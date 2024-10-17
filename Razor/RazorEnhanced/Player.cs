@@ -201,7 +201,7 @@ namespace RazorEnhanced
             get
             {
 
-                List<RazorEnhanced.Mobile> pets = new List<Mobile>();
+                List<RazorEnhanced.Mobile> pets = new();
                 foreach (var m in World.Mobiles)
                 {
 
@@ -332,7 +332,7 @@ namespace RazorEnhanced
                 {
                     foreach (System.Drawing.Rectangle rect in area.rect)
                     {
-                        if (rect.Contains((Int32)x, (Int32)y))
+                        if (rect.Contains(x, y))
                             return area;
                     }
                 }
@@ -370,7 +370,7 @@ namespace RazorEnhanced
                     return null;
                 else
                 {
-                    RazorEnhanced.Item enhancedBackpack = new RazorEnhanced.Item(assistantBackpack);
+                    RazorEnhanced.Item enhancedBackpack = new(assistantBackpack);
                     return enhancedBackpack;
                 }
             }
@@ -388,7 +388,7 @@ namespace RazorEnhanced
                     return null;
                 else
                 {
-                    RazorEnhanced.Item enhancedBackpack = new RazorEnhanced.Item(assistantBank);
+                    RazorEnhanced.Item enhancedBackpack = new(assistantBank);
                     return enhancedBackpack;
                 }
             }
@@ -406,7 +406,7 @@ namespace RazorEnhanced
                     return null;
                 else
                 {
-                    RazorEnhanced.Item enhancedQuiver = new RazorEnhanced.Item(assistantQuiver);
+                    RazorEnhanced.Item enhancedQuiver = new(assistantQuiver);
                     return enhancedQuiver;
                 }
             }
@@ -425,7 +425,7 @@ namespace RazorEnhanced
                     return null;
                 else
                 {
-                    RazorEnhanced.Item enhancedMount = new RazorEnhanced.Item(assistantMount);
+                    RazorEnhanced.Item enhancedMount = new(assistantMount);
                     return enhancedMount;
                 }
             }
@@ -571,7 +571,7 @@ namespace RazorEnhanced
         internal static Dictionary<BuffIcon, string> GetBuffsMapping()
         {
 
-            Dictionary<BuffIcon, string> buffs = new Dictionary<BuffIcon, string>
+            Dictionary<BuffIcon, string> buffs = new()
             {
                 [BuffIcon.ActiveMeditation] = "Meditation",
                 [BuffIcon.Agility] = "Agility",
@@ -881,7 +881,7 @@ namespace RazorEnhanced
         {
             get
             {
-                List<string> buffs = new List<string>();
+                List<string> buffs = new();
                 foreach (BuffIcon icon in World.Player.Buffs)
                 {
                     buffs.Add(GetBuffDescription(icon));
@@ -1198,7 +1198,7 @@ namespace RazorEnhanced
         /// <param name="serials">List of Serials of Item to equip.</param>
         public static void EquipUO3D(List<int> serials)
         {
-            List<uint> serialstoequip = new List<uint>();
+            List<uint> serialstoequip = new();
             foreach (int serial in serials)
                 serialstoequip.Add((uint)serial);
 
@@ -1296,7 +1296,7 @@ namespace RazorEnhanced
                     return null;
                 else
                 {
-                    RazorEnhanced.Item enhancedItem = new RazorEnhanced.Item(assistantItem);
+                    RazorEnhanced.Item enhancedItem = new(assistantItem);
                     return enhancedItem;
                 }
             }
@@ -1745,7 +1745,7 @@ namespace RazorEnhanced
                 return -1;
             }
             Scripts.SendMessageScriptError("Script Error: GetStatStatus: not implemented");
-            return (int)-1;
+            return -1;
         }
 
 
@@ -1931,9 +1931,9 @@ namespace RazorEnhanced
             }
 
             if (wait)
-                Assistant.Client.Instance.SendToServerWait(new UseSkill((int)skill));
+                Assistant.Client.Instance.SendToServerWait(new UseSkill(skill));
             else
-                Assistant.Client.Instance.SendToServer(new UseSkill((int)skill));
+                Assistant.Client.Instance.SendToServer(new UseSkill(skill));
 
             if (skill == RazorEnhanced.Skills.GetSkillId("Hiding"))
                 StealthSteps.Hide();
@@ -2269,7 +2269,7 @@ namespace RazorEnhanced
         /// <returns>if the attack was achieved. (empty: line not found)</returns>
         public static bool AttackType(int graphic, int rangemax, string selector, List<int> color = null, List<byte> notoriety = null)
         {
-            Mobiles.Filter filter = new Mobiles.Filter();
+            Mobiles.Filter filter = new();
             filter.RangeMin = 0;
             filter.RangeMax = rangemax;
 
@@ -2305,7 +2305,7 @@ namespace RazorEnhanced
                 return true;
             }
 
-            Items.Filter itfilter = new Items.Filter();
+            Items.Filter itfilter = new();
             itfilter.RangeMin = 0;
             itfilter.RangeMax = rangemax;
 
@@ -2347,7 +2347,7 @@ namespace RazorEnhanced
         /// <returns>if the attack was achieved. (empty: line not found)</returns>
         public static bool AttackType(List<int> graphics, int rangemax, string selector, List<int> color = null, List<byte> notoriety = null)
         {
-            Mobiles.Filter filter = new Mobiles.Filter();
+            Mobiles.Filter filter = new();
             filter.RangeMin = 0;
             filter.RangeMax = rangemax;
 
@@ -2384,7 +2384,7 @@ namespace RazorEnhanced
                 return true;
             }
 
-            Items.Filter itfilter = new Items.Filter();
+            Items.Filter itfilter = new();
             itfilter.RangeMin = 0;
             itfilter.RangeMax = rangemax;
 
@@ -2567,7 +2567,7 @@ namespace RazorEnhanced
 
         internal static void PathFindToPacket(int x, int y, int z)
         {
-            Assistant.Point3D loc = new Assistant.Point3D(x, y, z);
+            Assistant.Point3D loc = new(x, y, z);
             PathFindToPacket(loc);
         }
 
@@ -2770,7 +2770,7 @@ namespace RazorEnhanced
         // Props
 
         // Layer to scan
-        private static readonly List<Assistant.Layer> m_layer_props = new List<Layer>
+        private static readonly List<Assistant.Layer> m_layer_props = new()
         {
             Layer.RightHand,
             Layer.LeftHand,
@@ -2805,7 +2805,7 @@ namespace RazorEnhanced
         /// <returns>The total value as number.</returns>
         internal static Dictionary<string, float> SumAttributes(List<string> attributenames)
         {
-            Dictionary<string, float> result = new Dictionary<string, float>();
+            Dictionary<string, float> result = new();
             foreach (string attribname in attributenames)
             {
                 result[attribname] = 0;

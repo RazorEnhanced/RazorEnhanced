@@ -98,10 +98,8 @@ namespace RazorEnhanced.UI
             string ok = "Ok", string no = "", string cancel = "Cancel",
             Color? backColor = null)
         {
-            using (var form = new RE_MessageBox(title, message, link, ok, no, cancel, backColor))
-            {
-                return form.ShowDialog();
-            }
+            using var form = new RE_MessageBox(title, message, link, ok, no, cancel, backColor);
+            return form.ShowDialog();
         }
 
         private void OkButton_Click(object sender, EventArgs e)

@@ -493,7 +493,7 @@ namespace RazorEnhanced
                 LoadMapData();
 
             Ultima.HuedTile[] tiles;
-            List<TileInfo> tileinfo = new List<TileInfo>();
+            List<TileInfo> tileinfo = new();
 
             switch (map)
             {

@@ -117,7 +117,7 @@ namespace RazorEnhanced.UI
 
         private void RazorButton1_Click(object sender, EventArgs e)
         {
-            EnhancedAgentAddList addshard = new EnhancedAgentAddList(9);
+            EnhancedAgentAddList addshard = new(9);
             addshard.FormClosed += new FormClosedEventHandler(Addshard_refresh);
             addshard.TopMost = true;
             addshard.Show();
@@ -219,7 +219,7 @@ namespace RazorEnhanced.UI
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog folder = new FolderBrowserDialog
+            FolderBrowserDialog folder = new()
             {
                 Description = "Select a UO Data Directory...",
                 ShowNewFolderButton = false

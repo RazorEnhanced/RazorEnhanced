@@ -215,7 +215,7 @@ namespace Ultima
                     filePath = GetCaseInsensitiveFilePath(filePath);
                     m_MulPath[file] = filePath;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     m_MulPath[file] = "";
                     logger.Debug($"file={file} not found in file system");
@@ -317,7 +317,7 @@ namespace Ultima
                     path = GetCaseInsensitiveFilePath(path);
                     return path;
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     logger.Debug($"{path} not found in GetFilePath");
                 }

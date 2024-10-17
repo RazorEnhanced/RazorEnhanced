@@ -124,7 +124,7 @@ namespace Assistant
 
         private bool SetHue(Control ctrl, string cfg)
         {
-            HueEntry h = new HueEntry(RazorEnhanced.Settings.General.ReadInt(cfg));
+            HueEntry h = new(RazorEnhanced.Settings.General.ReadInt(cfg));
 
             if (h.ShowDialog(this) == DialogResult.OK)
             {
@@ -620,7 +620,7 @@ namespace Assistant
                 RazorEnhanced.Settings.General.WriteInt("Opacity", o);
 
             opacityLabel.Text = String.Format("Opacity: {0}%", o);
-            this.Opacity = ((double)o) / 100.0;
+            this.Opacity = o / 100.0;
         }
 
 

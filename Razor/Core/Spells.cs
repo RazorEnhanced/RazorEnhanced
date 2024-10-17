@@ -188,34 +188,32 @@ namespace Assistant
                 return;
             }
 
-            using (StreamReader reader = new StreamReader(filename))
+            using StreamReader reader = new(filename);
+            string line;
+            while ((line = reader.ReadLine()) != null)
             {
-                string line;
-                while ((line = reader.ReadLine()) != null)
+                line = line.Trim();
+                if (line.Length <= 0 || line[0] == '#')
+                    continue;
+                string[] split = line.Split('|');
+
+                try
                 {
-                    line = line.Trim();
-                    if (line.Length <= 0 || line[0] == '#')
-                        continue;
-                    string[] split = line.Split('|');
-
-                    try
+                    if (split.Length >= 5)
                     {
-                        if (split.Length >= 5)
-                        {
-                            string[] reags = new string[split.Length - 5];
-                            for (int i = 5; i < split.Length; i++)
-                                reags[i - 5] = split[i].ToLower().Trim();
-                            Spell s = new Spell(split[0].Trim()[0], Convert.ToInt32(split[1].Trim()), Convert.ToInt32(split[2].Trim()), /*split[3].Trim(),*/ split[4].Trim(), reags);
+                        string[] reags = new string[split.Length - 5];
+                        for (int i = 5; i < split.Length; i++)
+                            reags[i - 5] = split[i].ToLower().Trim();
+                        Spell s = new(split[0].Trim()[0], Convert.ToInt32(split[1].Trim()), Convert.ToInt32(split[2].Trim()), /*split[3].Trim(),*/ split[4].Trim(), reags);
 
-                            m_SpellsByID[s.GetID()] = s;
+                        m_SpellsByID[s.GetID()] = s;
 
-                            if (s.WordsOfPower != null && s.WordsOfPower.Trim().Length > 0)
-                                m_SpellsByPower[s.WordsOfPower] = s;
-                        }
+                        if (s.WordsOfPower != null && s.WordsOfPower.Trim().Length > 0)
+                            m_SpellsByPower[s.WordsOfPower] = s;
                     }
-                    catch
-                    {
-                    }
+                }
+                catch
+                {
                 }
             }
         }

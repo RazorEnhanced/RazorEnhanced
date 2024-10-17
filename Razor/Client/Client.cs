@@ -72,7 +72,7 @@ namespace Assistant
                 long_name, name_chars,
                 name_chars.Length);
 
-            string short_name = new string(name_chars);
+            string short_name = new(name_chars);
             return short_name.Substring(0, (int)length);
         }
 
@@ -110,7 +110,7 @@ namespace Assistant
                     // parse the command line
                     extra = options.Parse(args);
                 }
-                catch (OptionException e)
+                catch (OptionException)
                 {
                     RazorEnhanced.UI.RE_MessageBox.Show("Invalid Arguments passed",
                         "Error in Client.SelectShard.\r\nLooks like bad command line arguments",
@@ -125,7 +125,7 @@ namespace Assistant
                         startType = Shard.StartType.CUO;
                     }
                     RazorEnhanced.Shard argsShard =
-                        new RazorEnhanced.Shard("Server", Path.Combine(uoPath, "client.exe"),
+                        new("Server", Path.Combine(uoPath, "client.exe"),
                                     uoPath, cuoPath, ip, port,
                                     patchEncryption, osiEncryption, true, startType);
 
@@ -150,7 +150,7 @@ namespace Assistant
             }
             else
             {
-                RazorEnhanced.UI.EnhancedLauncher launcher = new RazorEnhanced.UI.EnhancedLauncher();
+                RazorEnhanced.UI.EnhancedLauncher launcher = new();
                 DialogResult laucherdialog = DialogResult.Retry;
                 while (laucherdialog == DialogResult.Retry)
                 {
@@ -341,7 +341,7 @@ namespace Assistant
         public System.Drawing.Rectangle GetUoWindowPos()
         {
             RECT rect;
-            System.Drawing.Rectangle outRect = new System.Drawing.Rectangle(-1, -1, 0, 0);
+            System.Drawing.Rectangle outRect = new(-1, -1, 0, 0);
             if (GetWindowRect(new HandleRef(this, Assistant.Client.Instance.GetWindowHandle()), out rect))
             {
                 outRect.X = rect.Left;
@@ -391,11 +391,11 @@ namespace Assistant
 
         internal bool Connected { get; set; }
 
-        internal void OnDisconnected()
+        internal virtual void OnDisconnected()
         {
             Connected = false;
         }
-        internal void OnConnected()
+        internal virtual void OnConnected()
         {
             Connected = true;
         }
@@ -610,7 +610,7 @@ namespace Assistant
         }
 
         private Timer m_TBTimer;
-        public StringBuilder TitleBarBuilder = new StringBuilder();
+        public StringBuilder TitleBarBuilder = new();
         private string m_LastPlayerName = "";
 
         public void ResetTitleBarBuilder()

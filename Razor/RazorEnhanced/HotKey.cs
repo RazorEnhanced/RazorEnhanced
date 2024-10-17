@@ -20,7 +20,7 @@ namespace RazorEnhanced
     /// <summary>@nodoc</summary>
     public class HotKeyEvent
     {
-        private readonly static DateTime UnixTimeBegin = new DateTime(1970, 1, 1);
+        private readonly static DateTime UnixTimeBegin = new(1970, 1, 1);
 
         /// <summary>@nodoc</summary>
         public static HotKeyEvent LastEvent;
@@ -356,7 +356,7 @@ namespace RazorEnhanced
 
                     case "Equip Wands":
                         string parameter = RazorEnhanced.Settings.HotKey.FindString(k);
-                        Thread thread = new Thread(() => ProcessEquipWands(parameter));
+                        Thread thread = new(() => ProcessEquipWands(parameter));
                         thread.Start();
                         break;
 
@@ -799,7 +799,7 @@ namespace RazorEnhanced
                             }
                         }
 
-                        ProcessStartInfo info = new ProcessStartInfo()
+                        ProcessStartInfo info = new()
                         {
                             WorkingDirectory = Path.GetDirectoryName(mappath),
                             FileName = mappath
@@ -1030,7 +1030,7 @@ namespace RazorEnhanced
                     }
                     break;
                 case "Attack Nearest Enemy":
-                    RazorEnhanced.Mobiles.Filter filter = new RazorEnhanced.Mobiles.Filter();
+                    RazorEnhanced.Mobiles.Filter filter = new();
                     filter.Notorieties.Add(6);
                     filter.Notorieties.Add(5);
                     filter.Notorieties.Add(4);
@@ -1467,7 +1467,7 @@ namespace RazorEnhanced
             List<Item> possibleWands = new();
             foreach (var w in py_wands)
             {
-                Item item = w as Item;
+                Item item = w;
                 if (item != null)
                 {
                     if (!item.PropsUpdated)
@@ -1510,7 +1510,7 @@ namespace RazorEnhanced
 
                 foreach (var item in possibleWands)
                 {
-                    
+
                     foreach (Property prop in item.Properties)
                     {
                         string entry = prop.ToString();
@@ -1936,7 +1936,7 @@ namespace RazorEnhanced
 
         private static TreeNode GenerateNode(HotKeyData keydata)
         {
-            TreeNode a = new TreeNode
+            TreeNode a = new()
             {
                 Name = keydata.Name,
                 Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )"
@@ -2113,7 +2113,7 @@ namespace RazorEnhanced
         {
             foreach (Assistant.Item t in cont.Contains)
             {
-                Assistant.Item item = (Assistant.Item)t;
+                Assistant.Item item = t;
 
                 if (item.TypeID == find && item.Hue == hue)
                 {

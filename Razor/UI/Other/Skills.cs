@@ -27,7 +27,7 @@ namespace Assistant
                     items[4] = String.Format("{0:F1}", sk.Cap);
                     items[5] = sk.Lock.ToString()[0].ToString();
 
-                    ListViewItem lvi = new ListViewItem(items)
+                    ListViewItem lvi = new(items)
                     {
                         Tag = sk
                     };
@@ -59,9 +59,9 @@ namespace Assistant
                 {
                     m_SkillMenu = new ContextMenu(new MenuItem[]
                     {
-                        new MenuItem( Language.GetString( LocString.SetSLUp ), new EventHandler( onSetSkillLockUP ) ),
-                        new MenuItem( Language.GetString( LocString.SetSLDown ), new EventHandler( onSetSkillLockDOWN ) ),
-                        new MenuItem( Language.GetString( LocString.SetSLLocked ), new EventHandler( onSetSkillLockLOCKED ) ),
+                        new( Language.GetString( LocString.SetSLUp ), new EventHandler( onSetSkillLockUP ) ),
+                        new( Language.GetString( LocString.SetSLDown ), new EventHandler( onSetSkillLockDOWN ) ),
+                        new( Language.GetString( LocString.SetSLLocked ), new EventHandler( onSetSkillLockLOCKED ) ),
                     });
                 }
 
@@ -174,7 +174,7 @@ namespace Assistant
 
         private class LVDoubleComparer : IComparer
         {
-            internal static readonly LVDoubleComparer Instance = new LVDoubleComparer();
+            internal static readonly LVDoubleComparer Instance = new();
             internal static int Column { set { Instance.m_Col = value; } }
             internal static bool Asc { set { Instance.m_Asc = value; } }
 
@@ -248,7 +248,7 @@ namespace Assistant
             if (skillList.SelectedItems == null || skillList.SelectedItems.Count <= 0)
                 return;
 
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
             for (int i = 0; i < skillList.SelectedItems.Count; i++)
             {
                 ListViewItem vi = skillList.SelectedItems[i];
@@ -277,7 +277,7 @@ namespace Assistant
             if (World.Player == null)
                 return;
 
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
             for (int i = 0; i < Skill.Count; i++)
             {
                 Skill sk = World.Player.Skills[i];

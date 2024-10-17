@@ -17,7 +17,7 @@ namespace Assistant
         //    Logger.Debug(member)
         //}
 
-        private static readonly Random m_Random = new Random();
+        private static readonly Random m_Random = new();
 
         internal static int Random(int min, int max)
         {
@@ -83,7 +83,7 @@ namespace Assistant
             if (str.Length == 1)
                 return char.ToUpper(str[0]).ToString();
 
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
             bool capitalizeNext = true;
             for (int i = 0; i < str.Length; i++)
             {
@@ -108,8 +108,8 @@ namespace Assistant
 
             for (int i = 0; i < whole; ++i, byteIndex += 16)
             {
-                StringBuilder bytes = new StringBuilder(49);
-                StringBuilder chars = new StringBuilder(16);
+                StringBuilder bytes = new(49);
+                StringBuilder chars = new(16);
 
                 for (int j = 0; j < 16; ++j)
                 {
@@ -145,8 +145,8 @@ namespace Assistant
 
             if (rem != 0)
             {
-                StringBuilder bytes = new StringBuilder(49);
-                StringBuilder chars = new StringBuilder(rem);
+                StringBuilder bytes = new(49);
+                StringBuilder chars = new(rem);
 
                 for (int j = 0; j < 16; ++j)
                 {
@@ -203,8 +203,8 @@ namespace Assistant
 
             for (int i = 0; i < whole; ++i, byteIndex += 16)
             {
-                StringBuilder bytes = new StringBuilder(49);
-                StringBuilder chars = new StringBuilder(16);
+                StringBuilder bytes = new(49);
+                StringBuilder chars = new(16);
 
                 for (int j = 0; j < 16; ++j)
                 {
@@ -240,8 +240,8 @@ namespace Assistant
 
             if (rem != 0)
             {
-                StringBuilder bytes = new StringBuilder(49);
-                StringBuilder chars = new StringBuilder(rem);
+                StringBuilder bytes = new(49);
+                StringBuilder chars = new(rem);
 
                 for (int j = 0; j < 16; ++j)
                 {
@@ -504,7 +504,8 @@ namespace Assistant
         /// Delays execution until the specified condition is met.
         /// </summary>
         /// <param name="condition">The lambda conditional that must be met to end the delay.</param>
-        /// <returns>A task that represents the asynchronous operation.</returns>
+        /// <param name="delay">The maximum time to delay.</param>
+        /// <returns>true if condition was satisfied, false if max delay time expired</returns>
         public static bool DelayUntil(Func<bool> condition, int delay)
         {
             var watch = System.Diagnostics.Stopwatch.StartNew();

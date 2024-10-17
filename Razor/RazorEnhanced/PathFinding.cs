@@ -139,14 +139,14 @@ namespace RazorEnhanced
         // DIRS is directions
         public static readonly Tile[] Dirs =
         {
-            new Tile(1, 0), // east 
-            new Tile(-1, 0), // west
-            new Tile(0, 1), // south
-            new Tile(0, -1), // north
-            new Tile(-1, -1), // NW
-            new Tile(1, 1), // SE
-            new Tile(-1, 1), // SW
-            new Tile(1, -1) // NE
+            new(1, 0), // east 
+            new(-1, 0), // west
+            new(0, 1), // south
+            new(0, -1), // north
+            new(-1, -1), // NW
+            new(1, 1), // SE
+            new(-1, 1), // SW
+            new(1, -1) // NE
         };
 
         public SquareGrid(int x, int y, int squareSize)
@@ -171,14 +171,14 @@ namespace RazorEnhanced
         public bool InBounds(Tile id)
         {
             //X == loc.X && Y == loc.Y
-            Assistant.Point2D point = new Assistant.Point2D(id.X, id.Y);
+            Assistant.Point2D point = new(id.X, id.Y);
             bool result = TilesRect.Contains(point);
             //bool result2 = Tiles.Any(x => x.Equals(id));
             return result;
         }
 
 
-        static HashSet<int> RoadIds = new HashSet<int>() { 0x70, 0x71, 0x72, 0x73, 0x74, 0x75, 0x76, 0x77, 0x78, 0x79, 0x7a, 0x7b, 0x7c,
+        static HashSet<int> RoadIds = new() { 0x70, 0x71, 0x72, 0x73, 0x74, 0x75, 0x76, 0x77, 0x78, 0x79, 0x7a, 0x7b, 0x7c,
             0x3cf, 0x3d0, 0x3d1, 0x3d2, 0x3d3, 0x3d4, 0x3d5, 0x3d6, 0x3d7, 0x3d8, 0x3d9, 0x3da,
             0x3db, 0x3dc, 0x3dd, 0x3de, 0x3df, 0x3e0, 0x3e1, 0x3e2, 0x3e3, 0x3e4, 0x3e5, 0x3e6, 0x3e7, 0x3e8, 0x3e9, 0x3ea,
             0x3eb, 0x3ec, 0x3ed, 0x3ee, 0x3ef, 0x3f0, 0x3f1, 0x3f2, 0x3f3, 0x3f4, 0x3f5, 0x3f6, 0x3f7, 0x3f8, 0x3f9, 0x3fa,
@@ -304,7 +304,7 @@ namespace RazorEnhanced
             if (!ignoremob)
             {
                 //var mobs = World.Mobiles.Values;
-                List<Assistant.Mobile> result = new List<Assistant.Mobile>();
+                List<Assistant.Mobile> result = new();
                 foreach (var entry in World.Mobiles)
                 {
                     Assistant.Mobile m = entry.Value;
@@ -715,8 +715,8 @@ namespace RazorEnhanced
 
     internal class AStarSearch
     {
-        public Dictionary<string, Tile> CameFrom = new Dictionary<string, Tile>();
-        public Dictionary<string, int> CostSoFar = new Dictionary<string, int>();
+        public Dictionary<string, Tile> CameFrom = new();
+        public Dictionary<string, int> CostSoFar = new();
 
         private readonly Tile _start;
         private readonly Tile _goal;
@@ -842,7 +842,7 @@ namespace RazorEnhanced
         // * http://xfleury.github.io/graphsearch.html
         // * http://stackoverflow.com/questions/102398/priority-queue-in-net
 
-        private readonly List<KeyValuePair<T, float>> _elements = new List<KeyValuePair<T, float>>();
+        private readonly List<KeyValuePair<T, float>> _elements = new();
 
         public int Count => _elements.Count;
 
@@ -943,7 +943,7 @@ namespace RazorEnhanced
         /// <param name="z">Z map coordinates</param>
         public static void PathFindTo(int x, int y, int z = 0)
         {
-            Route r = new Route();
+            Route r = new();
             r.X = x;
             r.Y = y;
             if (Assistant.Client.IsOSI)
@@ -998,7 +998,7 @@ namespace RazorEnhanced
                         else
                             return false;
                     }
-                    PathFinding pf = new PathFinding(road);
+                    PathFinding pf = new(road);
 
                     timeLeft = (int)timeEnd.Subtract(DateTime.Now).TotalSeconds;
                     if (r.Run)
@@ -1010,7 +1010,7 @@ namespace RazorEnhanced
                     if (DateTime.Now.CompareTo(timeEnd) > 0) { return false; }
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw;
             }
@@ -1041,13 +1041,13 @@ namespace RazorEnhanced
         /// <returns>True: if it finish the path in time. False: otherwise</returns>
         public static bool RunPath(List<Tile> path, float timeout = -1, bool debugMessage = false, bool useResync = true)
         {
-            PathFinding pf = new PathFinding(path);
+            PathFinding pf = new(path);
             return pf.followPath(true, timeout, debugMessage, useResync);
         }
 
         public static bool WalkPath(List<Tile> path, float timeout = -1, bool debugMessage = false, bool useResync = true)
         {
-            PathFinding pf = new PathFinding(path);
+            PathFinding pf = new(path);
             return pf.followPath(false, timeout, debugMessage, useResync);
         }
 
@@ -1122,12 +1122,12 @@ namespace RazorEnhanced
                 */
 
                 //RazorEnhanced.Multi.MultiData data = World.Multis[(int)serial]; 
-                Rectangle2D area = new Rectangle2D(item.Position.X - multiinfo.Max.X, item.Position.Y - multiinfo.Max.Y,
+                Rectangle2D area = new(item.Position.X - multiinfo.Max.X, item.Position.Y - multiinfo.Max.Y,
                                                     multiinfo.Max.X * 2, multiinfo.Max.Y * 2);
 
                 foreach (var tile in m_Path)
                 {
-                    Assistant.Point2D point = new Assistant.Point2D(tile.X, tile.Y);
+                    Assistant.Point2D point = new(tile.X, tile.Y);
                     if (area.Contains(point))
                     {
                         //if (tile.X == x && tile.Y == y)
@@ -1309,7 +1309,7 @@ namespace RazorEnhanced
                             // If position gets off, try to fix it
                             if (Misc.Distance(Player.Position.X, Player.Position.Y, step.X, step.Y) > 2)
                             {
-                                Route fixit = new Route();
+                                Route fixit = new();
                                 fixit.X = step.X;
                                 fixit.Y = step.Y;
                                 Go(fixit);
@@ -1359,7 +1359,6 @@ namespace RazorEnhanced
                 Misc.SendMessage("PathFind: Move to direction: " + d.ToString(), 55);
 
             bool result = false;
-            int retry = 5;
             for (int i = 0; i < 5; i++)
             {
                 if (run)

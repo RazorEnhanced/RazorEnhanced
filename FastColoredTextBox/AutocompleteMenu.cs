@@ -219,8 +219,8 @@ namespace FastColoredTextBoxNS
         AutocompleteMenu Menu { get { return Parent as AutocompleteMenu; } }
         int oldItemCount = 0;
         FastColoredTextBox tb;
-        internal ToolTip toolTip = new ToolTip();
-        System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+        internal ToolTip toolTip = new();
+        System.Windows.Forms.Timer timer = new();
 
         internal bool AllowTabKey { get; set; }
         public ImageList ImageList { get; set; }
@@ -429,7 +429,7 @@ namespace FastColoredTextBoxNS
             {
                 if (!Menu.Visible)
                 {
-                    CancelEventArgs args = new CancelEventArgs();
+                    CancelEventArgs args = new();
                     Menu.OnOpening(args);
                     if (!args.Cancel)
                         Menu.Show(tb, point);
@@ -588,7 +588,7 @@ namespace FastColoredTextBoxNS
             try
             {
                 AutocompleteItem item = FocussedItem;
-                SelectingEventArgs args = new SelectingEventArgs()
+                SelectingEventArgs args = new()
                 {
                     Item = item,
                     SelectedIndex = FocussedItemIndex
@@ -611,7 +611,7 @@ namespace FastColoredTextBoxNS
 
                 Menu.Close();
                 //
-                SelectedEventArgs args2 = new SelectedEventArgs()
+                SelectedEventArgs args2 = new()
                 {
                     Item = item,
                     Tb = Menu.Fragment.tb
@@ -774,7 +774,7 @@ namespace FastColoredTextBoxNS
 
         public void SetAutocompleteItems(ICollection<string> items)
         {
-            List<AutocompleteItem> list = new List<AutocompleteItem>(items.Count);
+            List<AutocompleteItem> list = new(items.Count);
             foreach (var item in items)
                 list.Add(new AutocompleteItem(item));
             SetAutocompleteItems(list);

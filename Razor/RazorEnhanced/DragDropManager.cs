@@ -7,9 +7,9 @@ namespace RazorEnhanced
 {
     public class DragDropManager
     {
-        internal static ConcurrentQueue<int> AutoLootSerialCorpseRefresh = new ConcurrentQueue<int>();
-        internal static ConcurrentQueue<int> ScavengerSerialToGrab = new ConcurrentQueue<int>();
-        internal static ConcurrentQueue<int> CorpseToCutSerial = new ConcurrentQueue<int>();
+        internal static ConcurrentQueue<int> AutoLootSerialCorpseRefresh = new();
+        internal static ConcurrentQueue<int> ScavengerSerialToGrab = new();
+        internal static ConcurrentQueue<int> CorpseToCutSerial = new();
 
         //  internal static volatile bool HoldingItem = false;
 
@@ -148,7 +148,7 @@ namespace RazorEnhanced
             Thread.Sleep(250);
         }
 
-        private static readonly System.Object autolootLock = new System.Object();
+        private static readonly System.Object autolootLock = new();
         internal static void ProcessLootList(uint lootbag)
         {
             if (Monitor.TryEnter(autolootLock)) try

@@ -10,7 +10,7 @@ namespace RazorEnhanced
     internal static class Shards
     {
         internal static readonly string m_Save = "RazorEnhanced.shards";
-        internal static AllShards allShards = new AllShards();
+        internal static AllShards allShards = new();
         public static bool AllowBeta { get { return allShards.AllowBeta; } }
         public static bool ShowLauncher
         {
@@ -23,12 +23,12 @@ namespace RazorEnhanced
     internal class AllShards
     {
         [JsonProperty("AllowBeta")]
-        internal bool AllowBeta = new bool();
+        internal bool AllowBeta = new();
         [JsonProperty("ShowLauncher")]
         [DefaultValue(true)]
-        internal bool ShowLauncher = new bool();
+        internal bool ShowLauncher = new();
         [JsonProperty("Shards")]
-        internal Dictionary<string, Shard> m_Shards = new Dictionary<string, Shard>();
+        internal Dictionary<string, Shard> m_Shards = new();
     }
 
 
@@ -130,7 +130,7 @@ namespace RazorEnhanced
                 entry.Value.Selected = false;
             }
 
-            Shard newEntry = new Shard(description, clientpath, clientfolder, cuoClient, host, (uint)port, patchenc, osienc, true);
+            Shard newEntry = new(description, clientpath, clientfolder, cuoClient, host, (uint)port, patchenc, osienc, true);
             Shards.allShards.m_Shards[newEntry.Description] = newEntry;
 
             Save();
@@ -185,7 +185,7 @@ namespace RazorEnhanced
 
         internal static List<RazorEnhanced.Shard> Read()
         {
-            List<RazorEnhanced.Shard> returnList = new List<RazorEnhanced.Shard>();
+            List<RazorEnhanced.Shard> returnList = new();
             foreach (var entry in Shards.allShards.m_Shards)
             {
                 returnList.Add(entry.Value);

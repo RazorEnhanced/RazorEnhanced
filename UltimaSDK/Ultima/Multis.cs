@@ -377,28 +377,28 @@ namespace Ultima
 
                         if (comp == MultiComponentList.Empty)
                         {
-                            binidx.Write((int)-1); // lookup
-                            binidx.Write((int)-1); // length
-                            binidx.Write((int)-1); // extra
+                            binidx.Write(-1); // lookup
+                            binidx.Write(-1); // length
+                            binidx.Write(-1); // extra
                         }
                         else
                         {
                             List<MultiComponentList.MultiTileEntry> tiles = RebuildTiles(comp.SortedTiles);
                             binidx.Write((int)fsmul.Position); //lookup
                             if (isUOAHS)
-                                binidx.Write((int)(tiles.Count * 16)); //length
+                                binidx.Write(tiles.Count * 16); //length
                             else
-                                binidx.Write((int)(tiles.Count * 12)); //length
-                            binidx.Write((int)-1); //extra
+                                binidx.Write(tiles.Count * 12); //length
+                            binidx.Write(-1); //extra
                             for (int i = 0; i < tiles.Count; ++i)
                             {
-                                binmul.Write((ushort)tiles[i].m_ItemID);
-                                binmul.Write((short)tiles[i].m_OffsetX);
-                                binmul.Write((short)tiles[i].m_OffsetY);
-                                binmul.Write((short)tiles[i].m_OffsetZ);
-                                binmul.Write((int)tiles[i].m_Flags);
+                                binmul.Write(tiles[i].m_ItemID);
+                                binmul.Write(tiles[i].m_OffsetX);
+                                binmul.Write(tiles[i].m_OffsetY);
+                                binmul.Write(tiles[i].m_OffsetZ);
+                                binmul.Write(tiles[i].m_Flags);
                                 if (isUOAHS)
-                                    binmul.Write((int)tiles[i].m_Unk1);
+                                    binmul.Write(tiles[i].m_Unk1);
                             }
                         }
                     }
@@ -1039,7 +1039,7 @@ namespace Ultima
                 int xOffset = m_SortedTiles[i].m_OffsetX + m_Center.X;
                 int yOffset = m_SortedTiles[i].m_OffsetY + m_Center.Y;
 
-                tiles[xOffset][yOffset].Add((ushort)(m_SortedTiles[i].m_ItemID), (sbyte)m_SortedTiles[i].m_OffsetZ, (sbyte)m_SortedTiles[i].m_Flags, m_SortedTiles[i].m_Unk1);
+                tiles[xOffset][yOffset].Add(m_SortedTiles[i].m_ItemID, (sbyte)m_SortedTiles[i].m_OffsetZ, (sbyte)m_SortedTiles[i].m_Flags, m_SortedTiles[i].m_Unk1);
             }
 
             m_Surface = 0;
@@ -1196,7 +1196,7 @@ namespace Ultima
                                 int xOffset = m_SortedTiles[i].m_OffsetX - m_Min.X;
                                 int yOffset = m_SortedTiles[i].m_OffsetY - m_Min.Y;
 
-                                tiles[xOffset][yOffset].Add((ushort)(m_SortedTiles[i].m_ItemID), (sbyte)m_SortedTiles[i].m_OffsetZ, (sbyte)m_SortedTiles[i].m_Flags, m_SortedTiles[i].m_Unk1);
+                                tiles[xOffset][yOffset].Add(m_SortedTiles[i].m_ItemID, (sbyte)m_SortedTiles[i].m_OffsetZ, (sbyte)m_SortedTiles[i].m_Flags, m_SortedTiles[i].m_Unk1);
                             }
                         }
 
@@ -1317,11 +1317,11 @@ namespace Ultima
                     MTile[] tiles = newtiles[x][y].ToArray();
                     for (int i = 0; i < tiles.Length; ++i)
                     {
-                        m_SortedTiles[counter].m_ItemID = (ushort)(tiles[i].ID);
+                        m_SortedTiles[counter].m_ItemID = tiles[i].ID;
                         m_SortedTiles[counter].m_OffsetX = (short)(x - m_Center.X);
                         m_SortedTiles[counter].m_OffsetY = (short)(y - m_Center.Y);
                         m_SortedTiles[counter].m_OffsetZ = (short)(tiles[i].Z);
-                        m_SortedTiles[counter].m_Flags = (int)tiles[i].Flag;
+                        m_SortedTiles[counter].m_Flags = tiles[i].Flag;
                         m_SortedTiles[counter].m_Unk1 = 0;
 
                         if (m_SortedTiles[counter].m_OffsetX < m_Min.X)

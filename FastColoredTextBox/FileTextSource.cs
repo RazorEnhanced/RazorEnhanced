@@ -13,10 +13,10 @@ namespace FastColoredTextBoxNS
     /// </summary>
     public class FileTextSource : TextSource, IDisposable
     {
-        List<int> sourceFileLinePositions = new List<int>();
+        List<int> sourceFileLinePositions = new();
         FileStream fs;
         Encoding fileEncoding;
-        System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+        System.Windows.Forms.Timer timer = new();
 
         /// <summary>
         /// Occurs when need to display line in the textbox
@@ -119,7 +119,7 @@ namespace FastColoredTextBoxNS
 
             int prev = 0;
             int prevPos = 0;
-            BinaryReader br = new BinaryReader(fs, enc);
+            BinaryReader br = new(fs, enc);
             while (fs.Position < length)
             {
                 prevPos = (int)fs.Position;
@@ -133,7 +133,7 @@ namespace FastColoredTextBoxNS
                 else
                 if (prev == 13)// \r (Mac format)
                 {
-                    sourceFileLinePositions.Add((int)prevPos);
+                    sourceFileLinePositions.Add(prevPos);
                     base.lines.Add(null);
                     SaveEOL = "\r";
                 }
@@ -143,7 +143,7 @@ namespace FastColoredTextBoxNS
 
             if (prev == 13)
             {
-                sourceFileLinePositions.Add((int)prevPos);
+                sourceFileLinePositions.Add(prevPos);
                 base.lines.Add(null);
             }
 
@@ -265,9 +265,9 @@ namespace FastColoredTextBoxNS
             var dir = Path.GetDirectoryName(fileName);
             var tempFileName = Path.Combine(dir, Path.GetFileNameWithoutExtension(fileName) + ".tmp");
 
-            StreamReader sr = new StreamReader(fs, fileEncoding);
-            using (FileStream tempFs = new FileStream(tempFileName, FileMode.Create))
-            using (StreamWriter sw = new StreamWriter(tempFs, enc))
+            StreamReader sr = new(fs, fileEncoding);
+            using (FileStream tempFs = new(tempFileName, FileMode.Create))
+            using (StreamWriter sw = new(tempFs, enc))
             {
                 sw.Flush();
 
@@ -363,7 +363,7 @@ namespace FastColoredTextBoxNS
         {
             var line = CreateLine();
             fs.Seek(sourceFileLinePositions[i], SeekOrigin.Begin);
-            StreamReader sr = new StreamReader(fs, fileEncoding);
+            StreamReader sr = new(fs, fileEncoding);
 
             var s = sr.ReadLine();
             if (s == null)

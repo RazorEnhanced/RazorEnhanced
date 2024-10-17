@@ -82,7 +82,7 @@ namespace RazorEnhanced
 
         public static bool WaitForTargetOrFizzle(int delay = 5000, bool noshow = false)
         {
-            ManualResetEvent waitOrFizzleEvent = new ManualResetEvent(false);
+            ManualResetEvent waitOrFizzleEvent = new(false);
             void watchForFizzle(PacketReader p, PacketHandlerEventArgs args)
             {
                 waitOrFizzleEvent.Set();
@@ -105,13 +105,13 @@ namespace RazorEnhanced
         /// <param name="StaticID">ID of Land/Tile</param>
         public static void TargetExecute(int x, int y, int z, int StaticID)
         {
-            Assistant.Point3D location = new Assistant.Point3D(x, y, z);
+            Assistant.Point3D location = new(x, y, z);
             Assistant.Targeting.Target(location, StaticID, true);
         }
 
         public static void TargetExecute(int x, int y, int z)
         {
-            Assistant.Point3D location = new Assistant.Point3D(x, y, z);
+            Assistant.Point3D location = new(x, y, z);
             Assistant.Targeting.Target(location, true);
         }
 
@@ -144,7 +144,7 @@ namespace RazorEnhanced
         /// <param name="selector">Selector for sorting the Entity. (default: Nearest)</param>
         /// <param name="notoriety">Notorieties of an Entity. (default: None -> all)</param>
         /// <returns>if the attack was achieved. (true: target succeeded)</returns>
-        public static bool TargetType(int graphic, int color=-1, int range=20, string selector="Nearest", List<byte> notoriety = null)
+        public static bool TargetType(int graphic, int color = -1, int range = 20, string selector = "Nearest", List<byte> notoriety = null)
         {
             Item itm = null;
             // Container (Range: Container Serial)
@@ -211,7 +211,7 @@ namespace RazorEnhanced
             return false;
         }
 
-        static internal HashSet<int> CaveTiles = new HashSet<int>() { 0xae, 0x5, 0x3, 0xc1, 0xc2, 0xc3, 0xbd, 0x0016, 0x0017, 0x0018, 0x0019,
+        static internal HashSet<int> CaveTiles = new() { 0xae, 0x5, 0x3, 0xc1, 0xc2, 0xc3, 0xbd, 0x0016, 0x0017, 0x0018, 0x0019,
             0x244, 0x245, 0x246, 0x247, 0x248, 0x249, 0x22b, 0x22c, 0x22d, 0x22e, 0x22f,
             0x053B, 0x053C, 0x053D, 0x053E, 0x053f };
         //static internal HashSet<int> SoilTiles = new HashSet<int>() {0x73, 0x74, 0x75, 0x76,  0x77, 0x78};
@@ -223,7 +223,7 @@ namespace RazorEnhanced
         /// <param name="offset">Distance from the target.</param>
         public static void TargetExecuteRelative(Mobile mobile, int offset)
         {
-            Assistant.Point2D relpos = new Assistant.Point2D();
+            Assistant.Point2D relpos = new();
             switch (mobile.Direction)
             {
                 case "North":

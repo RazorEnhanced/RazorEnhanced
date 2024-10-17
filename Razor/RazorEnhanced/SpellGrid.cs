@@ -195,7 +195,7 @@ namespace RazorEnhanced
             }
             else
             {
-                uint gumpId = (uint)999009999;
+                uint gumpId = 999009999;
                 Gumps.CloseGump(gumpId);
             }
             m_open = false;
@@ -229,7 +229,7 @@ namespace RazorEnhanced
                 Engine.MainWindow.SafeAction(s => { s.GridLocationLabel.Text = "X: " + Engine.GridX + " - Y:" + Engine.GridY; });
                 DLLImport.Win.ShowWindow(m_form.Handle, 8);
                 m_form.Location = new System.Drawing.Point(Settings.General.ReadInt("PosXGrid"), Settings.General.ReadInt("PosYGrid"));
-                m_form.Opacity = ((double)RazorEnhanced.Settings.General.ReadInt("GridOpacity")) / 100.0;
+                m_form.Opacity = RazorEnhanced.Settings.General.ReadInt("GridOpacity") / 100.0;
                 m_form.Refresh();
             }
             else
@@ -277,7 +277,7 @@ namespace RazorEnhanced
             if (icon == null)
                 return null;
 
-            Bitmap mImage = new Bitmap(icon.Width, icon.Height);
+            Bitmap mImage = new(icon.Width, icon.Height);
             float[][] coeff = new float[][] {
                         new float[] { 0, 0, 0, 0, 0 },
                         new float[] { 0, 1, 0, 0, 0 },
@@ -286,7 +286,7 @@ namespace RazorEnhanced
                         new float[] { 1, 0, 0, 0, 1 }};
 
 
-            ColorMatrix cm = new ColorMatrix(coeff);
+            ColorMatrix cm = new(coeff);
             var ia = new ImageAttributes();
             ia.SetColorMatrix(new ColorMatrix(coeff));
             using (var gr = Graphics.FromImage(mImage))
@@ -554,7 +554,7 @@ namespace RazorEnhanced
 
             Gumps.AddImageTiled(ref gd, 0, 0, 3000, 3000, 2624);
             Gumps.AddAlphaRegion(ref gd, 0, 0, 3000, 3000);
-            Gumps.AddHtml(ref gd, 320, 215, 350, 85, @"Select a button where you would like the hotbar to open. This position will also be used if you enable auto-open on login.<br>If you have maually moved the hotbar since logging in you may have to logout and  login again for this to work", (bool)true, (bool)true);
+            Gumps.AddHtml(ref gd, 320, 215, 350, 85, @"Select a button where you would like the hotbar to open. This position will also be used if you enable auto-open on login.<br>If you have maually moved the hotbar since logging in you may have to logout and  login again for this to work", true, true);
 
             Gumps.AddButton(ref gd, 700, 230, 241, 242, 0, 1, 0); // cancel
             Gumps.AddButton(ref gd, 700, 260, 247, 248, 0, 1, 0); // options
@@ -603,7 +603,7 @@ namespace RazorEnhanced
             int offset = 3;
 
             Gumps.GumpData spellBar = Gumps.CreateGump(false, false, false, false);
-            spellBar.gumpId = (uint)999009999;
+            spellBar.gumpId = 999009999;
             spellBar.serial = (uint)Player.Serial;
             Gumps.AddPage(ref spellBar, 0);
             //Gumps.AddAlphaRegion(ref spellBar, Engine.GridX, Engine.GridY, 300, 300);
@@ -654,13 +654,13 @@ namespace RazorEnhanced
                                     else if (Enum.TryParse<SkillIcon>(item.Spell.Replace(" ", ""), out SkillIcon icon))
                                     {
                                         if (World.Player.SkillEnabled.Contains(icon))
-                                            Gumps.AddImage(ref spellBar, Engine.GridX + (x * 50) + offset, Engine.GridY + (y * 50) + offset, (int)imageid, ActiveColor);
+                                            Gumps.AddImage(ref spellBar, Engine.GridX + (x * 50) + offset, Engine.GridY + (y * 50) + offset, imageid, ActiveColor);
                                         else
-                                            Gumps.AddImage(ref spellBar, Engine.GridX + (x * 50) + offset, Engine.GridY + (y * 50) + offset, (int)imageid, InactiveColor);
+                                            Gumps.AddImage(ref spellBar, Engine.GridX + (x * 50) + offset, Engine.GridY + (y * 50) + offset, imageid, InactiveColor);
                                     }
                                     else
                                     {
-                                        Gumps.AddImage(ref spellBar, Engine.GridX + (x * 50) + offset, Engine.GridY + (y * 50) + offset, (int)imageid, 0);
+                                        Gumps.AddImage(ref spellBar, Engine.GridX + (x * 50) + offset, Engine.GridY + (y * 50) + offset, imageid, 0);
                                     }
                                     Gumps.AddButton(ref spellBar, Engine.GridX + (x * 50), Engine.GridY + (y * 50), 2353, 2205, index, 1, 0);
                                 }
@@ -730,7 +730,7 @@ namespace RazorEnhanced
         /// <summary>
         /// ///////////////////////////////////////////
         /// </summary>
-        private static List<PanelGrid> m_panellist = new List<PanelGrid>();
+        private static List<PanelGrid> m_panellist = new();
 
         internal static void DrawSpellGrid()
         {
@@ -747,7 +747,7 @@ namespace RazorEnhanced
                 for (int x = 0; x < m_hslot; x += 1)
                 {
                     // Aggiungo panel dinamici
-                    PanelGrid paneltemp = new PanelGrid
+                    PanelGrid paneltemp = new()
                     {
                         BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center,
                         Location = new System.Drawing.Point(paneloffsetX, paneloffsetY),
@@ -872,9 +872,9 @@ namespace RazorEnhanced
 
         internal static Bitmap CreateBitmap(string text)
         {
-            Bitmap bmp = new Bitmap(44, 44);
+            Bitmap bmp = new(44, 44);
 
-            RectangleF rectf = new RectangleF(0, 0, 44, 44);
+            RectangleF rectf = new(0, 0, 44, 44);
 
             Graphics g = Graphics.FromImage(bmp);
             g.Clear(Color.Black);
@@ -892,8 +892,8 @@ namespace RazorEnhanced
 
         internal static ContextMenu GeneraMenu()
         {
-            ContextMenu cm = new ContextMenu();
-            MenuItem menuItem = new MenuItem
+            ContextMenu cm = new();
+            MenuItem menuItem = new()
             {
                 Text = "Close"
             };
@@ -979,7 +979,7 @@ namespace RazorEnhanced
         // Dizionari
         //////////////////////////////////////////////////////////////
 
-        internal static List<string> m_group_list = new List<string>
+        internal static List<string> m_group_list = new()
         {
             "Empty",
             "Abilities",
@@ -995,13 +995,13 @@ namespace RazorEnhanced
             "Skills"
         };
 
-        internal static Dictionary<string, int> SpellIconAbilities = new Dictionary<string, int>
+        internal static Dictionary<string, int> SpellIconAbilities = new()
         {
             { "Primary", 0x5204 },
             { "Secondary", 0x5206 }
         };
 
-        internal static Dictionary<string, int> SpellIconMastery = new Dictionary<string, int>
+        internal static Dictionary<string, int> SpellIconMastery = new()
         {
             { "Inspire", 0x945},
             { "Invigorate", 0x946},
@@ -1050,7 +1050,7 @@ namespace RazorEnhanced
             { "Boarding", 0x9BB1}
         };
 
-        internal static Dictionary<string, int> SpellIconMysticism = new Dictionary<string, int>
+        internal static Dictionary<string, int> SpellIconMysticism = new()
         {
             { "Nether Bolt", 0x5DC0},
             { "Healing Stone", 0x5DC1},
@@ -1070,7 +1070,7 @@ namespace RazorEnhanced
             { "Rising Colossus", 0x5DCF},
         };
 
-        internal static Dictionary<string, int> SpellIconSpellweaving = new Dictionary<string, int>
+        internal static Dictionary<string, int> SpellIconSpellweaving = new()
         {
             { "Arcane Circle", 0x59D8},
             { "Gift Of Renewal", 0x59D9},
@@ -1090,7 +1090,7 @@ namespace RazorEnhanced
             { "Arcane Empowerment", 0x59E7}
         };
 
-        internal static Dictionary<string, int> SpellIconNinjitsu = new Dictionary<string, int>
+        internal static Dictionary<string, int> SpellIconNinjitsu = new()
         {
             { "Focus Attack", 0x5320},
             { "Death Strike", 0x5321},
@@ -1102,7 +1102,7 @@ namespace RazorEnhanced
             { "Mirror Image", 0x5327}
         };
 
-        internal static Dictionary<string, int> SpellIconBushido = new Dictionary<string, int>
+        internal static Dictionary<string, int> SpellIconBushido = new()
         {
             { "Honorable Execution", 0x5420},
             { "Confidence", 0x5421},
@@ -1112,7 +1112,7 @@ namespace RazorEnhanced
             { "Momentum Strike", 0x5425}
         };
 
-        internal static Dictionary<string, int> SpellIconChivalry = new Dictionary<string, int>
+        internal static Dictionary<string, int> SpellIconChivalry = new()
         {
             { "Cleanse By Fire", 0x5100},
             { "Close Wounds", 0x5101},
@@ -1126,7 +1126,7 @@ namespace RazorEnhanced
             { "Sacred Journey", 0x5109}
         };
 
-        internal static Dictionary<string, int> SpellIconNecromancy = new Dictionary<string, int>
+        internal static Dictionary<string, int> SpellIconNecromancy = new()
         {
             { "Animate Dead", 0x5000},
             { "Blood Oath", 0x5001},
@@ -1147,7 +1147,7 @@ namespace RazorEnhanced
             { "Exorcism", 0x5010}
         };
 
-        internal static Dictionary<string, int> SpellIconMagery = new Dictionary<string, int>
+        internal static Dictionary<string, int> SpellIconMagery = new()
         {
             { "Clumsy", 0x8c0},
             { "Create Food", 0x8c1},
@@ -1215,7 +1215,7 @@ namespace RazorEnhanced
             { "Water Elemental", 0x8FF}
         };
 
-        internal static Dictionary<string, Bitmap> SkillsIcon = new Dictionary<string, Bitmap>
+        internal static Dictionary<string, Bitmap> SkillsIcon = new()
         {
             { "Anatomy", Assistant.Properties.Resources.Skill_Icon_Anatomy},
             { "Animal Lore", Assistant.Properties.Resources.Skill_Icon_AnimalLore},

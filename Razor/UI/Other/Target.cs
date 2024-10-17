@@ -181,9 +181,9 @@ namespace Assistant
 
         private void SaveTarget()
         {
-            List<int> bodylist = new List<int>();
-            List<int> huelist = new List<int>();
-            List<byte> notolist = new List<byte>();
+            List<int> bodylist = new();
+            List<int> huelist = new();
+            List<byte> notolist = new();
 
             // body list
             if (targetbodyCheckBox.Checked)
@@ -253,7 +253,7 @@ namespace Assistant
                 notolist.Add(0x07);
 
             // Genero filtro da salvare
-            Mobiles.Filter filtertosave = new Mobiles.Filter
+            Mobiles.Filter filtertosave = new()
             {
                 Enabled = true,
                 Bodies = bodylist,
@@ -319,7 +319,7 @@ namespace Assistant
             filtertosave.Notorieties = notolist;
 
             // Genero struttura da salvare
-            TargetGUI targettosave = new TargetGUI();
+            TargetGUI targettosave = new();
             targettosave.TargetGuiObject.Selector = targetSelectorComboBox.Text;
             targettosave.TargetGuiObject.Filter = Filter.FromMobileFilter(filtertosave);
             targettosave.Name = targetlistBox.SelectedItem.ToString();
@@ -351,12 +351,12 @@ namespace Assistant
                     ok: "Ok", no: null, cancel: null, backColor: null);
                 return;
             }
-            Mobiles.Filter filtertoadd = new Mobiles.Filter
+            Mobiles.Filter filtertoadd = new()
             {
                 Enabled = true
             };
 
-            TargetGUI targettoadd = new TargetGUI();
+            TargetGUI targettoadd = new();
             targettoadd.TargetGuiObject.Selector = "Nearest";
             targettoadd.TargetGuiObject.Filter = Filter.FromMobileFilter(filtertoadd);
             targettoadd.Name = newtargetid;

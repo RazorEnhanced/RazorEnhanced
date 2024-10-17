@@ -42,7 +42,7 @@ namespace RazorEnhanced.UI
         }
 
 
-        private static List<EnhancedScriptEditor> m_EnhancedScriptEditors = new List<EnhancedScriptEditor>();
+        private static List<EnhancedScriptEditor> m_EnhancedScriptEditors = new();
 
 
         public static EnhancedScriptEditor Search(string fullpath)
@@ -57,9 +57,9 @@ namespace RazorEnhanced.UI
             return null;
         }
 
-        private static ConcurrentQueue<Command> m_Queue = new ConcurrentQueue<Command>();
+        private static ConcurrentQueue<Command> m_Queue = new();
         private static Command m_CurrentCommand = Command.None;
-        private static readonly AutoResetEvent m_WaitDebug = new AutoResetEvent(false);
+        private static readonly AutoResetEvent m_WaitDebug = new(false);
 
 
 
@@ -85,7 +85,7 @@ namespace RazorEnhanced.UI
         public EnhancedScript Script { get { return m_Script; } }
         private ScriptRecorder m_Recorder;
 
-        private readonly List<int> m_Breakpoints = new List<int>();
+        private readonly List<int> m_Breakpoints = new();
 
         private volatile bool m_Debugger = false;
         private bool m_onclosing = false;
@@ -129,7 +129,7 @@ namespace RazorEnhanced.UI
                             UseShellExecute = true,
                             CreateNoWindow = true
                         });
-                        
+
                     }
                     return true;
                 }
@@ -358,7 +358,7 @@ namespace RazorEnhanced.UI
             this.fastColoredTextBoxEditor.SyntaxHighlighter.UosAttributeRegex = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
             // Fill in autocomplete
-            List<AutocompleteItem> items = new List<AutocompleteItem>();
+            List<AutocompleteItem> items = new();
             keywords = keywords.Distinct().ToList();
             keywords.Sort();
             foreach (var item in keywords)
@@ -385,11 +385,11 @@ namespace RazorEnhanced.UI
                 prms_name_type_desc.Add("Param1");
                 prms_name_type_desc.Add("Param2");
 
-                if (!autodocMethods.ContainsKey((string)method))
+                if (!autodocMethods.ContainsKey(method))
                 {
                     //tooltip = new ToolTipDescriptions(method, prms_name_type_desc.ToArray(), method.returnType, method.itemDescription.Trim() + "\n");
-                    tooltip = new ToolTipDescriptions((string)method, prms_name_type_desc.ToArray(), "ret", "desc" + "\n");
-                    autodocMethods.Add((string)method, tooltip);
+                    tooltip = new ToolTipDescriptions(method, prms_name_type_desc.ToArray(), "ret", "desc" + "\n");
+                    autodocMethods.Add(method, tooltip);
                 }
             }
         }
@@ -499,7 +499,7 @@ namespace RazorEnhanced.UI
             var autodocMethods = new Dictionary<string, ToolTipDescriptions>();
             foreach (var docitem in AutoDoc.GetPythonAPI().methods)
             {
-                var method = (DocMethod)docitem;
+                var method = docitem;
                 var methodName = method.itemClass + "." + method.itemName;
                 var prms_name = new List<String>();
                 var prms_type = new List<String>();
@@ -546,7 +546,7 @@ namespace RazorEnhanced.UI
             var descriptionMethods = autodocMethods.ToDictionary(x => x.Key, x => x.Value);
 
 
-            List<AutocompleteItem> items = new List<AutocompleteItem>();
+            List<AutocompleteItem> items = new();
 
             //Permette la creazione del menu con la singola keyword
             Array.Sort(keywords);
@@ -797,7 +797,7 @@ namespace RazorEnhanced.UI
 
             if (this.fastColoredTextBoxEditor.InvokeRequired)
             {
-                SetHighlightLineDelegate d = new SetHighlightLineDelegate(SetHighlightLine);
+                SetHighlightLineDelegate d = new(SetHighlightLine);
                 this.Invoke(d, new object[] { iline, background });
             }
             else
@@ -823,7 +823,7 @@ namespace RazorEnhanced.UI
             {
                 if (this.InvokeRequired)
                 {
-                    SetStatusLabelDelegate d = new SetStatusLabelDelegate(SetStatusLabel);
+                    SetStatusLabelDelegate d = new(SetStatusLabel);
                     this.Invoke(d, new object[] { text, color });
                 }
                 else
@@ -843,7 +843,7 @@ namespace RazorEnhanced.UI
 
             if (this.InvokeRequired)
             {
-                SetRecordButtonDelegate d = new SetRecordButtonDelegate(SetRecordButton);
+                SetRecordButtonDelegate d = new(SetRecordButton);
                 this.Invoke(d, new object[] { text });
             }
             else
@@ -856,7 +856,7 @@ namespace RazorEnhanced.UI
         {
             if (this.fastColoredTextBoxEditor.InvokeRequired)
             {
-                GetFastTextBoxTextDelegate d = new GetFastTextBoxTextDelegate(GetFastTextBoxText);
+                GetFastTextBoxTextDelegate d = new(GetFastTextBoxText);
                 return (string)this.Invoke(d, null);
             }
             else
@@ -892,7 +892,7 @@ namespace RazorEnhanced.UI
 
             if (this.textBoxDebug.InvokeRequired)
             {
-                SetTracebackDelegate d = new SetTracebackDelegate(SetTracebackOutput);
+                SetTracebackDelegate d = new(SetTracebackOutput);
                 this.Invoke(d, new object[] { text });
             }
             else
@@ -911,7 +911,7 @@ namespace RazorEnhanced.UI
                 //if (this.messagelistBox.InvokeRequired)
                 if (this.outputConsole.InvokeRequired)
                 {
-                    SetTracebackDelegate d = new SetTracebackDelegate(SetErrorBox);
+                    SetTracebackDelegate d = new(SetErrorBox);
                     this.Invoke(d, new object[] { text });
                 }
                 else
@@ -1040,7 +1040,7 @@ namespace RazorEnhanced.UI
         }
         private void ToolStripButtonWiki_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.ProcessStartInfo p = new System.Diagnostics.ProcessStartInfo("http://www.razorenhanced.net/dokuwiki");
+            System.Diagnostics.ProcessStartInfo p = new("http://www.razorenhanced.net/dokuwiki");
             try
             {
                 System.Diagnostics.Process.Start(p);
@@ -1051,7 +1051,7 @@ namespace RazorEnhanced.UI
         {
 
 
-            OpenFileDialog open = new OpenFileDialog
+            OpenFileDialog open = new()
             {
                 Filter = "Script Files|*.py;*.txt;*.uos;*.cs",
                 RestoreDirectory = true
@@ -1130,7 +1130,7 @@ namespace RazorEnhanced.UI
             }
 
 
-            SaveFileDialog save = new SaveFileDialog
+            SaveFileDialog save = new()
             {
                 Filter = filter,
                 RestoreDirectory = true
@@ -1224,7 +1224,7 @@ namespace RazorEnhanced.UI
                         }
                         else
                         {
-                            SaveFileDialog save = new SaveFileDialog
+                            SaveFileDialog save = new()
                             {
                                 Filter = "Script Files|*.py|Script Files|*.txt|C# Files|*.cs",
                                 FileName = m_Script.Fullpath
@@ -1306,7 +1306,7 @@ namespace RazorEnhanced.UI
                     return;
                 }
             }
-            EnhancedGumpInspector ginspector = new EnhancedGumpInspector();
+            EnhancedGumpInspector ginspector = new();
             ginspector.FormClosed += new FormClosedEventHandler(Gumpinspector_close);
             ginspector.TopMost = true;
             ginspector.Show();
@@ -1498,13 +1498,13 @@ namespace RazorEnhanced.UI
                 int container = item.Container;
                 if (container == 0)
                     container = -1;
-                return new ScriptRecorder.UsedObjectData((uint)serial, container, (ushort)item.ItemID, (ushort)item.Hue);
+                return new ScriptRecorder.UsedObjectData((uint)serial, container, (ushort)item.ItemID, item.Hue);
             }
 
             // Maybe its a Mobil
             Mobile mobile = Mobiles.FindBySerial(serial);
             if (mobile != null)
-                return new ScriptRecorder.UsedObjectData((uint)serial, -1, (ushort)mobile.Body, (ushort)mobile.Hue);
+                return new ScriptRecorder.UsedObjectData((uint)serial, -1, (ushort)mobile.Body, mobile.Hue);
 
             // Check for recently used (maybe and gone) items
             foreach (var entry in ScriptRecorder.RecentSerialType)
@@ -1528,7 +1528,7 @@ namespace RazorEnhanced.UI
                 case FastColoredTextBoxNS.Language.Python:
                     {
                         string pattern = @"(.*Items\.)\s*(\w+)\(\s*(\w+)\s*\)(.*$)";
-                        Regex r = new Regex(pattern, RegexOptions.IgnoreCase);
+                        Regex r = new(pattern, RegexOptions.IgnoreCase);
                         Match m = r.Match(lineToChange);
                         if (m.Success && m.Groups.Count == 5)
                         {
@@ -1586,7 +1586,7 @@ namespace RazorEnhanced.UI
                 case FastColoredTextBoxNS.Language.Uos:
                     {
                         string pattern = @"(.*)useobject\s+(\w+)(.*$)";
-                        Regex r = new Regex(pattern, RegexOptions.IgnoreCase);
+                        Regex r = new(pattern, RegexOptions.IgnoreCase);
                         Match m = r.Match(lineToChange);
                         if (m.Success && m.Groups.Count == 4)
                         {

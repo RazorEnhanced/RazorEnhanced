@@ -94,10 +94,10 @@ namespace Assistant
         private System.Windows.Forms.Label label9;
         private Label labelStatus;
         private System.Windows.Forms.Button razorButtonWiki;
-        private readonly List<RazorEnhanced.Organizer.OrganizerItem> organizerItemList = new List<RazorEnhanced.Organizer.OrganizerItem>();
-        private readonly List<RazorEnhanced.SellAgent.SellAgentItem> sellItemList = new List<RazorEnhanced.SellAgent.SellAgentItem>();
-        private readonly List<RazorEnhanced.BuyAgent.BuyAgentItem> buyItemList = new List<RazorEnhanced.BuyAgent.BuyAgentItem>();
-        private readonly List<RazorEnhanced.Dress.DressItemNew> dressItemList = new List<RazorEnhanced.Dress.DressItemNew>();
+        private readonly List<RazorEnhanced.Organizer.OrganizerItem> organizerItemList = new();
+        private readonly List<RazorEnhanced.SellAgent.SellAgentItem> sellItemList = new();
+        private readonly List<RazorEnhanced.BuyAgent.BuyAgentItem> buyItemList = new();
+        private readonly List<RazorEnhanced.Dress.DressItemNew> dressItemList = new();
         private TabPage EnhancedAgent;
         private TabControl tabControl1;
         private TabPage eautoloot;
@@ -753,12 +753,12 @@ namespace Assistant
             m_NotifyIcon.ContextMenu =
                 new ContextMenu(new MenuItem[]
                 {
-                    new MenuItem( "Show Razor", new EventHandler( DoShowMe ) ),
-                    new MenuItem( "Hide Razor", new EventHandler( HideMe ) ),
-                    new MenuItem( "-" ),
-                    new MenuItem( "Toggle Razor Visibility", new EventHandler( ToggleVisible ) ),
-                    new MenuItem( "-" ),
-                    new MenuItem( "Close Razor && UO", new EventHandler( OnClose ) ),
+                    new( "Show Razor", new EventHandler( DoShowMe ) ),
+                    new( "Hide Razor", new EventHandler( HideMe ) ),
+                    new( "-" ),
+                    new( "Toggle Razor Visibility", new EventHandler( ToggleVisible ) ),
+                    new( "-" ),
+                    new( "Close Razor && UO", new EventHandler( OnClose ) ),
                 });
             m_NotifyIcon.ContextMenu.MenuItems[0].DefaultItem = true;
         }
@@ -787,14 +787,14 @@ namespace Assistant
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            System.ComponentModel.ComponentResourceManager resources = new(typeof(MainForm));
             this.friendlistView = new System.Windows.Forms.ListView();
-            this.columnHeader28 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader29 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader30 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader28 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader29 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader30 = new System.Windows.Forms.ColumnHeader();
             this.friendguildListView = new System.Windows.Forms.ListView();
-            this.columnHeader63 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader64 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader63 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader64 = new System.Windows.Forms.ColumnHeader();
             this.tabs = new System.Windows.Forms.TabControl();
             this.generalTab = new System.Windows.Forms.TabPage();
             this.label82 = new System.Windows.Forms.Label();
@@ -1108,10 +1108,10 @@ namespace Assistant
             this.undressExecuteButton = new System.Windows.Forms.Button();
             this.dressExecuteButton = new System.Windows.Forms.Button();
             this.dressListView = new System.Windows.Forms.ListView();
-            this.columnHeader24 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader25 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader26 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader27 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader24 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader25 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader26 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader27 = new System.Windows.Forms.ColumnHeader();
             this.label28 = new System.Windows.Forms.Label();
             this.dressRemoveListB = new System.Windows.Forms.Button();
             this.dressAddListB = new System.Windows.Forms.Button();
@@ -1343,12 +1343,12 @@ namespace Assistant
             this.setlocks = new System.Windows.Forms.Button();
             this.resetDelta = new System.Windows.Forms.Button();
             this.skillList = new System.Windows.Forms.ListView();
-            this.skillHDRName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.skillHDRvalue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.skillHDRbase = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.skillHDRdelta = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.skillHDRcap = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.skillHDRlock = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.skillHDRName = new System.Windows.Forms.ColumnHeader();
+            this.skillHDRvalue = new System.Windows.Forms.ColumnHeader();
+            this.skillHDRbase = new System.Windows.Forms.ColumnHeader();
+            this.skillHDRdelta = new System.Windows.Forms.ColumnHeader();
+            this.skillHDRcap = new System.Windows.Forms.ColumnHeader();
+            this.skillHDRlock = new System.Windows.Forms.ColumnHeader();
             this.enhancedHotKeytabPage = new System.Windows.Forms.TabPage();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.hotkeyMasterClearButton = new System.Windows.Forms.Button();
@@ -1446,38 +1446,38 @@ namespace Assistant
             this.remountedelay = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
             this.remountdelay = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
             this.pyScriptListView = new RazorEnhanced.UI.ScriptListView();
-            this.filename = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.status = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.loop = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.autostart = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.wait = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.hotkey = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.heypass = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.index = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.preload = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.fullFilePath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.filename = new System.Windows.Forms.ColumnHeader();
+            this.status = new System.Windows.Forms.ColumnHeader();
+            this.loop = new System.Windows.Forms.ColumnHeader();
+            this.autostart = new System.Windows.Forms.ColumnHeader();
+            this.wait = new System.Windows.Forms.ColumnHeader();
+            this.hotkey = new System.Windows.Forms.ColumnHeader();
+            this.heypass = new System.Windows.Forms.ColumnHeader();
+            this.index = new System.Windows.Forms.ColumnHeader();
+            this.preload = new System.Windows.Forms.ColumnHeader();
+            this.fullFilePath = new System.Windows.Forms.ColumnHeader();
             this.uosScriptListView = new RazorEnhanced.UI.ScriptListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader19 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader3 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader4 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader5 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader6 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader7 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader8 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader19 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader9 = new System.Windows.Forms.ColumnHeader();
             this.csScriptListView = new RazorEnhanced.UI.ScriptListView();
-            this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader14 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader15 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader16 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader17 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader20 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader18 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader10 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader11 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader12 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader13 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader14 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader15 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader16 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader17 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader20 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader18 = new System.Windows.Forms.ColumnHeader();
             this.autoLootTextBoxMaxRange = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
             this.autoLootTextBoxDelay = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
             this.scavengerRange = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
@@ -1619,9 +1619,9 @@ namespace Assistant
             // 
             // friendlistView
             // 
-            this.friendlistView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.friendlistView.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.friendlistView.CheckBoxes = true;
             this.friendlistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader28,
@@ -1659,9 +1659,9 @@ namespace Assistant
             // 
             // friendguildListView
             // 
-            this.friendguildListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.friendguildListView.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.friendguildListView.CheckBoxes = true;
             this.friendguildListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader63,
@@ -1693,9 +1693,9 @@ namespace Assistant
             // 
             // tabs
             // 
-            this.tabs.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabs.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.tabs.Controls.Add(this.generalTab);
             this.tabs.Controls.Add(this.moreOptTab);
             this.tabs.Controls.Add(this.enhancedFilterTab);
@@ -1785,7 +1785,7 @@ namespace Assistant
             // 
             // openchangelogButton
             // 
-            this.openchangelogButton.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.openchangelogButton.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
             this.openchangelogButton.Location = new System.Drawing.Point(542, 24);
             this.openchangelogButton.Name = "openchangelogButton";
             this.openchangelogButton.Size = new System.Drawing.Size(95, 23);
@@ -1822,7 +1822,7 @@ namespace Assistant
             // 
             // profilesCloneButton
             // 
-            this.profilesCloneButton.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.profilesCloneButton.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
             this.profilesCloneButton.Location = new System.Drawing.Point(321, 44);
             this.profilesCloneButton.Name = "profilesCloneButton";
             this.profilesCloneButton.Size = new System.Drawing.Size(63, 21);
@@ -1832,7 +1832,7 @@ namespace Assistant
             // 
             // profilesRenameButton
             // 
-            this.profilesRenameButton.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.profilesRenameButton.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
             this.profilesRenameButton.Location = new System.Drawing.Point(252, 44);
             this.profilesRenameButton.Name = "profilesRenameButton";
             this.profilesRenameButton.Size = new System.Drawing.Size(63, 21);
@@ -1842,7 +1842,7 @@ namespace Assistant
             // 
             // profilesUnlinkButton
             // 
-            this.profilesUnlinkButton.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.profilesUnlinkButton.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
             this.profilesUnlinkButton.Location = new System.Drawing.Point(75, 70);
             this.profilesUnlinkButton.Name = "profilesUnlinkButton";
             this.profilesUnlinkButton.Size = new System.Drawing.Size(63, 21);
@@ -1852,7 +1852,7 @@ namespace Assistant
             // 
             // profilesLinkButton
             // 
-            this.profilesLinkButton.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.profilesLinkButton.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
             this.profilesLinkButton.Location = new System.Drawing.Point(6, 70);
             this.profilesLinkButton.Name = "profilesLinkButton";
             this.profilesLinkButton.Size = new System.Drawing.Size(63, 21);
@@ -1871,7 +1871,7 @@ namespace Assistant
             // 
             // profilesDeleteButton
             // 
-            this.profilesDeleteButton.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.profilesDeleteButton.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
             this.profilesDeleteButton.Location = new System.Drawing.Point(321, 18);
             this.profilesDeleteButton.Name = "profilesDeleteButton";
             this.profilesDeleteButton.Size = new System.Drawing.Size(63, 21);
@@ -1881,7 +1881,7 @@ namespace Assistant
             // 
             // profilesAddButton
             // 
-            this.profilesAddButton.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.profilesAddButton.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
             this.profilesAddButton.Location = new System.Drawing.Point(252, 18);
             this.profilesAddButton.Name = "profilesAddButton";
             this.profilesAddButton.Size = new System.Drawing.Size(63, 21);
@@ -2016,8 +2016,8 @@ namespace Assistant
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left);
             this.groupBox1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.groupBox1.Controls.Add(this.filters);
             this.groupBox1.Location = new System.Drawing.Point(3, 8);
@@ -2030,9 +2030,9 @@ namespace Assistant
             // 
             // filters
             // 
-            this.filters.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.filters.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.filters.CheckOnClick = true;
             this.filters.IntegralHeight = false;
             this.filters.Location = new System.Drawing.Point(6, 16);
@@ -2692,9 +2692,9 @@ namespace Assistant
             // 
             // FilterPages
             // 
-            this.FilterPages.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.FilterPages.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.FilterPages.Controls.Add(this.MiscFilterPage);
             this.FilterPages.Controls.Add(this.JournalFilterPage);
             this.FilterPages.Location = new System.Drawing.Point(-2, 2);
@@ -2722,7 +2722,7 @@ namespace Assistant
             // 
             // DmgDsplyGroup
             // 
-            this.DmgDsplyGroup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.DmgDsplyGroup.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.DmgDsplyGroup.Controls.Add(this.minDmgShown);
             this.DmgDsplyGroup.Controls.Add(this.label81);
             this.DmgDsplyGroup.Controls.Add(this.limitDamageDisplayEnable);
@@ -2735,7 +2735,7 @@ namespace Assistant
             // 
             // label81
             // 
-            this.label81.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label81.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.label81.AutoSize = true;
             this.label81.Location = new System.Drawing.Point(9, 44);
             this.label81.Name = "label81";
@@ -2756,7 +2756,7 @@ namespace Assistant
             // 
             // uomodgroupbox
             // 
-            this.uomodgroupbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.uomodgroupbox.Anchor = (System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left);
             this.uomodgroupbox.Controls.Add(this.uomodpaperdollCheckBox);
             this.uomodgroupbox.Controls.Add(this.uomodglobalsoundCheckBox);
             this.uomodgroupbox.Controls.Add(this.uomodFPSCheckBox);
@@ -2796,7 +2796,7 @@ namespace Assistant
             // 
             // groupBox32
             // 
-            this.groupBox32.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox32.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.groupBox32.Controls.Add(this.remountedelay);
             this.groupBox32.Controls.Add(this.remountdelay);
             this.groupBox32.Controls.Add(this.label48);
@@ -2850,7 +2850,7 @@ namespace Assistant
             // 
             // remountsetbutton
             // 
-            this.remountsetbutton.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.remountsetbutton.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
             this.remountsetbutton.Location = new System.Drawing.Point(73, 19);
             this.remountsetbutton.Name = "remountsetbutton";
             this.remountsetbutton.Size = new System.Drawing.Size(75, 21);
@@ -3019,9 +3019,9 @@ namespace Assistant
             // 
             // groupBox23
             // 
-            this.groupBox23.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox23.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.groupBox23.Controls.Add(this.graphfilterdatagrid);
             this.groupBox23.Controls.Add(this.mobfilterCheckBox);
             this.groupBox23.Location = new System.Drawing.Point(194, 0);
@@ -3035,9 +3035,9 @@ namespace Assistant
             // 
             this.graphfilterdatagrid.AllowDrop = true;
             this.graphfilterdatagrid.AllowUserToResizeRows = false;
-            this.graphfilterdatagrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.graphfilterdatagrid.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.graphfilterdatagrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.graphfilterdatagrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewCheckBoxColumn4,
@@ -3121,7 +3121,7 @@ namespace Assistant
             // 
             // groupBox10
             // 
-            this.groupBox10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox10.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.groupBox10.Controls.Add(this.autocarverbladeLabel);
             this.groupBox10.Controls.Add(this.label34);
             this.groupBox10.Controls.Add(this.autocarverrazorButton);
@@ -3153,7 +3153,7 @@ namespace Assistant
             // 
             // autocarverrazorButton
             // 
-            this.autocarverrazorButton.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.autocarverrazorButton.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
             this.autocarverrazorButton.Location = new System.Drawing.Point(74, 18);
             this.autocarverrazorButton.Name = "autocarverrazorButton";
             this.autocarverrazorButton.Size = new System.Drawing.Size(75, 21);
@@ -3173,7 +3173,7 @@ namespace Assistant
             // 
             // groupBox9
             // 
-            this.groupBox9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox9.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.groupBox9.Controls.Add(this.bonebladeLabel);
             this.groupBox9.Controls.Add(this.label16);
             this.groupBox9.Controls.Add(this.boneCutterrazorButton);
@@ -3205,7 +3205,7 @@ namespace Assistant
             // 
             // boneCutterrazorButton
             // 
-            this.boneCutterrazorButton.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.boneCutterrazorButton.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
             this.boneCutterrazorButton.Location = new System.Drawing.Point(74, 19);
             this.boneCutterrazorButton.Name = "boneCutterrazorButton";
             this.boneCutterrazorButton.Size = new System.Drawing.Size(75, 21);
@@ -3236,9 +3236,9 @@ namespace Assistant
             // 
             // journalfilterdatagrid
             // 
-            this.journalfilterdatagrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.journalfilterdatagrid.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.journalfilterdatagrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.journalfilterdatagrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.journalFilterText});
@@ -3296,8 +3296,8 @@ namespace Assistant
             // 
             // scriptControlBox
             // 
-            this.scriptControlBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.scriptControlBox.Anchor = ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.scriptControlBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.scriptControlBox.BackColor = System.Drawing.SystemColors.Control;
             this.scriptControlBox.Controls.Add(this.autoScriptReload);
@@ -3318,7 +3318,7 @@ namespace Assistant
             // 
             // autoScriptReload
             // 
-            this.autoScriptReload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.autoScriptReload.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.autoScriptReload.Location = new System.Drawing.Point(11, 383);
             this.autoScriptReload.Name = "autoScriptReload";
             this.autoScriptReload.Size = new System.Drawing.Size(128, 17);
@@ -3331,7 +3331,7 @@ namespace Assistant
             // scriptPacketLogCheckBox
             // 
             this.scriptPacketLogCheckBox.AccessibleDescription = "";
-            this.scriptPacketLogCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.scriptPacketLogCheckBox.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.scriptPacketLogCheckBox.Location = new System.Drawing.Point(11, 363);
             this.scriptPacketLogCheckBox.Name = "scriptPacketLogCheckBox";
             this.scriptPacketLogCheckBox.Size = new System.Drawing.Size(160, 21);
@@ -3341,7 +3341,7 @@ namespace Assistant
             // 
             // InspectGumpsButton
             // 
-            this.InspectGumpsButton.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.InspectGumpsButton.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
             this.InspectGumpsButton.Image = global::Assistant.Properties.Resources.gump;
             this.InspectGumpsButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.InspectGumpsButton.Location = new System.Drawing.Point(81, 6);
@@ -3355,7 +3355,7 @@ namespace Assistant
             // 
             // InspectContextButton
             // 
-            this.InspectContextButton.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.InspectContextButton.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
             this.InspectContextButton.Image = global::Assistant.Properties.Resources.applications_utilities;
             this.InspectContextButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.InspectContextButton.Location = new System.Drawing.Point(18, 4);
@@ -3369,7 +3369,7 @@ namespace Assistant
             // 
             // scriptshowStartStopCheckBox
             // 
-            this.scriptshowStartStopCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.scriptshowStartStopCheckBox.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.scriptshowStartStopCheckBox.Location = new System.Drawing.Point(11, 343);
             this.scriptshowStartStopCheckBox.Name = "scriptshowStartStopCheckBox";
             this.scriptshowStartStopCheckBox.Size = new System.Drawing.Size(175, 22);
@@ -3379,7 +3379,7 @@ namespace Assistant
             // 
             // groupBox30
             // 
-            this.groupBox30.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox30.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.groupBox30.Controls.Add(this.scriptpreload);
             this.groupBox30.Controls.Add(this.scriptautostartcheckbox);
             this.groupBox30.Controls.Add(this.scriptwaitmodecheckbox);
@@ -3429,7 +3429,7 @@ namespace Assistant
             // 
             // groupBox42
             // 
-            this.groupBox42.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox42.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.groupBox42.Controls.Add(this.scriptSearchTextBox);
             this.groupBox42.Location = new System.Drawing.Point(12, 260);
             this.groupBox42.Name = "groupBox42";
@@ -3448,7 +3448,7 @@ namespace Assistant
             // 
             // scripterrorlogCheckBox
             // 
-            this.scripterrorlogCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.scripterrorlogCheckBox.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.scripterrorlogCheckBox.Location = new System.Drawing.Point(11, 303);
             this.scripterrorlogCheckBox.Name = "scripterrorlogCheckBox";
             this.scripterrorlogCheckBox.Size = new System.Drawing.Size(160, 23);
@@ -3458,7 +3458,7 @@ namespace Assistant
             // 
             // scriptOperationsBox
             // 
-            this.scriptOperationsBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.scriptOperationsBox.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.scriptOperationsBox.Controls.Add(this.buttonScriptTo);
             this.scriptOperationsBox.Controls.Add(this.buttonScriptEditorNew);
             this.scriptOperationsBox.Controls.Add(this.buttonScriptRefresh);
@@ -3593,7 +3593,7 @@ namespace Assistant
             // 
             // showscriptmessageCheckBox
             // 
-            this.showscriptmessageCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.showscriptmessageCheckBox.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.showscriptmessageCheckBox.Location = new System.Drawing.Point(11, 323);
             this.showscriptmessageCheckBox.Name = "showscriptmessageCheckBox";
             this.showscriptmessageCheckBox.Size = new System.Drawing.Size(175, 23);
@@ -3603,9 +3603,9 @@ namespace Assistant
             // 
             // AllScriptsTab
             // 
-            this.AllScriptsTab.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.AllScriptsTab.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.AllScriptsTab.Controls.Add(this.pythonScriptingTab);
             this.AllScriptsTab.Controls.Add(this.uosScriptingTab);
             this.AllScriptsTab.Controls.Add(this.csScriptingTab);
@@ -3659,9 +3659,9 @@ namespace Assistant
             // 
             // tabControl1
             // 
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl1.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.tabControl1.Controls.Add(this.eautoloot);
             this.tabControl1.Controls.Add(this.escavenger);
             this.tabControl1.Controls.Add(this.organizer);
@@ -3791,9 +3791,9 @@ namespace Assistant
             // 
             this.autolootdataGridView.AllowDrop = true;
             this.autolootdataGridView.AllowUserToResizeRows = false;
-            this.autolootdataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.autolootdataGridView.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.autolootdataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.autolootdataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.autolootdataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -3938,8 +3938,8 @@ namespace Assistant
             // 
             // groupBox13
             // 
-            this.groupBox13.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox13.Anchor = ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.groupBox13.Controls.Add(this.autolootLogBox);
             this.groupBox13.Location = new System.Drawing.Point(425, 94);
             this.groupBox13.Name = "groupBox13";
@@ -3950,8 +3950,8 @@ namespace Assistant
             // 
             // autolootLogBox
             // 
-            this.autolootLogBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.autolootLogBox.Anchor = ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.autolootLogBox.FormattingEnabled = true;
             this.autolootLogBox.ItemHeight = 14;
             this.autolootLogBox.Location = new System.Drawing.Point(6, 19);
@@ -4063,9 +4063,9 @@ namespace Assistant
             // 
             this.scavengerdataGridView.AllowDrop = true;
             this.scavengerdataGridView.AllowUserToResizeRows = false;
-            this.scavengerdataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.scavengerdataGridView.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.scavengerdataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.scavengerdataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.scavengerdataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -4141,8 +4141,8 @@ namespace Assistant
             // 
             // groupBox12
             // 
-            this.groupBox12.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox12.Anchor = ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.groupBox12.Controls.Add(this.scavengerLogBox);
             this.groupBox12.Location = new System.Drawing.Point(389, 94);
             this.groupBox12.Name = "groupBox12";
@@ -4153,8 +4153,8 @@ namespace Assistant
             // 
             // scavengerLogBox
             // 
-            this.scavengerLogBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.scavengerLogBox.Anchor = ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.scavengerLogBox.FormattingEnabled = true;
             this.scavengerLogBox.ItemHeight = 14;
             this.scavengerLogBox.Location = new System.Drawing.Point(7, 18);
@@ -4363,9 +4363,9 @@ namespace Assistant
             // 
             this.organizerdataGridView.AllowDrop = true;
             this.organizerdataGridView.AllowUserToResizeRows = false;
-            this.organizerdataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.organizerdataGridView.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.organizerdataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.organizerdataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewCheckBoxColumn2,
@@ -4450,8 +4450,8 @@ namespace Assistant
             // 
             // groupBox16
             // 
-            this.groupBox16.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox16.Anchor = ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.groupBox16.Controls.Add(this.organizerLogBox);
             this.groupBox16.Location = new System.Drawing.Point(391, 84);
             this.groupBox16.Name = "groupBox16";
@@ -4462,8 +4462,8 @@ namespace Assistant
             // 
             // organizerLogBox
             // 
-            this.organizerLogBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.organizerLogBox.Anchor = ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.organizerLogBox.FormattingEnabled = true;
             this.organizerLogBox.ItemHeight = 14;
             this.organizerLogBox.Location = new System.Drawing.Point(6, 19);
@@ -4550,7 +4550,7 @@ namespace Assistant
             // 
             // buyToCompleteAmount
             // 
-            this.buyToCompleteAmount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buyToCompleteAmount.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.buyToCompleteAmount.AutoSize = true;
             this.buyToCompleteAmount.Location = new System.Drawing.Point(391, 86);
             this.buyToCompleteAmount.Name = "buyToCompleteAmount";
@@ -4563,8 +4563,8 @@ namespace Assistant
             // 
             // buyLogBox
             // 
-            this.buyLogBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buyLogBox.Anchor = ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.buyLogBox.FormattingEnabled = true;
             this.buyLogBox.ItemHeight = 14;
             this.buyLogBox.Location = new System.Drawing.Point(399, 177);
@@ -4574,7 +4574,7 @@ namespace Assistant
             // 
             // buyCompareNameCheckBox
             // 
-            this.buyCompareNameCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buyCompareNameCheckBox.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.buyCompareNameCheckBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buyCompareNameCheckBox.Location = new System.Drawing.Point(392, 65);
             this.buyCompareNameCheckBox.Name = "buyCompareNameCheckBox";
@@ -4596,9 +4596,9 @@ namespace Assistant
             // 
             this.vendorbuydataGridView.AllowDrop = true;
             this.vendorbuydataGridView.AllowUserToResizeRows = false;
-            this.vendorbuydataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.vendorbuydataGridView.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.vendorbuydataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.vendorbuydataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.vendorbuydataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -4684,8 +4684,8 @@ namespace Assistant
             // 
             // groupBox18
             // 
-            this.groupBox18.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox18.Anchor = ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.groupBox18.Location = new System.Drawing.Point(391, 163);
             this.groupBox18.Name = "groupBox18";
             this.groupBox18.Size = new System.Drawing.Size(278, 145);
@@ -4704,7 +4704,7 @@ namespace Assistant
             // 
             // buyAddTargetB
             // 
-            this.buyAddTargetB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buyAddTargetB.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.buyAddTargetB.Location = new System.Drawing.Point(581, 39);
             this.buyAddTargetB.Name = "buyAddTargetB";
             this.buyAddTargetB.Size = new System.Drawing.Size(90, 21);
@@ -4714,7 +4714,7 @@ namespace Assistant
             // 
             // buyEnableCheckBox
             // 
-            this.buyEnableCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buyEnableCheckBox.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.buyEnableCheckBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buyEnableCheckBox.Location = new System.Drawing.Point(392, 44);
             this.buyEnableCheckBox.Name = "buyEnableCheckBox";
@@ -4822,9 +4822,9 @@ namespace Assistant
             // 
             this.vendorsellGridView.AllowDrop = true;
             this.vendorsellGridView.AllowUserToResizeRows = false;
-            this.vendorsellGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.vendorsellGridView.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.vendorsellGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.vendorsellGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.vendorsellGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -4910,8 +4910,8 @@ namespace Assistant
             // 
             // groupBox20
             // 
-            this.groupBox20.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox20.Anchor = ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.groupBox20.Controls.Add(this.sellLogBox);
             this.groupBox20.Location = new System.Drawing.Point(391, 72);
             this.groupBox20.Name = "groupBox20";
@@ -4922,8 +4922,8 @@ namespace Assistant
             // 
             // sellLogBox
             // 
-            this.sellLogBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.sellLogBox.Anchor = ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.sellLogBox.FormattingEnabled = true;
             this.sellLogBox.ItemHeight = 14;
             this.sellLogBox.Location = new System.Drawing.Point(7, 18);
@@ -5014,7 +5014,7 @@ namespace Assistant
             // 
             // useUo3D
             // 
-            this.useUo3D.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.useUo3D.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.useUo3D.Location = new System.Drawing.Point(450, 84);
             this.useUo3D.Name = "useUo3D";
             this.useUo3D.Size = new System.Drawing.Size(185, 36);
@@ -5024,7 +5024,7 @@ namespace Assistant
             // 
             // dressStopButton
             // 
-            this.dressStopButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.dressStopButton.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.dressStopButton.Location = new System.Drawing.Point(439, 58);
             this.dressStopButton.Name = "dressStopButton";
             this.dressStopButton.Size = new System.Drawing.Size(62, 20);
@@ -5034,7 +5034,7 @@ namespace Assistant
             // 
             // dressConflictCheckB
             // 
-            this.dressConflictCheckB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.dressConflictCheckB.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.dressConflictCheckB.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.dressConflictCheckB.Location = new System.Drawing.Point(305, 84);
             this.dressConflictCheckB.Name = "dressConflictCheckB";
@@ -5045,7 +5045,7 @@ namespace Assistant
             // 
             // dressBagLabel
             // 
-            this.dressBagLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.dressBagLabel.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.dressBagLabel.Location = new System.Drawing.Point(578, 161);
             this.dressBagLabel.Name = "dressBagLabel";
             this.dressBagLabel.Size = new System.Drawing.Size(81, 19);
@@ -5054,7 +5054,7 @@ namespace Assistant
             // 
             // groupBox22
             // 
-            this.groupBox22.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox22.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.groupBox22.Controls.Add(this.dressAddTargetB);
             this.groupBox22.Controls.Add(this.dressAddManualB);
             this.groupBox22.Controls.Add(this.dressRemoveB);
@@ -5114,7 +5114,7 @@ namespace Assistant
             // 
             // label29
             // 
-            this.label29.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label29.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.label29.AutoSize = true;
             this.label29.Location = new System.Drawing.Point(555, 61);
             this.label29.Name = "label29";
@@ -5124,8 +5124,8 @@ namespace Assistant
             // 
             // groupBox21
             // 
-            this.groupBox21.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox21.Anchor = ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.groupBox21.Controls.Add(this.dressLogBox);
             this.groupBox21.Location = new System.Drawing.Point(306, 134);
             this.groupBox21.Name = "groupBox21";
@@ -5136,8 +5136,8 @@ namespace Assistant
             // 
             // dressLogBox
             // 
-            this.dressLogBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dressLogBox.Anchor = ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.dressLogBox.FormattingEnabled = true;
             this.dressLogBox.ItemHeight = 14;
             this.dressLogBox.Location = new System.Drawing.Point(3, 13);
@@ -5147,7 +5147,7 @@ namespace Assistant
             // 
             // dressSetBagB
             // 
-            this.dressSetBagB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.dressSetBagB.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.dressSetBagB.Location = new System.Drawing.Point(565, 134);
             this.dressSetBagB.Name = "dressSetBagB";
             this.dressSetBagB.Size = new System.Drawing.Size(88, 20);
@@ -5157,7 +5157,7 @@ namespace Assistant
             // 
             // undressExecuteButton
             // 
-            this.undressExecuteButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.undressExecuteButton.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.undressExecuteButton.Location = new System.Drawing.Point(373, 58);
             this.undressExecuteButton.Name = "undressExecuteButton";
             this.undressExecuteButton.Size = new System.Drawing.Size(62, 20);
@@ -5167,7 +5167,7 @@ namespace Assistant
             // 
             // dressExecuteButton
             // 
-            this.dressExecuteButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.dressExecuteButton.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.dressExecuteButton.Location = new System.Drawing.Point(306, 58);
             this.dressExecuteButton.Name = "dressExecuteButton";
             this.dressExecuteButton.Size = new System.Drawing.Size(62, 20);
@@ -5177,9 +5177,9 @@ namespace Assistant
             // 
             // dressListView
             // 
-            this.dressListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dressListView.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.dressListView.AutoArrange = false;
             this.dressListView.CheckBoxes = true;
             this.dressListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -5282,9 +5282,9 @@ namespace Assistant
             // 
             // splitContainer1
             // 
-            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitContainer1.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.splitContainer1.Location = new System.Drawing.Point(9, 41);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -5302,7 +5302,7 @@ namespace Assistant
             // 
             // groupBox34
             // 
-            this.groupBox34.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox34.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.groupBox34.Controls.Add(this.FriendGuildAddButton);
             this.groupBox34.Controls.Add(this.FriendGuildRemoveButton);
             this.groupBox34.Location = new System.Drawing.Point(565, 230);
@@ -5332,7 +5332,7 @@ namespace Assistant
             // 
             // groupBox33
             // 
-            this.groupBox33.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox33.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.groupBox33.Controls.Add(this.MINfriendCheckBox);
             this.groupBox33.Controls.Add(this.SLfriendCheckBox);
             this.groupBox33.Controls.Add(this.TBfriendCheckBox);
@@ -5382,7 +5382,7 @@ namespace Assistant
             // 
             // friendGroupBox
             // 
-            this.friendGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.friendGroupBox.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.friendGroupBox.Controls.Add(this.friendAddTargetButton);
             this.friendGroupBox.Controls.Add(this.friendRemoveButton);
             this.friendGroupBox.Controls.Add(this.friendAddButton);
@@ -5422,7 +5422,7 @@ namespace Assistant
             // 
             // friendloggroupBox
             // 
-            this.friendloggroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.friendloggroupBox.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.friendloggroupBox.Controls.Add(this.friendLogBox);
             this.friendloggroupBox.Location = new System.Drawing.Point(288, 131);
             this.friendloggroupBox.Name = "friendloggroupBox";
@@ -5433,9 +5433,9 @@ namespace Assistant
             // 
             // friendLogBox
             // 
-            this.friendLogBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.friendLogBox.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.friendLogBox.FormattingEnabled = true;
             this.friendLogBox.ItemHeight = 14;
             this.friendLogBox.Location = new System.Drawing.Point(6, 19);
@@ -5445,7 +5445,7 @@ namespace Assistant
             // 
             // friendIncludePartyCheckBox
             // 
-            this.friendIncludePartyCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.friendIncludePartyCheckBox.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.friendIncludePartyCheckBox.Location = new System.Drawing.Point(288, 101);
             this.friendIncludePartyCheckBox.Name = "friendIncludePartyCheckBox";
             this.friendIncludePartyCheckBox.Size = new System.Drawing.Size(235, 22);
@@ -5455,7 +5455,7 @@ namespace Assistant
             // 
             // friendAttackCheckBox
             // 
-            this.friendAttackCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.friendAttackCheckBox.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.friendAttackCheckBox.Location = new System.Drawing.Point(288, 76);
             this.friendAttackCheckBox.Name = "friendAttackCheckBox";
             this.friendAttackCheckBox.Size = new System.Drawing.Size(241, 22);
@@ -5465,7 +5465,7 @@ namespace Assistant
             // 
             // friendPartyCheckBox
             // 
-            this.friendPartyCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.friendPartyCheckBox.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.friendPartyCheckBox.Location = new System.Drawing.Point(288, 51);
             this.friendPartyCheckBox.Name = "friendPartyCheckBox";
             this.friendPartyCheckBox.Size = new System.Drawing.Size(241, 22);
@@ -5637,9 +5637,9 @@ namespace Assistant
             // 
             this.restockdataGridView.AllowDrop = true;
             this.restockdataGridView.AllowUserToResizeRows = false;
-            this.restockdataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.restockdataGridView.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.restockdataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.restockdataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.restockdataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -5725,8 +5725,8 @@ namespace Assistant
             // 
             // groupBox2
             // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.groupBox2.Controls.Add(this.restockLogBox);
             this.groupBox2.Location = new System.Drawing.Point(391, 84);
             this.groupBox2.Name = "groupBox2";
@@ -5737,8 +5737,8 @@ namespace Assistant
             // 
             // restockLogBox
             // 
-            this.restockLogBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.restockLogBox.Anchor = ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.restockLogBox.FormattingEnabled = true;
             this.restockLogBox.ItemHeight = 14;
             this.restockLogBox.Location = new System.Drawing.Point(7, 18);
@@ -5748,7 +5748,7 @@ namespace Assistant
             // 
             // label13
             // 
-            this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label13.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.label13.AutoSize = true;
             this.label13.Location = new System.Drawing.Point(438, 54);
             this.label13.Name = "label13";
@@ -5767,7 +5767,7 @@ namespace Assistant
             // 
             // restockAddTargetButton
             // 
-            this.restockAddTargetButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.restockAddTargetButton.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.restockAddTargetButton.Location = new System.Drawing.Point(581, 39);
             this.restockAddTargetButton.Name = "restockAddTargetButton";
             this.restockAddTargetButton.Size = new System.Drawing.Size(90, 21);
@@ -5817,7 +5817,7 @@ namespace Assistant
             // 
             // BandageHealSettingsBox
             // 
-            this.BandageHealSettingsBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.BandageHealSettingsBox.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.BandageHealSettingsBox.Controls.Add(this.bandagehealAutostartCheckBox);
             this.BandageHealSettingsBox.Controls.Add(this.bandageHealIgnoreCount);
             this.BandageHealSettingsBox.Controls.Add(this.bandagehealTimeWithBufCheckBox);
@@ -5859,7 +5859,7 @@ namespace Assistant
             // 
             // bandagehealAutostartCheckBox
             // 
-            this.bandagehealAutostartCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.bandagehealAutostartCheckBox.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.bandagehealAutostartCheckBox.Location = new System.Drawing.Point(221, 19);
             this.bandagehealAutostartCheckBox.Name = "bandagehealAutostartCheckBox";
             this.bandagehealAutostartCheckBox.Size = new System.Drawing.Size(118, 22);
@@ -5901,7 +5901,7 @@ namespace Assistant
             // 
             // bandagehealenableCheckBox
             // 
-            this.bandagehealenableCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.bandagehealenableCheckBox.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.bandagehealenableCheckBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bandagehealenableCheckBox.Location = new System.Drawing.Point(10, 19);
             this.bandagehealenableCheckBox.Name = "bandagehealenableCheckBox";
@@ -6123,9 +6123,9 @@ namespace Assistant
             // 
             // groupBox5
             // 
-            this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox5.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.groupBox5.Controls.Add(this.bandagehealLogBox);
             this.groupBox5.Location = new System.Drawing.Point(6, 6);
             this.groupBox5.Name = "groupBox5";
@@ -6136,9 +6136,9 @@ namespace Assistant
             // 
             // bandagehealLogBox
             // 
-            this.bandagehealLogBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.bandagehealLogBox.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.bandagehealLogBox.FormattingEnabled = true;
             this.bandagehealLogBox.ItemHeight = 14;
             this.bandagehealLogBox.Location = new System.Drawing.Point(7, 18);
@@ -6458,9 +6458,9 @@ namespace Assistant
             // 
             // toolboxcountNameTextBox
             // 
-            this.toolboxcountNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.toolboxcountNameTextBox.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.toolboxcountNameTextBox.BackColor = System.Drawing.Color.White;
             this.toolboxcountNameTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.toolboxcountNameTextBox.Location = new System.Drawing.Point(64, 49);
@@ -6517,9 +6517,9 @@ namespace Assistant
             // 
             // toolboxcountHueTextBox
             // 
-            this.toolboxcountHueTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.toolboxcountHueTextBox.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.toolboxcountHueTextBox.BackColor = System.Drawing.Color.White;
             this.toolboxcountHueTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.toolboxcountHueTextBox.Location = new System.Drawing.Point(64, 99);
@@ -6980,7 +6980,7 @@ namespace Assistant
             // targetOrangeCheckBox
             // 
             this.targetOrangeCheckBox.AutoSize = true;
-            this.targetOrangeCheckBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.targetOrangeCheckBox.ForeColor = System.Drawing.Color.FromArgb(255, 128, 0);
             this.targetOrangeCheckBox.Location = new System.Drawing.Point(6, 95);
             this.targetOrangeCheckBox.Name = "targetOrangeCheckBox";
             this.targetOrangeCheckBox.Size = new System.Drawing.Size(62, 18);
@@ -7063,9 +7063,9 @@ namespace Assistant
             // 
             // targetNameTextBox
             // 
-            this.targetNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.targetNameTextBox.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.targetNameTextBox.BackColor = System.Drawing.Color.White;
             this.targetNameTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.targetNameTextBox.Location = new System.Drawing.Point(10, 15);
@@ -7108,9 +7108,9 @@ namespace Assistant
             // 
             // targetRangeMaxTextBox
             // 
-            this.targetRangeMaxTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.targetRangeMaxTextBox.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.targetRangeMaxTextBox.BackColor = System.Drawing.Color.White;
             this.targetRangeMaxTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.targetRangeMaxTextBox.Location = new System.Drawing.Point(43, 45);
@@ -7130,9 +7130,9 @@ namespace Assistant
             // 
             // targetRangeMinTextBox
             // 
-            this.targetRangeMinTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.targetRangeMinTextBox.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.targetRangeMinTextBox.BackColor = System.Drawing.Color.White;
             this.targetRangeMinTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.targetRangeMinTextBox.Location = new System.Drawing.Point(43, 19);
@@ -7631,7 +7631,7 @@ namespace Assistant
             // 
             // dispDelta
             // 
-            this.dispDelta.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.dispDelta.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.dispDelta.Location = new System.Drawing.Point(530, 144);
             this.dispDelta.Name = "dispDelta";
             this.dispDelta.Size = new System.Drawing.Size(113, 22);
@@ -7641,7 +7641,7 @@ namespace Assistant
             // 
             // skillCopyAll
             // 
-            this.skillCopyAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.skillCopyAll.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.skillCopyAll.Location = new System.Drawing.Point(530, 109);
             this.skillCopyAll.Name = "skillCopyAll";
             this.skillCopyAll.Size = new System.Drawing.Size(132, 20);
@@ -7651,7 +7651,7 @@ namespace Assistant
             // 
             // skillCopySel
             // 
-            this.skillCopySel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.skillCopySel.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.skillCopySel.Location = new System.Drawing.Point(530, 81);
             this.skillCopySel.Name = "skillCopySel";
             this.skillCopySel.Size = new System.Drawing.Size(132, 21);
@@ -7661,7 +7661,7 @@ namespace Assistant
             // 
             // baseTotal
             // 
-            this.baseTotal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.baseTotal.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.baseTotal.Location = new System.Drawing.Point(600, 175);
             this.baseTotal.Name = "baseTotal";
             this.baseTotal.ReadOnly = true;
@@ -7670,7 +7670,7 @@ namespace Assistant
             // 
             // label1
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.label1.Location = new System.Drawing.Point(530, 179);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(65, 15);
@@ -7679,7 +7679,7 @@ namespace Assistant
             // 
             // locks
             // 
-            this.locks.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.locks.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.locks.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.locks.Font = new System.Drawing.Font("Arial", 9F);
             this.locks.Items.AddRange(new object[] {
@@ -7693,7 +7693,7 @@ namespace Assistant
             // 
             // setlocks
             // 
-            this.setlocks.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.setlocks.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.setlocks.Location = new System.Drawing.Point(530, 46);
             this.setlocks.Name = "setlocks";
             this.setlocks.Size = new System.Drawing.Size(76, 20);
@@ -7703,7 +7703,7 @@ namespace Assistant
             // 
             // resetDelta
             // 
-            this.resetDelta.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.resetDelta.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.resetDelta.Location = new System.Drawing.Point(530, 13);
             this.resetDelta.Name = "resetDelta";
             this.resetDelta.Size = new System.Drawing.Size(132, 20);
@@ -7713,9 +7713,9 @@ namespace Assistant
             // 
             // skillList
             // 
-            this.skillList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.skillList.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.skillList.AutoArrange = false;
             this.skillList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.skillHDRName,
@@ -7781,7 +7781,7 @@ namespace Assistant
             // 
             // groupBox8
             // 
-            this.groupBox8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox8.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.groupBox8.Controls.Add(this.hotkeyMasterClearButton);
             this.groupBox8.Controls.Add(this.hotkeyKeyMasterTextBox);
             this.groupBox8.Controls.Add(this.hotkeyMasterSetButton);
@@ -7824,7 +7824,7 @@ namespace Assistant
             // 
             // groupBox28
             // 
-            this.groupBox28.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox28.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.groupBox28.Controls.Add(this.hotkeyMDisableButton);
             this.groupBox28.Controls.Add(this.hotkeyMEnableButton);
             this.groupBox28.Controls.Add(this.hotkeyKeyMasterLabel);
@@ -7876,7 +7876,7 @@ namespace Assistant
             // 
             // groupBox27
             // 
-            this.groupBox27.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox27.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.groupBox27.Controls.Add(this.hotkeypassCheckBox);
             this.groupBox27.Controls.Add(this.hotkeyClearButton);
             this.groupBox27.Controls.Add(this.hotkeySetButton);
@@ -7929,9 +7929,9 @@ namespace Assistant
             // 
             // hotkeytreeView
             // 
-            this.hotkeytreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.hotkeytreeView.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.hotkeytreeView.Location = new System.Drawing.Point(10, 7);
             this.hotkeytreeView.Name = "hotkeytreeView";
             this.hotkeytreeView.Size = new System.Drawing.Size(502, 358);
@@ -7986,7 +7986,7 @@ namespace Assistant
             // 
             // capNow
             // 
-            this.capNow.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.capNow.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.capNow.Location = new System.Drawing.Point(333, 11);
             this.capNow.Name = "capNow";
             this.capNow.Size = new System.Drawing.Size(285, 20);
@@ -7996,9 +7996,9 @@ namespace Assistant
             // 
             // screenPath
             // 
-            this.screenPath.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.screenPath.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.screenPath.BackColor = System.Drawing.Color.White;
             this.screenPath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.screenPath.Location = new System.Drawing.Point(7, 14);
@@ -8190,9 +8190,9 @@ namespace Assistant
             // 
             // videoFPSTextBox
             // 
-            this.videoFPSTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.videoFPSTextBox.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.videoFPSTextBox.BackColor = System.Drawing.Color.White;
             this.videoFPSTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.videoFPSTextBox.Location = new System.Drawing.Point(42, 28);
@@ -8260,9 +8260,9 @@ namespace Assistant
             // 
             // videoPathTextBox
             // 
-            this.videoPathTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.videoPathTextBox.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.videoPathTextBox.BackColor = System.Drawing.Color.White;
             this.videoPathTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.videoPathTextBox.Location = new System.Drawing.Point(11, 15);
@@ -8290,7 +8290,7 @@ namespace Assistant
             // 
             // filtergroup
             // 
-            this.filtergroup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.filtergroup.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.filtergroup.Controls.Add(this.DPSMeterClearFilterButton);
             this.filtergroup.Controls.Add(this.DPSMeterApplyFilterButton);
             this.filtergroup.Controls.Add(this.DPSmetername);
@@ -8373,9 +8373,9 @@ namespace Assistant
             // 
             this.DpsMeterGridView.AllowDrop = true;
             this.DpsMeterGridView.AllowUserToResizeRows = false;
-            this.DpsMeterGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.DpsMeterGridView.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.DpsMeterGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DpsMeterGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn13,
@@ -8422,9 +8422,9 @@ namespace Assistant
             // 
             // DPSMeterStatusLabel
             // 
-            this.DPSMeterStatusLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.DPSMeterStatusLabel.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.DPSMeterStatusLabel.AutoSize = true;
-            this.DPSMeterStatusLabel.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DPSMeterStatusLabel.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
             this.DPSMeterStatusLabel.ForeColor = System.Drawing.Color.Green;
             this.DPSMeterStatusLabel.Location = new System.Drawing.Point(642, 331);
             this.DPSMeterStatusLabel.Name = "DPSMeterStatusLabel";
@@ -8434,7 +8434,7 @@ namespace Assistant
             // 
             // label67
             // 
-            this.label67.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label67.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.label67.AutoSize = true;
             this.label67.Location = new System.Drawing.Point(602, 331);
             this.label67.Name = "label67";
@@ -8444,7 +8444,7 @@ namespace Assistant
             // 
             // DPSMeterPauseButton
             // 
-            this.DPSMeterPauseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.DPSMeterPauseButton.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.DPSMeterPauseButton.Location = new System.Drawing.Point(528, 17);
             this.DPSMeterPauseButton.Name = "DPSMeterPauseButton";
             this.DPSMeterPauseButton.Size = new System.Drawing.Size(64, 21);
@@ -8454,7 +8454,7 @@ namespace Assistant
             // 
             // DPSMeterStopButton
             // 
-            this.DPSMeterStopButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.DPSMeterStopButton.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.DPSMeterStopButton.Location = new System.Drawing.Point(460, 17);
             this.DPSMeterStopButton.Name = "DPSMeterStopButton";
             this.DPSMeterStopButton.Size = new System.Drawing.Size(62, 21);
@@ -8464,7 +8464,7 @@ namespace Assistant
             // 
             // DPSMeterStartButton
             // 
-            this.DPSMeterStartButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.DPSMeterStartButton.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.DPSMeterStartButton.Location = new System.Drawing.Point(390, 17);
             this.DPSMeterStartButton.Name = "DPSMeterStartButton";
             this.DPSMeterStartButton.Size = new System.Drawing.Size(63, 21);
@@ -8474,7 +8474,7 @@ namespace Assistant
             // 
             // DPSMeterClearButton
             // 
-            this.DPSMeterClearButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.DPSMeterClearButton.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.DPSMeterClearButton.Location = new System.Drawing.Point(597, 17);
             this.DPSMeterClearButton.Name = "DPSMeterClearButton";
             this.DPSMeterClearButton.Size = new System.Drawing.Size(63, 21);
@@ -8500,7 +8500,7 @@ namespace Assistant
             // 
             // ChkForUpdate
             // 
-            this.ChkForUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.ChkForUpdate.Anchor = (System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left);
             this.ChkForUpdate.Location = new System.Drawing.Point(383, 273);
             this.ChkForUpdate.Name = "ChkForUpdate";
             this.ChkForUpdate.Size = new System.Drawing.Size(94, 37);
@@ -8511,7 +8511,7 @@ namespace Assistant
             // 
             // advertisementLink
             // 
-            this.advertisementLink.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.advertisementLink.Anchor = (System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left);
             this.advertisementLink.Location = new System.Drawing.Point(258, 273);
             this.advertisementLink.Name = "advertisementLink";
             this.advertisementLink.Size = new System.Drawing.Size(93, 37);
@@ -8522,9 +8522,9 @@ namespace Assistant
             // 
             // advertisement
             // 
-            this.advertisement.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.advertisement.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.advertisement.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.advertisement.Image = ((System.Drawing.Image)(resources.GetObject("advertisement.Image")));
             this.advertisement.InitialImage = ((System.Drawing.Image)(resources.GetObject("advertisement.InitialImage")));
@@ -8537,8 +8537,8 @@ namespace Assistant
             // 
             // label71
             // 
-            this.label71.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label71.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label71.Anchor = (System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left);
+            this.label71.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, 0);
             this.label71.Location = new System.Drawing.Point(3, 345);
             this.label71.Name = "label71";
             this.label71.Size = new System.Drawing.Size(650, 24);
@@ -8547,8 +8547,8 @@ namespace Assistant
             // 
             // labelHotride
             // 
-            this.labelHotride.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.labelHotride.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelHotride.Anchor = (System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left);
+            this.labelHotride.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, 0);
             this.labelHotride.Location = new System.Drawing.Point(3, 313);
             this.labelHotride.Name = "labelHotride";
             this.labelHotride.Size = new System.Drawing.Size(650, 45);
@@ -8559,7 +8559,7 @@ namespace Assistant
             // 
             // labelStatus
             // 
-            this.labelStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelStatus.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.labelStatus.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.labelStatus.Location = new System.Drawing.Point(496, 9);
             this.labelStatus.Name = "labelStatus";
@@ -8568,7 +8568,7 @@ namespace Assistant
             // 
             // discordrazorButton
             // 
-            this.discordrazorButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.discordrazorButton.Anchor = (System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left);
             this.discordrazorButton.Location = new System.Drawing.Point(124, 273);
             this.discordrazorButton.Name = "discordrazorButton";
             this.discordrazorButton.Size = new System.Drawing.Size(94, 37);
@@ -8579,7 +8579,7 @@ namespace Assistant
             // 
             // razorButtonWiki
             // 
-            this.razorButtonWiki.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.razorButtonWiki.Anchor = (System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left);
             this.razorButtonWiki.Location = new System.Drawing.Point(3, 273);
             this.razorButtonWiki.Name = "razorButtonWiki";
             this.razorButtonWiki.Size = new System.Drawing.Size(94, 37);
@@ -8742,8 +8742,8 @@ namespace Assistant
             // 
             // minDmgShown
             // 
-            this.minDmgShown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.minDmgShown.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.minDmgShown.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
+            this.minDmgShown.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
             this.minDmgShown.Location = new System.Drawing.Point(93, 42);
             this.minDmgShown.Name = "minDmgShown";
             this.minDmgShown.Size = new System.Drawing.Size(58, 20);
@@ -8752,9 +8752,9 @@ namespace Assistant
             // 
             // remountedelay
             // 
-            this.remountedelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.remountedelay.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.remountedelay.BackColor = System.Drawing.Color.White;
             this.remountedelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.remountedelay.Location = new System.Drawing.Point(93, 89);
@@ -8765,9 +8765,9 @@ namespace Assistant
             // 
             // remountdelay
             // 
-            this.remountdelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.remountdelay.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.remountdelay.BackColor = System.Drawing.Color.White;
             this.remountdelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.remountdelay.Location = new System.Drawing.Point(93, 64);
@@ -8778,9 +8778,9 @@ namespace Assistant
             // 
             // pyScriptListView
             // 
-            this.pyScriptListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pyScriptListView.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.pyScriptListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.filename,
             this.status,
@@ -8884,9 +8884,9 @@ namespace Assistant
             // 
             // uosScriptListView
             // 
-            this.uosScriptListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.uosScriptListView.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.uosScriptListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader2,
@@ -8980,9 +8980,9 @@ namespace Assistant
             // 
             // csScriptListView
             // 
-            this.csScriptListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.csScriptListView.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.csScriptListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader10,
             this.columnHeader11,
@@ -9117,7 +9117,7 @@ namespace Assistant
             // 
             // dressDragDelay
             // 
-            this.dressDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.dressDragDelay.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.dressDragDelay.BackColor = System.Drawing.Color.White;
             this.dressDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.dressDragDelay.Location = new System.Drawing.Point(508, 58);
@@ -9128,7 +9128,7 @@ namespace Assistant
             // 
             // restockDragDelay
             // 
-            this.restockDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.restockDragDelay.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right);
             this.restockDragDelay.BackColor = System.Drawing.Color.White;
             this.restockDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.restockDragDelay.Location = new System.Drawing.Point(391, 51);
@@ -9139,9 +9139,9 @@ namespace Assistant
             // 
             // bandagehealmaxrangeTextBox
             // 
-            this.bandagehealmaxrangeTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.bandagehealmaxrangeTextBox.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.bandagehealmaxrangeTextBox.BackColor = System.Drawing.Color.White;
             this.bandagehealmaxrangeTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.bandagehealmaxrangeTextBox.Location = new System.Drawing.Point(77, 307);
@@ -9152,9 +9152,9 @@ namespace Assistant
             // 
             // bandagehealhpTextBox
             // 
-            this.bandagehealhpTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.bandagehealhpTextBox.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.bandagehealhpTextBox.BackColor = System.Drawing.Color.White;
             this.bandagehealhpTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.bandagehealhpTextBox.Location = new System.Drawing.Point(76, 173);
@@ -9165,9 +9165,9 @@ namespace Assistant
             // 
             // bandagehealdelayTextBox
             // 
-            this.bandagehealdelayTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.bandagehealdelayTextBox.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.bandagehealdelayTextBox.BackColor = System.Drawing.Color.White;
             this.bandagehealdelayTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.bandagehealdelayTextBox.Location = new System.Drawing.Point(283, 171);
@@ -9178,9 +9178,9 @@ namespace Assistant
             // 
             // bandagehealcustomcolorTextBox
             // 
-            this.bandagehealcustomcolorTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.bandagehealcustomcolorTextBox.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.bandagehealcustomcolorTextBox.BackColor = System.Drawing.Color.White;
             this.bandagehealcustomcolorTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.bandagehealcustomcolorTextBox.Enabled = false;
@@ -9192,9 +9192,9 @@ namespace Assistant
             // 
             // bandagehealcustomIDTextBox
             // 
-            this.bandagehealcustomIDTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.bandagehealcustomIDTextBox.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.bandagehealcustomIDTextBox.BackColor = System.Drawing.Color.White;
             this.bandagehealcustomIDTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.bandagehealcustomIDTextBox.Enabled = false;
@@ -9206,9 +9206,9 @@ namespace Assistant
             // 
             // toolboxcountWarningTextBox
             // 
-            this.toolboxcountWarningTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.toolboxcountWarningTextBox.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.toolboxcountWarningTextBox.BackColor = System.Drawing.Color.White;
             this.toolboxcountWarningTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.toolboxcountWarningTextBox.Location = new System.Drawing.Point(64, 148);
@@ -9219,9 +9219,9 @@ namespace Assistant
             // 
             // toolboxcountGraphTextBox
             // 
-            this.toolboxcountGraphTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.toolboxcountGraphTextBox.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.toolboxcountGraphTextBox.BackColor = System.Drawing.Color.White;
             this.toolboxcountGraphTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.toolboxcountGraphTextBox.Location = new System.Drawing.Point(64, 73);
@@ -9232,9 +9232,9 @@ namespace Assistant
             // 
             // hotkeyKeyMasterTextBox
             // 
-            this.hotkeyKeyMasterTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.hotkeyKeyMasterTextBox.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.hotkeyKeyMasterTextBox.BackColor = System.Drawing.Color.White;
             this.hotkeyKeyMasterTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.hotkeyKeyMasterTextBox.Location = new System.Drawing.Point(41, 19);
@@ -9247,9 +9247,9 @@ namespace Assistant
             // 
             // hotkeytextbox
             // 
-            this.hotkeytextbox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.hotkeytextbox.Anchor = (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right);
             this.hotkeytextbox.BackColor = System.Drawing.Color.White;
             this.hotkeytextbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.hotkeytextbox.Location = new System.Drawing.Point(41, 17);
@@ -9646,7 +9646,7 @@ namespace Assistant
             clientPrio.SelectedItem = RazorEnhanced.Settings.General.ReadString("ClientPrio");
             opacity.AutoSize = false;
             opacity.Value = RazorEnhanced.Settings.General.ReadInt("Opacity");
-            this.Opacity = ((float)opacity.Value) / 100.0;
+            this.Opacity = opacity.Value / 100.0;
             opacityLabel.Text = String.Format("Opacity: {0}%", opacity.Value);
             msglvl.SelectedIndex = RazorEnhanced.Settings.General.ReadInt("MessageLevel");
 
@@ -9864,8 +9864,8 @@ namespace Assistant
             string status = Language.Format(LocString.RazorStatus1,
                 m_Ver,
                 Utility.FormatSize(System.GC.GetTotalMemory(false)),
-                Utility.FormatSize(m_OutPrev), Utility.FormatSize((long)((m_OutPrev - ps))),
-                Utility.FormatSize(m_InPrev), Utility.FormatSize((long)((m_InPrev - pr))),
+                Utility.FormatSize(m_OutPrev), Utility.FormatSize((m_OutPrev - ps)),
+                Utility.FormatSize(m_InPrev), Utility.FormatSize((m_InPrev - pr)),
                 Utility.FormatTime(time),
                 World.Player != null ? (uint)World.Player.Serial : 0,
                 World.Player != null && World.Player.Backpack != null ? (uint)World.Player.Backpack.Serial : 0,
@@ -9990,7 +9990,7 @@ namespace Assistant
 
         private void razorButtonWiki_Click(object sender, EventArgs e)
         {
-            ProcessStartInfo p = new ProcessStartInfo("http://www.razorenhanced.net/dokuwiki");
+            ProcessStartInfo p = new("http://www.razorenhanced.net/dokuwiki");
             try
             {
                 Process.Start(p);
@@ -10000,7 +10000,7 @@ namespace Assistant
 
         private void advertisement_Click(object sender, EventArgs e)
         {
-            ProcessStartInfo p = new ProcessStartInfo("https://www.uoeventine.com/");
+            ProcessStartInfo p = new("https://www.uoeventine.com/");
             try
             {
                 Process.Start(p);
@@ -10012,7 +10012,7 @@ namespace Assistant
         private void discordrazorButton_Click(object sender, EventArgs e)
         {
             //ProcessStartInfo p = new ProcessStartInfo("https://discord.gg/P3Q7mKT");
-            ProcessStartInfo p = new ProcessStartInfo("https://discord.com/invite/ukQUK7cSPd");
+            ProcessStartInfo p = new("https://discord.com/invite/ukQUK7cSPd");
             try
             {
                 Process.Start(p);
@@ -10036,7 +10036,7 @@ namespace Assistant
 
         private void openchangelogButton_Click(object sender, EventArgs e)
         {
-            EnhancedChangeLog changelogform = new EnhancedChangeLog
+            EnhancedChangeLog changelogform = new()
             {
                 TopMost = true
             };
@@ -10290,7 +10290,7 @@ namespace Assistant
 
         private void paypalButton_Click(object sender, EventArgs e)
         {
-            ProcessStartInfo p = new ProcessStartInfo("https://github.com/sponsors/credzba");
+            ProcessStartInfo p = new("https://github.com/sponsors/credzba");
             Process.Start(p);
         }
 
@@ -10317,7 +10317,7 @@ namespace Assistant
                     return;
                 }
             }
-            EnhancedGumpInspector ginspector = new EnhancedGumpInspector();
+            EnhancedGumpInspector ginspector = new();
             ginspector.FormClosed += new FormClosedEventHandler(Gumpinspector_close);
             ginspector.TopMost = true;
             ginspector.Show();

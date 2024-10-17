@@ -9,7 +9,7 @@ namespace JsonData
     public class TargetGUI : RazorEnhanced.ListAbleItem
     {
         // Selector List
-        internal static List<string> Selectors = new List<string>
+        internal static List<string> Selectors = new()
         {
             "Random",
             "Nearest",
@@ -31,7 +31,7 @@ namespace JsonData
         }
 
 
-        TargetGuiObject m_guiObject = new TargetGuiObject();
+        TargetGuiObject m_guiObject = new();
 
         [JsonProperty("TargetGUIObject")]
         public TargetGuiObject TargetGuiObject
@@ -62,7 +62,7 @@ namespace JsonData
         [JsonProperty("Selector")]
         public string Selector { get => selector; set => selector = value; }
 
-        private Filter filter = new Filter();
+        private Filter filter = new();
         [JsonProperty("Filter")]
         public Filter Filter { get => filter; set => filter = value; }
     }
@@ -72,7 +72,7 @@ namespace JsonData
 
         public static Filter FromMobileFilter(RazorEnhanced.Mobiles.Filter mobileFilter)
         {
-            Filter filter = new Filter();
+            Filter filter = new();
             filter.Enabled = mobileFilter.Enabled;
             filter.Serials = mobileFilter.Serials;
             filter.Bodies = mobileFilter.Bodies;
@@ -144,7 +144,7 @@ namespace JsonData
 
         public RazorEnhanced.Mobiles.Filter ToMobileFilter()
         {
-            RazorEnhanced.Mobiles.Filter filter = new RazorEnhanced.Mobiles.Filter();
+            RazorEnhanced.Mobiles.Filter filter = new();
             filter.Enabled = Enabled;
             filter.Serials = Serials;
             filter.Bodies = Bodies;

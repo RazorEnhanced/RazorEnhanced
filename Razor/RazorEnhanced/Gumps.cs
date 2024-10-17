@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Ultima;
 
 namespace RazorEnhanced
 {
@@ -18,7 +17,7 @@ namespace RazorEnhanced
 
     public class Gumps
     {
-        internal static Mutex gumpIdMutex = new Mutex();
+        internal static Mutex gumpIdMutex = new();
         internal static void AddGump(uint gumpSerial, uint gumpId)
         {
             gumpIdMutex.WaitOne(1500);
@@ -115,24 +114,6 @@ namespace RazorEnhanced
                 gumpData = new List<string>();
             }
         }
-        /// <summary>
-        // vars defined
-        // gumpId
-        // serial
-        // x
-        // y
-        // gumpDefinition
-        // gumpStrings
-        // --  data returned --
-        // hasResponse
-        // buttonid
-        // switches
-        // text
-        // textID
-        // action
-        // gumpRawData
-        // gumpRawText
-        /// </summary>
         public class GumpData
         {
             // vars used to build it
@@ -192,7 +173,7 @@ namespace RazorEnhanced
         /// <param name="resizeable"> allow the gump to be resized</param>
         public static GumpData CreateGump(bool movable = true, bool closable = true, bool disposable = true, bool resizeable = true)
         {
-            GumpData gd = new GumpData();
+            GumpData gd = new();
             if (!movable)
                 gd.gumpDefinition += "{ nomove}";
             if (!closable)
@@ -255,7 +236,7 @@ namespace RazorEnhanced
         /// <param name="param"> button can have a param of any integer (I have no idea what param does)</param>
         public static void AddButton(ref GumpData gd, int x, int y, int normalID, int pressedID, int buttonID, int type, int param)
         {
-            string textEntry = String.Format("{{ button {0} {1} {2} {3} {4} {5} {6} }}", x, y, normalID, pressedID, (int)type, param, buttonID);
+            string textEntry = String.Format("{{ button {0} {1} {2} {3} {4} {5} {6} }}", x, y, normalID, pressedID, type, param, buttonID);
             gd.gumpDefinition += textEntry;
         }
         /// <summary>
@@ -659,8 +640,8 @@ namespace RazorEnhanced
         }
 
 
-        internal static Dictionary<uint, GumpData> m_gumpData = new Dictionary<uint, GumpData>();
-        internal static Dictionary<uint, IncomingGumpData> m_incomingData = new Dictionary<uint, IncomingGumpData>();
+        internal static Dictionary<uint, GumpData> m_gumpData = new();
+        internal static Dictionary<uint, IncomingGumpData> m_incomingData = new();
 
         /// <summary>
         /// Sends a gump using an existing GumpData structure
@@ -670,7 +651,7 @@ namespace RazorEnhanced
         {
             m_gumpData[gd.gumpId] = gd;
             gd.hasResponse = false;
-            GenericGump gg = new GenericGump(gd.gumpId, gd.serial, gd.x, gd.y, gd.gumpDefinition, gd.gumpStrings);
+            GenericGump gg = new(gd.gumpId, gd.serial, gd.x, gd.y, gd.gumpDefinition, gd.gumpStrings);
             Assistant.Client.Instance.SendToClientWait(gg);
         }
 
@@ -681,7 +662,7 @@ namespace RazorEnhanced
         public static void SendGump(uint gumpid, uint serial, uint x, uint y,
             string gumpDefinition, List<string> gumpStrings)
         {
-            GumpData gd = new GumpData
+            GumpData gd = new()
             {
                 gumpId = gumpid,
                 serial = serial,
@@ -694,7 +675,7 @@ namespace RazorEnhanced
             gd.gumpStrings.AddRange(gumpStrings);
             //
             m_gumpData[gumpid] = gd;
-            GenericGump gg = new GenericGump(gd.gumpId, gd.serial, gd.x, gd.y, gd.gumpDefinition, gd.gumpStrings);
+            GenericGump gg = new(gd.gumpId, gd.serial, gd.x, gd.y, gd.gumpDefinition, gd.gumpStrings);
             Assistant.Client.Instance.SendToClientWait(gg);
         }
         public static GumpData GetGumpData(uint gumpid)
@@ -782,7 +763,7 @@ namespace RazorEnhanced
         {
             bool found = false;
             bool local = false;
-            List<uint> waitList = new List<uint>();
+            List<uint> waitList = new();
             foreach (var gumpID in gumpIDs)
             {
                 UInt32 gumpid = (uint)gumpID;
@@ -796,7 +777,7 @@ namespace RazorEnhanced
             }
 
             if (local)
-            {                
+            {
                 found = Utility.DelayUntil(() =>
                 {
                     foreach (var gumpID in waitList)
@@ -853,7 +834,7 @@ namespace RazorEnhanced
         /// Adds a response to the gump
         /// </summary>
         /// WorldResponse
-        internal static void AddResponse(uint gumpid, int x, int y, string layout, 
+        internal static void AddResponse(uint gumpid, int x, int y, string layout,
             List<string> parsedText, List<string> parsedData,
             string[] stringList, string[] layoutPieces
             )
@@ -899,10 +880,10 @@ namespace RazorEnhanced
                 if (m_gumpData.ContainsKey(gumpid))
                 {
                     var gd = m_gumpData[gumpid];
-                    GumpResponse gumpResp = new GumpResponse(gd.serial, gd.gumpId, buttonid, nullswitch, nullentries);
-                    PacketReader p = new PacketReader(gumpResp.ToArray(), false);
+                    GumpResponse gumpResp = new(gd.serial, gd.gumpId, buttonid, nullswitch, nullentries);
+                    PacketReader p = new(gumpResp.ToArray(), false);
 
-                    PacketHandlerEventArgs args = new PacketHandlerEventArgs();
+                    PacketHandlerEventArgs args = new();
                     p.ReadByte(); // through away the packet id
                     p.ReadInt16(); // throw away the packet length
                     Assistant.PacketHandlers.ClientGumpResponse(p, args);
@@ -910,7 +891,7 @@ namespace RazorEnhanced
                 if (m_incomingData.ContainsKey(gumpid))
                 {
                     var gd = m_incomingData[gumpid];
-                    GumpResponse gumpResp = new GumpResponse(gd.gumpSerial, gd.gumpId, buttonid, nullswitch, nullentries);
+                    GumpResponse gumpResp = new(gd.gumpSerial, gd.gumpId, buttonid, nullswitch, nullentries);
                     Assistant.Client.Instance.SendToServerWait(gumpResp);
                 }
                 Gumps.RemoveGump(gumpid);
@@ -947,7 +928,7 @@ namespace RazorEnhanced
         public static void SendAdvancedAction(uint gumpid, int buttonid,
             List<int> inSwitches)
         {
-            IronPython.Runtime.PythonList switches = new IronPython.Runtime.PythonList();
+            IronPython.Runtime.PythonList switches = new();
 
             foreach (var item in inSwitches)
             {
@@ -977,9 +958,9 @@ namespace RazorEnhanced
                 if (m_gumpData.ContainsKey(gumpid))
                 {
                     var gd = m_gumpData[gumpid];
-                    GumpResponse gumpResp = new GumpResponse(gd.serial, gumpid, buttonid, ConvertToIntList(switchs), entries);
-                    PacketReader p = new PacketReader(gumpResp.ToArray(), false);
-                    PacketHandlerEventArgs args = new PacketHandlerEventArgs();
+                    GumpResponse gumpResp = new(gd.serial, gumpid, buttonid, ConvertToIntList(switchs), entries);
+                    PacketReader p = new(gumpResp.ToArray(), false);
+                    PacketHandlerEventArgs args = new();
                     p.ReadByte(); // through away the packet id
                     p.ReadInt16(); // throw away the packet length
                     Assistant.PacketHandlers.ClientGumpResponse(p, args);
@@ -987,7 +968,7 @@ namespace RazorEnhanced
                 if (m_incomingData.ContainsKey(gumpid))
                 {
                     var gd = m_incomingData[gumpid];
-                    GumpResponse gumpResp = new GumpResponse(gd.gumpSerial, gumpid, buttonid, ConvertToIntList(switchs), entries);
+                    GumpResponse gumpResp = new(gd.gumpSerial, gumpid, buttonid, ConvertToIntList(switchs), entries);
                     Assistant.Client.Instance.SendToServerWait(gumpResp);
                 }
                 Gumps.RemoveGump(gumpid);
@@ -1003,8 +984,8 @@ namespace RazorEnhanced
         public static void SendAdvancedAction(uint gumpid, int buttonid,
             List<int> textlist_id, List<string> textlist_str)
         {
-            IronPython.Runtime.PythonList textIDs = new IronPython.Runtime.PythonList();
-            IronPython.Runtime.PythonList textStrings = new IronPython.Runtime.PythonList();
+            IronPython.Runtime.PythonList textIDs = new();
+            IronPython.Runtime.PythonList textStrings = new();
 
             foreach (var item in textlist_id)
             {
@@ -1025,7 +1006,7 @@ namespace RazorEnhanced
         public static void SendAdvancedAction(uint gumpid, int buttonid,
             IronPython.Runtime.PythonList textlist_id, IronPython.Runtime.PythonList textlist_str)
         {
-            IronPython.Runtime.PythonList switchs = new IronPython.Runtime.PythonList();
+            IronPython.Runtime.PythonList switchs = new();
             SendAdvancedAction(gumpid, buttonid, switchs, textlist_id, textlist_str);
         }
 
@@ -1035,9 +1016,9 @@ namespace RazorEnhanced
             List<int> inSwitches, List<int> textlist_id, List<string> textlist_str)
 
         {
-            IronPython.Runtime.PythonList textIDs = new IronPython.Runtime.PythonList();
-            IronPython.Runtime.PythonList textStrings = new IronPython.Runtime.PythonList();
-            IronPython.Runtime.PythonList switches = new IronPython.Runtime.PythonList();
+            IronPython.Runtime.PythonList textIDs = new();
+            IronPython.Runtime.PythonList textStrings = new();
+            IronPython.Runtime.PythonList switches = new();
 
             foreach (var item in inSwitches)
             {
@@ -1073,7 +1054,7 @@ namespace RazorEnhanced
                 var stringList = ConvertToStringList(textlist_str);
                 foreach (int entry in textlist_id)
                 {
-                    GumpTextEntry entrie = new GumpTextEntry(0, string.Empty)
+                    GumpTextEntry entrie = new(0, string.Empty)
                     {
                         EntryID = (ushort)entry,
                         Text = stringList[i]
@@ -1094,10 +1075,10 @@ namespace RazorEnhanced
                     if (m_gumpData.ContainsKey(gumpid))
                     {
                         var gd = m_gumpData[gumpid];
-                        GumpResponse gumpResp = new GumpResponse(gd.serial, gumpid,
+                        GumpResponse gumpResp = new(gd.serial, gumpid,
                             buttonid, ConvertToIntList(switchlist_id), entries);
-                        PacketReader p = new PacketReader(gumpResp.ToArray(), false);
-                        PacketHandlerEventArgs args = new PacketHandlerEventArgs();
+                        PacketReader p = new(gumpResp.ToArray(), false);
+                        PacketHandlerEventArgs args = new();
                         p.ReadByte(); // through away the packet id
                         p.ReadInt16(); // throw away the packet length
                         Assistant.PacketHandlers.ClientGumpResponse(p, args);
@@ -1105,7 +1086,7 @@ namespace RazorEnhanced
                     if (m_incomingData.ContainsKey(gumpid))
                     {
                         var gd = m_incomingData[gumpid];
-                        GumpResponse gumpResp = new GumpResponse(gd.gumpSerial, gumpid,
+                        GumpResponse gumpResp = new(gd.gumpSerial, gumpid,
                             buttonid, ConvertToIntList(switchlist_id), entries);
                         Assistant.Client.Instance.SendToServerWait(gumpResp);
                     }
@@ -1158,7 +1139,7 @@ namespace RazorEnhanced
                     {
                         resolvedText += ",string not found";
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
                         resolvedText += $",Error parsing {text} - report bug to discord channel";
                     }
@@ -1187,7 +1168,7 @@ namespace RazorEnhanced
                     {
                         resolvedText += ",string not found";
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
                         resolvedText += $",Error parsing {text} - report bug to discord channel";
                     }
@@ -1250,14 +1231,14 @@ namespace RazorEnhanced
         /// </summary>
         /// <param name="gumpId">gump id to get data from</param>
         /// <returns>Text of the gump.</returns>
-        public static List<string> GetLineList(uint gumpId, bool dataOnly=false)
+        public static List<string> GetLineList(uint gumpId, bool dataOnly = false)
         {
             if (m_gumpData.ContainsKey(gumpId))
             {
                 if (dataOnly)
                     return m_gumpData[gumpId].gumpData;
 
-                List<string> lines = new List<string>(m_gumpData[gumpId].gumpText);
+                List<string> lines = new(m_gumpData[gumpId].gumpText);
                 lines.AddRange(m_gumpData[gumpId].gumpData);
 
                 return lines;
@@ -1269,9 +1250,9 @@ namespace RazorEnhanced
                 if (dataOnly)
                     return m_incomingData[gumpId].gumpData;
 
-                List<string> lines = new List<string>(m_incomingData[gumpId].gumpText);
+                List<string> lines = new(m_incomingData[gumpId].gumpText);
                 lines.AddRange(m_incomingData[gumpId].gumpData);
-                
+
                 return lines;
             }
             return new List<string>();

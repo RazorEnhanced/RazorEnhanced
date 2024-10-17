@@ -229,8 +229,8 @@ namespace SyncPrimitives
                     }
                     else
                     {
-                        elapsedMS = (int)((TimeSpan)
-                           (DateTime.Now - start)).TotalMilliseconds;
+                        elapsedMS = (int)(
+                           DateTime.Now - start).TotalMilliseconds;
                         timeout = millisecondsTimeout - elapsedMS;
                         // Next wait will be a smaller timeout.
 

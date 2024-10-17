@@ -93,7 +93,7 @@ namespace RazorEnhanced.UI
                 this.Close();
 
             // general
-            ToolTip toolTip = new ToolTip
+            ToolTip toolTip = new()
             {
                 // Set up the delays for the ToolTip.
                 AutoPopDelay = 10000,

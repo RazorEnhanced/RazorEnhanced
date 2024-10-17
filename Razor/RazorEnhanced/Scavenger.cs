@@ -378,7 +378,7 @@ namespace RazorEnhanced
             DragDropManager.ScavengerSerialToGrab = new ConcurrentQueue<int>();
         }
 
-        private static readonly Items.Filter m_itemfilter = new Items.Filter
+        private static readonly Items.Filter m_itemfilter = new()
         {
             Movable = -1,
             Multi = -1,
@@ -386,7 +386,7 @@ namespace RazorEnhanced
             Enabled = true
         };
 
-        private static readonly Items.Filter m_itemfilterOsi = new Items.Filter
+        private static readonly Items.Filter m_itemfilterOsi = new()
         {
             Movable = -1,
             Multi = -1,

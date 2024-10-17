@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Ultima;
 
 namespace RazorEnhanced
 {
@@ -38,7 +37,7 @@ namespace RazorEnhanced
         /// 0: neutaral - 3 is highest fame
         /// </summary>
         public int Fame { get { return m_AssistantMobile.Fame; } }
-        
+
         /// <summary>
         /// Karma has to be reverse engineered from the title so it is just ranges:
         /// -5: most evil, 0: neutaral, 5 most good
@@ -65,7 +64,7 @@ namespace RazorEnhanced
         /// <summary>@nodoc @deprecate
         /// Represents the type of Mobile, usually unique for the Mobile image. ( Alias: Mobile.MobileID )
         /// </summary>
-        public int Body { get { return m_AssistantMobile.TypeID; } }
+        public ushort Body { get { return m_AssistantMobile.TypeID; } }
 
         /// <summary>
         /// Represents the type of Mobile, usually unique for the Mobile image. ( Alias: Mobile.Body )
@@ -87,9 +86,8 @@ namespace RazorEnhanced
         /// Color of the mobile.
         /// </summary>
         public int Color { get { return m_AssistantMobile.Hue; } }
-        public ushort Hue { get { return base.Hue; } }
         public ushort Graphics { get { return base.TypeID.Value; } }
-        public int ItemID { get { return (int)base.TypeID.Value; } }
+        public int ItemID { get { return base.TypeID.Value; } }
 
 
         /// <summary>
@@ -226,7 +224,7 @@ namespace RazorEnhanced
                     return null;
                 else
                 {
-                    RazorEnhanced.Item enhancedMount = new RazorEnhanced.Item(assistantMount);
+                    RazorEnhanced.Item enhancedMount = new(assistantMount);
                     return enhancedMount;
                 }
             }
@@ -402,7 +400,7 @@ namespace RazorEnhanced
                     return null;
                 else
                 {
-                    RazorEnhanced.Item enhancedItem = new RazorEnhanced.Item(assistantItem);
+                    RazorEnhanced.Item enhancedItem = new(assistantItem);
                     return enhancedItem;
                 }
             }
@@ -422,7 +420,7 @@ namespace RazorEnhanced
                     return null;
                 else
                 {
-                    RazorEnhanced.Item enhancedBackpack = new RazorEnhanced.Item(assistantBackpack);
+                    RazorEnhanced.Item enhancedBackpack = new(assistantBackpack);
                     return enhancedBackpack;
                 }
             }
@@ -440,7 +438,7 @@ namespace RazorEnhanced
                     return null;
                 else
                 {
-                    RazorEnhanced.Item enhancedQuiver = new RazorEnhanced.Item(assistantQuiver);
+                    RazorEnhanced.Item enhancedQuiver = new(assistantQuiver);
                     return enhancedQuiver;
                 }
             }
@@ -454,10 +452,10 @@ namespace RazorEnhanced
         {
             get
             {
-                List<Item> items = new List<Item>();
+                List<Item> items = new();
                 foreach (Assistant.Item assistantItem in m_AssistantMobile.Contains)
                 {
-                    RazorEnhanced.Item enhancedItem = new RazorEnhanced.Item(assistantItem);
+                    RazorEnhanced.Item enhancedItem = new(assistantItem);
                     items.Add(enhancedItem);
                 }
                 return items;
@@ -471,10 +469,10 @@ namespace RazorEnhanced
         {
             get
             {
-                List<Property> properties = new List<Property>();
+                List<Property> properties = new();
                 foreach (Assistant.ObjectPropertyList.OPLEntry entry in m_AssistantMobile.ObjPropList.Content)
                 {
-                    Property property = new Property(entry);
+                    Property property = new(entry);
                     properties.Add(property);
                 }
                 return properties;
@@ -503,12 +501,12 @@ namespace RazorEnhanced
             /// Limit the search to a list of Serials of Mobile to find. (ex: 0x0406EFCA )
             /// Supports .Add() and .AddRange()
             /// </summary>
-            public List<int> Serials = new List<int>();
+            public List<int> Serials = new();
             /// <summary>
             /// Limit the search to a list of MobileID (see: Mobile.ItemID or Mobile.Body ) 
             /// Supports .Add() and .AddRange()
             /// </summary>
-            public List<int> Bodies = new List<int>();
+            public List<int> Bodies = new();
             public List<int> Graphics { get { return Bodies; } set { Bodies = value; } }
             /// <summary>
             /// Limit the search by name of the Mobile.
@@ -519,7 +517,7 @@ namespace RazorEnhanced
             /// Limit the search to a list of Colors.
             /// Supports .Add() and .AddRange()
             /// </summary>
-            public List<int> Hues = new List<int>();
+            public List<int> Hues = new();
 
             /// <summary>
             /// Limit the search by distance, to Mobiles which are at least RangeMin tiles away from the Player. ( default: -1, any Mobile )
@@ -612,7 +610,7 @@ namespace RazorEnhanced
             ///     6: red, hostile 
             ///     6: yellow, invulnerable
             /// </summary>
-            public List<byte> Notorieties = new List<byte>();
+            public List<byte> Notorieties = new();
 
             public Filter()
             {
@@ -632,8 +630,8 @@ namespace RazorEnhanced
 
         public static List<Mobile> ApplyFilter(Filter filter)
         {
-            List<Mobile> result = new List<Mobile>();
-            List<Assistant.Mobile> assistantMobiles = new List<Assistant.Mobile>(World.Mobiles.Values.ToList());
+            List<Mobile> result = new();
+            List<Assistant.Mobile> assistantMobiles = new(World.Mobiles.Values.ToList());
 
             if (filter.Enabled)
             {
@@ -645,7 +643,7 @@ namespace RazorEnhanced
                 {
                     if (filter.Name != String.Empty)
                     {
-                        Regex rgx = new Regex(filter.Name, RegexOptions.IgnoreCase);
+                        Regex rgx = new(filter.Name, RegexOptions.IgnoreCase);
                         List<Assistant.Mobile> list = assistantMobiles.Where(i => rgx.IsMatch(i.Name)).ToList();
                         assistantMobiles = list;
                     }
@@ -756,7 +754,7 @@ namespace RazorEnhanced
 
             foreach (Assistant.Mobile assistantMobile in assistantMobiles)
             {
-                RazorEnhanced.Mobile enhancedMobile = new RazorEnhanced.Mobile(assistantMobile);
+                RazorEnhanced.Mobile enhancedMobile = new(assistantMobile);
                 result.Add(enhancedMobile);
             }
 
@@ -777,14 +775,14 @@ namespace RazorEnhanced
                 case "Random":
                     try
                     {
-                        result = mobiles_reduced[Utility.Random(mobiles_reduced.Count)] as Mobile;
+                        result = mobiles_reduced[Utility.Random(mobiles_reduced.Count)];
                     }
                     catch { }
 
                     break;
 
                 case "Nearest":
-                    Mobile closest = mobiles_reduced[0] as Mobile;
+                    Mobile closest = mobiles_reduced[0];
                     int closestDist = int.MaxValue;
                     if (closest != null)
                     {
@@ -802,7 +800,7 @@ namespace RazorEnhanced
                     break;
 
                 case "Farthest":
-                    Mobile farthest = mobiles_reduced[0] as Mobile;
+                    Mobile farthest = mobiles_reduced[0];
                     int farthestDist = int.MinValue;
                     if (farthest != null)
                     {
@@ -820,7 +818,7 @@ namespace RazorEnhanced
                     break;
 
                 case "Weakest":
-                    Mobile weakest = mobiles_reduced[0] as Mobile;
+                    Mobile weakest = mobiles_reduced[0];
                     if (weakest != null)
                     {
                         int minHits = weakest.Hits;
@@ -841,7 +839,7 @@ namespace RazorEnhanced
                     break;
 
                 case "Strongest":
-                    Mobile strongest = mobiles_reduced[0] as Mobile;
+                    Mobile strongest = mobiles_reduced[0];
                     if (strongest != null)
                     {
                         int maxHits = strongest.Hits;
@@ -939,7 +937,7 @@ namespace RazorEnhanced
                 return null;
             else
             {
-                RazorEnhanced.Mobile enhancedMobile = new RazorEnhanced.Mobile(assistantMobile);
+                RazorEnhanced.Mobile enhancedMobile = new(assistantMobile);
                 return enhancedMobile;
             }
         }
@@ -955,7 +953,7 @@ namespace RazorEnhanced
         /// <returns>The mobile if in range. (empty: line not found)</returns>
         public static Mobile FindMobile(int graphic, List<byte> notoriety, int rangemax, string selector, bool highlight)
         {
-            Filter filter = new Filter();
+            Filter filter = new();
             filter.RangeMin = 0;
             filter.RangeMax = rangemax;
 
@@ -996,7 +994,7 @@ namespace RazorEnhanced
         /// <returns>The mobile if in range. (empty: line not found)</returns>
         public static Mobile FindMobile(List<int> graphics, List<byte> notoriety, int rangemax, string selector, bool highlight)
         {
-            Filter filter = new Filter();
+            Filter filter = new();
             filter.RangeMin = 0;
             filter.RangeMax = rangemax;
 
@@ -1146,7 +1144,7 @@ namespace RazorEnhanced
 
         public static List<string> GetPropStringList(int serial)
         {
-            List<string> propstringlist = new List<string>();
+            List<string> propstringlist = new();
             Assistant.Mobile assistantMobile = Assistant.World.FindMobile((uint)serial);
 
             if (assistantMobile == null)
@@ -1190,7 +1188,7 @@ namespace RazorEnhanced
 
             if (assistantMobile != null)
             {
-                List<ObjectPropertyList.OPLEntry> props = new List<ObjectPropertyList.OPLEntry>(assistantMobile.ObjPropList.Content);
+                List<ObjectPropertyList.OPLEntry> props = new(assistantMobile.ObjPropList.Content);
 
                 foreach (Assistant.ObjectPropertyList.OPLEntry prop in props)
                 {
@@ -1254,7 +1252,7 @@ namespace RazorEnhanced
         #region Check Line of Sight internals
         internal static List<Assistant.Mobile> CheckLineOfSight(List<Assistant.Mobile> inAssistantMobiles)
         {
-            List<Assistant.Mobile> outAssistantMobile = new List<Assistant.Mobile>();
+            List<Assistant.Mobile> outAssistantMobile = new();
             foreach (Assistant.Mobile mobile in inAssistantMobiles)
             {
                 if (IsVisible(mobile))
@@ -1326,7 +1324,7 @@ namespace RazorEnhanced
         }
 
         // WallTypes: Unused
-        internal static List<int> WallTypes = new List<int> { 0x015e, 0x015f, 0x0160 };
+        internal static List<int> WallTypes = new() { 0x015e, 0x015f, 0x0160 };
         internal static bool IsStaticWall(Assistant.Mobile mobile, Statics.TileInfo checkStatic)
         {
             string staticName = Statics.GetTileName(checkStatic.StaticID);
@@ -1386,8 +1384,8 @@ namespace RazorEnhanced
 
         internal static bool CheckCoords(Assistant.Mobile mobile, List<Assistant.Point3D> coords)
         {
-            List<int> zlist = new List<int>();
-            List<Assistant.Point3D> badLand = new List<Assistant.Point3D>();
+            List<int> zlist = new();
+            List<Assistant.Point3D> badLand = new();
 
             foreach (var coord in coords)
             {
@@ -1407,7 +1405,7 @@ namespace RazorEnhanced
 
         internal static List<Assistant.Point3D> CoordsToMobile(Assistant.Mobile mobile)
         {
-            List<Assistant.Point3D> coords = new List<Assistant.Point3D>();
+            List<Assistant.Point3D> coords = new();
 
             Assistant.Point3D playerPosition = World.Player.Position;
             Assistant.Point3D mobPosition = mobile.Position;

@@ -120,7 +120,7 @@ namespace Assistant
             if (error != ZLibError.Z_OK)
                 throw new Exception("ZLib error during copression: " + error.ToString());
 
-            Raw.Write((int)outLen);
+            Raw.Write(outLen);
             Raw.Write((int)m_Buffer.Position);
             Raw.Write(m_CompBuff, 0, outLen);
 

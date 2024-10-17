@@ -29,11 +29,11 @@ namespace Assistant
             if (m_Table.Count <= 0)
                 return;
 
-            ConcurrentBag<KeyValuePair<string, MsgInfo>> list = new ConcurrentBag<KeyValuePair<string, MsgInfo>>(m_Table);
+            ConcurrentBag<KeyValuePair<string, MsgInfo>> list = new(m_Table);
             foreach (KeyValuePair<string, MsgInfo> pair in list)
             {
                 string txt = pair.Key.ToString();
-                MsgInfo msg = (MsgInfo)pair.Value;
+                MsgInfo msg = pair.Value;
 
                 if (msg.NextSend > DateTime.Now)
                     continue;
@@ -55,14 +55,14 @@ namespace Assistant
             }
         }
 
-        private static readonly System.Threading.Timer m_Timer = new System.Threading.Timer(new System.Threading.TimerCallback(OnTick), null, TimeSpan.FromSeconds(0.1), TimeSpan.FromSeconds(0.1));
-        private static readonly ConcurrentDictionary<string, MsgInfo> m_Table = new ConcurrentDictionary<string, MsgInfo>();
+        private static readonly System.Threading.Timer m_Timer = new(new System.Threading.TimerCallback(OnTick), null, TimeSpan.FromSeconds(0.1), TimeSpan.FromSeconds(0.1));
+        private static readonly ConcurrentDictionary<string, MsgInfo> m_Table = new();
 
         internal static bool Enqueue(Serial ser, ushort body, MessageType type, ushort hue, ushort font, string lang, string name, string text)
         {
             MsgInfo m = null;
             if (m_Table.ContainsKey(text))
-                m = m_Table[text] as MsgInfo;
+                m = m_Table[text];
 
             if (m == null)
             {
@@ -70,7 +70,7 @@ namespace Assistant
 
                 m.Count = 0;
 
-                m.Delay = TimeSpan.FromSeconds((((int)(text.Length / 50)) + 1) * 3.5);
+                m.Delay = TimeSpan.FromSeconds((text.Length / 50 + 1) * 3.5);
 
                 m.NextSend = DateTime.Now + m.Delay;
 

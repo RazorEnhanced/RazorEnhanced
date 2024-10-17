@@ -196,7 +196,7 @@ namespace RazorEnhanced
             }
         }
 
-        private static List<GraphChangeData> m_graphfilterdata = new List<GraphChangeData>();
+        private static List<GraphChangeData> m_graphfilterdata = new();
         internal static void ReloadGraphFilterData()
         {
             m_graphfilterdata = Settings.GraphFilter.ReadAll();
@@ -235,7 +235,7 @@ namespace RazorEnhanced
 
 
         ///////////////////// START - AUTOCARVER ///////////////////////
-        private static readonly Queue<int> m_IgnoreCutCorpiQueue = new Queue<int>();
+        private static readonly Queue<int> m_IgnoreCutCorpiQueue = new();
         private static bool m_AutoCarver;
         private static int m_carverblade;
 
@@ -279,7 +279,7 @@ namespace RazorEnhanced
             }
         }
 
-        private static readonly Items.Filter m_corpsefilter = new Items.Filter
+        private static readonly Items.Filter m_corpsefilter = new()
         {
             RangeMax = 3,
             Movable = -1,
@@ -344,7 +344,7 @@ namespace RazorEnhanced
             }
         }
 
-        private static readonly Items.Filter m_bonefilter = new Items.Filter
+        private static readonly Items.Filter m_bonefilter = new()
         {
             Graphics = new List<int> { 0x0ECA, 0x0ECB, 0x0ECC, 0x0ECD, 0x0ECE, 0x0ECF, 0x0ED0, 0x0ED1, 0x0ED2 },
             RangeMax = 1,
@@ -475,7 +475,7 @@ namespace RazorEnhanced
             BloodOath = 0x0026
         }
 
-        private static readonly List<Assistant.Layer> m_colorized_layer = new List<Layer>
+        private static readonly List<Assistant.Layer> m_colorized_layer = new()
         {
             Layer.Backpack,
             Layer.Invalid,

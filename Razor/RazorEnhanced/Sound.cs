@@ -19,7 +19,7 @@ namespace RazorEnhanced
         static internal int m_x;
         static internal int m_y;
         static internal int m_z;
-        static internal PacketViewerCallback m_Callback = new PacketViewerCallback(Sound.OnFilter);
+        static internal PacketViewerCallback m_Callback = new(Sound.OnFilter);
         static internal bool m_logActive = false;
         static internal bool m_detailLogActive = false;
 
@@ -182,8 +182,8 @@ namespace RazorEnhanced
 
         }
 
-        internal static Mutex waiterMutex = new Mutex();
-        internal static HashSet<Tuple<WeakReference<ManualResetEvent>, List<int>>> waiters = new HashSet<Tuple<WeakReference<ManualResetEvent>, List<int>>>();
+        internal static Mutex waiterMutex = new();
+        internal static HashSet<Tuple<WeakReference<ManualResetEvent>, List<int>>> waiters = new();
 
         /// <summary>
         /// Waits for a sound to arrive, or for timeout 
@@ -193,9 +193,9 @@ namespace RazorEnhanced
         public static bool WaitForSound(List<int> sounds, int timeout = -1)
         {
             Register = true;
-            ManualResetEvent manualResetEvent = new ManualResetEvent(false);
+            ManualResetEvent manualResetEvent = new(false);
 
-            Tuple<WeakReference<ManualResetEvent>, List<int>> entry = new Tuple<WeakReference<ManualResetEvent>, List<int>>(new WeakReference<ManualResetEvent>(manualResetEvent), sounds);
+            Tuple<WeakReference<ManualResetEvent>, List<int>> entry = new(new WeakReference<ManualResetEvent>(manualResetEvent), sounds);
             waiterMutex.WaitOne();
             waiters.Add(entry);
             waiterMutex.ReleaseMutex();

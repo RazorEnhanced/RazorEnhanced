@@ -17,16 +17,16 @@ namespace Assistant
         public static readonly string DEFAULT_LOG_OUTPATH = Path.Combine(DEFAULT_LOG_DIR, DEFAULT_LOG_FILE);
 
         // Class/Static Methods
-        public readonly static PacketLogger SharedInstance = new PacketLogger(DEFAULT_LOG_OUTPATH);
+        public readonly static PacketLogger SharedInstance = new(DEFAULT_LOG_OUTPATH);
 
-        private Dictionary<int, PacketTemplate> m_PacketTemplates = new Dictionary<int, PacketTemplate>();
+        private Dictionary<int, PacketTemplate> m_PacketTemplates = new();
 
-        private List<PacketPath> m_PacketPaths = new List<PacketPath> { PacketPath.ClientToServer, PacketPath.ServerToClient };
+        private List<PacketPath> m_PacketPaths = new() { PacketPath.ClientToServer, PacketPath.ServerToClient };
 
         public bool DiscardAll = false;
         public bool DiscardShowHeader = false;
-        private List<int> m_PacketWhitelist = new List<int>();
-        private List<int> m_PacketBlacklist = new List<int>();
+        private List<int> m_PacketWhitelist = new();
+        private List<int> m_PacketBlacklist = new();
 
         private bool m_Active = false;
 
@@ -74,13 +74,11 @@ namespace Assistant
                     File.Create(m_OutputPath).Dispose(); // create-truncate file
                 }
 
-                using (StreamWriter sw = new StreamWriter(m_OutputPath, true))
-                {
-                    sw.AutoFlush = true;
-                    sw.WriteLine("\n\n");
-                    sw.WriteLine(">>>>>>>>>> Logging START {0} >>>>>>>>>>", DateTime.Now);
-                    sw.WriteLine("\n\n");
-                }
+                using StreamWriter sw = new(m_OutputPath, true);
+                sw.AutoFlush = true;
+                sw.WriteLine("\n\n");
+                sw.WriteLine(">>>>>>>>>> Logging START {0} >>>>>>>>>>", DateTime.Now);
+                sw.WriteLine("\n\n");
             }
             return m_OutputPath;
         }
@@ -90,7 +88,7 @@ namespace Assistant
             if (!m_Active) return m_OutputPath;
             m_Active = false;
 
-            using (StreamWriter sw = new StreamWriter(m_OutputPath, true))
+            using (StreamWriter sw = new(m_OutputPath, true))
             {
                 sw.AutoFlush = true;
                 sw.WriteLine("\n\n");
@@ -107,11 +105,9 @@ namespace Assistant
 
             try
             {
-                using (StreamWriter sw = new StreamWriter(m_OutputPath, true))
-                {
-                    sw.AutoFlush = true;
-                    sw.WriteLine(line);
-                }
+                using StreamWriter sw = new(m_OutputPath, true);
+                sw.AutoFlush = true;
+                sw.WriteLine(line);
             }
             catch
             {
@@ -222,21 +218,19 @@ namespace Assistant
 
             try
             {
-                using (StreamWriter sw = new StreamWriter(m_OutputPath, true))
+                using StreamWriter sw = new(m_OutputPath, true);
+                sw.AutoFlush = true;
+
+                sw.WriteLine("{0}: {1}{2}0x{3:X2} (Length: {4})", DateTime.Now.ToString("HH:mm:ss.ffff"), pathStr, blocked ? " [BLOCKED] " : " ", packetID, packetLen);
+                if (shouldDiscard) { return; }
+
+                var showHexDump = !DisplayTemplate(sw, packetData);
+                if (showHexDump)
                 {
-                    sw.AutoFlush = true;
-
-                    sw.WriteLine("{0}: {1}{2}0x{3:X2} (Length: {4})", DateTime.Now.ToString("HH:mm:ss.ffff"), pathStr, blocked ? " [BLOCKED] " : " ", packetID, packetLen);
-                    if (shouldDiscard) { return; }
-
-                    var showHexDump = !DisplayTemplate(sw, packetData);
-                    if (showHexDump)
-                    {
-                        Stream packetStream = new MemoryStream(packetData);
-                        Utility.FormatBuffer(sw, packetStream, (int)packetStream.Length);
-                    }
-                    sw.WriteLine();
+                    Stream packetStream = new MemoryStream(packetData);
+                    Utility.FormatBuffer(sw, packetStream, (int)packetStream.Length);
                 }
+                sw.WriteLine();
             }
             catch
             {

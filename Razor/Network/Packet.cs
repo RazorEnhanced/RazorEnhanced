@@ -58,7 +58,7 @@ namespace Assistant
         internal void EnsureCapacity(int capacity)
         {
             m_Stream = new MemoryStream(capacity);
-            Write((byte)m_PacketID);
+            Write(m_PacketID);
             if (m_DynSize)
                 Write((short)0);
         }
@@ -196,7 +196,7 @@ namespace Assistant
 
         internal string ReadUnicodeStringLE()
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
 
             int c;
 
@@ -208,7 +208,7 @@ namespace Assistant
 
         internal string ReadUnicodeStringLESafe()
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
 
             int c;
 
@@ -223,7 +223,7 @@ namespace Assistant
 
         internal string ReadUnicodeStringSafe()
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
 
             int c;
 
@@ -238,7 +238,7 @@ namespace Assistant
 
         internal string ReadUnicodeString()
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
 
             int c;
 
@@ -283,14 +283,14 @@ namespace Assistant
             bool isSafe = true;
 
             for (int i = 0; isSafe && i < s.Length; ++i)
-                isSafe = IsSafeChar((int)s[i]);
+                isSafe = IsSafeChar(s[i]);
 
             m_Stream.Seek(start + fixedLength, SeekOrigin.Begin);
 
             if (isSafe)
                 return s;
 
-            StringBuilder sb = new StringBuilder(s.Length);
+            StringBuilder sb = new(s.Length);
 
             foreach (char t in s)
             {
@@ -327,12 +327,12 @@ namespace Assistant
             bool isSafe = true;
 
             for (int i = 0; isSafe && i < s.Length; ++i)
-                isSafe = IsSafeChar((int)s[i]);
+                isSafe = IsSafeChar(s[i]);
 
             if (isSafe)
                 return s;
 
-            StringBuilder sb = new StringBuilder(s.Length);
+            StringBuilder sb = new(s.Length);
 
             foreach (char t in s)
             {
@@ -374,7 +374,7 @@ namespace Assistant
 
         internal string ReadStringSafe()
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
 
             int c;
 
@@ -397,7 +397,7 @@ namespace Assistant
             if (bound > m_Stream.Length)
                 bound = m_Stream.Length;
 
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
 
             int c;
 
@@ -424,7 +424,7 @@ namespace Assistant
 
             long end = bound;
 
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
 
             int c;
 
@@ -858,21 +858,21 @@ namespace Assistant
             b1 = ReadByte();
             b2 = ReadByte();
             b3 = ReadByte();
-            return (uint)b3 | (uint)b2 << 8 | (uint)b1 << 16 | (uint)b0 << 24;
+            return b3 | (uint)b2 << 8 | (uint)b1 << 16 | (uint)b0 << 24;
         }
 
 
         internal ulong ReadRawUInt64()
         {
-            return (ulong)
-                (((ulong)ReadByte() << 0)
+            return
+                ((ulong)ReadByte() << 0)
                 | ((ulong)ReadByte() << 8)
                 | ((ulong)ReadByte() << 16)
                 | ((ulong)ReadByte() << 24)
                 | ((ulong)ReadByte() << 32)
                 | ((ulong)ReadByte() << 40)
                 | ((ulong)ReadByte() << 48)
-                | ((ulong)ReadByte() << 56));
+                | ((ulong)ReadByte() << 56);
         }
 
         internal ushort ReadUInt16()
@@ -904,7 +904,7 @@ namespace Assistant
 
         internal string ReadUnicodeStringSafe()
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
 
             int c;
 
@@ -919,7 +919,7 @@ namespace Assistant
 
         internal string ReadUnicodeString()
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
 
             int c;
 
@@ -964,14 +964,14 @@ namespace Assistant
             bool isSafe = true;
 
             for (int i = 0; isSafe && i < s.Length; ++i)
-                isSafe = IsSafeChar((int)s[i]);
+                isSafe = IsSafeChar(s[i]);
 
             Seek(start + fixedLength, SeekOrigin.Begin);
 
             if (isSafe)
                 return s;
 
-            StringBuilder sb = new StringBuilder(s.Length);
+            StringBuilder sb = new(s.Length);
 
             foreach (char t in s)
             {
@@ -1008,12 +1008,12 @@ namespace Assistant
             bool isSafe = true;
 
             for (int i = 0; isSafe && i < s.Length; ++i)
-                isSafe = IsSafeChar((int)s[i]);
+                isSafe = IsSafeChar(s[i]);
 
             if (isSafe)
                 return s;
 
-            StringBuilder sb = new StringBuilder(s.Length);
+            StringBuilder sb = new(s.Length);
 
             foreach (char t in s)
             {
@@ -1055,7 +1055,7 @@ namespace Assistant
 
         internal string ReadStringSafe()
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
 
             int c;
 
@@ -1078,7 +1078,7 @@ namespace Assistant
             if (bound > m_Length)
                 bound = m_Length;
 
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
 
             int c;
             while ((m_Pos + 1) < bound && (c = ReadUInt16()) != 0)
@@ -1098,7 +1098,7 @@ namespace Assistant
             if (bound > m_Length)
                 bound = m_Length;
 
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
 
             int c;
 
@@ -1126,7 +1126,7 @@ namespace Assistant
             if (bound > m_Length)
                 bound = m_Length;
 
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
 
             int c;
 

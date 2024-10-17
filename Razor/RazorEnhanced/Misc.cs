@@ -72,7 +72,7 @@ namespace RazorEnhanced
                     else candidateInfo = candidateInfo.Parent;
                 }
             }
-            catch (Exception error)
+            catch (Exception)
             {
                 //var message = String.Format("Unable to check directories {0} and {1}: {2}", candidate, other, error);
                 //Trace.WriteLine(message);
@@ -264,7 +264,7 @@ namespace RazorEnhanced
         /// <returns>Return True - is an Item False - is not an item</returns>
         public static bool IsItem(System.UInt32 serial)
         {
-            Assistant.Serial anObject = new Assistant.Serial(serial);
+            Assistant.Serial anObject = new(serial);
             return anObject.IsItem;
         }
 
@@ -276,7 +276,7 @@ namespace RazorEnhanced
         /// <returns>Return True - is a mobile False - is not a mobile</returns>
         public static bool IsMobile(System.UInt32 serial)
         {
-            Assistant.Serial anObject = new Assistant.Serial(serial);
+            Assistant.Serial anObject = new(serial);
             return anObject.IsMobile;
         }
 
@@ -576,7 +576,7 @@ namespace RazorEnhanced
             }
             World.Player.HasContext = false;
             World.Player.ContextID = 0;
-            List<Context> retList = new List<Context>();
+            List<Context> retList = new();
             Assistant.Client.Instance.SendToServerWait(new ContextMenuRequest(serial));
             int subdelay = delay;
             while (World.Player.HasContext != true && World.Player.ContextID != serial && subdelay > 0)
@@ -585,7 +585,7 @@ namespace RazorEnhanced
                 subdelay -= 2;
             }
             UOEntity ent = null;
-            Assistant.Serial menuOwner = new Assistant.Serial((uint)serial);
+            Assistant.Serial menuOwner = new((uint)serial);
             if (menuOwner.IsMobile)
                 ent = World.FindMobile(menuOwner);
             else if (menuOwner.IsItem)
@@ -594,7 +594,7 @@ namespace RazorEnhanced
             {
                 foreach (var entry in ent.ContextMenu)
                 {
-                    Context temp = new Context
+                    Context temp = new()
                     {
                         Response = entry.Key,
                         Entry = Language.GetString(entry.Value)
@@ -765,12 +765,12 @@ namespace RazorEnhanced
             {
                 return;
             }
-            System.Drawing.Point thePoint = new System.Drawing.Point(posX + windowRect.X, posY + windowRect.Y);
+            System.Drawing.Point thePoint = new(posX + windowRect.X, posY + windowRect.Y);
             System.Windows.Forms.Cursor.Position = thePoint;
         }
 
         // Shared Script data
-        private static ConcurrentDictionary<string, object> m_sharedscriptdata = new ConcurrentDictionary<string, object>();
+        private static ConcurrentDictionary<string, object> m_sharedscriptdata = new();
 
         /// <summary>@nodoc</summary>
         public static ConcurrentDictionary<string, object> SharedScriptData { get => m_sharedscriptdata; set => m_sharedscriptdata = value; }
@@ -824,7 +824,7 @@ namespace RazorEnhanced
         }
 
         // Ignore list
-        private static readonly List<int> m_serialignorelist = new List<int>();
+        private static readonly List<int> m_serialignorelist = new();
 
         /// <summary>
         /// Add an entiry to the ignore list. Can ignore Serial, Items or Mobiles.
@@ -1209,7 +1209,7 @@ namespace RazorEnhanced
         /// <returns>A MapInfo object.</returns>
         public static MapInfo GetMapInfo(uint serial)
         {
-            MapInfo mapInfo = new MapInfo
+            MapInfo mapInfo = new()
             {
                 Serial = serial,
                 PinPosition = RazorEnhanced.Point2D.Zero,
@@ -1411,12 +1411,12 @@ namespace RazorEnhanced
         public static void LeftMouseClick(int xpos, int ypos, bool clientCoords = true)
         {
             var window = Assistant.Client.Instance.GetWindowHandle();
-            Point old_point = new Point();
+            Point old_point = new();
             GetCursorPos(ref old_point);
 
             if (clientCoords)
             {
-                Point pnt = new Point { X = xpos, Y = ypos };
+                Point pnt = new() { X = xpos, Y = ypos };
                 ClientToScreen(window, ref pnt);
                 xpos = pnt.X;
                 ypos = pnt.Y;
@@ -1438,12 +1438,12 @@ namespace RazorEnhanced
         /// <param name="clientCoords">True: Client coordinates - False: Screen coordinates (default: True, client).</param>
         public static void RightMouseClick(int xpos, int ypos, bool clientCoords = true)
         {
-            Point old_point = new Point();
+            Point old_point = new();
             GetCursorPos(ref old_point);
 
             if (clientCoords)
             {
-                Point pnt = new Point { X = xpos, Y = ypos };
+                Point pnt = new() { X = xpos, Y = ypos };
                 var window = Assistant.Client.Instance.GetWindowHandle();
                 ClientToScreen(window, ref pnt);
                 xpos = pnt.X;

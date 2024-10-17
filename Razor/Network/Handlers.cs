@@ -1,18 +1,16 @@
 using Assistant.UI;
-using Google.Protobuf.WellKnownTypes;
 using RazorEnhanced;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
-using static System.Net.Mime.MediaTypeNames;
 
 
 namespace Assistant
 {
     public class PacketHandlers
     {
-        private static readonly List<Item> m_IgnoreGumps = new List<Item>();
+        private static readonly List<Item> m_IgnoreGumps = new();
 
         /// <summary>
         /// Last container displayed to the client
@@ -140,7 +138,7 @@ namespace Assistant
 
         private static void SetUpdateRange(Packet p, PacketHandlerEventArgs args)
         {
-            World.Player.VisRange = (int)p.ReadByte();
+            World.Player.VisRange = p.ReadByte();
         }
 
         private static void EncodedPacket(PacketReader p, PacketHandlerEventArgs args)
@@ -601,7 +599,7 @@ namespace Assistant
             if (Engine.UsePostKRPackets)
                 /* grid num */
                 p.ReadByte();
-            Point3D newPos = new Point3D(x, y, z);
+            Point3D newPos = new(x, y, z);
             Serial dser = p.ReadUInt32();
 
             Item i = World.FindItem(iser);
@@ -709,7 +707,7 @@ namespace Assistant
             ushort amount = p.ReadUInt16();
             if (amount == 0)
                 amount = 1;
-            Point3D pos = new Point3D(p.ReadUInt16(), p.ReadUInt16(), 0);
+            Point3D pos = new(p.ReadUInt16(), p.ReadUInt16(), 0);
             byte gridPos = 0;
             if (Engine.UsePostKRPackets)
                 gridPos = p.ReadByte();
@@ -773,7 +771,7 @@ namespace Assistant
                 {
                     if (item.Contains.Count > 0)
                     {
-                        List<Serial> itemsWithoutProps = new List<Serial>();
+                        List<Serial> itemsWithoutProps = new();
                         foreach (Item itm in item.Contains)
                         {
                             if (itm.PropsUpdated == false)
@@ -810,7 +808,7 @@ namespace Assistant
             bool isPostKR = false, decided = false; ;
             int count = p.ReadUInt16();
 
-            List<Item> list = new List<Item>();
+            List<Item> list = new();
 
             for (int i = 0; i < count; i++)
             {
@@ -872,7 +870,7 @@ namespace Assistant
         {
             int count = p.ReadUInt16();
 
-            List<Item> updated = new List<Item>();
+            List<Item> updated = new();
 
             for (int i = 0; i < count; i++)
             {
@@ -881,7 +879,7 @@ namespace Assistant
                 UInt16 itemID = (UInt16)(p.ReadUInt16() + p.ReadSByte());
 
                 ushort amount = Math.Max(p.ReadUInt16(), (ushort)1);
-                Point3D position = new Point3D(p.ReadUInt16(), p.ReadUInt16(), 0);
+                Point3D position = new(p.ReadUInt16(), p.ReadUInt16(), 0);
                 byte gridNum = 0;
                 if (Engine.UsePostKRPackets)
                     gridNum = p.ReadByte();
@@ -989,7 +987,7 @@ namespace Assistant
                 if (World.Player.LastWeaponRight != i.Serial)
                 {
                     World.Player.LastWeaponRight = i.Serial;
-                    System.Threading.Thread doAction = new System.Threading.Thread(() => RazorEnhanced.SpellGrid.UpdateSAHighLight(0));
+                    System.Threading.Thread doAction = new(() => RazorEnhanced.SpellGrid.UpdateSAHighLight(0));
                     doAction.Start();
                 }
             }
@@ -998,7 +996,7 @@ namespace Assistant
                 if (World.Player.LastWeaponLeft != i.Serial)
                 {
                     World.Player.LastWeaponLeft = i.Serial;
-                    System.Threading.Thread doAction = new System.Threading.Thread(() => RazorEnhanced.SpellGrid.UpdateSAHighLight(0));
+                    System.Threading.Thread doAction = new(() => RazorEnhanced.SpellGrid.UpdateSAHighLight(0));
                     doAction.Start();
                 }
             }
@@ -1117,7 +1115,7 @@ namespace Assistant
                             Engine.MainWindow.SafeAction(s => s.UpdateSkill(skill));
 
                             if (RazorEnhanced.Settings.General.ReadBool("DisplaySkillChanges") && skill.FixedBase != old)
-                                World.Player.SendMessage(MsgLevel.Force, LocString.SkillChanged, RazorEnhanced.Skills.GetSkillName(i), skill.Delta > 0 ? " + " : "", skill.Delta, skill.Value, skill.FixedBase - old > 0 ? "+" : "", ((double)(skill.FixedBase - old)) / 10.0);
+                                World.Player.SendMessage(MsgLevel.Force, LocString.SkillChanged, RazorEnhanced.Skills.GetSkillName(i), skill.Delta > 0 ? " + " : "", skill.Delta, skill.Value, skill.FixedBase - old > 0 ? "+" : "", (skill.FixedBase - old) / 10.0);
                             Assistant.UOAssist.PostSkillUpdate(i, skill.FixedBase);
                         }
                         break;
@@ -1141,7 +1139,7 @@ namespace Assistant
                             skill.FixedCap = 100;
                             Engine.MainWindow.UpdateSkill(skill);
                             if (RazorEnhanced.Settings.General.ReadBool("DisplaySkillChanges") && skill.FixedBase != old)
-                                World.Player.SendMessage(MsgLevel.Force, LocString.SkillChanged, RazorEnhanced.Skills.GetSkillName(i), skill.Delta > 0 ? " + " : "", skill.Delta, skill.Value, ((double)(skill.FixedBase - old)) / 10.0, skill.FixedBase - old > 0 ? "+" : "");
+                                World.Player.SendMessage(MsgLevel.Force, LocString.SkillChanged, RazorEnhanced.Skills.GetSkillName(i), skill.Delta > 0 ? " + " : "", skill.Delta, skill.Value, (skill.FixedBase - old) / 10.0, skill.FixedBase - old > 0 ? "+" : "");
                             Assistant.UOAssist.PostSkillUpdate(i, skill.FixedBase);
                         }
                         break;
@@ -1163,7 +1161,7 @@ namespace Assistant
 
             Serial serial = p.ReadUInt32();
 
-            PlayerData m = new PlayerData(serial);
+            PlayerData m = new(serial);
             m.Name = World.OrigPlayerName;
 
             Mobile test = World.FindMobile(serial);
@@ -1350,7 +1348,7 @@ namespace Assistant
             if (m == null)
                 return;
 
-            int oldPercent = (int)(m.Hits * 100 / (m.HitsMax == 0 ? (ushort)1 : m.HitsMax));
+            int oldPercent = m.Hits * 100 / (m.HitsMax == 0 ? (ushort)1 : m.HitsMax);
 
             m.HitsMax = p.ReadUInt16();
             m.Hits = p.ReadUInt16();
@@ -1368,7 +1366,7 @@ namespace Assistant
             if (!Engine.MainWindow.ShowHealthOH.Checked)
                 return;
 
-            int percent = (int)(m.Hits * 100 / (m.HitsMax == 0 ? (ushort)1 : m.HitsMax));
+            int percent = m.Hits * 100 / (m.HitsMax == 0 ? (ushort)1 : m.HitsMax);
 
             // Limit to people who are on screen and check the previous value so we dont get spammed.
             if (oldPercent != percent && World.Player != null && Utility.Distance(World.Player.Position, m.Position) <= 12)
@@ -1393,7 +1391,7 @@ namespace Assistant
             if (m == null)
                 return;
 
-            int oldPercent = (int)(m.Stam * 100 / (m.StamMax == 0 ? (ushort)1 : m.StamMax));
+            int oldPercent = m.Stam * 100 / (m.StamMax == 0 ? (ushort)1 : m.StamMax);
 
             m.StamMax = p.ReadUInt16();
             m.Stam = p.ReadUInt16();
@@ -1409,8 +1407,8 @@ namespace Assistant
             if (m == World.Player || !RazorEnhanced.Settings.General.ReadBool("ShowPartyStats"))
                 return;
 
-            int stamPercent = (int)(m.Stam * 100 / (m.StamMax == 0 ? (ushort)1 : m.StamMax));
-            int manaPercent = (int)(m.Mana * 100 / (m.ManaMax == 0 ? (ushort)1 : m.ManaMax));
+            int stamPercent = m.Stam * 100 / (m.StamMax == 0 ? (ushort)1 : m.StamMax);
+            int manaPercent = m.Mana * 100 / (m.ManaMax == 0 ? (ushort)1 : m.ManaMax);
 
             // Limit to people who are on screen and check the previous value so we dont get spammed.
             if (oldPercent != stamPercent && World.Player != null && Utility.Distance(World.Player.Position, m.Position) <= 12)
@@ -1434,7 +1432,7 @@ namespace Assistant
             if (m == null)
                 return;
 
-            int oldPercent = (int)(m.Mana * 100 / (m.ManaMax == 0 ? (ushort)1 : m.ManaMax));
+            int oldPercent = m.Mana * 100 / (m.ManaMax == 0 ? (ushort)1 : m.ManaMax);
 
             m.ManaMax = p.ReadUInt16();
             m.Mana = p.ReadUInt16();
@@ -1450,8 +1448,8 @@ namespace Assistant
             if (m == World.Player || !RazorEnhanced.Settings.General.ReadBool("ShowPartyStats"))
                 return;
 
-            int stamPercent = (int)(m.Stam * 100 / (m.StamMax == 0 ? (ushort)1 : m.StamMax));
-            int manaPercent = (int)(m.Mana * 100 / (m.ManaMax == 0 ? (ushort)1 : m.ManaMax));
+            int stamPercent = m.Stam * 100 / (m.StamMax == 0 ? (ushort)1 : m.StamMax);
+            int manaPercent = m.Mana * 100 / (m.ManaMax == 0 ? (ushort)1 : m.ManaMax);
 
             // Limit to people who are on screen and check the previous value so we dont get spammed.
             if (oldPercent != manaPercent && World.Player != null && Utility.Distance(World.Player.Position, m.Position) <= 12)
@@ -1832,7 +1830,7 @@ namespace Assistant
             }
 
 
-            Point3D position = new Point3D(p.ReadUInt16(), p.ReadUInt16(), p.ReadSByte());
+            Point3D position = new(p.ReadUInt16(), p.ReadUInt16(), p.ReadSByte());
 
             if (World.Player.Position != Point3D.Zero && !Utility.InRange(World.Player.Position, position, World.Player.VisRange))
                 return;
@@ -1973,7 +1971,7 @@ namespace Assistant
                     // Update weapon special ability icons on spellgrid when removing weapons
                     if (World.Player != null && (i.Serial == World.Player.LastWeaponLeft || i.Serial == World.Player.LastWeaponRight))
                     {
-                        System.Threading.Thread doAction = new System.Threading.Thread(() => RazorEnhanced.SpellGrid.UpdateSAHighLight(0));
+                        System.Threading.Thread doAction = new(() => RazorEnhanced.SpellGrid.UpdateSAHighLight(0));
                         doAction.Start();
                     }
 
@@ -2226,18 +2224,18 @@ namespace Assistant
             p.ReadByte();
             p.ReadByte();
             p.ReadByte();
-            Point3D position = new Point3D((int)p.ReadUInt16(), (int)p.ReadUInt16(), (int)p.ReadInt16());
+            Point3D position = new(p.ReadUInt16(), p.ReadUInt16(), p.ReadInt16());
             UOEntity uOEntity = World.FindItem(serial);
             if (uOEntity != null)
             {
                 uOEntity.Position = position;
             }
-            int num = (int)p.ReadInt16();
+            int num = p.ReadInt16();
             int i = 0;
             while (i < num)
             {
                 serial = p.ReadUInt32();
-                position = new Point3D((int)p.ReadUInt16(), (int)p.ReadUInt16(), (int)p.ReadInt16());
+                position = new Point3D(p.ReadUInt16(), p.ReadUInt16(), p.ReadInt16());
                 if (serial.IsMobile)
                 {
                     uOEntity = World.FindMobile(serial);
@@ -2258,8 +2256,7 @@ namespace Assistant
             }
         }
 
-        internal static List<string> SysMessages = new List<string>(21);
-        static int MaxJournalEntries = 200;
+        internal static List<string> SysMessages = new(21);
         internal static void HandleSpeech(Packet p, PacketHandlerEventArgs args, Serial ser, ushort body, MessageType type, ushort hue, ushort font, string lang, string name, string text)
         {
 
@@ -2321,7 +2318,7 @@ namespace Assistant
                 bool replaced = false;
                 if (s != null)
                 {
-                    System.Text.StringBuilder sb = new System.Text.StringBuilder(RazorEnhanced.Settings.General.ReadString("SpellFormat"));
+                    System.Text.StringBuilder sb = new(RazorEnhanced.Settings.General.ReadString("SpellFormat"));
                     sb.Replace(@"{power}", s.WordsOfPower);
                     string spell = Language.GetString(s.Name);
                     sb.Replace(@"{spell}", spell);
@@ -2437,7 +2434,7 @@ namespace Assistant
         internal static System.Data.DataTable JIList = InitJournalItems();
         internal static System.Data.DataTable InitJournalItems()
         {
-            System.Data.DataTable retTable = new System.Data.DataTable("JournalItems");
+            System.Data.DataTable retTable = new("JournalItems");
             retTable.Columns.Add(new System.Data.DataColumn("type", System.Type.GetType("System.String")));
             retTable.Columns.Add(new System.Data.DataColumn("text", System.Type.GetType("System.String")));
 
@@ -2595,7 +2592,7 @@ namespace Assistant
             if (gd != null)
                 gd.buttonid = bid;
 
-            List<int> switchesid = new List<int>();
+            List<int> switchesid = new();
 
             RazorEnhanced.GumpInspector.GumpResponseAddLogMain(ser, gumpID, bid);
 
@@ -2649,7 +2646,7 @@ namespace Assistant
                 gd.hasResponse = true;
                 if (gd.action != null)
                 {
-                    System.Threading.Thread doAction = new System.Threading.Thread(() => gd.action(gd));
+                    System.Threading.Thread doAction = new(() => gd.action(gd));
                     doAction.Start();
                 }
             }
@@ -2862,7 +2859,7 @@ namespace Assistant
                             SpecialMoves.HasPrimary = false;
                             SpecialMoves.HasSecondary = false;
 
-                            System.Threading.Thread doAction = new System.Threading.Thread(() => RazorEnhanced.SpellGrid.UpdateSAHighLight(0));
+                            System.Threading.Thread doAction = new(() => RazorEnhanced.SpellGrid.UpdateSAHighLight(0));
                             doAction.Start();
                         }
                         break;
@@ -2881,7 +2878,7 @@ namespace Assistant
                                     if (World.Player != null && !World.Player.SkillEnabled.Contains(skill))
                                     {
                                         World.Player.SkillEnabled.Add(skill);
-                                        System.Threading.Thread doAction = new System.Threading.Thread(() => RazorEnhanced.SpellGrid.UpdateSkillHighLight(skill, true));
+                                        System.Threading.Thread doAction = new(() => RazorEnhanced.SpellGrid.UpdateSkillHighLight(skill, true));
                                         doAction.Start();
                                     }
                                     break;
@@ -2890,7 +2887,7 @@ namespace Assistant
                                     if (World.Player != null && World.Player.SkillEnabled.Contains(skill))
                                     {
                                         World.Player.SkillEnabled.Remove(skill);
-                                        System.Threading.Thread doAction = new System.Threading.Thread(() => RazorEnhanced.SpellGrid.UpdateSkillHighLight(skill, false));
+                                        System.Threading.Thread doAction = new(() => RazorEnhanced.SpellGrid.UpdateSkillHighLight(skill, false));
                                         doAction.Start();
                                     }
                                     break;
@@ -2952,7 +2949,7 @@ namespace Assistant
                 case 0xFE: // Begin Handshake/Features Negotiation
                     {
 
-                        ulong features = ((ulong)p.ReadUInt32() << 32) | (ulong)p.ReadUInt32();
+                        ulong features = ((ulong)p.ReadUInt32() << 32) | p.ReadUInt32();
 
                         Client.Instance.SetFeatures(features);
                         Client.Instance.SendToServer(new RazorNegotiateResponse());
@@ -2962,7 +2959,7 @@ namespace Assistant
             }
         }
 
-        private static readonly List<Serial> m_Party = new List<Serial>();
+        private static readonly List<Serial> m_Party = new();
         internal static List<Serial> Party { get { return m_Party; } }
         private static Timer m_PartyDeclineTimer = null;
         internal static Serial PartyLeader = Serial.Zero;
@@ -3081,7 +3078,7 @@ namespace Assistant
                         {
                             int ability = p.ReadInt32();
                             SpecialMoves.ClientSentSpecial(ability);
-                            System.Threading.Thread doAction = new System.Threading.Thread(() => RazorEnhanced.SpellGrid.UpdateSAHighLight(0));
+                            System.Threading.Thread doAction = new(() => RazorEnhanced.SpellGrid.UpdateSAHighLight(0));
                             doAction.Start();
 
                             //RazorEnhanced.SpellGrid.UpdateSAHighLight(ability);
@@ -3178,7 +3175,7 @@ namespace Assistant
                 byte m_modelTextLenght = p.ReadByte();
                 string m_modelText = p.ReadStringSafe(m_modelTextLenght);
 
-                PlayerData.MenuItem m_entry = new PlayerData.MenuItem(m_modelID, m_modelColor, m_modelText);
+                PlayerData.MenuItem m_entry = new(m_modelID, m_modelColor, m_modelText);
                 World.Player.MenuEntry.Add(m_entry);
             }
 
@@ -3246,7 +3243,7 @@ namespace Assistant
 
             string text = p.ReadStringSafe(60);
             byte flags = p.ReadByte();
-            
+
             string pattern = @"The (\w+)";
             Match match = Regex.Match(text, pattern);
             if (match.Success)
@@ -3539,7 +3536,7 @@ namespace Assistant
 
         private static List<string> ParseGumpString(string[] gumpPieces, string[] gumpLines)
         {
-            List<string> lines = new List<string>();
+            List<string> lines = new();
             for (int i = 0; i < gumpPieces.Length; i++)
             {
                 string[] gumpParams = Regex.Split(gumpPieces[i], @"\s+");
@@ -3579,7 +3576,7 @@ namespace Assistant
 
         private static bool TryParseGump(string gumpData, out string[] pieces)
         {
-            List<string> i = new List<string>();
+            List<string> i = new();
             int dataIndex = 0;
             while (dataIndex < gumpData.Length)
             {

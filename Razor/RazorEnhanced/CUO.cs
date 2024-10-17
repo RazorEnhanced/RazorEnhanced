@@ -373,7 +373,7 @@ namespace RazorEnhanced
                     var SavePosition = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Game.Managers.UIManager")?.GetMethod("SavePosition", BindingFlags.Public | BindingFlags.Static);
                     if (SavePosition != null)
                     {
-                        SavePosition.Invoke(assembly, new object[] { (uint)gumpserial, pos });
+                        SavePosition.Invoke(assembly, new object[] { gumpserial, pos });
                     }
                 }
             }
@@ -541,7 +541,7 @@ namespace RazorEnhanced
 
                             if (status != null)
                             {
-                                var parameters = new object[1] { (uint)mobileserial };
+                                var parameters = new object[1] { mobileserial };
                                 var gump = status.Invoke(parameters);
 
                                 var uimanager = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Game.Managers.UIManager");
@@ -579,7 +579,7 @@ namespace RazorEnhanced
 
                             if (status != null)
                             {
-                                var parameters = new object[1] { (uint)mobileserial };
+                                var parameters = new object[1] { mobileserial };
                                 var gump = status.Invoke(parameters);
 
                                 var uimanager = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Game.Managers.UIManager");

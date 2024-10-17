@@ -48,7 +48,7 @@ namespace FastColoredTextBoxNS
     public class Bookmarks : BaseBookmarks
     {
         protected FastColoredTextBox tb;
-        protected List<Bookmark> items = new List<Bookmark>();
+        protected List<Bookmark> items = new();
         protected int counter;
 
         public Bookmarks(FastColoredTextBox tb)
@@ -250,8 +250,8 @@ namespace FastColoredTextBoxNS
             var size = TB.CharHeight - 1;
             using (var brush = new LinearGradientBrush(new Rectangle(0, lineRect.Top, size, size), Color.White, Color, 45))
                 gr.FillEllipse(brush, 0, lineRect.Top, size, size);
-            using (var pen = new Pen(Color))
-                gr.DrawEllipse(pen, 0, lineRect.Top, size, size);
+            using var pen = new Pen(Color);
+            gr.DrawEllipse(pen, 0, lineRect.Top, size, size);
         }
     }
 }

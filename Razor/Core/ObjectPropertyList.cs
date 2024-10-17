@@ -40,10 +40,10 @@ namespace Assistant
             }
         }
 
-        private readonly List<int> m_StringNums = new List<int>();
+        private readonly List<int> m_StringNums = new();
 
         private int m_Hash = 0;
-        private List<OPLEntry> m_Content = new List<OPLEntry>();
+        private List<OPLEntry> m_Content = new();
         internal List<OPLEntry> Content { get { return m_Content; } }
 
         private readonly UOEntity m_Owner = null;

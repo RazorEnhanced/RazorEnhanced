@@ -30,7 +30,7 @@ namespace Assistant
                     return null;
                 }
 
-                AssemblyName askedassembly = new AssemblyName(e.Name);
+                AssemblyName askedassembly = new(e.Name);
 
                 bool isdll = File.Exists(Path.Combine(RootPath, askedassembly.Name + ".dll"));
 
@@ -54,7 +54,7 @@ namespace Assistant
                 ((OnGetUOFilePath)Marshal.GetDelegateForFunctionPointer(plugin->GetUOFilePath, typeof(OnGetUOFilePath))
                 )();
 
-            ClassicUOClient cuo = new ClassicUOClient();
+            ClassicUOClient cuo = new();
             Client.Instance = cuo;
             cuo.InitPlugin(plugin);
 
@@ -110,7 +110,7 @@ namespace Assistant
             base.Init(selected);
 
             // Spin up CUO
-            Process cuo = new Process();
+            Process cuo = new();
             cuo.StartInfo.FileName = selected.CUOClient;
             cuo.StartInfo.WorkingDirectory = Path.GetDirectoryName(selected.CUOClient);
             int osiEnc = 0;
@@ -224,7 +224,7 @@ namespace Assistant
             header->OnFocusLost = Marshal.GetFunctionPointerForDelegate(_onFocusLost);
 
             RazorEnhanced.Shard fake_shard =
-                new RazorEnhanced.Shard("Classic UO Default", Path.Combine(ClassicUOClient.UOFilePath, "client.exe"),
+                new("Classic UO Default", Path.Combine(ClassicUOClient.UOFilePath, "client.exe"),
                                         ClassicUOClient.UOFilePath, "", "127.0.0.1", 1000, true, false, true);
             base.Init(fake_shard);
             RazorEnhanced.Settings.Load(RazorEnhanced.Profiles.LastUsed());
@@ -273,7 +273,7 @@ namespace Assistant
         }
         public override void RunUI()
         {
-            Thread t = new Thread(() => { RunTheUI(); });
+            Thread t = new(() => { RunTheUI(); });
             t.SetApartmentState(ApartmentState.STA);
             t.IsBackground = true;
             t.Start();
@@ -443,7 +443,7 @@ namespace Assistant
             bool ReWindowVisible = false;
             foreach (Screen screen in Screen.AllScreens)
             {
-                System.Drawing.Rectangle screenArea = new System.Drawing.Rectangle(screen.Bounds.Location, screen.Bounds.Size);
+                System.Drawing.Rectangle screenArea = new(screen.Bounds.Location, screen.Bounds.Size);
                 screenArea.Width -= (Engine.MainWindow.Width / 2);
                 screenArea.Height -= (Engine.MainWindow.Height / 2);
                 if (screenArea.Contains(Engine.MainWindow.Location))
@@ -634,7 +634,7 @@ namespace Assistant
 
         public override List<string> ValidFileLocations()
         {
-            List<string> validFileLocations = new List<string>();
+            List<string> validFileLocations = new();
             validFileLocations.Add(Assistant.Engine.RootPath);
             validFileLocations.Add(Path.GetDirectoryName(CUOAssembly.Location));
 

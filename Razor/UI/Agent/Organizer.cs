@@ -318,7 +318,7 @@ namespace Assistant
                 organizerRemoveListB.InvokeRequired ||
                 organizerDragDelay.InvokeRequired)
             {
-                OrganizerStartWorkCallback d = new OrganizerStartWorkCallback(OrganizerStartWork);
+                OrganizerStartWorkCallback d = new(OrganizerStartWork);
                 this.Invoke(d, null);
             }
             else
@@ -344,7 +344,7 @@ namespace Assistant
                 organizerRemoveListB.InvokeRequired ||
                 organizerDragDelay.InvokeRequired)
             {
-                OrganizerFinishWorkCallback d = new OrganizerFinishWorkCallback(OrganizerFinishWork);
+                OrganizerFinishWorkCallback d = new(OrganizerFinishWork);
                 this.Invoke(d, null);
             }
             else

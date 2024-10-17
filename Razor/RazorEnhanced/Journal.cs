@@ -40,7 +40,7 @@ namespace RazorEnhanced
     /// </summary>
     public class Journal
     {
-        private readonly object syncObj = new object();
+        private readonly object syncObj = new();
         bool m_Active;
         internal bool Active
         {
@@ -62,8 +62,8 @@ namespace RazorEnhanced
             }
         }
 
-        internal static readonly object allInstancesSyncObj = new object();
-        internal static List<WeakReference<Journal>> allInstances = new List<WeakReference<Journal>>();
+        internal static readonly object allInstancesSyncObj = new();
+        internal static List<WeakReference<Journal>> allInstances = new();
         internal static void Enqueue(RazorEnhanced.Journal.JournalEntry entry)
         {
             bool needsCleanup = false;
@@ -92,7 +92,7 @@ namespace RazorEnhanced
 
         internal ConcurrentQueue<RazorEnhanced.Journal.JournalEntry> m_journal;
         internal int m_MaxJournalEntries;
-        internal static Journal GlobalJournal = new Journal(100);
+        internal static Journal GlobalJournal = new(100);
 
         public Journal(int size = 100)
         {
@@ -175,7 +175,7 @@ namespace RazorEnhanced
             /// </summary>
             public double Timestamp { get { return m_Timestamp; } }
 
-            private readonly static DateTime UnixTimeBegin = new DateTime(1970, 1, 1);
+            private readonly static DateTime UnixTimeBegin = new(1970, 1, 1);
 
             public JournalEntry Copy()
             {
@@ -235,7 +235,7 @@ namespace RazorEnhanced
         /// </summary>
         public void Clear()
         {
-            ConcurrentQueue<JournalEntry> Journal = new ConcurrentQueue<JournalEntry>();
+            ConcurrentQueue<JournalEntry> Journal = new();
             Interlocked.Exchange(ref m_journal, Journal);
         }
 
@@ -244,7 +244,7 @@ namespace RazorEnhanced
         /// </summary>
         public void Clear(string toBeRemoved)
         {
-            ConcurrentQueue<JournalEntry> journal = new ConcurrentQueue<JournalEntry>();
+            ConcurrentQueue<JournalEntry> journal = new();
             foreach (var entry in m_journal)
             {
                 if (!entry.Text.Contains(toBeRemoved))
@@ -392,7 +392,7 @@ namespace RazorEnhanced
         static Tuple<string, int, string> ExtractNumberAndString(string input)
         {
             // Regular expression to match string before the '#', the number, and the text after the number
-            Regex regex = new Regex(@"^(.*)#(\d+)(.*)$");
+            Regex regex = new(@"^(.*)#(\d+)(.*)$");
 
             // Match the input with the pattern
             Match match = regex.Match(input);
@@ -455,7 +455,7 @@ namespace RazorEnhanced
         /// <returns>A list of Journal as lines of text.</returns>
         public List<string> GetTextBySerial(int serial, bool addname = false)
         {
-            List<string> result = new List<string>();
+            List<string> result = new();
             try
             {
                 foreach (JournalEntry entrys in m_journal)
@@ -484,7 +484,7 @@ namespace RazorEnhanced
         /// <returns>A list of Journal as lines of text.</returns>
         public List<string> GetTextByColor(int color, bool addname = false)
         {
-            List<string> result = new List<string>();
+            List<string> result = new();
             try
             {
                 foreach (JournalEntry entrys in m_journal)
@@ -513,7 +513,7 @@ namespace RazorEnhanced
         /// <returns>A list of Journal as lines of text.</returns>
         public List<string> GetTextByName(string name, bool addname = false)
         {
-            List<string> result = new List<string>();
+            List<string> result = new();
             try
             {
                 foreach (JournalEntry entrys in m_journal)
@@ -556,7 +556,7 @@ namespace RazorEnhanced
         /// <returns>A list of Journal as lines of text.</returns>
         public List<string> GetTextByType(string type, bool addname = false)
         {
-            List<string> result = new List<string>();
+            List<string> result = new();
             try
             {
                 foreach (JournalEntry entrys in m_journal)
@@ -583,7 +583,7 @@ namespace RazorEnhanced
         /// <returns>List of speakers as text.</returns>
         public List<string> GetSpeechName()
         {
-            List<string> result = new List<string>();
+            List<string> result = new();
             try
             {
                 result.AddRange(from entrys in m_journal where !string.IsNullOrEmpty(entrys.Name) select entrys.Name);

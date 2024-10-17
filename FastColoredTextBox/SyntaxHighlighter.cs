@@ -27,9 +27,9 @@ namespace FastColoredTextBoxNS
         public readonly Style DodgerBlueStyle = new TextStyle(Brushes.DodgerBlue, null, FontStyle.Regular);
         //
         protected readonly Dictionary<string, SyntaxDescriptor> descByXMLfileNames =
-            new Dictionary<string, SyntaxDescriptor>();
+            new();
 
-        protected readonly List<Style> resilientStyles = new List<Style>(5);
+        protected readonly List<Style> resilientStyles = new(5);
 
         protected Regex CSharpAttributeRegex,
                       CSharpClassNameRegex;

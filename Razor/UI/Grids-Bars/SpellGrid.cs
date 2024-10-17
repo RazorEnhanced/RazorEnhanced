@@ -335,7 +335,7 @@ namespace Assistant
                 RazorEnhanced.Settings.General.WriteInt("GridOpacity", o);
                 if (RazorEnhanced.SpellGrid.SpellGridForm != null)
                 {
-                    RazorEnhanced.SpellGrid.SpellGridForm.Opacity = ((double)o) / 100.0;
+                    RazorEnhanced.SpellGrid.SpellGridForm.Opacity = o / 100.0;
                     RazorEnhanced.SpellGrid.SpellGridForm.Show();
                 }
             }

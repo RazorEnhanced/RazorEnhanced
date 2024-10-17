@@ -310,7 +310,7 @@ namespace Assistant
                 if (RazorEnhanced.ToolBar.ToolBarForm != null)
                 {
                     RazorEnhanced.ToolBar.ToolBarForm.Show();
-                    RazorEnhanced.ToolBar.ToolBarForm.Opacity = ((double)o) / 100.0;
+                    RazorEnhanced.ToolBar.ToolBarForm.Opacity = o / 100.0;
                 }
             }
 

@@ -6,7 +6,7 @@ namespace Assistant.Filters
 {
     public abstract class Filter
     {
-        private static readonly ArrayList m_Filters = new ArrayList();
+        private static readonly ArrayList m_Filters = new();
 
         public static ArrayList List
         {

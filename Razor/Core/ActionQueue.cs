@@ -24,13 +24,11 @@ namespace Assistant
 
             try
             {
-                using (StreamWriter w = new StreamWriter("DragDrop.log", true))
-                {
-                    w.Write(DateTime.Now.ToString("HH:mm:ss.fff"));
-                    w.Write(":: ");
-                    w.WriteLine(str, args);
-                    w.Flush();
-                }
+                using StreamWriter w = new("DragDrop.log", true);
+                w.Write(DateTime.Now.ToString("HH:mm:ss.fff"));
+                w.Write(":: ");
+                w.WriteLine(str, args);
+                w.Flush();
             }
             catch
             {
@@ -92,7 +90,7 @@ namespace Assistant
         private static bool m_ClientLiftReq = false;
         private static DateTime m_Lifted = DateTime.MinValue;
 
-        private static readonly Dictionary<Serial, Queue<DropReq>> m_DropReqs = new Dictionary<Serial, Queue<DropReq>>();
+        private static readonly Dictionary<Serial, Queue<DropReq>> m_DropReqs = new();
 
         private static readonly LiftReq[] m_LiftReqs = new LiftReq[500];
         private static byte m_Front, m_Back;
@@ -188,7 +186,7 @@ namespace Assistant
 
         internal static int Drag(Item i, int amount, bool fromClient, bool doLast)
         {
-            LiftReq lr = new LiftReq(i.Serial, amount, fromClient, doLast);
+            LiftReq lr = new(i.Serial, amount, fromClient, doLast);
             LiftReq prev = null;
 
             if (Full)
@@ -470,8 +468,8 @@ namespace Assistant
     internal class ActionQueue
     {
         private static Serial m_Last = Serial.Zero;
-        private static readonly Queue<Serial> m_Queue = new Queue<Serial>();
-        private static readonly ProcTimer m_Timer = new ProcTimer();
+        private static readonly Queue<Serial> m_Queue = new();
+        private static readonly ProcTimer m_Timer = new();
         private static int m_Total = 0;
 
         internal static void DoubleClick(bool silent, Serial s)
@@ -543,7 +541,7 @@ namespace Assistant
             private DateTime m_StartTime;
             private DateTime m_LastTick;
 
-            private readonly ManualResetEvent m_stop = new ManualResetEvent(false);
+            private readonly ManualResetEvent m_stop = new(false);
             private RegisteredWaitHandle m_registeredWait = null;
             public bool Running
             {

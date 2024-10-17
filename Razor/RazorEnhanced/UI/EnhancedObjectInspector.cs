@@ -58,7 +58,7 @@ namespace RazorEnhanced.UI
 
             foreach (var t in Timer.Timers)
             {
-                timerGridView.Rows.Add(new object[] { t.Key, "0x " + ((ScriptTimer)t.Value).Interval.ToString() });
+                timerGridView.Rows.Add(new object[] { t.Key, "0x " + t.Value.Interval.ToString() });
             }
         }
     }

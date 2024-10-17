@@ -8,7 +8,7 @@ namespace RazorEnhanced
 {
     public class TradeService
     {
-        public static readonly TradeService Instance = new TradeService();
+        public static readonly TradeService Instance = new();
 
         public static TradeData Copy(TradeData trade)
         {
@@ -32,7 +32,7 @@ namespace RazorEnhanced
 
         public static float Timestamp() { return ((DateTimeOffset)DateTime.UtcNow).ToUnixTimeMilliseconds() / 1000; }
 
-        private readonly Dictionary<int, TradeData> m_SecureTrades = new Dictionary<int, TradeData>();
+        private readonly Dictionary<int, TradeData> m_SecureTrades = new();
 
         public Dictionary<int, TradeData> TradeData
         {

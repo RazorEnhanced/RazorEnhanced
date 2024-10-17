@@ -7,7 +7,7 @@ namespace RazorEnhanced.UI
 {
     public partial class EnhancedAutolootEditItemProps : Form
     {
-        private readonly List<AutoLoot.AutoLootItem.Property> m_proplist = new List<AutoLoot.AutoLootItem.Property>();
+        private readonly List<AutoLoot.AutoLootItem.Property> m_proplist = new();
         private readonly string m_name;
         private readonly string m_graphics;
         private readonly string m_color;
@@ -32,7 +32,7 @@ namespace RazorEnhanced.UI
             Close();
         }
 
-        internal static List<string> m_default_prop = new List<string>
+        internal static List<string> m_default_prop = new()
         {
             "Balanced",
             "Cold Resist",
@@ -209,7 +209,7 @@ namespace RazorEnhanced.UI
 
         private void SaveData()
         {
-            List<AutoLoot.AutoLootItem.Property> propslist = new List<AutoLoot.AutoLootItem.Property>();
+            List<AutoLoot.AutoLootItem.Property> propslist = new();
             foreach (DataGridViewRow row in autolootpropGridView.Rows)
             {
                 if (row.IsNewRow)

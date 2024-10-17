@@ -1,4 +1,3 @@
-using Accord.Imaging.Filters;
 using Accord.Math;
 using Assistant;
 using IronPython.Runtime;
@@ -6,8 +5,6 @@ using Microsoft.Scripting.Utils;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -16,9 +13,6 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WebSocketSharp;
-using static IronPython.Modules.PythonIterTools;
-using static Microsoft.CodeAnalysis.CSharp.SyntaxTokenParser;
 
 namespace RazorEnhanced.UOS
 {
@@ -109,7 +103,7 @@ namespace RazorEnhanced.UOS
         private static Journal g_journal;
         private Journal m_journal = null;
         //private Mutex m_mutex;
-        private readonly Lexer m_Lexer = new Lexer();
+        private readonly Lexer m_Lexer = new();
 
         private bool m_Loaded = false;
         private bool m_UseIsolation = DEFAULT_ISOLATION;
@@ -179,7 +173,7 @@ namespace RazorEnhanced.UOS
 
         internal List<string> AllKeywords()
         {
-            List<string> retlist = new List<string>();
+            List<string> retlist = new();
             foreach (var cmd in m_Interpreter._commandHandlers)
             {
                 var handler = cmd.Value;
@@ -326,7 +320,7 @@ namespace RazorEnhanced.UOS
                         //case "lastobject": return (uint)Items.LastLobject(); // TODO: Doesn't look like RE there is a way in RE to get the "last object" Serial
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             { }
             return 0;
         }
@@ -458,7 +452,7 @@ namespace RazorEnhanced.UOS
                 {
                     m_journal.Active = false;
                 }
-                
+
             }
         }
 
@@ -844,7 +838,7 @@ namespace RazorEnhanced.UOS
             {
                 serial = args[0].AsSerial();
             }
-            Assistant.Serial thing = new Assistant.Serial(serial);
+            Assistant.Serial thing = new(serial);
 
             if (thing.IsItem)
             {
@@ -877,7 +871,7 @@ namespace RazorEnhanced.UOS
             {
                 serial = args[0].AsSerial();
             }
-            Assistant.Serial thing = new Assistant.Serial(serial);
+            Assistant.Serial thing = new(serial);
 
             if (thing.IsItem)
             {
@@ -911,7 +905,7 @@ namespace RazorEnhanced.UOS
             {
                 serial = args[0].AsSerial();
             }
-            Assistant.Serial thing = new Assistant.Serial(serial);
+            Assistant.Serial thing = new(serial);
 
             if (thing.IsItem)
             {
@@ -959,9 +953,9 @@ namespace RazorEnhanced.UOS
         ///   if it is an item it can't be a mobile and vica-versa
         private static List<int> FindByType_ground(int graphic, int color, int amount, int range)
         {
-            List<int> retList = new List<int>();
+            List<int> retList = new();
             // Search for items first
-            Items.Filter itemFilter = new Items.Filter
+            Items.Filter itemFilter = new()
             {
                 Enabled = true,
                 CheckIgnoreObject = true
@@ -969,7 +963,7 @@ namespace RazorEnhanced.UOS
             itemFilter.Graphics.Add(graphic);
             itemFilter.RangeMax = range;
             itemFilter.OnGround = 1;
-            
+
             if (color != -1)
                 itemFilter.Hues.Add(color);
             List<Item> items = RazorEnhanced.Items.ApplyFilter(itemFilter);
@@ -984,7 +978,7 @@ namespace RazorEnhanced.UOS
                 //return retList;
             }
 
-            Mobiles.Filter mobileFilter = new Mobiles.Filter
+            Mobiles.Filter mobileFilter = new()
             {
                 Enabled = true,
                 CheckIgnoreObject = true
@@ -1012,7 +1006,7 @@ namespace RazorEnhanced.UOS
             int retCount = 0;
 
             // Search for items first
-            Items.Filter itemFilter = new Items.Filter
+            Items.Filter itemFilter = new()
             {
                 Enabled = true,
                 CheckIgnoreObject = true
@@ -1032,7 +1026,7 @@ namespace RazorEnhanced.UOS
                 }
             }
 
-            Mobiles.Filter mobileFilter = new Mobiles.Filter
+            Mobiles.Filter mobileFilter = new()
             {
                 CheckIgnoreObject = true,
                 Enabled = true
@@ -1093,7 +1087,7 @@ namespace RazorEnhanced.UOS
             string listname = args[0].AsString();
             if (m_Interpreter.ListExists(listname))
             {
-                IronPython.Runtime.PythonList itemids = new IronPython.Runtime.PythonList();
+                IronPython.Runtime.PythonList itemids = new();
                 foreach (Argument arg in m_Interpreter.ListContents(listname))
                 {
                     ushort type = arg.AsUShort();
@@ -1188,7 +1182,7 @@ namespace RazorEnhanced.UOS
 
             string findProp = args[0].AsString().ToLower();
             uint serial = args[1].AsSerial();
-            Assistant.Serial thing = new Assistant.Serial(serial);
+            Assistant.Serial thing = new(serial);
 
             if (thing.IsItem)
             {
@@ -1229,7 +1223,7 @@ namespace RazorEnhanced.UOS
             }
 
             uint serial = args[0].AsSerial();
-            Assistant.Serial thing = new Assistant.Serial(serial);
+            Assistant.Serial thing = new(serial);
 
             if (thing.IsItem)
             {
@@ -1341,7 +1335,7 @@ namespace RazorEnhanced.UOS
             }
 
             uint serial = args[0].AsSerial();
-            Assistant.Serial thing = new Assistant.Serial(serial);
+            Assistant.Serial thing = new(serial);
 
             if (thing.IsMobile)
             {
@@ -1412,7 +1406,7 @@ namespace RazorEnhanced.UOS
         private static IComparable Direction(ASTNode node, Argument[] args, bool quiet)
         {
             //UOS Direction -  Start in top-right-corner: 0 | North. Inclements: clockwise
-            Dictionary<string, int> dir_num = new Dictionary<string, int>() {
+            Dictionary<string, int> dir_num = new() {
                 {"North",0}, {"Right",1}, {"East",2}, {"Down",3},
                 {"South",4}, {"Left",5},  {"West",6}, {"Up",7},
 
@@ -1631,7 +1625,7 @@ namespace RazorEnhanced.UOS
         /// </summary>
         private static IComparable Bandage(ASTNode node, Argument[] args, bool quiet)
         {
-            int count = Items.ContainerCount((int)Player.Backpack.Serial, 0x0E21, -1, true);
+            int count = Items.ContainerCount(Player.Backpack.Serial, 0x0E21, -1, true);
             if (count > 0 && (Player.Hits < Player.HitsMax || Player.Poisoned))
                 BandageHeal.Heal(Assistant.World.Player, false);
             return count;
@@ -1755,7 +1749,7 @@ namespace RazorEnhanced.UOS
                 {
                     if (rect.Contains(mobile.Position.X, mobile.Position.Y))
                     {
-                        System.Drawing.Rectangle desiredRect = new System.Drawing.Rectangle(rect.X - range, rect.Y - range, rect.Width - range, rect.Height - range);
+                        System.Drawing.Rectangle desiredRect = new(rect.X - range, rect.Y - range, rect.Width - range, rect.Height - range);
                         if (desiredRect.Contains(mobile.Position.X, mobile.Position.Y))
                             return true;
                     }
@@ -1849,7 +1843,7 @@ namespace RazorEnhanced.UOS
             int range = -1;
 
             uint serial = args[0].AsSerial();
-            Assistant.Serial thing = new Assistant.Serial(serial);
+            Assistant.Serial thing = new(serial);
 
             if (args.Length >= 2)
             {
@@ -1925,7 +1919,7 @@ namespace RazorEnhanced.UOS
                 return Player.MobileID;
 
             uint serial = args[0].AsSerial();
-            Assistant.Serial thing = new Assistant.Serial(serial);
+            Assistant.Serial thing = new(serial);
             if (thing.IsItem)
             {
                 Item item = Items.FindBySerial((int)serial);
@@ -1957,7 +1951,7 @@ namespace RazorEnhanced.UOS
             }
 
             uint serial = args[0].AsSerial();
-            Assistant.Serial thing = new Assistant.Serial(serial);
+            Assistant.Serial thing = new(serial);
 
             int x = -1;
             int y = -1;
@@ -1995,7 +1989,7 @@ namespace RazorEnhanced.UOS
                 // return false;
             }
             uint serial = args[0].AsSerial();
-            Assistant.Serial thing = new Assistant.Serial(serial);
+            Assistant.Serial thing = new(serial);
 
             int range = args[1].AsInt();
             int x = -1;
@@ -2052,7 +2046,7 @@ namespace RazorEnhanced.UOS
                 // return false;
             }
             uint serial = args[0].AsSerial();
-            Assistant.Mobile mobile = Assistant.World.FindMobile((Assistant.Serial)((uint)serial));
+            Assistant.Mobile mobile = Assistant.World.FindMobile((Assistant.Serial)serial);
             if (mobile == null)
                 return false;
 
@@ -2103,7 +2097,7 @@ namespace RazorEnhanced.UOS
             if (args.Length > 0)
             {
                 uint serial = args[0].AsSerial();
-                Friend.FriendPlayer player = new Friend.FriendPlayer("FAKE", (int)serial, true);
+                Friend.FriendPlayer player = new("FAKE", (int)serial, true);
                 string selection = Friend.FriendListName;
                 if (RazorEnhanced.Settings.Friend.ListExists(selection))
                 {
@@ -2174,7 +2168,7 @@ namespace RazorEnhanced.UOS
                 if (serial == Player.Serial)
                 {
                     return Player.Hits;
-                }   
+                }
 
                 Mobile theMobile = Mobiles.FindBySerial((int)serial);
                 if (theMobile != null)
@@ -2370,7 +2364,7 @@ namespace RazorEnhanced.UOS
             return true;
         }
 
-        static internal Dictionary<string, string> map = new Dictionary<string, string>()
+        static internal Dictionary<string, string> map = new()
             {
                 {"north", "North" },
                 {"south", "South" },
@@ -2853,7 +2847,7 @@ namespace RazorEnhanced.UOS
             if (args.Length == 1)
             {
                 string alias = args[0].AsString();
-                RazorEnhanced.Target target = new RazorEnhanced.Target();
+                RazorEnhanced.Target target = new();
                 int value = target.PromptTarget("Target Alias for " + alias);
                 m_Interpreter.SetAlias(alias, (uint)value);
             }
@@ -2971,8 +2965,8 @@ namespace RazorEnhanced.UOS
             }
             else
             {
-                ASTNode node_int = new ASTNode(ASTNodeType.INTEGER, resolvedAlias.ToString(), insertItem.Node, insertItem.Node.LineNumber);
-                Argument newArg = new Argument(insertItem._script, node_int);
+                ASTNode node_int = new(ASTNodeType.INTEGER, resolvedAlias.ToString(), insertItem.Node, insertItem.Node.LineNumber);
+                Argument newArg = new(insertItem._script, node_int);
                 Utility.Logger.Debug("Pushing {0} to list {1}", newArg.AsString(), listName);
                 m_Interpreter.PushList(listName, newArg, (frontBack == "front"), false);
             }
@@ -2981,23 +2975,36 @@ namespace RazorEnhanced.UOS
 
 
         /// <summary>
-        /// moveitemoffset (serial) 'ground' [(x, y, z)] [amount] 
+        /// moveitemoffset (serial) 'ground|container' [(x, y, z)] [amount] 
         /// </summary>
         private static bool MoveItemOffset(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             uint serial = args[0].AsSerial();
-            // string ground = args[1].AsString();
+            string container = args[1].AsString();
             if (args.Length == 2)
-            {
-                Items.DropItemGroundSelf((int)serial);
-            }
+                if (container == "ground")
+                {
+                    Items.DropItemGroundSelf((int)serial);
+                }
+                else 
+                {
+                    uint contSerial = args[1].AsSerial();
+                    Items.Move((int)serial, (int)contSerial, -1);
+                }
             else
             {
-                int amount;
                 if (args.Length == 3)
                 {
-                    amount = args[2].AsInt();
-                    Items.DropItemGroundSelf((int)serial, amount);
+                    int amount = args[2].AsInt();
+                    if (container == "ground")
+                    {
+                        Items.DropItemGroundSelf((int)serial, amount);
+                    }
+                    else
+                    {
+                        uint contSerial = args[1].AsSerial();
+                        Items.Move((int)serial, (int)contSerial, amount);
+                    }
                 }
                 else if (args.Length >= 5)
                 {
@@ -3005,9 +3012,16 @@ namespace RazorEnhanced.UOS
                     int X = args[2].AsInt() + ppos.X;
                     int Y = args[3].AsInt() + ppos.Y;
                     int Z = args[4].AsInt() + ppos.Z;
-
-                    amount = (args.Length == 6) ? args[5].AsInt() : -1;
-                    Items.MoveOnGround((int)serial, amount, X, Y, Z);
+                    int amount = (args.Length == 6) ? args[5].AsInt() : -1;
+                    if (container == "ground")
+                    {
+                        Items.MoveOnGround((int)serial, amount, X, Y, Z);
+                    }
+                    else
+                    {
+                        uint contSerial = args[1].AsSerial();
+                        Items.Move((int)serial, (int)contSerial, amount, X, Y);
+                    }
                 }
                 else
                 {
@@ -3128,7 +3142,7 @@ namespace RazorEnhanced.UOS
                         if (item != null)
                         {
                             if (x == 0 && y == 0)
-                                Items.Move((int)item.Serial, (int)dest, amount);
+                                Items.Move(item.Serial, (int)dest, amount);
                             else
                                 Items.Move(item.Serial, (int)dest, amount, x, y);
                             return true;
@@ -3183,7 +3197,7 @@ namespace RazorEnhanced.UOS
                         Item item = Items.FindByID(id, -1, (int)src, true);
                         if (item != null)
                         {
-                            Items.MoveOnGround(item.Serial, -1, (int)Player.Position.X + x, (int)Player.Position.Y + y, (int)Player.Position.Z + z);
+                            Items.MoveOnGround(item.Serial, -1, Player.Position.X + x, Player.Position.Y + y, Player.Position.Z + z);
                             return true;
                         }
                     }
@@ -3288,7 +3302,7 @@ namespace RazorEnhanced.UOS
                     m_lastMount = (int)m_Interpreter.GetAlias("mount");
                     if (m_lastMount == 0)
                     {
-                        RazorEnhanced.Target target = new RazorEnhanced.Target();
+                        RazorEnhanced.Target target = new();
                         m_lastMount = target.PromptTarget("Select a new mount");
                     }
                 }
@@ -3606,9 +3620,9 @@ namespace RazorEnhanced.UOS
             {
                 uint gumpid = args[0].AsUInt();
                 int buttonid = args[1].AsInt();
-                IronPython.Runtime.PythonList switches = new IronPython.Runtime.PythonList();
-                IronPython.Runtime.PythonList textIds = new IronPython.Runtime.PythonList();
-                IronPython.Runtime.PythonList textValues = new IronPython.Runtime.PythonList();
+                IronPython.Runtime.PythonList switches = new();
+                IronPython.Runtime.PythonList textIds = new();
+                IronPython.Runtime.PythonList textValues = new();
 
                 string sl = args[2].AsString().Trim().Replace("\"", "");
                 if (sl.Length > 0)
@@ -3781,7 +3795,7 @@ namespace RazorEnhanced.UOS
                 }
 
                 string fullpath = Path.Combine(Assistant.Engine.RootPath, filename);
-                System.Media.SoundPlayer player = new System.Media.SoundPlayer(fullpath);
+                System.Media.SoundPlayer player = new(fullpath);
                 player.Play();
                 return true;
             }
@@ -4638,7 +4652,7 @@ namespace RazorEnhanced.UOS
         {
             if (args.Length == 0) { WrongParameterCount(node, 1, args.Length); }
 
-            RazorEnhanced.Mobiles.Filter filter = new RazorEnhanced.Mobiles.Filter();
+            RazorEnhanced.Mobiles.Filter filter = new();
             filter.CheckIgnoreObject = true;
             filter.IgnorePets = true;
 
@@ -4720,7 +4734,7 @@ namespace RazorEnhanced.UOS
         {
             if (args.Length == 0) { WrongParameterCount(node, 1, args.Length); }
 
-            RazorEnhanced.Mobiles.Filter filter = new RazorEnhanced.Mobiles.Filter();
+            RazorEnhanced.Mobiles.Filter filter = new();
             filter.CheckIgnoreObject = true;
             bool nearest = false;
             foreach (var arg in args)
@@ -5044,7 +5058,7 @@ namespace RazorEnhanced.UOS
             if (args.Length == 0) { WrongParameterCount(node, 1, 0); }
             var graphic = args[0].AsInt();
             var color = (args.Length >= 2 ? args[1].AsInt() : -1);
-            var range = (args.Length >= 3 ? args[2].AsInt() : (int)Player.Backpack.Serial);
+            var range = (args.Length >= 3 ? args[2].AsInt() : Player.Backpack.Serial);
 
             Item itm = null;
             // Container (Range: Container Serial)
@@ -5081,15 +5095,15 @@ namespace RazorEnhanced.UOS
                 var options = new Mobiles.Filter();
                 options.CheckIgnoreObject = true;
 
-                List<byte> notoriety = new List<byte>
-                    {
-                        (byte)1,
-                        (byte)2,
-                        (byte)3,
-                        (byte)4,
-                        (byte)5,
-                        (byte)6,
-                        (byte)7
+                List<byte> notoriety = new()
+                {
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7
                     };
 
                 options.Bodies.Add(graphic);
@@ -5535,7 +5549,7 @@ namespace RazorEnhanced.UOS
 
     public class Scope
     {
-        private readonly Dictionary<string, Argument> _namespace = new Dictionary<string, Argument>();
+        private readonly Dictionary<string, Argument> _namespace = new();
 
         public readonly ASTNode StartNode;
         public readonly Scope Parent;
@@ -5714,7 +5728,7 @@ namespace RazorEnhanced.UOS
 
         internal Argument CheckIsListElement(string token)
         {
-            Regex rx = new Regex(@"(\S+)\[(\d+)\]");
+            Regex rx = new(@"(\S+)\[(\d+)\]");
             Match match = rx.Match(token);
             if (match.Success)
             {
@@ -5829,7 +5843,7 @@ namespace RazorEnhanced.UOS
 
         private Argument[] ConstructArguments(ref ASTNode node)
         {
-            List<Argument> args = new List<Argument>();
+            List<Argument> args = new();
 
             node = node.Next();
 
@@ -6753,7 +6767,7 @@ namespace RazorEnhanced.UOS
                             val = handler(node, ConstructArguments(ref node), quiet);
                         else
                         {
-                            Argument temp = new Argument(this, node);
+                            Argument temp = new(this, node);
                             val = temp.AsString();
                         }
                         break;
@@ -6770,14 +6784,14 @@ namespace RazorEnhanced.UOS
     {
         const string DEFAULT_NAMESPACE = "global";
 
-        public static readonly ConcurrentDictionary<string, Namespace> _namespaces = new ConcurrentDictionary<string, Namespace>();
-        public static readonly Namespace GlobalNamespace = new Namespace(DEFAULT_NAMESPACE);
+        public static readonly ConcurrentDictionary<string, Namespace> _namespaces = new();
+        public static readonly Namespace GlobalNamespace = new(DEFAULT_NAMESPACE);
 
         // Timers
         public readonly string Name;
-        public readonly ConcurrentDictionary<string, int> _alias = new ConcurrentDictionary<string, int>();
-        public readonly ConcurrentDictionary<string, DateTime> _timers = new ConcurrentDictionary<string, DateTime>();
-        public readonly ConcurrentDictionary<string, List<Argument>> _lists = new ConcurrentDictionary<string, List<Argument>>();
+        public readonly ConcurrentDictionary<string, int> _alias = new();
+        public readonly ConcurrentDictionary<string, DateTime> _timers = new();
+        public readonly ConcurrentDictionary<string, List<Argument>> _lists = new();
 
         public static Namespace Get(string name = null)
         {
@@ -6985,7 +6999,7 @@ namespace RazorEnhanced.UOS
 
     public class Interpreter
     {
-        internal static readonly Dictionary<string, AliasHandler> _aliasHandlers = new Dictionary<string, AliasHandler>();
+        internal static readonly Dictionary<string, AliasHandler> _aliasHandlers = new();
 
         // Delegates
         //public delegate T ExpressionHandler<T>(string expression, Argument[] args, bool quiet) where T : IComparable;
@@ -6993,8 +7007,8 @@ namespace RazorEnhanced.UOS
         public delegate bool CommandHandler(ASTNode node, Argument[] args, bool quiet, bool force);
         public delegate uint AliasHandler(string alias);
 
-        internal readonly ConcurrentDictionary<string, ExpressionHandler> _exprHandlers = new ConcurrentDictionary<string, ExpressionHandler>();
-        internal readonly ConcurrentDictionary<string, CommandHandler> _commandHandlers = new ConcurrentDictionary<string, CommandHandler>();
+        internal readonly ConcurrentDictionary<string, ExpressionHandler> _exprHandlers = new();
+        internal readonly ConcurrentDictionary<string, CommandHandler> _commandHandlers = new();
 
         // Timers
 
@@ -7072,7 +7086,7 @@ namespace RazorEnhanced.UOS
         public void RegisterCommandHandler(string keyword, CommandHandler handler, string docString = "default")
         {
             _commandHandlers[keyword.ToLower()] = handler;
-            DocItem di = new DocItem("", "UOSteamEngine", keyword, docString);
+            DocItem di = new("", "UOSteamEngine", keyword, docString);
         }
         public CommandHandler GetCommandHandler(string keyword)
         {
@@ -7571,8 +7585,8 @@ namespace RazorEnhanced.UOS
         private string[] _lines;
         private ASTNode m_LastStatement;
 
-        static Regex matchListName = new Regex("[a-zA-Z]+", RegexOptions.Compiled);
-        static Regex matchNumber = new Regex("^[0-9]+$", RegexOptions.Compiled);
+        static Regex matchListName = new("[a-zA-Z]+", RegexOptions.Compiled);
+        static Regex matchNumber = new("^[0-9]+$", RegexOptions.Compiled);
 
 
         //private static string _filename = ""; // can be empty
@@ -7592,7 +7606,7 @@ namespace RazorEnhanced.UOS
         public ASTNode Lex(string[] lines)
         {
             _lines = lines;
-            ASTNode root_node = new ASTNode(ASTNodeType.SCRIPT, null, null, 0, this);
+            ASTNode root_node = new(ASTNodeType.SCRIPT, null, null, 0, this);
             m_LastStatement = root_node;
             try
             {
@@ -7623,7 +7637,7 @@ namespace RazorEnhanced.UOS
             return Lex(lines);
         }
 
-        private static readonly TextParser _tfp = new TextParser("", new char[] { ' ' }, new string[] { "//", "#" }, new char[] { '\'', '\'', '"', '"' });
+        private static readonly TextParser _tfp = new("", new char[] { ' ' }, new string[] { "//", "#" }, new char[] { '\'', '\'', '"', '"' });
         private void ParseLine(ASTNode node, string line)
         {
             line = line.Trim();
@@ -8139,7 +8153,7 @@ namespace RazorEnhanced.UOS
 
         private string ObtainData()
         {
-            StringBuilder result = new StringBuilder();
+            StringBuilder result = new();
 
             while (_pos < _Size && _string[_pos] != '\n')
             {
@@ -8214,7 +8228,7 @@ namespace RazorEnhanced.UOS
         internal string[] GetTokens(string str, bool trim = true)
         {
             _trim = trim;
-            List<string> result = new List<string>();
+            List<string> result = new();
 
             _pos = 0;
             _string = str;

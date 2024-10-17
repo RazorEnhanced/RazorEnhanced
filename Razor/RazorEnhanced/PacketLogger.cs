@@ -15,7 +15,8 @@ namespace RazorEnhanced
     /// </summary>
     public class PacketLogger
     {
-        public readonly static Dictionary<PacketPath, string> PathToString = new Dictionary<PacketPath, string> {
+        public readonly static Dictionary<PacketPath, string> PathToString = new()
+        {
             { PacketPath.ClientToServer, "ClientToServer" },
             { PacketPath.ServerToClient, "ServerToClient" },
             { PacketPath.RazorToServer, "RazorToServer" },
@@ -23,7 +24,8 @@ namespace RazorEnhanced
             { PacketPath.PacketVideo, "PacketVideo" },
         };
 
-        public readonly static Dictionary<string, PacketPath> StringToPath = new Dictionary<string, PacketPath> {
+        public readonly static Dictionary<string, PacketPath> StringToPath = new()
+        {
             { "ClientToServer", PacketPath.ClientToServer},
             { "ServerToClient", PacketPath.ServerToClient},
             { "RazorToServer", PacketPath.RazorToServer },
@@ -524,7 +526,7 @@ namespace RazorEnhanced
             {
                 var packetID = packetReader.ReadByte();
                 packetReader.Seek(-1, SeekOrigin.Current);
-                Dictionary<string, dynamic> fieldsObject = new Dictionary<string, dynamic>();
+                Dictionary<string, dynamic> fieldsObject = new();
                 foreach (var field in template.fields)
                 {
                     var fieldObj = parseField(field, packetReader);
@@ -533,7 +535,8 @@ namespace RazorEnhanced
                         fieldsObject.Add(field.name, fieldObj);
                     }
                 }
-                Dictionary<string, dynamic> packetObject = new Dictionary<string, dynamic>{
+                Dictionary<string, dynamic> packetObject = new()
+                {
                         //{ "version", version },
                         { "name", template.name },
                         { "packetID", "0x{0:X2}".Format(packetID) },
@@ -552,7 +555,8 @@ namespace RazorEnhanced
                 if (field.subpacket != null)
                 {
                     field.type = FieldType.SUBPACKET;
-                    Dictionary<string, dynamic> subpacketObject = new Dictionary<string, dynamic>{
+                    Dictionary<string, dynamic> subpacketObject = new()
+                    {
                             { field.name, parsePacket(field.subpacket,packetReader) }
                         };
                     return subpacketObject;
@@ -577,7 +581,8 @@ namespace RazorEnhanced
                     {
                         field.type = FieldType.FIELDS;
                     }
-                    Dictionary<string, dynamic> fieldObjects = new Dictionary<string, dynamic>{
+                    Dictionary<string, dynamic> fieldObjects = new()
+                    {
                                 { field.name, subfieldObjects },
                             };
 
@@ -591,7 +596,7 @@ namespace RazorEnhanced
                     {
                         case 1: return packetReader.ReadByte();
                         case 2: return packetReader.ReadInt16();
-                        case 3: return (((Int32)packetReader.ReadInt16()) << 8) | packetReader.ReadByte();
+                        case 3: return (packetReader.ReadInt16() << 8) | packetReader.ReadByte();
                         case 4: return packetReader.ReadInt32();
                     }
                 }

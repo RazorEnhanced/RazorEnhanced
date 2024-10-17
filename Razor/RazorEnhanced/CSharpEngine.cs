@@ -1,4 +1,3 @@
-using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeDom.Providers.DotNetCompilerPlatform;
 using Microsoft.Scripting;
@@ -9,8 +8,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using Assistant;
-using System.Runtime.InteropServices;
 
 namespace RazorEnhanced
 {
@@ -310,8 +307,8 @@ namespace RazorEnhanced
                 // Write the source code to the file
                 File.WriteAllText(tempFileName, source);
 
-            // Call the CompileFromFile method
-            return CompileFromFile(tempFileName, true, out errorwarnings, out assembly);
+                // Call the CompileFromFile method
+                return CompileFromFile(tempFileName, true, out errorwarnings, out assembly);
             }
             finally
             {
@@ -322,15 +319,15 @@ namespace RazorEnhanced
                 }
             }
 
-            return false;
+            // return false;
         }
 
-    // https://medium.com/swlh/replace-codedom-with-roslyn-but-bin-roslyn-csc-exe-not-found-6a5dd9290bf2
-    // https://stackoverflow.com/questions/20018979/how-can-i-target-a-specific-language-version-using-codedom
-    // https://docs.microsoft.com/it-it/dotnet/api/microsoft.csharp.csharpcodeprovider.-ctor?view=net-5.0
-    // https://github.com/aspnet/RoslynCodeDomProvider/blob/main/src/Microsoft.CodeDom.Providers.DotNetCompilerPlatform/Util/IProviderOptions.cs
-    // https://josephwoodward.co.uk/2016/12/in-memory-c-sharp-compilation-using-roslyn
-    public bool CompileFromFile(string path, bool debug, out List<string> errorwarnings, out Assembly assembly)
+        // https://medium.com/swlh/replace-codedom-with-roslyn-but-bin-roslyn-csc-exe-not-found-6a5dd9290bf2
+        // https://stackoverflow.com/questions/20018979/how-can-i-target-a-specific-language-version-using-codedom
+        // https://docs.microsoft.com/it-it/dotnet/api/microsoft.csharp.csharpcodeprovider.-ctor?view=net-5.0
+        // https://github.com/aspnet/RoslynCodeDomProvider/blob/main/src/Microsoft.CodeDom.Providers.DotNetCompilerPlatform/Util/IProviderOptions.cs
+        // https://josephwoodward.co.uk/2016/12/in-memory-c-sharp-compilation-using-roslyn
+        public bool CompileFromFile(string path, bool debug, out List<string> errorwarnings, out Assembly assembly)
         {
             errorwarnings = new();
             assembly = null;

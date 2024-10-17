@@ -32,7 +32,7 @@ namespace Assistant
 
         private void videoPathButton_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog folder = new FolderBrowserDialog
+            FolderBrowserDialog folder = new()
             {
                 Description = "Select a folder to store Razor video file",
                 SelectedPath = RazorEnhanced.Settings.General.ReadString("VideoPath"),
@@ -80,7 +80,7 @@ namespace Assistant
         {
             if (e.Button == MouseButtons.Right && e.Clicks == 1)
             {
-                ContextMenu menu = new ContextMenu();
+                ContextMenu menu = new();
                 menu.MenuItems.Add("Delete", new EventHandler(DeleteVideoFile));
                 if (videolistBox.SelectedIndex == -1)
                     menu.MenuItems[menu.MenuItems.Count - 1].Enabled = false;
@@ -130,7 +130,7 @@ namespace Assistant
                 return;
 
             string[] files = Directory.GetFiles(dir, "*.avi");
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
             int failed = 0;
             for (int i = 0; i < files.Length; i++)
             {
@@ -218,7 +218,7 @@ namespace Assistant
         // Open video source
         private void OpenVideoSource(string file)
         {
-            FileVideoSource source = new FileVideoSource(file);
+            FileVideoSource source = new(file);
             // set busy cursor
             this.Cursor = Cursors.WaitCursor;
 

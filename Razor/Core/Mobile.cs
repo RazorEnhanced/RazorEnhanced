@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace Assistant
 {
@@ -27,9 +26,8 @@ namespace Assistant
 
     public class Mobile : UOEntity
     {
-        private static readonly List<ushort> m_HumanBodies = new List<ushort>() { 183, 184, 185, 186, 400, 401, 402, 403, 605, 606, 607, 608, 666, 667, 694, 744, 745, 747, 748, 750, 751, 970, 695 };
+        private static readonly List<ushort> m_HumanBodies = new() { 183, 184, 185, 186, 400, 401, 402, 403, 605, 606, 607, 608, 666, 667, 694, 744, 745, 747, 748, 750, 751, 970, 695 };
 
-        private ushort m_Body;
         private Direction m_Direction;
         private string m_Name;
 
@@ -128,7 +126,8 @@ namespace Assistant
         internal string KarmaTitle
         {
             get { return _karmaTitle; }
-            set { 
+            set
+            {
                 Karma = -1;
                 Fame = -1;
                 _karmaTitle = value;
@@ -215,13 +214,13 @@ namespace Assistant
                 if (StatsUpdated && m_Hits == 0)
                     return true;
 
-                return m_Body == 402
-                    || m_Body == 403
-                    || m_Body == 607
-                    || m_Body == 608
-                    || m_Body == 694
-                    || m_Body == 695
-                    || m_Body == 970;
+                return Body == 402
+                    || Body == 403
+                    || Body == 607
+                    || Body == 608
+                    || Body == 694
+                    || Body == 695
+                    || Body == 970;
             }
         }
 
@@ -367,7 +366,7 @@ namespace Assistant
 
         internal override void Remove()
         {
-            List<Item> rem = new List<Item>(m_Items);
+            List<Item> rem = new(m_Items);
             m_Items.Clear();
 
             foreach (Item r in rem)
@@ -398,7 +397,7 @@ namespace Assistant
                 return null;
             for (int i = 0; i < m_Items.Count; i++)
             {
-                Item item = (Item)m_Items[i];
+                Item item = m_Items[i];
                 if (item.Layer == layer)
                     return item;
             }
@@ -514,7 +513,7 @@ namespace Assistant
                     return;
                 }
             }
-            Assistant.Client.Instance.SendToClient(new UnicodeMessage(Serial, m_Body, MessageType.Regular, hue, 3, Language.CliLocName, from, text));
+            Assistant.Client.Instance.SendToClient(new UnicodeMessage(Serial, Body, MessageType.Regular, hue, 3, Language.CliLocName, from, text));
         }
 
         internal void OverheadMessage(string text)

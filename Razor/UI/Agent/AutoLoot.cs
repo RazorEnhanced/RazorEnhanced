@@ -114,7 +114,7 @@ namespace Assistant
                     return;
 
                 DataGridViewRow row = autolootdataGridView.Rows[autolootdataGridView.CurrentCell.RowIndex];
-                EnhancedAutolootEditItemProps editProp = new EnhancedAutolootEditItemProps(ref row)
+                EnhancedAutolootEditItemProps editProp = new(ref row)
                 {
                     TopMost = true
                 };

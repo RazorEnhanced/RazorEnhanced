@@ -58,41 +58,41 @@ namespace RazorEnhanced
         }
 
         // Piccola Orizzontale
-        private static Label m_hitslabelSH = new Label();
-        private static Label m_manalabelSH = new Label();
-        private static Label m_staminalabelSH = new Label();
-        private static Label m_weightlabelSH = new Label();
-        private static Label m_tithelabelSH = new Label();
+        private static Label m_hitslabelSH = new();
+        private static Label m_manalabelSH = new();
+        private static Label m_staminalabelSH = new();
+        private static Label m_weightlabelSH = new();
+        private static Label m_tithelabelSH = new();
 
-        private static Label m_followerlabelSH = new Label();
+        private static Label m_followerlabelSH = new();
 
         // Piccola verticale
-        private static Label m_strlabelSV = new Label();
-        private static Label m_hitlabelSV = new Label();
-        private static Label m_dexlabelSV = new Label();
-        private static Label m_stamlabelSV = new Label();
-        private static Label m_intlabelSV = new Label();
-        private static Label m_manalabelSV = new Label();
-        private static Label m_weightlabelSV = new Label();
-        private static Label m_tithelabelSV = new Label();
+        private static Label m_strlabelSV = new();
+        private static Label m_hitlabelSV = new();
+        private static Label m_dexlabelSV = new();
+        private static Label m_stamlabelSV = new();
+        private static Label m_intlabelSV = new();
+        private static Label m_manalabelSV = new();
+        private static Label m_weightlabelSV = new();
+        private static Label m_tithelabelSV = new();
 
-        private static Label m_weightmaxlabelSV = new Label();
-        private static Label m_followerlabelSV = new Label();
+        private static Label m_weightmaxlabelSV = new();
+        private static Label m_followerlabelSV = new();
 
         // Grande orizzontale e verticale
-        private static Label m_labelBarHitsBHV = new Label();
-        private static Label m_labelTextHitsBHV = new Label();
-        private static Label m_labelTextManaBHV = new Label();
-        private static Label m_labelBarManaBHV = new Label();
-        private static Label m_labelBarStaminaBHV = new Label();
-        private static Label m_labelTextStaminaBHV = new Label();
-        private static Label m_labelTextWeightBHV = new Label();
-        private static Label m_labelTextTitheBHV = new Label();
+        private static Label m_labelBarHitsBHV = new();
+        private static Label m_labelTextHitsBHV = new();
+        private static Label m_labelTextManaBHV = new();
+        private static Label m_labelBarManaBHV = new();
+        private static Label m_labelBarStaminaBHV = new();
+        private static Label m_labelTextStaminaBHV = new();
+        private static Label m_labelTextWeightBHV = new();
+        private static Label m_labelTextTitheBHV = new();
 
-        private static Label m_labelTextFollowerBHV = new Label();
+        private static Label m_labelTextFollowerBHV = new();
 
-        private static List<Panel> m_panellist = new List<Panel>();
-        private static List<Label> m_panelcount = new List<Label>();
+        private static List<Panel> m_panellist = new();
+        private static List<Label> m_panelcount = new();
 
         [Serializable]
         public class ToolBarItem
@@ -129,7 +129,7 @@ namespace RazorEnhanced
 
             if (Settings.General.ReadString("ToolBoxSizeComboBox") == "Big")
             {
-                int percent = (int)(hits * 100 / (maxhits == 0 ? (ushort)1 : maxhits));
+                int percent = hits * 100 / (maxhits == 0 ? 1 : maxhits);
 
                 m_labelTextHitsBHV.Text = "Hits: " + hits.ToString() + " / " + maxhits.ToString();
                 m_labelBarHitsBHV.Size = Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical" ? new Size(percent, 10) : new Size(percent, 5);
@@ -156,7 +156,7 @@ namespace RazorEnhanced
 
             if (Settings.General.ReadString("ToolBoxSizeComboBox") == "Big")
             {
-                int percent = (int)(stam * 100 / (maxstam == 0 ? (ushort)1 : maxstam));
+                int percent = stam * 100 / (maxstam == 0 ? 1 : maxstam);
 
                 m_labelTextStaminaBHV.Text = "Stam: " + stam.ToString() + " / " + maxstam.ToString();
                 m_labelBarStaminaBHV.Size = Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical" ? new Size(percent, 10) : new Size(percent, 5);
@@ -183,7 +183,7 @@ namespace RazorEnhanced
 
             if (Settings.General.ReadString("ToolBoxSizeComboBox") == "Big")
             {
-                int percent = (int)(mana * 100 / (maxmana == 0 ? (ushort)1 : maxmana));
+                int percent = mana * 100 / (maxmana == 0 ? 1 : maxmana);
 
                 m_labelTextManaBHV.Text = "Mana: " + mana.ToString() + " / " + maxmana.ToString();
                 m_labelBarManaBHV.Size = Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical" ? new Size(percent, 10) : new Size(percent, 5);
@@ -331,7 +331,7 @@ namespace RazorEnhanced
             UpdateCount();
             DLLImport.Win.ShowWindow(m_form.Handle, 8);
             m_form.Location = new Point(Settings.General.ReadInt("PosXToolBar"), Settings.General.ReadInt("PosYToolBar"));
-            m_form.Opacity = ((double)Settings.General.ReadInt("ToolBarOpacity")) / 100.0; ;
+            m_form.Opacity = Settings.General.ReadInt("ToolBarOpacity") / 100.0; ;
         }
 
         internal static void UptateToolBarComboBox(int index, int slotlimit = 0)
@@ -540,8 +540,8 @@ namespace RazorEnhanced
 
         internal static ContextMenu GeneraMenu()
         {
-            ContextMenu cm = new ContextMenu();
-            MenuItem menuItem = new MenuItem
+            ContextMenu cm = new();
+            MenuItem menuItem = new()
             {
                 Text = "Close"
             };
@@ -666,7 +666,7 @@ namespace RazorEnhanced
             {
                 m_labelBarHitsBHV = new Label
                 {
-                    BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0))))),
+                    BackColor = System.Drawing.Color.FromArgb(0, 192, 0),
                     Location = new Point(12, offsetstat + 16),
                     Name = "labelBarHits",
                     Size = new Size(100, 10),
@@ -699,7 +699,7 @@ namespace RazorEnhanced
             {
                 m_labelBarManaBHV = new Label
                 {
-                    BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0))))),
+                    BackColor = System.Drawing.Color.FromArgb(0, 192, 0),
                     Location = new Point(12, offsetstat + 16),
                     Name = "labelBarMana",
                     Size = new Size(100, 10),
@@ -732,7 +732,7 @@ namespace RazorEnhanced
             {
                 m_labelBarStaminaBHV = new Label
                 {
-                    BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0))))),
+                    BackColor = System.Drawing.Color.FromArgb(0, 192, 0),
                     Location = new Point(12, offsetstat + 16),
                     Name = "labelBarStamina",
                     Size = new Size(100, 10),
@@ -834,20 +834,20 @@ namespace RazorEnhanced
                 sfondotemporaneo = BackGroundAddVerticale(sfondotemporaneo, Assistant.Properties.Resources.BarraGrandeVerticaleSlot);
 
                 // Aggiungo panel dinamici
-                Label labeltemp1 = new Label
+                Label labeltemp1 = new()
                 {
                     AutoSize = true,
                     Location = new Point(0, 29),
                     Font =
                         new System.Drawing.Font("Arial", 6.75F, System.Drawing.FontStyle.Regular,
-                            System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+                            System.Drawing.GraphicsUnit.Point, 0),
                     Name = "panel" + i + "count",
                     Size = new Size(25, 13),
                     TabIndex = 1,
                     Text = "000"
                 };
 
-                Panel paneltemp1 = new Panel
+                Panel paneltemp1 = new()
                 {
                     BackColor = Color.Transparent,
                     BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center,
@@ -858,18 +858,18 @@ namespace RazorEnhanced
                     TabIndex = 10,
                 };
 
-                Label labeltemp2 = new Label
+                Label labeltemp2 = new()
                 {
                     AutoSize = true,
                     Location = new Point(0, 29),
-                    Font = new System.Drawing.Font("Arial", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+                    Font = new System.Drawing.Font("Arial", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0),
                     Name = "panel" + i + "count",
                     Size = new Size(25, 13),
                     TabIndex = 1,
                     Text = "000"
                 };
 
-                Panel paneltemp2 = new Panel
+                Panel paneltemp2 = new()
                 {
                     BackColor = Color.Transparent,
                     BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center,
@@ -929,7 +929,7 @@ namespace RazorEnhanced
             {
                 m_labelBarHitsBHV = new Label
                 {
-                    BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0))))),
+                    BackColor = System.Drawing.Color.FromArgb(0, 192, 0),
                     Location = new Point(12, offsetstat + 16),
                     Name = "labelBarHits",
                     Size = new Size(100, 5),
@@ -958,7 +958,7 @@ namespace RazorEnhanced
             {
                 m_labelBarManaBHV = new Label
                 {
-                    BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0))))),
+                    BackColor = System.Drawing.Color.FromArgb(0, 192, 0),
                     Location = new Point(12, offsetstat + 16),
                     Name = "labelBarMana",
                     Size = new Size(100, 5),
@@ -987,7 +987,7 @@ namespace RazorEnhanced
             {
                 m_labelBarStaminaBHV = new Label
                 {
-                    BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0))))),
+                    BackColor = System.Drawing.Color.FromArgb(0, 192, 0),
                     Location = new Point(12, offsetstat + 16),
                     Name = "labelBarStamina",
                     Size = new Size(100, 5),
@@ -1077,20 +1077,20 @@ namespace RazorEnhanced
                 //Genero sfondo slot
                 tempBackground = BackgroundAddHorizontal(tempBackground, Assistant.Properties.Resources.BarraGrandeOrizzontaleSlot);
 
-                Label labeltemp1 = new Label
+                Label labeltemp1 = new()
                 {
                     AutoSize = true,
                     Location = new Point(0, 29),
                     Font =
                         new System.Drawing.Font("Arial", 6.75F, System.Drawing.FontStyle.Regular,
-                            System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+                            System.Drawing.GraphicsUnit.Point, 0),
                     Name = "panel" + i + "count",
                     Size = new Size(25, 13),
                     TabIndex = 1,
                     Text = "000"
                 };
 
-                Panel paneltemp1 = new Panel
+                Panel paneltemp1 = new()
                 {
                     BackColor = Color.Transparent,
                     BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center,
@@ -1102,20 +1102,20 @@ namespace RazorEnhanced
                 };
                 paneltemp1.Controls.Add(labeltemp1);
 
-                Label labeltemp2 = new Label
+                Label labeltemp2 = new()
                 {
                     AutoSize = true,
                     Location = new Point(0, 29),
                     Font =
                         new System.Drawing.Font("Arial", 6.75F, System.Drawing.FontStyle.Regular,
-                            System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+                            System.Drawing.GraphicsUnit.Point, 0),
                     Name = "panel" + i + "count",
                     Size = new Size(25, 13),
                     TabIndex = 1,
                     Text = "000"
                 };
 
-                Panel paneltemp2 = new Panel
+                Panel paneltemp2 = new()
                 {
                     BackColor = Color.Transparent,
                     BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center,
@@ -1163,7 +1163,7 @@ namespace RazorEnhanced
                 m_strlabelSV = new Label
                 {
                     AutoSize = true,
-                    Font = new System.Drawing.Font("Arial", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+                    Font = new System.Drawing.Font("Arial", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0),
                     Location = new Point(5, offsetstat),
                     Name = "label1",
                     Size = new Size(50, 12),
@@ -1175,7 +1175,7 @@ namespace RazorEnhanced
                 m_hitlabelSV = new Label
                 {
                     AutoSize = true,
-                    Font = new System.Drawing.Font("Arial", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+                    Font = new System.Drawing.Font("Arial", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0),
                     Location = new Point(5, offsetstat + 13),
                     Name = "label1",
                     Size = new Size(50, 12),
@@ -1196,7 +1196,7 @@ namespace RazorEnhanced
                 m_intlabelSV = new Label
                 {
                     AutoSize = true,
-                    Font = new System.Drawing.Font("Arial", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+                    Font = new System.Drawing.Font("Arial", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0),
                     Location = new Point(5, offsetstat),
                     Name = "label1",
                     Size = new Size(50, 12),
@@ -1208,7 +1208,7 @@ namespace RazorEnhanced
                 m_manalabelSV = new Label
                 {
                     AutoSize = true,
-                    Font = new System.Drawing.Font("Arial", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+                    Font = new System.Drawing.Font("Arial", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0),
                     Location = new Point(5, offsetstat + 13),
                     Name = "label1",
                     Size = new Size(48, 12),
@@ -1229,7 +1229,7 @@ namespace RazorEnhanced
                 m_dexlabelSV = new Label
                 {
                     AutoSize = true,
-                    Font = new System.Drawing.Font("Arial", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+                    Font = new System.Drawing.Font("Arial", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0),
                     Location = new Point(5, offsetstat),
                     Name = "label1",
                     Size = new Size(50, 12),
@@ -1241,7 +1241,7 @@ namespace RazorEnhanced
                 m_stamlabelSV = new Label
                 {
                     AutoSize = true,
-                    Font = new System.Drawing.Font("Arial", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+                    Font = new System.Drawing.Font("Arial", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0),
                     Location = new Point(5, offsetstat + 13),
                     Name = "label1",
                     Size = new Size(50, 12),
@@ -1262,7 +1262,7 @@ namespace RazorEnhanced
                 m_weightlabelSV = new Label
                 {
                     AutoSize = true,
-                    Font = new Font("Arial", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+                    Font = new Font("Arial", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0),
                     Location = new Point(5, offsetstat),
                     Name = "label1",
                     Size = new Size(50, 12),
@@ -1274,7 +1274,7 @@ namespace RazorEnhanced
                 m_weightmaxlabelSV = new Label
                 {
                     AutoSize = true,
-                    Font = new Font("Arial", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+                    Font = new Font("Arial", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0),
                     Location = new Point(5, offsetstat + 13),
                     Name = "label1",
                     Size = new Size(50, 12),
@@ -1296,7 +1296,7 @@ namespace RazorEnhanced
                 m_tithelabelSV = new Label
                 {
                     AutoSize = true,
-                    Font = new Font("Arial", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+                    Font = new Font("Arial", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0),
                     Location = new Point(5, offsetstat),
                     Name = "label1",
                     Size = new Size(50, 12),
@@ -1317,7 +1317,7 @@ namespace RazorEnhanced
                 m_followerlabelSV = new Label
                 {
                     AutoSize = true,
-                    Font = new Font("Arial", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+                    Font = new Font("Arial", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0),
                     Location = new Point(5, offsetstat + 7),
                     Name = "label1",
                     Size = new Size(50, 12),
@@ -1339,20 +1339,20 @@ namespace RazorEnhanced
 
                 // Aggiungo panel dinamici
 
-                Label labeltemp = new Label
+                Label labeltemp = new()
                 {
                     AutoSize = true,
                     Location = new Point(0, 18),
                     Font =
                         new Font("Arial", 6.75F, System.Drawing.FontStyle.Regular,
-                            GraphicsUnit.Point, ((byte)(0))),
+                            GraphicsUnit.Point, 0),
                     Name = "panel" + i + "count",
                     Size = new Size(10, 20),
                     TabIndex = 1,
                     Text = "000"
                 };
 
-                Panel paneltemp = new Panel
+                Panel paneltemp = new()
                 {
                     BackgroundImageLayout = ImageLayout.Center,
                     BackColor = Color.Transparent,
@@ -1395,12 +1395,12 @@ namespace RazorEnhanced
 
             if (Settings.General.ReadBool("ShowHitsToolBarCheckBox"))
             {
-                Label m_hits_label = new Label
+                Label m_hits_label = new()
                 {
                     AutoSize = false,
                     Width = 5,
                     Height = 5,
-                    Font = new Font("Arial", 6.75F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0))),
+                    Font = new Font("Arial", 6.75F, FontStyle.Regular, GraphicsUnit.Point, 0),
                     Location = new Point(offsetstat + 16, 3),
                     Name = "h",
                     Size = new Size(20, 12),
@@ -1413,7 +1413,7 @@ namespace RazorEnhanced
                 m_hitslabelSH = new Label
                 {
                     AutoSize = true,
-                    Font = new System.Drawing.Font("Arial", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+                    Font = new System.Drawing.Font("Arial", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0),
                     Location = new Point(offsetstat, 14),
                     Name = "hitslabel",
                     Size = new Size(50, 12),
@@ -1431,12 +1431,12 @@ namespace RazorEnhanced
 
             if (Settings.General.ReadBool("ShowManaToolBarCheckBox"))
             {
-                Label m_mana_label = new Label
+                Label m_mana_label = new()
                 {
                     AutoSize = false,
                     Width = 5,
                     Height = 5,
-                    Font = new System.Drawing.Font("Arial", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+                    Font = new System.Drawing.Font("Arial", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0),
                     Location = new Point(offsetstat + 16, 3),
                     Name = "m",
                     Size = new Size(20, 12),
@@ -1449,7 +1449,7 @@ namespace RazorEnhanced
                 m_manalabelSH = new Label
                 {
                     AutoSize = true,
-                    Font = new System.Drawing.Font("Arial", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+                    Font = new System.Drawing.Font("Arial", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0),
                     Location = new Point(offsetstat, 14),
                     Name = "manalabel",
                     Size = new Size(52, 12),
@@ -1467,12 +1467,12 @@ namespace RazorEnhanced
 
             if (Settings.General.ReadBool("ShowStaminaToolBarCheckBox"))
             {
-                Label m_stam_label = new Label
+                Label m_stam_label = new()
                 {
                     AutoSize = false,
                     Width = 5,
                     Height = 5,
-                    Font = new System.Drawing.Font("Arial", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+                    Font = new System.Drawing.Font("Arial", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0),
                     Location = new Point(offsetstat + 16, 3),
                     Name = "s",
                     Size = new Size(20, 12),
@@ -1485,7 +1485,7 @@ namespace RazorEnhanced
                 m_staminalabelSH = new Label
                 {
                     AutoSize = true,
-                    Font = new System.Drawing.Font("Arial", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+                    Font = new System.Drawing.Font("Arial", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0),
                     Location = new Point(offsetstat, 14),
                     Name = "stamlabel",
                     Size = new Size(49, 12),
@@ -1505,12 +1505,12 @@ namespace RazorEnhanced
 
             if (Settings.General.ReadBool("ShowWeightToolBarCheckBox"))
             {
-                Label m_weight_label = new Label
+                Label m_weight_label = new()
                 {
                     AutoSize = false,
                     Width = 5,
                     Height = 5,
-                    Font = new System.Drawing.Font("Arial", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+                    Font = new System.Drawing.Font("Arial", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0),
                     Location = new Point(offsetstat + 12, 3),
                     Name = "w",
                     Size = new Size(20, 12),
@@ -1523,7 +1523,7 @@ namespace RazorEnhanced
                 m_weightlabelSH = new Label
                 {
                     AutoSize = true,
-                    Font = new System.Drawing.Font("Arial", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+                    Font = new System.Drawing.Font("Arial", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0),
                     Location = new Point(offsetstat - 5, 14),
                     Name = "weightlabel",
                     Size = new Size(49, 12),
@@ -1540,12 +1540,12 @@ namespace RazorEnhanced
             }
             if (Settings.General.ReadBool("ShowTitheToolBarCheckBox"))
             {
-                Label m_tithe_label = new Label
+                Label m_tithe_label = new()
                 {
                     AutoSize = false,
                     Width = 5,
                     Height = 5,
-                    Font = new System.Drawing.Font("Arial", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+                    Font = new System.Drawing.Font("Arial", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0),
                     Location = new Point(offsetstat + 12, 3),
                     Name = "t",
                     Size = new Size(20, 12),
@@ -1558,7 +1558,7 @@ namespace RazorEnhanced
                 m_tithelabelSH = new Label
                 {
                     AutoSize = true,
-                    Font = new System.Drawing.Font("Arial", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+                    Font = new System.Drawing.Font("Arial", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0),
                     Location = new Point(offsetstat - 5, 14),
                     Name = "tithelabel",
                     Size = new Size(49, 12),
@@ -1578,12 +1578,12 @@ namespace RazorEnhanced
 
             if (Settings.General.ReadBool("ShowFollowerToolBarCheckBox"))
             {
-                Label m_follower_label = new Label
+                Label m_follower_label = new()
                 {
                     AutoSize = false,
                     Width = 5,
                     Height = 5,
-                    Font = new System.Drawing.Font("Arial", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+                    Font = new System.Drawing.Font("Arial", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0),
                     Location = new Point(offsetstat + 7, 3),
                     Name = "f",
                     Size = new Size(20, 12),
@@ -1596,7 +1596,7 @@ namespace RazorEnhanced
                 m_followerlabelSH = new Label
                 {
                     AutoSize = true,
-                    Font = new System.Drawing.Font("Arial", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+                    Font = new System.Drawing.Font("Arial", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0),
                     Location = new Point(offsetstat, 14),
                     Name = "followerlabel",
                     Size = new Size(49, 12),
@@ -1622,13 +1622,13 @@ namespace RazorEnhanced
 
                 // Aggiungo panel dinamici
 
-                Label labeltemp = new Label
+                Label labeltemp = new()
                 {
                     AutoSize = true,
                     Location = new Point(0, 18),
                     Font =
                         new System.Drawing.Font("Arial", 6.75F, System.Drawing.FontStyle.Regular,
-                            System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+                            System.Drawing.GraphicsUnit.Point, 0),
                     Name = "panel" + i + "count",
                     Size = new Size(10, 20),
                     TabIndex = 1,
@@ -1636,7 +1636,7 @@ namespace RazorEnhanced
                 };
 
 
-                Panel paneltemp = new Panel
+                Panel paneltemp = new()
                 {
                     BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center,
                     Location = new Point(paneloffset, 6),
@@ -1684,7 +1684,7 @@ namespace RazorEnhanced
 
             int outputImageHeight = firstImage.Height + secondImage.Height;
 
-            Bitmap outputImage = new Bitmap(outputImageWidth, outputImageHeight, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            Bitmap outputImage = new(outputImageWidth, outputImageHeight, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
             using (Graphics graphics = Graphics.FromImage(outputImage))
             {
@@ -1703,7 +1703,7 @@ namespace RazorEnhanced
 
             int outputImageHeight = firstImage.Height;
 
-            Bitmap outputImage = new Bitmap(outputImageWidth, outputImageHeight, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            Bitmap outputImage = new(outputImageWidth, outputImageHeight, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
             using (Graphics graphics = Graphics.FromImage(outputImage))
             {
@@ -1718,10 +1718,10 @@ namespace RazorEnhanced
 
         private static Bitmap ResizeImage(System.Drawing.Bitmap value, int newWidth, int newHeight)
         {
-            Bitmap resizedImage = new System.Drawing.Bitmap(newWidth, newHeight);
+            Bitmap resizedImage = new(newWidth, newHeight);
             using (Graphics graphics = Graphics.FromImage(resizedImage))
             {
-                System.Drawing.Graphics.FromImage((System.Drawing.Image)resizedImage).DrawImage(value, 0, 0, newWidth, newHeight);
+                System.Drawing.Graphics.FromImage(resizedImage).DrawImage(value, 0, 0, newWidth, newHeight);
             }
 
             return (resizedImage);
@@ -1730,8 +1730,8 @@ namespace RazorEnhanced
 
         public static Bitmap CropImage(Bitmap img)
         {
-            Point min = new Point(int.MaxValue, int.MaxValue);
-            Point max = new Point(int.MinValue, int.MinValue);
+            Point min = new(int.MaxValue, int.MaxValue);
+            Point max = new(int.MinValue, int.MinValue);
 
             for (int x = 0; x < img.Width; ++x)
             {
@@ -1758,8 +1758,8 @@ namespace RazorEnhanced
             max.Y += 2;
 
             // Create a new bitmap from the crop rectangle
-            Rectangle cropRectangle = new Rectangle(min.X, min.Y, max.X - min.X, max.Y - min.Y);
-            Bitmap newBitmap = new Bitmap(cropRectangle.Width, cropRectangle.Height);
+            Rectangle cropRectangle = new(min.X, min.Y, max.X - min.X, max.Y - min.Y);
+            Bitmap newBitmap = new(cropRectangle.Width, cropRectangle.Height);
             using (Graphics g = Graphics.FromImage(newBitmap))
             {
                 g.DrawImage(img, 0, 0, cropRectangle, GraphicsUnit.Pixel);

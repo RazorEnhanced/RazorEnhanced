@@ -48,16 +48,16 @@ namespace Assistant
 
         private delegate bool QueueTarget();
 
-        private static readonly QueueTarget TargetSelfAction = new QueueTarget(DoTargetSelf);
-        private static readonly QueueTarget LastTargetAction = new QueueTarget(DoLastTarget);
-        private static readonly QueueTarget AutoTargetAction = new QueueTarget(DoAutoTarget);
+        private static readonly QueueTarget TargetSelfAction = new(DoTargetSelf);
+        private static readonly QueueTarget LastTargetAction = new(DoLastTarget);
+        private static readonly QueueTarget AutoTargetAction = new(DoAutoTarget);
 
         private static QueueTarget m_QueueTarget;
 
         private static uint m_SpellTargID = 0;
         internal static uint SpellTargetID { get { return m_SpellTargID; } set { m_SpellTargID = value; } }
 
-        private static readonly List<uint> m_FilterCancel = new List<uint>();
+        private static readonly List<uint> m_FilterCancel = new();
 
         internal static bool HasTarget { get { return m_HasTarget; } }
 
@@ -209,7 +209,7 @@ namespace Assistant
             if (m_LastTarget != null && s == Serial.Zero && m_LastTarget.Serial == s) // Non settare last se già il serial corrente
                 return;
 
-            TargetInfo targ = new TargetInfo();
+            TargetInfo targ = new();
             m_LastGroundTarg = m_LastTarget = targ;
 
             if ((m_HasTarget && m_CurFlags == 1) || flagType == 1)
@@ -295,7 +295,7 @@ namespace Assistant
 
             if (m_Intercept)
             {
-                TargetInfo targ = new TargetInfo();
+                TargetInfo targ = new();
                 targ.Serial = World.Player.Serial;
                 targ.Gfx = World.Player.TypeID;
                 targ.Type = 0;
@@ -537,7 +537,7 @@ namespace Assistant
             m_LastTarget = m_LastGroundTarg = null;
         }
 
-        private static readonly TimerCallbackState m_OneTimeRespCallback = new TimerCallbackState(OneTimeResponse);
+        private static readonly TimerCallbackState m_OneTimeRespCallback = new(OneTimeResponse);
 
         private static void OneTimeResponse(object state)
         {
@@ -565,7 +565,7 @@ namespace Assistant
             if (!m_ClientTarget)
                 return;
 
-            m_FilterCancel.Add((uint)m_CurrentID);
+            m_FilterCancel.Add(m_CurrentID);
             if (wait)
                 Assistant.Client.Instance.SendToClientWait(new CancelTarget(m_CurrentID));
             else
@@ -595,7 +595,7 @@ namespace Assistant
 
         internal static void Target(Point3D pt, bool wait)
         {
-            TargetInfo info = new TargetInfo
+            TargetInfo info = new()
             {
                 Type = 1,
                 Flags = 0,
@@ -611,7 +611,7 @@ namespace Assistant
 
         internal static void Target(Point3D pt, int gfx, bool wait)
         {
-            TargetInfo info = new TargetInfo();
+            TargetInfo info = new();
             info.Type = 1;
             info.Flags = 0;
             info.Serial = 0;
@@ -625,7 +625,7 @@ namespace Assistant
 
         internal static void Target(Serial s, bool wait)
         {
-            TargetInfo info = new TargetInfo
+            TargetInfo info = new()
             {
                 Type = 0,
                 Flags = 0,
@@ -662,7 +662,7 @@ namespace Assistant
             if (o is Item)
             {
                 Item item = (Item)o;
-                TargetInfo info = new TargetInfo
+                TargetInfo info = new()
                 {
                     Type = 0,
                     Flags = 0,
@@ -677,7 +677,7 @@ namespace Assistant
             else if (o is Mobile)
             {
                 Mobile m = (Mobile)o;
-                TargetInfo info = new TargetInfo
+                TargetInfo info = new()
                 {
                     Type = 0,
                     Flags = 0,
@@ -782,7 +782,7 @@ namespace Assistant
         {
             m_NoShowTarget = false;
 
-            TargetInfo info = new TargetInfo
+            TargetInfo info = new()
             {
                 Type = p.ReadByte(),
                 TargID = p.ReadUInt32(),
@@ -824,7 +824,7 @@ namespace Assistant
                         ResendTarget();
                     }
                 }
-                else if (m_FilterCancel.Contains((uint)info.TargID) || info.TargID == LocalTargID)
+                else if (m_FilterCancel.Contains(info.TargID) || info.TargID == LocalTargID)
                 {
                     args.Block = true;
                 }
@@ -961,7 +961,7 @@ namespace Assistant
                     EndIntercept();
                     World.Player.SendMessage(MsgLevel.Error, LocString.OTTCancel);
 
-                    m_FilterCancel.Add((uint)prevID);
+                    m_FilterCancel.Add(prevID);
                 }
             }
         }

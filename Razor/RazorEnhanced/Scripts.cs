@@ -29,9 +29,9 @@ namespace RazorEnhanced
         internal static bool ScriptErrorLog = false;
         internal static bool ScriptStartStopMessage = false;
 
-        internal static List<ScriptItem> PyScripts = new List<ScriptItem>();
-        internal static List<ScriptItem> UosScripts = new List<ScriptItem>();
-        internal static List<ScriptItem> CsScripts = new List<ScriptItem>();
+        internal static List<ScriptItem> PyScripts = new();
+        internal static List<ScriptItem> UosScripts = new();
+        internal static List<ScriptItem> CsScripts = new();
 
         internal static void Clear()
         {
@@ -447,7 +447,7 @@ namespace RazorEnhanced
             }
 
 
-            static readonly object syncLockScripts = new object();
+            static readonly object syncLockScripts = new();
             private void OnTickScripts(object state)
             {
 
@@ -480,7 +480,7 @@ namespace RazorEnhanced
 
 
 
-            static readonly object syncLockAgents = new object();
+            static readonly object syncLockAgents = new();
             private void OnTickAgents(object state)
             {
                 lock (syncLockAgents)
@@ -591,7 +591,7 @@ namespace RazorEnhanced
             }
         }
 
-        private static ScriptTimer m_Timer = new ScriptTimer();
+        private static ScriptTimer m_Timer = new();
         internal static ScriptTimer Timer { get { return m_Timer; } }
 
         //Dalamar: Moved to EnhancedScript.cs
@@ -645,11 +645,9 @@ namespace RazorEnhanced
         internal static string ReadAllTextWithoutLocking(string _filePath)
         {
             string filePath = Utility.GetCaseInsensitiveFilePath(_filePath);
-            using (FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-            using (StreamReader streamReader = new StreamReader(fileStream))
-            {
-                return streamReader.ReadToEnd();
-            }
+            using FileStream fileStream = new(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            using StreamReader streamReader = new(fileStream);
+            return streamReader.ReadToEnd();
         }
     }
 }

@@ -194,7 +194,7 @@ namespace Assistant
             return (list != null && list.Count > 0) || false;
         }
 
-        private static readonly PacketHandlerEventArgs m_Args = new PacketHandlerEventArgs();
+        private static readonly PacketHandlerEventArgs m_Args = new();
 
         private static bool ProcessViewers(List<PacketViewerCallback> list, PacketReader p)
         {
@@ -218,7 +218,7 @@ namespace Assistant
                     }
                 }
             }
-            catch (System.InvalidOperationException e)
+            catch (System.InvalidOperationException)
             {
                 // A viewer callback was added or removed will be okay next time
             }
