@@ -2859,26 +2859,37 @@ namespace RazorEnhanced.UOS
         /// </summary>
         private static bool HeadMsg(ASTNode node, Argument[] args, bool quiet, bool force)
         {
-            string msg = args[0].AsString();
-            int color = 0;
-            int mobile = Player.Serial;
-            if (args.Length == 2)
-            {
-                int value = (int)args[1].AsSerial();
-                if (value < 10240)
-                    color = value;
-                else
-                    mobile = value;
-            }
-            if (args.Length == 3)
-            {
-                color = args[1].AsInt();
-                mobile = (int)args[2].AsSerial();
-            }
 
-            Mobiles.Message(mobile, color, msg);
+            if (args.Length > 0)
+            {
+                string msg = args[0].AsString();
+                if (args[0].IsAlias())
+                {
+                    // if it's an alias, resolve it
+                    uint varValue = args[0].AsAlias();
+                    msg = varValue.ToString();
+                }
 
-            return true;
+                int color = 0;
+                int mobile = Player.Serial;
+                if (args.Length == 2)
+                {
+                    int value = (int)args[1].AsSerial();
+                    if (value < 10240)
+                        color = value;
+                    else
+                        mobile = value;
+                }
+                if (args.Length == 3)
+                {
+                    color = args[1].AsInt();
+                    mobile = (int)args[2].AsSerial();
+                }
+
+                Mobiles.Message(mobile, color, msg);
+                return true;
+            }
+            return false;
         }
 
         //TODO: Not implemented properly .. I dunno how to do a party only msg
@@ -2910,18 +2921,28 @@ namespace RazorEnhanced.UOS
         /// </summary>
         private static bool MsgCommand(ASTNode node, Argument[] args, bool quiet, bool force)
         {
-            string msg = args[0].AsString();
-            if (args.Length == 1)
+            if (args.Length > 0)
             {
-                Player.ChatSay(0, msg);
-            }
-            if (args.Length == 2)
-            {
-                int color = args[1].AsInt();
-                Player.ChatSay(color, msg);
-            }
+                string msg = args[0].AsString();
+                if (args[0].IsAlias())
+                {
+                    // if it's an alias, resolve it
+                    uint varValue = args[0].AsAlias();
+                    msg = varValue.ToString();
+                }
+                if (args.Length == 1)
+                {
+                    Player.ChatSay(0, msg);
+                }
+                if (args.Length == 2)
+                {
+                    int color = args[1].AsInt();
+                    Player.ChatSay(color, msg);
+                }
 
-            return true;
+                return true;
+            }
+            return false;
         }
 
         /// <summary>
@@ -5724,6 +5745,29 @@ namespace RazorEnhanced.UOS
                 return arg.AsString();
 
             return Node.Lexeme;
+        }
+
+        public bool IsAlias()
+        {
+            if (Node.Lexeme == null)
+                throw new UOSRuntimeError(Node, $"Cannot convert argument to string {Node.LineNumber}");
+
+            // Resolve it as a global alias next
+            return _script.Engine.Interpreter.FindAlias(Node.Lexeme);
+        }
+
+        public uint AsAlias()
+        {
+            if (Node.Lexeme == null)
+                throw new UOSRuntimeError(Node, $"Cannot convert argument to string {Node.LineNumber}");
+            
+            // Resolve it as a global alias next
+            if (_script.Engine.Interpreter.FindAlias(Node.Lexeme))
+            {
+                uint value = _script.Engine.Interpreter.GetAlias(Node.Lexeme);
+                return value;
+            }
+            return Int32.MaxValue;
         }
 
         internal Argument CheckIsListElement(string token)

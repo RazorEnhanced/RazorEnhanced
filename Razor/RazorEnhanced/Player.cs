@@ -1192,6 +1192,7 @@ namespace RazorEnhanced
             Assistant.Client.Instance.SendToServerWait(new LiftRequest(item.Serial, item.Amount)); // Prende
             Assistant.Client.Instance.SendToServerWait(new EquipRequest(item.Serial, World.Player.Serial, item.AssistantLayer)); // Equippa
         }
+
         /// <summary>
         /// Equip a list of item by using UO3D packet.
         /// </summary>
@@ -1205,6 +1206,68 @@ namespace RazorEnhanced
             Assistant.Client.Instance.SendToServerWait(new EquipItemMacro(serialstoequip));
 
         }
+
+        /// <summary>
+        /// Equip a python list of item by using UO3D packet.
+        /// </summary>
+        /// <param name="serials"> python list of Serials of Item to equip.</param>
+        public static void EquipUO3D(IronPython.Runtime.PythonList _serials)
+        {
+            List<uint> serialstoequip = new();
+            foreach (object serial in _serials)
+            {
+                uint theSerial = Convert.ToUInt32(serial);
+                serialstoequip.Add(theSerial);
+            }
+            Assistant.Client.Instance.SendToServerWait(new EquipItemMacro(serialstoequip));
+        }
+
+        /// <summary>
+        /// UnEquip a list of item by using UO3D packet.
+        /// </summary>
+        /// <param name="layers">List of layer names to unequip.</param>
+        public static void UnEquipUO3D(List<string> _layers)
+        {
+            HashSet<ushort> layers = new();
+            foreach (string layer in _layers)
+            {
+                bool parseResult = Enum.TryParse<Layer>(layer, out Layer l);
+                if (!parseResult || l == Assistant.Layer.Invalid)
+                {
+                    Scripts.SendMessageScriptError("Script Error: GetItemOnLayer: " + layer + " not valid");
+                    return;
+                }
+                layers.Add((ushort)l);
+            }
+            List<ushort> layertoundress = new(layers);
+            Assistant.Client.Instance.SendToServerWait(new UnEquipItemMacro(layertoundress));
+        }
+
+        /// <summary>
+        /// UnEquip a python list of layer names by using UO3D packet.
+        /// </summary>
+        /// <param name="layers">python list of layer names to unequip.</param>
+        public static void UnEquipUO3D(IronPython.Runtime.PythonList _layers)
+        {
+            HashSet<ushort> layers = new();
+            foreach (object layer in _layers)
+            {
+                string theLayer = Convert.ToString(layer);
+                bool parseResult = Enum.TryParse<Layer>(theLayer, out Layer l);
+                if (!parseResult || l == Assistant.Layer.Invalid)
+                {
+                    Scripts.SendMessageScriptError("Script Error: GetItemOnLayer: " + layer + " not valid");
+                    return;
+                }
+                layers.Add((ushort)l);
+            }
+            List<ushort> layertoundress = new(layers);
+            Assistant.Client.Instance.SendToServerWait(new UnEquipItemMacro(layertoundress));
+        }
+            
+                
+
+
 
         /// <summary>
         /// Check if a Layer is equipped by the Item.
