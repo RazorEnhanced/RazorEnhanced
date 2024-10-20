@@ -765,7 +765,7 @@ namespace Assistant
         {
             get
             {
-                return Hue >= 0x0400 && TypeID.Value == 0xE76;
+                return Name.ToLower().Contains("sending") && Hue >= 0x0400 && TypeID.Value == 0xE76;
             }
         }
 
