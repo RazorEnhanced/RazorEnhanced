@@ -419,7 +419,6 @@ namespace Assistant
                         && !this.IsBagOfSending
                         )
                     {
-                        PacketHandlers.IgnoreGumps.Add(this);
                         PlayerData.DoubleClick(this);
 
                         for (int c = 0; c < Contains.Count; c++)
@@ -431,7 +430,6 @@ namespace Assistant
                                     continue;
                                 if (icheck.IsBagOfSending)
                                     continue;
-                                PacketHandlers.IgnoreGumps.Add(icheck);
                                 PlayerData.DoubleClick(icheck);
                             }
                         }

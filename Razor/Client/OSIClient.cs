@@ -469,9 +469,6 @@ namespace Assistant
             StealthSteps.Unhide();
 
             PacketHandlers.Party.Clear();
-            PacketHandlers.IgnoreGumps.Clear();
-
-
         }
 
         [DllImport("user32.dll")]

@@ -270,22 +270,43 @@ namespace RazorEnhanced.UOS
             uint friend = 0;
             if (m_Namespace == Namespace.GlobalNamespace)
             {
-                if (Misc.CheckSharedValue("lastobject"))
-                    lastobject = (uint)Misc.ReadSharedValue("lastobject");
-                if (Misc.CheckSharedValue("found"))
-                    found = (uint)Misc.ReadSharedValue("found");
-                if (Misc.CheckSharedValue("enemy"))
-                    enemy = (uint)Misc.ReadSharedValue("enemy");
-                if (Misc.CheckSharedValue("friend"))
-                    friend = (uint)Misc.ReadSharedValue("friend");
+                List<string> existingSharedValues = Misc.AllSharedValue();
+                foreach (string sharedValue in existingSharedValues)
+                {
+                    object obj = Misc.ReadSharedValue(sharedValue);
+                    string valueString = obj.ToString();
+                    if (uint.TryParse(valueString, out uint uintResult))
+                    {
+                        m_Interpreter.SetAlias(sharedValue, uintResult);
+                    }
+                    else if (bool.TryParse(valueString, out bool boolResult))
+                    {
+                        if (boolResult)
+                        {
+                            m_Interpreter.SetAlias(sharedValue, 1);
+                        }
+                    }
+                    else
+                    {
+                        Utility.Logger.Debug($"Unable to assign alias {sharedValue} to {valueString}");
+                    }
+                }
             }
+
+            if (Misc.CheckSharedValue("lastobject"))
+                lastobject = (uint)Misc.ReadSharedValue("lastobject");
+            if (Misc.CheckSharedValue("found"))
+                found = (uint)Misc.ReadSharedValue("found");
+            if (Misc.CheckSharedValue("enemy"))
+                enemy = (uint)Misc.ReadSharedValue("enemy");
+            if (Misc.CheckSharedValue("friend"))
+                friend = (uint)Misc.ReadSharedValue("friend");
+
             m_Interpreter.SetAlias("lastobject", lastobject); //TODO: not implemented
 
             m_Interpreter.SetAlias("found", found);
             m_Interpreter.SetAlias("enemy", enemy);
             m_Interpreter.SetAlias("friend", friend);
-
-
         }
 
         static uint AliasHandler(string alias)
@@ -7158,9 +7179,9 @@ namespace RazorEnhanced.UOS
             if (m_Engine.Namespace == Namespace.GlobalNamespace)
             {
                 // uint value;
-                if (Misc.CheckSharedValue(alias))
+                if (Misc.CheckSharedValue(alias.ToLower()))
                 {
-                    return (uint)Misc.ReadSharedValue(alias);
+                    return (uint)Misc.ReadSharedValue(alias.ToLower());
                 }
             }
             if (_alias.TryGetValue(alias, out int value))
@@ -7178,7 +7199,7 @@ namespace RazorEnhanced.UOS
                 return true;
             if (m_Engine.Namespace == Namespace.GlobalNamespace)
             {
-                return Misc.CheckSharedValue(alias);
+                return Misc.CheckSharedValue(alias.ToLower());
             }
             else
             {

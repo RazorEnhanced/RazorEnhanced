@@ -775,6 +775,15 @@ namespace RazorEnhanced
         /// <summary>@nodoc</summary>
         public static ConcurrentDictionary<string, object> SharedScriptData { get => m_sharedscriptdata; set => m_sharedscriptdata = value; }
 
+        /// <summary>
+        /// List all Shared Value Keys
+        /// Shared values are accessible by every script.
+        /// </summary>
+        /// <returns>List<string> containing all the shared value keys</returns>
+        public static List<string> AllSharedValue()
+        {
+            return m_sharedscriptdata.Keys.ToList();
+        }
 
         /// <summary>
         /// Get a Shared Value, if value not exist return null.

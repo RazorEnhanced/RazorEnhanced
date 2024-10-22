@@ -1,3 +1,4 @@
+using Assistant;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ namespace RazorEnhanced
         public static readonly string CONFIG_WANDS = "wands.json";
         public static readonly string CONFIG_MAPS = "maps.json";
         public static readonly string CONFIG_SOUNDFILTERS = "soundfilters.json";
+        public static readonly string CONFIG_GUMPIGNORE = "gump_ignore.json";
         public static readonly string CONFIG_PF_BYPASS = "pf_bypass.json";
         #endregion
 
@@ -120,6 +122,7 @@ namespace RazorEnhanced
         public static void LoadAll()
         {
             // TODO: add more
+            ConfigFiles.GumpIgnore.Data = (ConfigFiles.GumpIgnore)Load(CONFIG_GUMPIGNORE, typeof(ConfigFiles.GumpIgnore));
             ConfigFiles.PF_Bypass.Data = (ConfigFiles.PF_Bypass)Load(CONFIG_PF_BYPASS, typeof(ConfigFiles.PF_Bypass));
             ConfigFiles.Doors.Data = (ConfigFiles.Doors)Load(CONFIG_DOORS, typeof(ConfigFiles.Doors));
             ConfigFiles.Foods.Data = (ConfigFiles.Foods)Load(CONFIG_FOODS, typeof(ConfigFiles.Foods));
@@ -306,7 +309,27 @@ namespace RazorEnhanced
 
         }
 
-        //pathfinding.json
+        // Set of gump ids I never want to see again
+        public class GumpIgnore : ConfigData
+        {
+            new public static GumpIgnore Data = new();
+            public HashSet<uint> GumpIDs;
+
+            public static void CheckGumpIgnore(PacketReader p, PacketHandlerEventArgs args)
+            {
+                // Packet Build
+                // BYTE[1] Cmd
+                // BYTE[2] len
+                // BYTE[4] Player Serial
+                // BYTE[4] Gump ID
+                uint playerSerial = p.ReadUInt32(); // Player Serial
+                uint gumpId = p.ReadUInt32(); // Gump ID
+                if (GumpIgnore.Data.GumpIDs.Contains(gumpId))
+                    args.Block = true;
+            }
+        }
+
+            //pathfinding.json
         public class PF_Bypass : ConfigData
         {
             new public static PF_Bypass Data = new();
