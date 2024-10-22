@@ -101,7 +101,7 @@ namespace Assistant
             PacketHandler.RegisterServerToClientViewer(0xAF, new PacketViewerCallback(DeathAnimation));
             PacketHandler.RegisterServerToClientFilter(0xAE, new PacketFilterCallback(UnicodeSpeech));
             PacketHandler.RegisterServerToClientViewer(0xB0, new PacketViewerCallback(SendGump));
-            PacketHandler.RegisterServerToClientViewer(0xB0, new PacketViewerCallback(ConfigFiles.GumpIgnore.CheckGumpIgnore));
+            //PacketHandler.RegisterServerToClientViewer(0xB0, new PacketViewerCallback(ConfigFiles.GumpIgnore.CheckGumpIgnore));
             PacketHandler.RegisterServerToClientViewer(0xB8, new PacketViewerCallback(Profile));
             PacketHandler.RegisterServerToClientViewer(0xB9, new PacketViewerCallback(Features));
             PacketHandler.RegisterServerToClientViewer(0xBA, new PacketViewerCallback(TrackingArrow));
@@ -115,7 +115,7 @@ namespace Assistant
             PacketHandler.RegisterServerToClientViewer(0xD8, new PacketViewerCallback(CustomHouseInfo));
             //PacketHandler.RegisterServerToClientFilter(0xDC, new PacketFilterCallback(ServOPLHash));
             PacketHandler.RegisterServerToClientViewer(0xDD, new PacketViewerCallback(CompressedGump));
-            PacketHandler.RegisterServerToClientViewer(0xDD, new PacketViewerCallback(RazorEnhanced.ConfigFiles.GumpIgnore.CheckGumpIgnore));
+            //PacketHandler.RegisterServerToClientViewer(0xDD, new PacketViewerCallback(RazorEnhanced.ConfigFiles.GumpIgnore.CheckGumpIgnore));
             PacketHandler.RegisterServerToClientViewer(0xDF, new PacketViewerCallback(BuffDebuff));
             PacketHandler.RegisterServerToClientViewer(0xDF, new PacketViewerCallback(BandageHeal.BuffDebuff));
             PacketHandler.RegisterServerToClientViewer(0xE2, new PacketViewerCallback(TestAnimation));
