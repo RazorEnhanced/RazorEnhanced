@@ -551,6 +551,17 @@ namespace RazorEnhanced
         }
 
         /// <summary>
+        /// Returns a list with every detailed active buff 
+        /// </summary>
+        public static List<BuffInfo> BuffsInfo
+        {
+            get
+            {
+                return World.Player.Buffs.Values.Select(p => new RazorEnhanced.BuffInfo(p)).ToList();
+            }
+        }
+
+        /// <summary>
         /// Returns the distance between the Player and a Mobile or an Item.
         /// </summary>
         /// <param name="target">The other Mobile or Item</param>
@@ -881,12 +892,7 @@ namespace RazorEnhanced
         {
             get
             {
-                List<string> buffs = new();
-                foreach (BuffIcon icon in World.Player.Buffs)
-                {
-                    buffs.Add(GetBuffDescription(icon));
-                }
-                return buffs;
+                return BuffsInfo.Select(p => p.Name).ToList();
             }
         }
 
@@ -1011,27 +1017,49 @@ namespace RazorEnhanced
         /// <returns>True: if the buff is active - False: otherwise.</returns>
         public static bool BuffsExist(string buffname)
         {
-            if (World.Player == null || World.Player.Buffs == null)
-                return false;
-
-            // if exact match use it
-            for (int i = 0; i < World.Player.Buffs.Count; i++)
-            {
-                if (GetBuffDescription(World.Player.Buffs[i]) == buffname)
-                    return true;
-            }
-
-            // try to guess correct spelling
-            string useBuffname = GuessBuffName(buffname);
-            for (int i = 0; i < World.Player.Buffs.Count; i++)
-            {
-                if (GetBuffDescription(World.Player.Buffs[i]) == useBuffname)
-                    return true;
-            }
-
-            return false;
+            return (GetBuffInfo(buffname) != null);
         }
+        
+        /// <summary>
+        /// Check if buff information is active by buff name and returns it.
+        /// </summary>
+        /// <param name="buffName">buff name</param>
+        /// <returns>Buff information</returns>
+        public static BuffInfo GetBuffInfo(string buffName)
+        {
+            BuffInfo result = null;
 
+            if (World.Player != null && World.Player.Buffs != null)
+            {
+                var currentBuffs = BuffsInfo;
+                
+                BuffIcon buffIcon;
+                
+                // if Match with enum
+                if (Enum.TryParse(buffName, out buffIcon))
+                {
+                    Assistant.BuffInfo buffParse;
+                    if (World.Player.Buffs.TryGetValue(buffIcon, out buffParse))
+                    {
+                        result = new BuffInfo(buffParse);
+                    }
+                }
+                else
+                {
+                    // if exact match use it
+                    result = currentBuffs.FirstOrDefault(p => p.Name.Equals(buffName, StringComparison.InvariantCultureIgnoreCase));
+                    if (result == null)
+                    {
+                        // try to guess correct spelling
+                        string useBuffname = GuessBuffName(buffName);
+                        result = currentBuffs.FirstOrDefault(p => p.Name.Equals(useBuffname, StringComparison.InvariantCultureIgnoreCase));
+                    }
+                }
+            }
+
+            return result;
+        }
+        
         /// <summary>
         /// Get durations from buff actived by buff name.
         /// </summary>
@@ -1039,30 +1067,7 @@ namespace RazorEnhanced
         /// <returns>Duration</returns>
         public static int BuffTime(string buffname)
         {
-            try
-            {
-                buffname = buffname.ToLower();
-
-                if (World.Player == null || World.Player.BuffTimes == null)
-                {
-                    return 0;
-                }
-
-                DateTime expiredTime = SearchBuffTime(World.Player.BuffTimes, buffname);
-
-                if (!BuffsExist(buffname) || expiredTime < DateTime.Now)
-                {
-                    return 0;
-                }
-
-                double timeRemaings = (expiredTime - DateTime.Now).TotalMilliseconds;
-
-                return (int)timeRemaings;
-            }
-            catch
-            {
-                return 0;
-            }
+            return BuffsInfo.FirstOrDefault(p => p.Name.Equals(buffname, StringComparison.InvariantCultureIgnoreCase))?.Remaining ?? 0;
         }
 
         internal static DateTime SearchBuffTime(Dictionary<BuffIcon, DateTime> buffTimes, String buffname)

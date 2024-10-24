@@ -175,14 +175,12 @@ namespace Assistant
         private byte m_WalkSeq;
 
         internal static int FastWalkKey = 0;
-
-        private readonly List<BuffIcon> m_Buffs = new();
-        internal List<BuffIcon> Buffs { get { return m_Buffs; } }
-
-        private readonly Dictionary<BuffIcon, DateTime> m_BuffTimes = new();
-        internal Dictionary<BuffIcon, DateTime> BuffTimes { get { return m_BuffTimes; } }
-
+        
+        private readonly ConcurrentDictionary<BuffIcon, BuffInfo> m_Buffs = new ();
+        internal ConcurrentDictionary<BuffIcon, BuffInfo> Buffs { get { return m_Buffs; } }
+        
         private readonly List<SkillIcon> m_SkillEnabled = new();
+        
         internal List<SkillIcon> SkillEnabled { get { return m_SkillEnabled; } }
 
 
