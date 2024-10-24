@@ -85,7 +85,8 @@ namespace RazorEnhanced
         /// <summary>
         /// Color of the mobile.
         /// </summary>
-        public int Color { get { return m_AssistantMobile.Hue; } }
+        public ushort Color { get { return m_AssistantMobile.Hue; } }
+        public ushort Hue { get { return Color; } }
         public ushort Graphics { get { return base.TypeID.Value; } }
         public int ItemID { get { return base.TypeID.Value; } }
 

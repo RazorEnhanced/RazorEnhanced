@@ -2,7 +2,6 @@ using Assistant;
 using Assistant.UI;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace RazorEnhanced
 {
@@ -202,12 +201,12 @@ namespace RazorEnhanced
             {
 
                 List<RazorEnhanced.Mobile> pets = new();
-                foreach (var m in World.Mobiles)
+                foreach (var mobile in World.Mobiles)
                 {
 
-                    if (m.Value.CanRename == true)
+                    if (mobile.Value.CanRename == true)
                     {
-                        pets.Add(new RazorEnhanced.Mobile(m.Value));
+                        pets.Add(new RazorEnhanced.Mobile(mobile.Value));
                     }
                 }
 
@@ -557,7 +556,14 @@ namespace RazorEnhanced
         {
             get
             {
-                return World.Player.Buffs.Values.Select(p => new RazorEnhanced.BuffInfo(p)).ToList();
+                List<RazorEnhanced.BuffInfo> buffInfoList = new List<RazorEnhanced.BuffInfo>();
+
+                foreach (var buff in World.Player.Buffs.Values)
+                {
+                    buffInfoList.Add(new RazorEnhanced.BuffInfo(buff));
+                }
+                return buffInfoList;
+                //return World.Player.Buffs.Values.Select(p => new RazorEnhanced.BuffInfo(p)).ToList();
             }
         }
 
@@ -892,7 +898,15 @@ namespace RazorEnhanced
         {
             get
             {
-                return BuffsInfo.Select(p => p.Name).ToList();
+                //return BuffsInfo.Select(p => p.Name).ToList();
+                List<string> names = new List<string>();
+
+                foreach (var buffInfo in BuffsInfo)
+                {
+                    names.Add(buffInfo.Name);
+                }
+
+                return names;
             }
         }
 
@@ -1046,13 +1060,29 @@ namespace RazorEnhanced
                 }
                 else
                 {
-                    // if exact match use it
-                    result = currentBuffs.FirstOrDefault(p => p.Name.Equals(buffName, StringComparison.InvariantCultureIgnoreCase));
+                    foreach (var buffInfo in currentBuffs)
+                    {
+                        if (buffInfo.Name.Equals(buffName, StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            result = buffInfo;
+                            break;
+                        }
+                    }
+                    //result = currentBuffs.FirstOrDefault(p => p.Name.Equals(buffName, StringComparison.InvariantCultureIgnoreCase));
                     if (result == null)
                     {
                         // try to guess correct spelling
                         string useBuffname = GuessBuffName(buffName);
-                        result = currentBuffs.FirstOrDefault(p => p.Name.Equals(useBuffname, StringComparison.InvariantCultureIgnoreCase));
+                        //result = currentBuffs.FirstOrDefault(p => p.Name.Equals(useBuffname, StringComparison.InvariantCultureIgnoreCase));
+                        foreach (var buffInfo in currentBuffs)
+                        {
+                            if (buffInfo.Name.Equals(useBuffname, StringComparison.InvariantCultureIgnoreCase))
+                            {
+                                result = buffInfo;
+                                break;
+                            }
+                        }
+
                     }
                 }
             }
@@ -1067,7 +1097,16 @@ namespace RazorEnhanced
         /// <returns>Duration</returns>
         public static int BuffTime(string buffname)
         {
-            return BuffsInfo.FirstOrDefault(p => p.Name.Equals(buffname, StringComparison.InvariantCultureIgnoreCase))?.Remaining ?? 0;
+            //return BuffsInfo.FirstOrDefault(p => p.Name.Equals(buffname, StringComparison.InvariantCultureIgnoreCase))?.Remaining ?? 0;
+            foreach (var buffInfo in BuffsInfo)
+            {
+                if (buffInfo.Name.Equals(buffname, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    return buffInfo.Remaining;
+                }
+            }
+
+            return 0;
         }
 
         internal static DateTime SearchBuffTime(Dictionary<BuffIcon, DateTime> buffTimes, String buffname)
@@ -1376,8 +1415,8 @@ namespace RazorEnhanced
         {
             int distance = 99;
             string closest = "";
-            List<string> buffsList = BuffsMapping.Values.ToList();
-            foreach (string buff in buffsList)
+
+            foreach (string buff in BuffsMapping.Values)
             {
                 int computeDistance = UOAssist.LevenshteinDistance(buff, originalName);
                 if (computeDistance < distance)
@@ -2933,9 +2972,15 @@ namespace RazorEnhanced
         /// <returns>List of text lines.</returns>
         public static List<string> GetPropStringList()
         {
-            List<Assistant.ObjectPropertyList.OPLEntry> props = World.Player.ObjPropList.Content;
+            // return props.Select(prop => prop.ToString()).ToList();
+            List<string> result = new List<string>();
 
-            return props.Select(prop => prop.ToString()).ToList();
+            foreach (var prop in World.Player.ObjPropList.Content)
+            {
+                result.Add(prop.ToString());
+            }
+
+            return result;
         }
 
 

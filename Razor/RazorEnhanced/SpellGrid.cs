@@ -635,35 +635,38 @@ namespace RazorEnhanced
                                 break;
 
                             default:
-                                if (Gumps.IsValid(2353))
+                                if (item.Spell == "Primary")
                                 {
-                                    if (item.Spell == "Primary")
-                                    {
-                                        if (Player.HasPrimarySpecial)
-                                            Gumps.AddImage(ref spellBar, Engine.GridX + (x * 50) + offset, Engine.GridY + (y * 50) + offset, (int)Player.PrimarySpecial, ActiveColor);
-                                        else
-                                            Gumps.AddImage(ref spellBar, Engine.GridX + (x * 50) + offset, Engine.GridY + (y * 50) + offset, (int)Player.PrimarySpecial, InactiveColor);
-                                    }
-                                    else if (item.Spell == "Secondary")
-                                    {
-                                        if (Player.HasSecondarySpecial)
-                                            Gumps.AddImage(ref spellBar, Engine.GridX + (x * 50) + offset, Engine.GridY + (y * 50) + offset, (int)Player.SecondarySpecial, ActiveColor);
-                                        else
-                                            Gumps.AddImage(ref spellBar, Engine.GridX + (x * 50) + offset, Engine.GridY + (y * 50) + offset, (int)Player.SecondarySpecial, InactiveColor);
-                                    }
-                                    else if (Enum.TryParse<SkillIcon>(item.Spell.Replace(" ", ""), out SkillIcon icon))
-                                    {
-                                        if (World.Player.SkillEnabled.Contains(icon))
-                                            Gumps.AddImage(ref spellBar, Engine.GridX + (x * 50) + offset, Engine.GridY + (y * 50) + offset, imageid, ActiveColor);
-                                        else
-                                            Gumps.AddImage(ref spellBar, Engine.GridX + (x * 50) + offset, Engine.GridY + (y * 50) + offset, imageid, InactiveColor);
-                                    }
+                                    if (Player.HasPrimarySpecial)
+                                        Gumps.AddImage(ref spellBar, Engine.GridX + (x * 50) + offset, Engine.GridY + (y * 50) + offset, (int)Player.PrimarySpecial, ActiveColor);
                                     else
-                                    {
-                                        Gumps.AddImage(ref spellBar, Engine.GridX + (x * 50) + offset, Engine.GridY + (y * 50) + offset, imageid, 0);
-                                    }
-                                    Gumps.AddButton(ref spellBar, Engine.GridX + (x * 50), Engine.GridY + (y * 50), 2353, 2205, index, 1, 0);
+                                        Gumps.AddImage(ref spellBar, Engine.GridX + (x * 50) + offset, Engine.GridY + (y * 50) + offset, (int)Player.PrimarySpecial, InactiveColor);
                                 }
+                                else if (item.Spell == "Secondary")
+                                {
+                                    if (Player.HasSecondarySpecial)
+                                        Gumps.AddImage(ref spellBar, Engine.GridX + (x * 50) + offset, Engine.GridY + (y * 50) + offset, (int)Player.SecondarySpecial, ActiveColor);
+                                    else
+                                        Gumps.AddImage(ref spellBar, Engine.GridX + (x * 50) + offset, Engine.GridY + (y * 50) + offset, (int)Player.SecondarySpecial, InactiveColor);
+                                }
+                                else if (Enum.TryParse<SkillIcon>(item.Spell.Replace(" ", ""), out SkillIcon icon))
+                                {
+                                    if (World.Player.SkillEnabled.Contains(icon))
+                                        Gumps.AddImage(ref spellBar, Engine.GridX + (x * 50) + offset, Engine.GridY + (y * 50) + offset, imageid, ActiveColor);
+                                    else
+                                        Gumps.AddImage(ref spellBar, Engine.GridX + (x * 50) + offset, Engine.GridY + (y * 50) + offset, imageid, InactiveColor);
+                                }
+                                else
+                                {
+                                    Gumps.AddImage(ref spellBar, Engine.GridX + (x * 50) + offset, Engine.GridY + (y * 50) + offset, imageid, 0);
+                                }
+                                // If available 2353 is a transparent button to let the hilighted image show through
+                                // 0xa5d is ugly but better than nothing
+                                // if not the button wont change color when activated
+                                if (Gumps.IsValid(2353))
+                                    Gumps.AddButton(ref spellBar, Engine.GridX + (x * 50), Engine.GridY + (y * 50), 2353, 2205, index, 1, 0);
+                                //else if (Gumps.IsValid(0xa5d))
+                                //    Gumps.AddButton(ref spellBar, Engine.GridX + (x * 50), Engine.GridY + (y * 50), 0xa5d, 2205, index, 1, 0);
                                 else
                                 {
                                     Gumps.AddButton(ref spellBar, Engine.GridX + (x * 50), Engine.GridY + (y * 50), imageid, 2205, index, 1, 0);

@@ -28,7 +28,7 @@ namespace RazorEnhanced
         }
 
         public int Serial { get { return (int)base.Serial.Value; } }
-        public ushort Hue { get { return base.Hue; } }
+        public ushort Hue { get { return Color; } }
         public ushort Color { get { return base.Hue; } }
         public ushort Graphics { get { return base.TypeID.Value; } }
 

@@ -122,7 +122,7 @@ namespace RazorEnhanced
         public static void LoadAll()
         {
             // TODO: add more
-            //ConfigFiles.GumpIgnore.Data = (ConfigFiles.GumpIgnore)Load(CONFIG_GUMPIGNORE, typeof(ConfigFiles.GumpIgnore));
+            ConfigFiles.GumpIgnore.Data = (ConfigFiles.GumpIgnore)Load(CONFIG_GUMPIGNORE, typeof(ConfigFiles.GumpIgnore));
             ConfigFiles.PF_Bypass.Data = (ConfigFiles.PF_Bypass)Load(CONFIG_PF_BYPASS, typeof(ConfigFiles.PF_Bypass));
             ConfigFiles.Doors.Data = (ConfigFiles.Doors)Load(CONFIG_DOORS, typeof(ConfigFiles.Doors));
             ConfigFiles.Foods.Data = (ConfigFiles.Foods)Load(CONFIG_FOODS, typeof(ConfigFiles.Foods));
@@ -309,7 +309,7 @@ namespace RazorEnhanced
 
         }
 
- /*       // Set of gump ids I never want to see again
+        // Set of gump ids I never want to see again
         public class GumpIgnore : ConfigData
         {
             new public static GumpIgnore Data = new();
@@ -328,7 +328,7 @@ namespace RazorEnhanced
                     args.Block = true;
             }
         }
- */
+ 
             //pathfinding.json
         public class PF_Bypass : ConfigData
         {
