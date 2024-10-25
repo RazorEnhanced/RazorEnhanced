@@ -49,40 +49,50 @@ namespace Assistant
 
             Last = POWERHOUR
         }
-        internal static int LevenshteinDistance(string s, string t)
+        internal static int LevenshteinDistance(string string1, string string2)
         {
-            if (string.IsNullOrEmpty(s))
+            if (string.IsNullOrEmpty(string1))
             {
-                if (string.IsNullOrEmpty(t))
+                if (string.IsNullOrEmpty(string2))
                     return 0;
-                return t.Length;
+                return string2.Length;
             }
 
-            if (string.IsNullOrEmpty(t))
+            if (string.IsNullOrEmpty(string2))
             {
-                return s.Length;
+                return string1.Length;
             }
 
-            int n = s.Length;
-            int m = t.Length;
-            int[,] d = new int[n + 1, m + 1];
+            int str1Len = string1.Length;
+            int str2Len = string2.Length;
+
+            // if first 2 character, ignoring case, are different, return 1000
+            if (str1Len >= 2 && str2Len >= 2)
+            {
+                bool areFirstTwoCharactersEqual =
+                string.Equals(string1.Substring(0, 2), string2.Substring(0, 2), StringComparison.OrdinalIgnoreCase);
+                if (!areFirstTwoCharactersEqual)
+                    return 1000;
+            }
+
+            int[,] d = new int[str1Len + 1, str2Len + 1];
 
             // initialize the top and right of the table to 0, 1, 2, ...
-            for (int i = 0; i <= n; d[i, 0] = i++) ;
-            for (int j = 1; j <= m; d[0, j] = j++) ;
+            for (int i = 0; i <= str1Len; d[i, 0] = i++) ;
+            for (int j = 1; j <= str2Len; d[0, j] = j++) ;
 
-            for (int i = 1; i <= n; i++)
+            for (int i = 1; i <= str1Len; i++)
             {
-                for (int j = 1; j <= m; j++)
+                for (int j = 1; j <= str2Len; j++)
                 {
-                    int cost = (t[j - 1] == s[i - 1]) ? 0 : 1;
+                    int cost = (string2[j - 1] == string1[i - 1]) ? 0 : 1;
                     int min1 = d[i - 1, j] + 1;
                     int min2 = d[i, j - 1] + 1;
                     int min3 = d[i - 1, j - 1] + cost;
                     d[i, j] = Math.Min(Math.Min(min1, min2), min3);
                 }
             }
-            return d[n, m];
+            return d[str1Len, str2Len];
         }
         private class WndCmd
         {
