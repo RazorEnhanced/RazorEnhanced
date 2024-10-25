@@ -3671,6 +3671,9 @@ namespace Assistant
                     // Highlight for bloodOath
                     if (Engine.MainWindow.ColorFlagsSelfHighlightCheckBox.Checked && buff == BuffIcon.BloodOathCurse)
                         RazorEnhanced.Filters.ApplyColor(World.Player);
+
+                    System.Threading.Thread doAction = new(() => RazorEnhanced.SpellGrid.UpdateSAHighLight(0));
+                    doAction.Start();
                 }
             }
         }

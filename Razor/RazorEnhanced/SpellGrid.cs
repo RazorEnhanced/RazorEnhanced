@@ -658,15 +658,18 @@ namespace RazorEnhanced
                                 }
                                 else
                                 {
-                                    Gumps.AddImage(ref spellBar, Engine.GridX + (x * 50) + offset, Engine.GridY + (y * 50) + offset, imageid, 0);
+                                    if (Player.BuffsExist(item.Spell, false))
+                                        Gumps.AddImage(ref spellBar, Engine.GridX + (x * 50) + offset, Engine.GridY + (y * 50) + offset, imageid, ActiveColor);
+                                    else
+                                        Gumps.AddImage(ref spellBar, Engine.GridX + (x * 50) + offset, Engine.GridY + (y * 50) + offset, imageid, InactiveColor);
                                 }
                                 // If available 2353 is a transparent button to let the hilighted image show through
-                                // 0xa5d is ugly but better than nothing
+                                // 30088 is a possible backup
                                 // if not the button wont change color when activated
                                 if (Gumps.IsValid(2353))
                                     Gumps.AddButton(ref spellBar, Engine.GridX + (x * 50), Engine.GridY + (y * 50), 2353, 2205, index, 1, 0);
-                                //else if (Gumps.IsValid(0xa5d))
-                                //    Gumps.AddButton(ref spellBar, Engine.GridX + (x * 50), Engine.GridY + (y * 50), 0xa5d, 2205, index, 1, 0);
+                                else if (Gumps.IsValid(30088))
+                                    Gumps.AddButton(ref spellBar, 6 + Engine.GridX + (x * 50), 10 + Engine.GridY + (y * 50), 30088, 2205, index, 1, 0);
                                 else
                                 {
                                     Gumps.AddButton(ref spellBar, Engine.GridX + (x * 50), Engine.GridY + (y * 50), imageid, 2205, index, 1, 0);

@@ -1029,9 +1029,9 @@ namespace RazorEnhanced
         ///    Wraith Form
         /// </param>
         /// <returns>True: if the buff is active - False: otherwise.</returns>
-        public static bool BuffsExist(string buffname)
+        public static bool BuffsExist(string buffname, bool okayToGuess=true)
         {
-            return (GetBuffInfo(buffname) != null);
+            return (GetBuffInfo(buffname, okayToGuess) != null);
         }
         
         /// <summary>
@@ -1039,7 +1039,7 @@ namespace RazorEnhanced
         /// </summary>
         /// <param name="buffName">buff name</param>
         /// <returns>Buff information</returns>
-        public static BuffInfo GetBuffInfo(string buffName)
+        public static BuffInfo GetBuffInfo(string buffName, bool okayToGuess = true)
         {
             BuffInfo result = null;
 
@@ -1069,7 +1069,7 @@ namespace RazorEnhanced
                         }
                     }
                     //result = currentBuffs.FirstOrDefault(p => p.Name.Equals(buffName, StringComparison.InvariantCultureIgnoreCase));
-                    if (result == null)
+                    if (result == null && okayToGuess)
                     {
                         // try to guess correct spelling
                         string useBuffname = GuessBuffName(buffName);
