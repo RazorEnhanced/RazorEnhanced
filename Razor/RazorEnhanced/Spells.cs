@@ -1,5 +1,7 @@
 using Assistant;
+using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace RazorEnhanced
 {
@@ -32,20 +34,20 @@ namespace RazorEnhanced
         }
 
 
-        internal static void CastOnly(string SpellName, bool wait)
+        internal static void CastOnly(string SpellName, bool wait, int waitAfter)
         {
             //
             bool success = false;
             string guessedSpellName = GuessSpellName(SpellName);
             if (m_AllSpells.ContainsKey(guessedSpellName))
             {
-                success = CastOnlyGeneric(m_AllSpells, guessedSpellName, wait);
+                success = CastOnlyGeneric(m_AllSpells, guessedSpellName, wait, waitAfter);
             }
             if (!success)
                 Scripts.SendMessageScriptError("Script Error: Cast: Invalid spell name: " + SpellName);
         }
 
-        internal static bool CastOnlyGeneric(Dictionary<string, int> conversion, string SpellName, bool wait)
+        internal static bool CastOnlyGeneric(Dictionary<string, int> conversion, string SpellName, bool wait, int waitAfter)
         {
             if (World.Player == null)
                 return true;
@@ -60,12 +62,87 @@ namespace RazorEnhanced
                 return false;
 
             if (s != null)
+            {
                 s.OnCast(new CastSpellFromMacro((ushort)s.GetID()), wait);
+                WaitCastComplete(waitAfter);
+            }
             return true;
         }
 
+        static CountdownEvent countdownEvent = null;
+
+        internal static void ParalyzeChanged(Assistant.Mobile mobile)
+        {
+            if (mobile == World.Player && countdownEvent != null)
+            {
+                if (countdownEvent.CurrentCount > 0)
+                {
+                    countdownEvent.Signal();
+                }
+            }
+        }
+
+
+        // false == timeout
+        // true == fizzeled or finished
+        internal static bool WaitCastComplete(int maxWait)
+        {
+            if (maxWait > 0)
+            {
+                ManualResetEvent waitOrFizzleEvent = new(false);
+                countdownEvent = new CountdownEvent(2);
+
+                void watchForFizzle(PacketReader p, PacketHandlerEventArgs args)
+                {
+                    waitOrFizzleEvent.Set();
+                }
+                try
+                {
+                    PacketHandler.RegisterServerToClientViewer(0x54, watchForFizzle);
+
+                    TimeSpan timeout = TimeSpan.FromMilliseconds(maxWait);
+                    WaitHandle[] waitHandles = new WaitHandle[] { waitOrFizzleEvent, countdownEvent.WaitHandle };
+                    while (true)
+                    {
+                        int index = WaitHandle.WaitAny(waitHandles, timeout);
+                        if (index == WaitHandle.WaitTimeout)
+                        {
+                            Utility.Logger.Debug("Worker thread: Wait timed out.");
+                            return false; // Exit loop on timeout
+                            break; // just to make parser happy 
+                        }
+                        else if (index == 0)
+                        {
+                            // ManualResetEvent was signaled
+                            Utility.Logger.Debug("Worker thread: ManualResetEvent was signaled.");
+                            break; // Exit loop after handling
+                        }
+                        else if (index == 1)
+                        {
+                            // CountdownEvent was signaled
+                            if (countdownEvent.IsSet)
+                            {
+                                Utility.Logger.Debug("Worker thread: CountdownEvent has been signaled twice and is now cleared.");
+                                break; // Exit loop after handling
+                            }
+                        }
+                        else
+                        {
+                            Utility.Logger.Debug("WTF");
+                        }
+                    }
+                }
+                finally
+                {
+                    PacketHandler.RemoveServerToClientViewer(0x54, watchForFizzle);
+                }
+            }
+            return true;
+
+        }
+
         internal static bool CastTargetedGeneric(Dictionary<string, int> conversion,
-            string SpellName, uint target, bool wait)
+            string SpellName, uint target, bool wait, int waitAfter)
         {
             if (World.Player == null)
                 return true;
@@ -80,7 +157,10 @@ namespace RazorEnhanced
                 return false;
 
             if (s != null)
+            {
                 s.OnCast(new CastTargetedSpell((ushort)s.GetID(), target), wait);
+                WaitCastComplete(waitAfter);
+            }
             return true;
         }
 
@@ -94,27 +174,31 @@ namespace RazorEnhanced
         /// <param name="SpellName">Name of the spell to cast.</param>
         /// <param name="target">Optional: Serial or Mobile to target (default: null)</param>
         /// <param name="wait">Optional: Wait server to confirm. (default: True)</param>
-        public static void Cast(string SpellName, uint target, bool wait = true)
+        public static void Cast(string SpellName, uint target, bool wait = true, int waitAfter = 0)
         {
             //
             bool success = false;
             string guessedSpellName = GuessSpellName(SpellName);
             if (m_AllSpells.ContainsKey(guessedSpellName))
             {
-                success = CastTargetedGeneric(m_AllSpells, guessedSpellName, target, wait);
+                success = CastTargetedGeneric(m_AllSpells, guessedSpellName, target, wait, waitAfter);
             }
             if (!success)
                 Scripts.SendMessageScriptError("Script Error: Cast: Invalid spell name: " + SpellName);
         }
 
-        public static void Cast(string SpellName, Mobile mobile, bool wait = true)
+        public static void Cast(string SpellName, Mobile mobile, bool wait = true, int waitAfter = 0)
         {
-            Cast(SpellName, (uint)mobile.Serial, wait);
+            Cast(SpellName, (uint)mobile.Serial, wait, waitAfter);
         }
 
-        public static void Cast(string SpellName)
+        public static void Cast(string SpellName, int waitAfter = 0)
         {
-            CastOnly(SpellName, true);
+            UOEntity target = World.FindEntity(waitAfter); // decide if its a wait timeout or a target
+            if (target != null)
+                Cast(SpellName, (uint)target.Serial, true, waitAfter);
+            else
+                CastOnly(SpellName, true, waitAfter);
         }
 
 
@@ -193,10 +277,10 @@ namespace RazorEnhanced
         /// </param>
         /// <param name="target">Optional: Serial or Mobile to target (default: null)</param>
         /// <param name="wait">Optional: Wait server to confirm. (default: True)</param>
-        public static void CastMagery(string SpellName, uint target, bool wait = true)
+        public static void CastMagery(string SpellName, uint target, bool wait = true, int waitAfter = 0)
         {
             string guessedSpellName = GuessSpellName(SpellName);
-            bool success = CastTargetedGeneric(m_MagerySpellName, guessedSpellName, target, wait);
+            bool success = CastTargetedGeneric(m_MagerySpellName, guessedSpellName, target, wait, waitAfter);
             if (!success)
                 Scripts.SendMessageScriptError("Script Error: CastMagery: Invalid spell name: " + SpellName);
         }
@@ -206,16 +290,20 @@ namespace RazorEnhanced
             CastMagery(SpellName, (uint)mobile.Serial, wait);
         }
 
-        public static void CastMagery(string SpellName)
+        public static void CastMagery(string SpellName, int waitAfter=0)
         {
-            CastOnlyMagery(SpellName, true);
+            UOEntity target = World.FindEntity(waitAfter); // decide if its a wait timeout or a target
+            if (target != null)
+                CastMagery(SpellName, (uint)target.Serial, true, waitAfter);
+            else
+                CastOnlyMagery(SpellName, true, waitAfter);
         }
 
 
-        internal static void CastOnlyMagery(string SpellName, bool wait)
+        internal static void CastOnlyMagery(string SpellName, bool wait, int waitAfter)
         {
             string guessedSpellName = GuessSpellName(SpellName);
-            bool success = CastOnlyGeneric(m_MagerySpellName, guessedSpellName, wait);
+            bool success = CastOnlyGeneric(m_MagerySpellName, guessedSpellName, wait, waitAfter);
             if (!success)
                 Scripts.SendMessageScriptError("Script Error: CastMagery: Invalid spell name: " + SpellName);
         }
@@ -247,10 +335,10 @@ namespace RazorEnhanced
         /// </param>
         /// <param name="target">Optional: Serial or Mobile to target (default: null)</param>
         /// <param name="wait">Optional: Wait server to confirm. (default: True)</param>
-        public static void CastNecro(string SpellName, uint target, bool wait = true)
+        public static void CastNecro(string SpellName, uint target, bool wait = true, int waitAfter = 0)
         {
             string guessedSpellName = GuessSpellName(SpellName);
-            bool success = CastTargetedGeneric(m_NecroSpellName, guessedSpellName, target, wait);
+            bool success = CastTargetedGeneric(m_NecroSpellName, guessedSpellName, target, wait, waitAfter);
             if (!success)
                 Scripts.SendMessageScriptError("Script Error: CastNecro: Invalid spell name: " + SpellName);
         }
@@ -260,16 +348,20 @@ namespace RazorEnhanced
             CastNecro(SpellName, (uint)mobile.Serial, wait);
         }
 
-        public static void CastNecro(string SpellName)
+        public static void CastNecro(string SpellName, int waitAfter=0)
         {
-            CastOnlyNecro(SpellName);
+            UOEntity target = World.FindEntity(waitAfter); // decide if its a wait timeout or a target
+            if (target != null)
+                CastNecro(SpellName, (uint)target.Serial, true, waitAfter);
+            else
+                CastOnlyNecro(SpellName, true, waitAfter);
         }
 
 
-        internal static void CastOnlyNecro(string SpellName, bool wait = true)
+        internal static void CastOnlyNecro(string SpellName, bool wait, int waitAfter)
         {
             string guessedSpellName = GuessSpellName(SpellName);
-            bool success = CastOnlyGeneric(m_NecroSpellName, guessedSpellName, wait);
+            bool success = CastOnlyGeneric(m_NecroSpellName, guessedSpellName, wait, waitAfter);
             if (!success)
                 Scripts.SendMessageScriptError("Script Error: CastNecro: Invalid spell name: " + SpellName);
         }
@@ -294,10 +386,10 @@ namespace RazorEnhanced
         /// </param>
         /// <param name="target">Optional: Serial or Mobile to target (default: null)</param>
         /// <param name="wait">Optional: Wait server to confirm. (default: True)</param>
-        public static void CastChivalry(string SpellName, uint target, bool wait = true)
+        public static void CastChivalry(string SpellName, uint target, bool wait = true, int waitAfter = 0)
         {
             string guessedSpellName = GuessSpellName(SpellName);
-            bool success = CastTargetedGeneric(m_ChivalrySpellName, guessedSpellName, target, wait);
+            bool success = CastTargetedGeneric(m_ChivalrySpellName, guessedSpellName, target, wait, waitAfter);
             if (!success)
                 Scripts.SendMessageScriptError("Script Error: CastChivalry: Invalid spell name: " + SpellName);
         }
@@ -307,15 +399,19 @@ namespace RazorEnhanced
             CastChivalry(SpellName, (uint)mobile.Serial, wait);
         }
 
-        public static void CastChivalry(string SpellName)
+        public static void CastChivalry(string SpellName, int waitAfter = 0)
         {
-            CastOnlyChivalry(SpellName);
+            UOEntity target = World.FindEntity(waitAfter); // decide if its a wait timeout or a target
+            if (target != null)
+                CastChivalry(SpellName, (uint)target.Serial, true, waitAfter);
+            else
+                CastOnlyChivalry(SpellName, true, waitAfter);
         }
 
-        internal static void CastOnlyChivalry(string SpellName, bool wait = true)
+        internal static void CastOnlyChivalry(string SpellName, bool wait, int waitAfter)
         {
             string guessedSpellName = GuessSpellName(SpellName);
-            bool success = CastOnlyGeneric(m_ChivalrySpellName, guessedSpellName, wait);
+            bool success = CastOnlyGeneric(m_ChivalrySpellName, guessedSpellName, wait, waitAfter);
             if (!success)
                 Scripts.SendMessageScriptError("Script Error: CastChivalry: Invalid spell name: " + SpellName);
         }
@@ -333,15 +429,15 @@ namespace RazorEnhanced
         /// </param>
         /// <param name="wait">Optional: Wait server to confirm. (default: True)</param>
         /// 
-        public static void CastBushido(string SpellName, bool wait = true)
+        public static void CastBushido(string SpellName, bool wait = true, int waitAfter=0)
         {
-            CastOnlyBushido(SpellName, wait);
+            CastOnlyBushido(SpellName, wait, waitAfter);
         }
 
-        internal static void CastOnlyBushido(string SpellName, bool wait = true)
+        internal static void CastOnlyBushido(string SpellName, bool wait, int waitAfter)
         {
             string guessedSpellName = GuessSpellName(SpellName);
-            bool success = CastOnlyGeneric(m_BushidoSpellName, guessedSpellName, wait);
+            bool success = CastOnlyGeneric(m_BushidoSpellName, guessedSpellName, wait, waitAfter);
             if (!success)
                 Scripts.SendMessageScriptError("Script Error: CastBushido: Invalid spell name: " + SpellName);
         }
@@ -363,28 +459,32 @@ namespace RazorEnhanced
         /// <param name="target">Optional: Serial or Mobile to target (default: null)</param>
         /// <param name="wait">Optional: Wait server to confirm. (default: True)</param>
 
-        public static void CastNinjitsu(string SpellName, uint target, bool wait = true)
+        public static void CastNinjitsu(string SpellName, uint target, bool wait = true, int waitAfter = 0)
         {
             string guessedSpellName = GuessSpellName(SpellName);
-            bool success = CastTargetedGeneric(m_NinjitsuSpellName, guessedSpellName, target, wait);
+            bool success = CastTargetedGeneric(m_NinjitsuSpellName, guessedSpellName, target, wait, waitAfter);
             if (!success)
                 Scripts.SendMessageScriptError("Script Error: CastNinjitsu: Invalid spell name: " + SpellName);
         }
 
-        public static void CastNinjitsu(string SpellName, Mobile mobile, bool wait = true)
+        public static void CastNinjitsu(string SpellName, Mobile mobile, bool wait = true, int waitAfter=0)
         {
-            CastNinjitsu(SpellName, (uint)mobile.Serial, wait);
+            CastNinjitsu(SpellName, (uint)mobile.Serial, wait, waitAfter);
         }
 
-        public static void CastNinjitsu(string SpellName)
+        public static void CastNinjitsu(string SpellName, int waitAfter=0)
         {
-            CastOnlyNinjitsu(SpellName);
+            UOEntity target = World.FindEntity(waitAfter); // decide if its a wait timeout or a target
+            if (target != null)
+                CastNinjitsu(SpellName, (uint)target.Serial, true, waitAfter);
+            else
+                CastOnlyNinjitsu(SpellName, true, waitAfter);
         }
 
-        internal static void CastOnlyNinjitsu(string SpellName, bool wait = true)
+        internal static void CastOnlyNinjitsu(string SpellName, bool wait, int waitAfter)
         {
             string guessedSpellName = GuessSpellName(SpellName);
-            bool success = CastOnlyGeneric(m_NinjitsuSpellName, guessedSpellName, wait);
+            bool success = CastOnlyGeneric(m_NinjitsuSpellName, guessedSpellName, wait, waitAfter);
             if (!success)
                 Scripts.SendMessageScriptError("Script Error: CastNinjitsu: Invalid spell name: " + SpellName);
         }
@@ -414,10 +514,10 @@ namespace RazorEnhanced
         /// </param>
         /// <param name="target">Optional: Serial or Mobile to target (default: null)</param>
         /// <param name="wait">Optional: Wait server to confirm. (default: True)</param>
-        public static void CastSpellweaving(string SpellName, uint target, bool wait = true)
+        public static void CastSpellweaving(string SpellName, uint target, bool wait = true, int waitAfter = 0)
         {
             string guessedSpellName = GuessSpellName(SpellName);
-            bool success = CastTargetedGeneric(m_SpellweavingSpellName, guessedSpellName, target, wait);
+            bool success = CastTargetedGeneric(m_SpellweavingSpellName, guessedSpellName, target, wait, waitAfter);
             if (!success)
                 Scripts.SendMessageScriptError("Script Error: CastSpellweaving: Invalid spell name: " + SpellName);
         }
@@ -429,15 +529,19 @@ namespace RazorEnhanced
 
 
 
-        public static void CastSpellweaving(string SpellName)
+        public static void CastSpellweaving(string SpellName, int waitAfter=0)
         {
-            CastOnlySpellweaving(SpellName);
+            UOEntity target = World.FindEntity(waitAfter); // decide if its a wait timeout or a target
+            if (target != null)
+                CastSpellweaving(SpellName, (uint)target.Serial, true, waitAfter);
+            else
+                CastOnlySpellweaving(SpellName, true, waitAfter);
         }
 
-        internal static void CastOnlySpellweaving(string SpellName, bool wait = true)
+        internal static void CastOnlySpellweaving(string SpellName, bool wait, int waitAfter)
         {
             string guessedSpellName = GuessSpellName(SpellName);
-            bool success = CastOnlyGeneric(m_SpellweavingSpellName, guessedSpellName, wait);
+            bool success = CastOnlyGeneric(m_SpellweavingSpellName, guessedSpellName, wait, waitAfter);
             if (!success)
                 Scripts.SendMessageScriptError("Script Error: CastSpellweaving: Invalid spell name: " + SpellName);
         }
@@ -468,10 +572,10 @@ namespace RazorEnhanced
         /// </param>
         /// <param name="target">Optional: Serial or Mobile to target (default: null)</param>
         /// <param name="wait">Optional: Wait server to confirm. (default: True)</param>
-        public static void CastMysticism(string SpellName, uint target, bool wait = true)
+        public static void CastMysticism(string SpellName, uint target, bool wait = true, int waitAfter = 0)
         {
             string guessedSpellName = GuessSpellName(SpellName);
-            bool success = CastTargetedGeneric(m_MysticismSpellName, guessedSpellName, target, wait);
+            bool success = CastTargetedGeneric(m_MysticismSpellName, guessedSpellName, target, wait, waitAfter);
             if (!success)
                 Scripts.SendMessageScriptError("Script Error: CastMysticism: Invalid spell name: " + SpellName);
         }
@@ -481,15 +585,19 @@ namespace RazorEnhanced
             CastMysticism(SpellName, (uint)mobile.Serial, wait);
         }
 
-        public static void CastMysticism(string SpellName)
+        public static void CastMysticism(string SpellName, int waitAfter=0)
         {
-            CastOnlyMysticism(SpellName);
+            UOEntity target = World.FindEntity(waitAfter); // decide if its a wait timeout or a target
+            if (target != null)
+                CastMysticism(SpellName, (uint)target.Serial, true, waitAfter);
+            else
+                CastOnlyMysticism(SpellName, true, waitAfter);
         }
 
-        internal static void CastOnlyMysticism(string SpellName, bool wait = true)
+        internal static void CastOnlyMysticism(string SpellName, bool wait, int waitAfter)
         {
             string guessedSpellName = GuessSpellName(SpellName);
-            bool success = CastOnlyGeneric(m_MysticismSpellName, guessedSpellName, wait);
+            bool success = CastOnlyGeneric(m_MysticismSpellName, guessedSpellName, wait, waitAfter);
             if (!success)
                 Scripts.SendMessageScriptError("Script Error: CastMysticism: Invalid spell name: " + SpellName);
         }
@@ -549,10 +657,10 @@ namespace RazorEnhanced
         /// <param name="target">Optional: Serial or Mobile to target (default: null)</param>
         /// <param name="wait">Optional: Wait server to confirm. (default: True)</param>
 
-        public static void CastMastery(string SpellName, uint target, bool wait = true)
+        public static void CastMastery(string SpellName, uint target, bool wait = true, int waitAfter = 0)
         {
             string guessedSpellName = GuessSpellName(SpellName);
-            bool success = CastTargetedGeneric(m_MasterySpellName, guessedSpellName, target, wait);
+            bool success = CastTargetedGeneric(m_MasterySpellName, guessedSpellName, target, wait, waitAfter);
             if (!success)
                 Scripts.SendMessageScriptError("Script Error: CastMastery: Invalid spell name: " + SpellName);
         }
@@ -562,15 +670,19 @@ namespace RazorEnhanced
             CastMastery(SpellName, (uint)mobile.Serial, wait);
         }
 
-        public static void CastMastery(string SpellName)
+        public static void CastMastery(string SpellName, int waitAfter=0)
         {
-            CastOnlyMastery(SpellName);
+            UOEntity target = World.FindEntity(waitAfter); // decide if its a wait timeout or a target
+            if (target != null)
+                CastMastery(SpellName, (uint)target.Serial, true, waitAfter);
+            else
+                CastOnlyMastery(SpellName, true, waitAfter);
         }
 
-        internal static void CastOnlyMastery(string SpellName, bool wait = true)
+        internal static void CastOnlyMastery(string SpellName, bool wait, int waitAfter)
         {
             string guessedSpellName = GuessSpellName(SpellName);
-            bool success = CastOnlyGeneric(m_MasterySpellName, guessedSpellName, wait);
+            bool success = CastOnlyGeneric(m_MasterySpellName, guessedSpellName, wait, waitAfter);
             if (!success)
                 Scripts.SendMessageScriptError("Script Error: CastMastery: Invalid spell name: " + SpellName);
         }
@@ -605,34 +717,38 @@ namespace RazorEnhanced
         /// </param>
         /// <param name="target">Optional: Serial or Mobile to target (default: null)</param>
         /// <param name="wait">Optional: Wait server to confirm. (default: True)</param>
-        public static void CastCleric(string SpellName, uint target, bool wait = true)
+        public static void CastCleric(string SpellName, uint target, bool wait = true, int waitAfter = 0)
         {
             if (RazorEnhanced.Settings.General.ReadBool("DruidClericPackets"))
             {
                 string guessedSpellName = GuessSpellName(SpellName);
-                bool success = CastTargetedGeneric(m_ClericSpellName, guessedSpellName, target, wait);
+                bool success = CastTargetedGeneric(m_ClericSpellName, guessedSpellName, target, wait, waitAfter);
                 if (!success)
                     Scripts.SendMessageScriptError("Script Error: CastNecro: Invalid spell name: " + SpellName);
             }
             else
             {
-                CastOnlyCleric(SpellName, wait);
+                CastOnlyCleric(SpellName, wait, waitAfter);
             }
         }
 
-        public static void CastCleric(string SpellName)
+        public static void CastCleric(string SpellName, int waitAfter = 0)
         {
-            CastOnlyCleric(SpellName);
+            UOEntity target = World.FindEntity(waitAfter); // decide if its a wait timeout or a target
+            if (target != null)
+                CastCleric(SpellName, (uint)target.Serial, true, waitAfter);
+            else
+                CastOnlyCleric(SpellName, true, waitAfter);
         }
-        public static void CastCleric(string SpellName, Mobile mobile, bool wait = true)
+        public static void CastCleric(string SpellName, Mobile mobile, bool wait = true, int waitAfter=0)
         {
-            CastCleric(SpellName, (uint)mobile.Serial, wait);
+            CastCleric(SpellName, (uint)mobile.Serial, wait, waitAfter);
         }
 
 
 
         //TODO: why is this function much different from the other implementations ?  (ex: CastOnlyMastery )
-        internal static void CastOnlyCleric(string SpellName, bool wait = true)
+        internal static void CastOnlyCleric(string SpellName, bool wait, int waitAfter)
         {
             if (World.Player == null)
                 return;
@@ -647,7 +763,7 @@ namespace RazorEnhanced
             {
                 if (RazorEnhanced.Settings.General.ReadBool("DruidClericPackets"))
                 {
-                    bool success = CastOnlyGeneric(m_ClericSpellName, guessedSpellName, wait);
+                    bool success = CastOnlyGeneric(m_ClericSpellName, guessedSpellName, wait, waitAfter);
                     if (!success)
                         Scripts.SendMessageScriptError("Script Error: CastCleric: Invalid spell name: " + SpellName);
                 }
@@ -681,18 +797,18 @@ namespace RazorEnhanced
         /// <param name="target">target to use the druid spell on</param>
         /// <param name="wait"></param>
 
-        public static void CastDruid(string SpellName, uint target, bool wait = true)
+        public static void CastDruid(string SpellName, uint target, bool wait = true, int waitAfter = 0)
         {
             string guessedSpellName = GuessSpellName(SpellName);
             if (RazorEnhanced.Settings.General.ReadBool("DruidClericPackets"))
             {
-                bool success = CastTargetedGeneric(m_DruidSpellName, guessedSpellName, target, wait);
+                bool success = CastTargetedGeneric(m_DruidSpellName, guessedSpellName, target, wait, waitAfter);
                 if (!success)
                     Scripts.SendMessageScriptError("Script Error: CastNecro: Invalid spell name: " + SpellName);
             }
             else
             {
-                CastOnlyDruid(guessedSpellName, wait);
+                CastOnlyDruid(guessedSpellName, wait, waitAfter);
             }
         }
 
@@ -702,13 +818,17 @@ namespace RazorEnhanced
         }
 
 
-        public static void CastDruid(string SpellName)
+        public static void CastDruid(string SpellName, int waitAfter=0)
         {
-            CastOnlyDruid(SpellName);
+            UOEntity target = World.FindEntity(waitAfter); // decide if its a wait timeout or a target
+            if (target != null)
+                CastDruid(SpellName, (uint)target.Serial, true, waitAfter);
+            else
+                CastOnlyDruid(SpellName, true, waitAfter);
         }
 
         //TODO: why is this function much different from the other implementations ?  (ex: CastOnlyMastery )
-        internal static void CastOnlyDruid(string SpellName, bool wait = true)
+        internal static void CastOnlyDruid(string SpellName, bool wait, int waitAfter)
         {
             if (World.Player == null)
                 return;
@@ -723,7 +843,7 @@ namespace RazorEnhanced
             {
                 if (RazorEnhanced.Settings.General.ReadBool("DruidClericPackets"))
                 {
-                    bool success = CastOnlyGeneric(m_DruidSpellName, guessedSpellName, wait);
+                    bool success = CastOnlyGeneric(m_DruidSpellName, guessedSpellName, wait, waitAfter);
                     if (!success)
                         Scripts.SendMessageScriptError("Script Error: CasDruid: Invalid spell name: " + SpellName);
                 }

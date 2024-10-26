@@ -40,7 +40,7 @@ namespace Assistant
             }
         }
 
-        internal bool Deleted
+        public bool Deleted
         {
             get
             {

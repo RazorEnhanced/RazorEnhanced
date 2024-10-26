@@ -1,3 +1,4 @@
+using RazorEnhanced;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -479,6 +480,8 @@ namespace Assistant
                 needrefresh = true;
 
             m_Paralized = (flags & 0x01) != 0;
+
+            Spells.ParalyzeChanged(this);
 
             if (!needrefresh) // Non richiede aggiornamento colori in quanto flag non cambiati
                 return;

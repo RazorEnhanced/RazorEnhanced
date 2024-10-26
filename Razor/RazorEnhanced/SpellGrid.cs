@@ -468,7 +468,7 @@ namespace RazorEnhanced
             switch (pl.Group)
             {
                 case GroupType.Magery:
-                    Spells.CastOnlyMagery(pl.Spell, false);
+                    Spells.CastOnlyMagery(pl.Spell, false, 0);
                     break;
                 case GroupType.Abilities:
                     if (pl.Spell == "Primary")
@@ -477,31 +477,31 @@ namespace RazorEnhanced
                         SpecialMoves.SetSecondaryAbility(false);
                     break;
                 case GroupType.Bushido:
-                    Spells.CastOnlyBushido(pl.Spell, false);
+                    Spells.CastOnlyBushido(pl.Spell, false, 0);
                     break;
                 case GroupType.Chivalry:
-                    Spells.CastOnlyChivalry(pl.Spell, false);
+                    Spells.CastOnlyChivalry(pl.Spell, false, 0);
                     break;
                 case GroupType.Necromancy:
-                    Spells.CastOnlyNecro(pl.Spell, false);
+                    Spells.CastOnlyNecro(pl.Spell, false, 0);
                     break;
                 case GroupType.Ninjitsu:
-                    Spells.CastOnlyNinjitsu(pl.Spell, false);
+                    Spells.CastOnlyNinjitsu(pl.Spell, false, 0);
                     break;
                 case GroupType.Mysticism:
-                    Spells.CastOnlyMysticism(pl.Spell, false);
+                    Spells.CastOnlyMysticism(pl.Spell, false, 0);
                     break;
                 case GroupType.Spellweaving:
-                    Spells.CastOnlySpellweaving(pl.Spell, false);
+                    Spells.CastOnlySpellweaving(pl.Spell, false, 0);
                     break;
                 case GroupType.Mastery:
-                    Spells.CastOnlyMastery(pl.Spell, false);
+                    Spells.CastOnlyMastery(pl.Spell, false, 0);
                     break;
                 case GroupType.Cleric:
-                    Spells.CastOnlyMastery(pl.Spell, false);
+                    Spells.CastOnlyMastery(pl.Spell, false, 0);
                     break;
                 case GroupType.Druid:
-                    Spells.CastOnlyMastery(pl.Spell, false);
+                    Spells.CastOnlyMastery(pl.Spell, false, 0);
                     break;
                 case GroupType.Script:
                     Misc.ScriptRun(pl.Spell);
