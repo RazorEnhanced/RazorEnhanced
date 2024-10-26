@@ -252,6 +252,7 @@ namespace RazorEnhanced.UI
             var language = m_Script.GetLanguage();
             LoadLanguage(language);
             fastColoredTextBoxEditor.Text = m_Script.Text;
+            fastColoredTextBoxEditor.IsChanged = false;
             UpdateTitle();
             return true;
         }
@@ -262,6 +263,7 @@ namespace RazorEnhanced.UI
             language = m_Script.GetLanguage();
             LoadLanguage(language);
             fastColoredTextBoxEditor.Text = "";
+            fastColoredTextBoxEditor.IsChanged = false;
             UpdateTitle();
         }
 
@@ -1174,6 +1176,14 @@ namespace RazorEnhanced.UI
             }
         }
 
+        private static readonly Regex WhitespaceRegex = new Regex(@"\s+", RegexOptions.Compiled);
+
+        static bool CompareIgnoringWhitespace(string str1, string str2)
+        {
+            return WhitespaceRegex.Replace(str1, "") ==
+                   WhitespaceRegex.Replace(str2, "");
+        }
+
         private bool CloseAndSave()
         {
             m_onclosing = true;
@@ -1182,7 +1192,7 @@ namespace RazorEnhanced.UI
 
             // Not ask to save empty text
             var editorContent = fastColoredTextBoxEditor.Text;
-            if (editorContent != null && editorContent != "")
+            if (fastColoredTextBoxEditor.IsChanged && (editorContent != null || editorContent != ""))
             {
                 string fileContent = "";
                 if (m_Script.Exist)
@@ -1193,8 +1203,7 @@ namespace RazorEnhanced.UI
                     }
                     catch { }
                 }
-
-                if (fileContent != editorContent)
+                if (!CompareIgnoringWhitespace(fileContent, editorContent))
                 {
                     var dialogResult = RazorEnhanced.UI.RE_MessageBox.Show("Save current file?",
                         $"Save file named:\r\n{m_Script.Fullpath}",

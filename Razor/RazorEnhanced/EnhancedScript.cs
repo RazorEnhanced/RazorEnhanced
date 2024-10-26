@@ -321,7 +321,7 @@ namespace RazorEnhanced
             if (force || content != m_Text)
             {
                 m_Text = content;
-                if (Preload)
+                if (force || Preload)
                     InitEngine();
             }
             OnLoad?.Invoke(this, true);
