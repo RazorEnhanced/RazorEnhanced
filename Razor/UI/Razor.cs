@@ -787,7 +787,7 @@ namespace Assistant
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new(typeof(MainForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.friendlistView = new System.Windows.Forms.ListView();
             this.columnHeader28 = new System.Windows.Forms.ColumnHeader();
             this.columnHeader29 = new System.Windows.Forms.ColumnHeader();
