@@ -196,7 +196,7 @@ namespace RazorEnhanced
         {
             UOEntity target = World.FindEntity(waitAfter); // decide if its a wait timeout or a target
             if (target != null)
-                Cast(SpellName, (uint)target.Serial, true, waitAfter);
+                Cast(SpellName, (uint)target.Serial, false, 0);
             else
                 CastOnly(SpellName, true, waitAfter);
         }
@@ -294,7 +294,7 @@ namespace RazorEnhanced
         {
             UOEntity target = World.FindEntity(waitAfter); // decide if its a wait timeout or a target
             if (target != null)
-                CastMagery(SpellName, (uint)target.Serial, true, waitAfter);
+                CastMagery(SpellName, (uint)target.Serial, false, 0);
             else
                 CastOnlyMagery(SpellName, true, waitAfter);
         }
@@ -352,7 +352,7 @@ namespace RazorEnhanced
         {
             UOEntity target = World.FindEntity(waitAfter); // decide if its a wait timeout or a target
             if (target != null)
-                CastNecro(SpellName, (uint)target.Serial, true, waitAfter);
+                CastNecro(SpellName, (uint)target.Serial, false, 0);
             else
                 CastOnlyNecro(SpellName, true, waitAfter);
         }
@@ -403,7 +403,7 @@ namespace RazorEnhanced
         {
             UOEntity target = World.FindEntity(waitAfter); // decide if its a wait timeout or a target
             if (target != null)
-                CastChivalry(SpellName, (uint)target.Serial, true, waitAfter);
+                CastChivalry(SpellName, (uint)target.Serial, false, 0);
             else
                 CastOnlyChivalry(SpellName, true, waitAfter);
         }
@@ -476,7 +476,7 @@ namespace RazorEnhanced
         {
             UOEntity target = World.FindEntity(waitAfter); // decide if its a wait timeout or a target
             if (target != null)
-                CastNinjitsu(SpellName, (uint)target.Serial, true, waitAfter);
+                CastNinjitsu(SpellName, (uint)target.Serial, false, 0);
             else
                 CastOnlyNinjitsu(SpellName, true, waitAfter);
         }
@@ -533,7 +533,7 @@ namespace RazorEnhanced
         {
             UOEntity target = World.FindEntity(waitAfter); // decide if its a wait timeout or a target
             if (target != null)
-                CastSpellweaving(SpellName, (uint)target.Serial, true, waitAfter);
+                CastSpellweaving(SpellName, (uint)target.Serial, false, 0);
             else
                 CastOnlySpellweaving(SpellName, true, waitAfter);
         }
@@ -589,7 +589,7 @@ namespace RazorEnhanced
         {
             UOEntity target = World.FindEntity(waitAfter); // decide if its a wait timeout or a target
             if (target != null)
-                CastMysticism(SpellName, (uint)target.Serial, true, waitAfter);
+                CastMysticism(SpellName, (uint)target.Serial, false, 0);
             else
                 CastOnlyMysticism(SpellName, true, waitAfter);
         }
@@ -674,7 +674,7 @@ namespace RazorEnhanced
         {
             UOEntity target = World.FindEntity(waitAfter); // decide if its a wait timeout or a target
             if (target != null)
-                CastMastery(SpellName, (uint)target.Serial, true, waitAfter);
+                CastMastery(SpellName, (uint)target.Serial, false, 0);
             else
                 CastOnlyMastery(SpellName, true, waitAfter);
         }
@@ -736,7 +736,7 @@ namespace RazorEnhanced
         {
             UOEntity target = World.FindEntity(waitAfter); // decide if its a wait timeout or a target
             if (target != null)
-                CastCleric(SpellName, (uint)target.Serial, true, waitAfter);
+                CastCleric(SpellName, (uint)target.Serial, false, 0);
             else
                 CastOnlyCleric(SpellName, true, waitAfter);
         }
@@ -822,7 +822,7 @@ namespace RazorEnhanced
         {
             UOEntity target = World.FindEntity(waitAfter); // decide if its a wait timeout or a target
             if (target != null)
-                CastDruid(SpellName, (uint)target.Serial, true, waitAfter);
+                CastDruid(SpellName, (uint)target.Serial, false, 0);
             else
                 CastOnlyDruid(SpellName, true, waitAfter);
         }
