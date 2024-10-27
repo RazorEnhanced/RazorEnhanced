@@ -2558,7 +2558,13 @@ namespace RazorEnhanced.UOS
                 container = args[2].AsInt();
             }
 
-            Item item = Items.FindByID(itemID, color, container, true);
+            int searchDepth = -1;
+            if (args.Length > 3)
+            {
+                searchDepth = args[3].AsInt();
+            }
+
+            Item item = Items.FindByID(itemID, color, container, searchDepth, true);
             if (item == null)
                 return false;
 
