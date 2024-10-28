@@ -7716,6 +7716,8 @@ namespace RazorEnhanced.UOS
             if (line.StartsWith("//") || line.StartsWith("#"))
                 return;
 
+            line = Regex.Replace(line, @"else\s+if", "elseif");
+
             // Split the line by spaces (unless the space is in quotes)
             var lexemes = _tfp.GetTokens(line, false);
 
