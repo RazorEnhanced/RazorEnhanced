@@ -645,7 +645,8 @@ namespace RazorEnhanced
                     if (filter.Name != String.Empty)
                     {
                         Regex rgx = new(filter.Name, RegexOptions.IgnoreCase);
-                        List<Assistant.Mobile> list = assistantMobiles.Where(i => rgx.IsMatch(i.Name)).ToList();
+                        List<Assistant.Mobile> list = assistantMobiles.Where(i => rgx.IsMatch(i.Name) 
+                          || rgx.IsMatch(Mobiles.GetPropStringByIndex(i.Serial, 0))).ToList();                        
                         assistantMobiles = list;
                     }
 
