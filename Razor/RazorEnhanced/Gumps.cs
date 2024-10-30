@@ -2,7 +2,9 @@ using Assistant;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Threading;
+using static Microsoft.CodeAnalysis.CSharp.SyntaxTokenParser;
 
 namespace RazorEnhanced
 {
@@ -755,6 +757,32 @@ namespace RazorEnhanced
             return World.Player.HasGump;
         }
 
+        static internal uint ConvertObjectToUint(object anObject)
+        {
+            if (anObject is int intVal)
+            {
+                // Convert regular int to uint
+                return ((uint)intVal);
+            }
+            else if (anObject is BigInteger bigIntVal)
+            {
+                // Check if BigInteger is within the uint range
+                if (bigIntVal >= uint.MinValue && bigIntVal <= uint.MaxValue)
+                {
+                    return((uint)bigIntVal);
+                }
+                else
+                {
+                    throw new ArgumentOutOfRangeException($"Value {bigIntVal} is out of range for uint.");
+                }
+            }
+            else
+            {
+                throw new InvalidCastException("The object contains unsupported types.");
+            }
+        }
+
+
         /// <summary>@nodoc @experimental
         /// wait for one of a list of gump ids
         /// </summary>
@@ -766,7 +794,7 @@ namespace RazorEnhanced
             List<uint> waitList = new();
             foreach (var gumpID in gumpIDs)
             {
-                UInt32 gumpid = (uint)gumpID;
+                uint gumpid = ConvertObjectToUint(gumpID);
                 if (Gumps.m_incomingData.ContainsKey(gumpid))
                     return true;
                 if (Gumps.m_gumpData.ContainsKey(gumpid))

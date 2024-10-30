@@ -18,7 +18,6 @@ namespace RazorEnhanced.UI
                 this.AutoScaleMode = AutoScaleMode.Font;
             MaximizeBox = false;
             this.Text = m_Title;
-
         }
 
         private void RefreshGUI()
@@ -328,7 +327,14 @@ namespace RazorEnhanced.UI
         private void Checkupdatebutton_Click(object sender, EventArgs e)
         {
             // AutoUpdater
-            AutoUpdater.Start("https://raw.githubusercontent.com/RazorEnhanced/razorenhanced.github.io/main/RazorEnhancedAutoUpdater.xml");
+            if (riskyCode.Checked)
+            {
+                AutoUpdater.Start("https://raw.githubusercontent.com/RazorEnhanced/razorenhanced.github.io/main/RazorEnhancedAutoUpdaterBetaCode.xml");
+            }
+            else
+            {
+                AutoUpdater.Start("https://raw.githubusercontent.com/RazorEnhanced/razorenhanced.github.io/main/RazorEnhancedAutoUpdater.xml");
+            }
         }
 
         private void CuoClient_Click(object sender, EventArgs e)
