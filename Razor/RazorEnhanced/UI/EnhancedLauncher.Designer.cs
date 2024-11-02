@@ -57,7 +57,6 @@ namespace RazorEnhanced.UI
             this.launch = new System.Windows.Forms.Button();
             this.launchCUO = new System.Windows.Forms.Button();
             this.m_Tip = new System.Windows.Forms.ToolTip(this.components);
-            this.riskyCode = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -341,23 +340,11 @@ namespace RazorEnhanced.UI
             this.launchCUO.Text = "Launch CUO";
             this.launchCUO.Click += new System.EventHandler(this.LaunchCUO_Click);
             // 
-            // riskyCode
-            // 
-            this.riskyCode.AutoSize = true;
-            this.riskyCode.Location = new System.Drawing.Point(298, 1);
-            this.riskyCode.Name = "riskyCode";
-            this.riskyCode.Size = new System.Drawing.Size(80, 18);
-            this.riskyCode.TabIndex = 104;
-            this.riskyCode.Text = "Risky Code";
-            this.m_Tip.SetToolTip(this.riskyCode, "Warning: This will load beta code. Make sure you know how to revert\r\n");
-            this.riskyCode.UseVisualStyleBackColor = true;
-            // 
             // EnhancedLauncher
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(397, 279);
-            this.Controls.Add(this.riskyCode);
             this.Controls.Add(this.launchCUO);
             this.Controls.Add(this.checkupdatebutton);
             this.Controls.Add(this.quit);
@@ -375,7 +362,6 @@ namespace RazorEnhanced.UI
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -407,6 +393,5 @@ namespace RazorEnhanced.UI
         private System.Windows.Forms.Label cuoClientLabel;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button launchCUO;
-        private System.Windows.Forms.CheckBox riskyCode;
     }
 }

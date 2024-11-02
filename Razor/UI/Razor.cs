@@ -553,7 +553,6 @@ namespace Assistant
         private System.Windows.Forms.Button targetChoseBody;
         private System.Windows.Forms.CheckBox bandagehealAutostartCheckBox;
         private System.Windows.Forms.CheckBox bandagehealusetarget;
-        private System.Windows.Forms.Button paypalButton;
         private System.Windows.Forms.CheckBox bandagehealusetext;
         private TextBox bandagehealusetextSelfContent;
         private TextBox bandagehealusetextContent;
@@ -735,7 +734,6 @@ namespace Assistant
         private ColumnHeader columnHeader19;
         private ColumnHeader columnHeader20;
         private CheckBox remoteControl;
-        private Label label82;
         private CheckBox useUo3D;
 
         internal MainForm()
@@ -797,9 +795,7 @@ namespace Assistant
             this.columnHeader64 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabs = new System.Windows.Forms.TabControl();
             this.generalTab = new System.Windows.Forms.TabPage();
-            this.label82 = new System.Windows.Forms.Label();
             this.label79 = new System.Windows.Forms.Label();
-            this.paypalButton = new System.Windows.Forms.Button();
             this.openchangelogButton = new System.Windows.Forms.Button();
             this.showlauncher = new System.Windows.Forms.CheckBox();
             this.groupBox29 = new System.Windows.Forms.GroupBox();
@@ -1675,7 +1671,7 @@ namespace Assistant
             this.friendguildListView.MinimumSize = new System.Drawing.Size(10, 10);
             this.friendguildListView.MultiSelect = false;
             this.friendguildListView.Name = "friendguildListView";
-            this.friendguildListView.Size = new System.Drawing.Size(243, 140);
+            this.friendguildListView.Size = new System.Drawing.Size(243, 141);
             this.friendguildListView.TabIndex = 77;
             this.friendguildListView.UseCompatibleStateImageBehavior = false;
             this.friendguildListView.View = System.Windows.Forms.View.Details;
@@ -1723,9 +1719,7 @@ namespace Assistant
             // generalTab
             // 
             this.generalTab.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.generalTab.Controls.Add(this.label82);
             this.generalTab.Controls.Add(this.label79);
-            this.generalTab.Controls.Add(this.paypalButton);
             this.generalTab.Controls.Add(this.openchangelogButton);
             this.generalTab.Controls.Add(this.showlauncher);
             this.generalTab.Controls.Add(this.groupBox29);
@@ -1749,15 +1743,6 @@ namespace Assistant
             this.generalTab.TabIndex = 0;
             this.generalTab.Text = "General";
             // 
-            // label82
-            // 
-            this.label82.AutoSize = true;
-            this.label82.Location = new System.Drawing.Point(542, 128);
-            this.label82.Name = "label82";
-            this.label82.Size = new System.Drawing.Size(128, 14);
-            this.label82.TabIndex = 71;
-            this.label82.Text = "Sponsor RazorEnhanced";
-            // 
             // label79
             // 
             this.label79.Location = new System.Drawing.Point(429, 99);
@@ -1766,22 +1751,6 @@ namespace Assistant
             this.label79.TabIndex = 70;
             this.label79.Text = "X";
             this.label79.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // paypalButton
-            // 
-            this.paypalButton.BackColor = System.Drawing.SystemColors.Control;
-            this.paypalButton.BackgroundImage = global::Assistant.Properties.Resources.github;
-            this.paypalButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.paypalButton.FlatAppearance.BorderSize = 0;
-            this.paypalButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.paypalButton.Location = new System.Drawing.Point(542, 53);
-            this.paypalButton.Name = "paypalButton";
-            this.paypalButton.Size = new System.Drawing.Size(95, 68);
-            this.paypalButton.TabIndex = 69;
-            this.paypalButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.paypalButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.paypalButton.UseVisualStyleBackColor = false;
-            this.paypalButton.Click += new System.EventHandler(this.paypalButton_Click);
             // 
             // openchangelogButton
             // 
@@ -5658,10 +5627,10 @@ namespace Assistant
             this.friends.Controls.Add(this.friendButtonRemoveList);
             this.friends.Controls.Add(this.friendButtonAddList);
             this.friends.Controls.Add(this.friendListSelect);
-            this.friends.Location = new System.Drawing.Point(4, 23);
+            this.friends.Location = new System.Drawing.Point(4, 22);
             this.friends.Name = "friends";
             this.friends.Padding = new System.Windows.Forms.Padding(3);
-            this.friends.Size = new System.Drawing.Size(677, 346);
+            this.friends.Size = new System.Drawing.Size(677, 347);
             this.friends.TabIndex = 6;
             this.friends.Text = "Friends";
             this.friends.UseVisualStyleBackColor = true;
@@ -5682,7 +5651,7 @@ namespace Assistant
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.friendguildListView);
-            this.splitContainer1.Size = new System.Drawing.Size(249, 284);
+            this.splitContainer1.Size = new System.Drawing.Size(249, 285);
             this.splitContainer1.SplitterDistance = 135;
             this.splitContainer1.TabIndex = 83;
             // 
@@ -9112,7 +9081,7 @@ namespace Assistant
             this.discordrazorButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.discordrazorButton.Location = new System.Drawing.Point(124, 273);
             this.discordrazorButton.Name = "discordrazorButton";
-            this.discordrazorButton.Size = new System.Drawing.Size(94, 37);
+            this.discordrazorButton.Size = new System.Drawing.Size(99, 37);
             this.discordrazorButton.TabIndex = 9;
             this.discordrazorButton.Text = "Razor Enhanced Discord";
             this.discordrazorButton.UseVisualStyleBackColor = true;
@@ -9990,7 +9959,7 @@ namespace Assistant
 
         private void razorButtonWiki_Click(object sender, EventArgs e)
         {
-            ProcessStartInfo p = new("http://www.razorenhanced.net/dokuwiki");
+            ProcessStartInfo p = new("https://razorenhanced.github.io/");
             try
             {
                 Process.Start(p);

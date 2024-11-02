@@ -327,14 +327,7 @@ namespace RazorEnhanced.UI
         private void Checkupdatebutton_Click(object sender, EventArgs e)
         {
             // AutoUpdater
-            if (riskyCode.Checked)
-            {
-                AutoUpdater.Start("https://raw.githubusercontent.com/RazorEnhanced/razorenhanced.github.io/main/RazorEnhancedAutoUpdaterBetaCode.xml");
-            }
-            else
-            {
-                AutoUpdater.Start("https://raw.githubusercontent.com/RazorEnhanced/razorenhanced.github.io/main/RazorEnhancedAutoUpdater.xml");
-            }
+            AutoUpdater.Start("https://raw.githubusercontent.com/RazorEnhanced/razorenhanced.github.io/main/RazorEnhancedAutoUpdater.xml");
         }
 
         private void CuoClient_Click(object sender, EventArgs e)
