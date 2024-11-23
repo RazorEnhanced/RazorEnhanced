@@ -9959,7 +9959,7 @@ namespace Assistant
 
         private void razorButtonWiki_Click(object sender, EventArgs e)
         {
-            ProcessStartInfo p = new("https://razorenhanced.github.io/");
+            ProcessStartInfo p = new("https://razorenhanced.net/dokuwiki");
             try
             {
                 Process.Start(p);
@@ -9994,7 +9994,7 @@ namespace Assistant
             try
             {
                 // Leave stuff thats already set up
-                AutoUpdater.Start("https://raw.githubusercontent.com/RazorEnhanced/razorenhanced.github.io/main/RazorEnhancedAutoUpdater.xml");
+                AutoUpdater.Start("https://raw.githubusercontent.com/jsebold666/razorenhanced.github.io/main/RazorEnhancedAutoUpdater.xml");
             }
             catch
             {

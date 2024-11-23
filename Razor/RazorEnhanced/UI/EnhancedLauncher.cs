@@ -109,7 +109,7 @@ namespace RazorEnhanced.UI
             if (DateTime.Now > reminderDate)
             {
                 // run update check .. removed AutoUpdater
-                AutoUpdater.Start("https://raw.githubusercontent.com/RazorEnhanced/razorenhanced.github.io/main/RazorEnhancedAutoUpdater.xml");
+                AutoUpdater.Start("https://raw.githubusercontent.com/jsebold666/razorenhanced.github.io/main/RazorEnhancedAutoUpdater.xml");
             }
             UpdateGUI();
         }
@@ -327,7 +327,7 @@ namespace RazorEnhanced.UI
         private void Checkupdatebutton_Click(object sender, EventArgs e)
         {
             // AutoUpdater
-            AutoUpdater.Start("https://raw.githubusercontent.com/RazorEnhanced/razorenhanced.github.io/main/RazorEnhancedAutoUpdater.xml");
+            AutoUpdater.Start("https://raw.githubusercontent.com/jsebold666/razorenhanced.github.io/main/RazorEnhancedAutoUpdater.xml");
         }
 
         private void CuoClient_Click(object sender, EventArgs e)
