@@ -7,6 +7,7 @@ using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using Ultima;
 
 namespace Assistant
 {
@@ -466,6 +467,20 @@ namespace Assistant
                 if (text[0] == '<')
                 {
                     args.Block = ExecCommand(text);
+                }
+                else if (text.Length > 7 && text.Substring(0, 7).Equals(">macro "))
+                {
+                    args.Block = true;
+                    string script_name = text.Substring(7, text.Length - 7);
+
+                    if (EnhancedScript.Service.Search(script_name + ".py") != null)
+                        Misc.ScriptRun(script_name + ".py");
+                    else if (EnhancedScript.Service.Search(script_name + ".uos") != null)
+                        Misc.ScriptRun(script_name + ".uos");
+                    else if (EnhancedScript.Service.Search(script_name + ".cs") != null)
+                        Misc.ScriptRun(script_name + ".cs");
+                    else
+                        Misc.SendMessage("The macro cannot be found.", 33, false);
                 }
             }
         }
