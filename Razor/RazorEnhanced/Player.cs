@@ -2,6 +2,8 @@ using Assistant;
 using Assistant.UI;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
+using System.Runtime.InteropServices;
 
 namespace RazorEnhanced
 {
@@ -2676,6 +2678,19 @@ namespace RazorEnhanced
         {
             Assistant.Point3D loc = new(x, y, z);
             PathFindToPacket(loc);
+        }
+
+        /// <summary>
+        /// Returns the pathfinding status of ClassicUO
+        /// </summary>
+        public static bool PathFinding()
+        {
+            var getAutoWalking = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Game.Pathfinder")?.GetProperty("AutoWalking");
+
+            if (getAutoWalking == null)
+                return false;
+
+            return (bool)getAutoWalking.GetValue(null);
         }
 
         // Fly
