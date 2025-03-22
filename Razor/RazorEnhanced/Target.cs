@@ -4,6 +4,7 @@ using JsonData;
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace RazorEnhanced
 {
@@ -88,7 +89,15 @@ namespace RazorEnhanced
                 waitOrFizzleEvent.Set();
             }
             PacketHandler.RegisterServerToClientViewer(0x54, watchForFizzle);
-            waitOrFizzleEvent.WaitOne(delay);
+            var waitOrFizzleTask = Task.Run(() => {
+                waitOrFizzleEvent.WaitOne(delay);
+                return HasTarget();
+            });
+
+            var waitForTargetTask = Task.Run(() => WaitForTarget(delay, noshow));
+
+            var completedTask = Task.WhenAny(waitForTargetTask, waitOrFizzleTask).Result;
+
             PacketHandler.RemoveServerToClientViewer(0x54, watchForFizzle);
 
             return HasTarget();
