@@ -803,6 +803,10 @@ namespace RazorEnhanced
             hotkey.Rows.Add(hotkeyrow);
 
             hotkeyrow = hotkey.NewRow();
+            hotkeyrow.ItemArray = new object[] { "General", "Grid Container Viewer", Keys.None, true };
+            hotkey.Rows.Add(hotkeyrow);
+
+            hotkeyrow = hotkey.NewRow();
             hotkeyrow.ItemArray = new object[] { "Actions", "Grab Item", Keys.None, true };
             hotkey.Rows.Add(hotkeyrow);
 

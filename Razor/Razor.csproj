@@ -568,6 +568,12 @@
     <Compile Include="RazorEnhanced\Gumps.cs" />
     <Compile Include="RazorEnhanced\Shards.cs" />
     <Compile Include="RazorEnhanced\Trade.cs" />
+    <Compile Include="RazorEnhanced\UI\EnhancedGridContainerViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedGridContainerViewer.Designer.cs">
+      <DependentUpon>EnhancedGridContainerViewer.cs</DependentUpon>
+    </Compile>
     <Compile Include="RazorEnhanced\UI\RE_MessageBox.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -800,6 +806,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedGridContainerViewer.resx">
+      <DependentUpon>EnhancedGridContainerViewer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\RE_MessageBox.resx">
       <DependentUpon>RE_MessageBox.cs</DependentUpon>

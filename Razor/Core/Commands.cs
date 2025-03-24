@@ -7,6 +7,7 @@ using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using Ultima;
 
 namespace Assistant
 {
@@ -99,6 +100,27 @@ namespace Assistant
                             inspector.Show();
                         });
                     }
+                }
+            }
+        }
+
+        internal static void GetContainerViewerTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+        {
+            if (loc) // Target on ground or static
+            {
+                
+            }
+            else  // Target item or mobile
+            {
+                Assistant.Item assistantItem = Assistant.World.FindItem(serial);
+                if (assistantItem != null && assistantItem.Serial.IsItem && assistantItem.IsContainer)
+                {
+                    Engine.MainWindow.SafeAction(s =>
+                    {
+                        RazorEnhanced.UI.EnhancedGridContainerViewer gridviewer = new(assistantItem);
+                        gridviewer.TopMost = true;
+                        gridviewer.Show();
+                    });
                 }
             }
         }

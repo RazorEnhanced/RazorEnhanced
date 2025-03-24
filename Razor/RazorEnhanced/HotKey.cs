@@ -813,6 +813,11 @@ namespace RazorEnhanced
                     Targeting.OneTimeTarget(true, new Targeting.TargetResponseCallback(Commands.GetInfoTarget_Callback));
                     break;
 
+                case "Grid Container Viewer":
+                    Assistant.Client.Instance.ForceSendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 0x25, 3, Language.CliLocName, "System", "Target a container to open object viewer."));
+                    Targeting.OneTimeTarget(true, new Targeting.TargetResponseCallback(Commands.GetContainerViewerTarget_Callback));
+                    break;
+
                 default:
                     break;
             }

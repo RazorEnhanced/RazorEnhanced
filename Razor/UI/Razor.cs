@@ -734,6 +734,7 @@ namespace Assistant
         private ColumnHeader columnHeader19;
         private ColumnHeader columnHeader20;
         private CheckBox remoteControl;
+        private Button GridContainerViewButton;
         private CheckBox useUo3D;
 
         internal MainForm()
@@ -1493,6 +1494,7 @@ namespace Assistant
             this.timertitlestatusbar = new System.Windows.Forms.Timer(this.components);
             this.openmaplocation = new System.Windows.Forms.OpenFileDialog();
             this.m_Tip = new System.Windows.Forms.ToolTip(this.components);
+            this.GridContainerViewButton = new System.Windows.Forms.Button();
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             this.groupBox29.SuspendLayout();
@@ -3279,13 +3281,13 @@ namespace Assistant
             this.datagridMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.deleteRowToolStripMenuItem});
             this.datagridMenuStrip.Name = "datagridMenuStrip";
-            this.datagridMenuStrip.Size = new System.Drawing.Size(134, 26);
+            this.datagridMenuStrip.Size = new System.Drawing.Size(136, 26);
             this.datagridMenuStrip.Click += new System.EventHandler(this.datagridMenuStrip_Click);
             // 
             // deleteRowToolStripMenuItem
             // 
             this.deleteRowToolStripMenuItem.Name = "deleteRowToolStripMenuItem";
-            this.deleteRowToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.deleteRowToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.deleteRowToolStripMenuItem.Text = "Delete Row";
             // 
             // AllScripts
@@ -3305,6 +3307,7 @@ namespace Assistant
             | System.Windows.Forms.AnchorStyles.Right)));
             this.scriptControlBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.scriptControlBox.BackColor = System.Drawing.SystemColors.Control;
+            this.scriptControlBox.Controls.Add(this.GridContainerViewButton);
             this.scriptControlBox.Controls.Add(this.autoScriptReload);
             this.scriptControlBox.Controls.Add(this.scriptPacketLogCheckBox);
             this.scriptControlBox.Controls.Add(this.InspectGumpsButton);
@@ -3349,9 +3352,9 @@ namespace Assistant
             this.InspectGumpsButton.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.InspectGumpsButton.Image = global::Assistant.Properties.Resources.gump;
             this.InspectGumpsButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.InspectGumpsButton.Location = new System.Drawing.Point(81, 6);
+            this.InspectGumpsButton.Location = new System.Drawing.Point(72, 4);
             this.InspectGumpsButton.Name = "InspectGumpsButton";
-            this.InspectGumpsButton.Size = new System.Drawing.Size(99, 20);
+            this.InspectGumpsButton.Size = new System.Drawing.Size(53, 23);
             this.InspectGumpsButton.TabIndex = 78;
             this.InspectGumpsButton.Text = "Inspect Gump";
             this.InspectGumpsButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -3363,7 +3366,7 @@ namespace Assistant
             this.InspectContextButton.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.InspectContextButton.Image = global::Assistant.Properties.Resources.applications_utilities;
             this.InspectContextButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.InspectContextButton.Location = new System.Drawing.Point(18, 4);
+            this.InspectContextButton.Location = new System.Drawing.Point(11, 4);
             this.InspectContextButton.Name = "InspectContextButton";
             this.InspectContextButton.Size = new System.Drawing.Size(53, 23);
             this.InspectContextButton.TabIndex = 77;
@@ -9144,42 +9147,42 @@ namespace Assistant
             // addToolStripMenuItem
             // 
             this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-            this.addToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.addToolStripMenuItem.Text = "Add";
             this.addToolStripMenuItem.Click += new System.EventHandler(this.addToolStripMenuItem_Click);
             // 
             // removeToolStripMenuItem
             // 
             this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
-            this.removeToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.removeToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.removeToolStripMenuItem.Text = "Remove";
             this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // moveUpToolStripMenuItem
             // 
             this.moveUpToolStripMenuItem.Name = "moveUpToolStripMenuItem";
-            this.moveUpToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.moveUpToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.moveUpToolStripMenuItem.Text = "Move Up";
             this.moveUpToolStripMenuItem.Click += new System.EventHandler(this.moveUpToolStripMenuItem_Click);
             // 
             // moveDownToolStripMenuItem
             // 
             this.moveDownToolStripMenuItem.Name = "moveDownToolStripMenuItem";
-            this.moveDownToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.moveDownToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.moveDownToolStripMenuItem.Text = "Move Down";
             this.moveDownToolStripMenuItem.Click += new System.EventHandler(this.moveDownToolStripMenuItem_Click);
             // 
             // moveToToolStripMenuItem
             // 
             this.moveToToolStripMenuItem.Name = "moveToToolStripMenuItem";
-            this.moveToToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.moveToToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.moveToToolStripMenuItem.Text = "Move To";
             this.moveToToolStripMenuItem.Click += new System.EventHandler(this.moveToToolStripMenuItem_Click);
             // 
@@ -9197,28 +9200,28 @@ namespace Assistant
             // loopModeToolStripMenuItem
             // 
             this.loopModeToolStripMenuItem.Name = "loopModeToolStripMenuItem";
-            this.loopModeToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.loopModeToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.loopModeToolStripMenuItem.Text = "Loop Mode";
             this.loopModeToolStripMenuItem.Click += new System.EventHandler(this.loopModeToolStripMenuItem_Click);
             // 
             // preloadToolStripMenuItem
             // 
             this.preloadToolStripMenuItem.Name = "preloadToolStripMenuItem";
-            this.preloadToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.preloadToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.preloadToolStripMenuItem.Text = "Preload";
             this.preloadToolStripMenuItem.Click += new System.EventHandler(this.preloadToolStripMenuItem_Click);
             // 
             // waitBeforeInterruptToolStripMenuItem
             // 
             this.waitBeforeInterruptToolStripMenuItem.Name = "waitBeforeInterruptToolStripMenuItem";
-            this.waitBeforeInterruptToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.waitBeforeInterruptToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.waitBeforeInterruptToolStripMenuItem.Text = "Wait Before Interrupt";
             this.waitBeforeInterruptToolStripMenuItem.Click += new System.EventHandler(this.waitBeforeInterruptToolStripMenuItem_Click);
             // 
             // autoStartAtLoginToolStripMenuItem
             // 
             this.autoStartAtLoginToolStripMenuItem.Name = "autoStartAtLoginToolStripMenuItem";
-            this.autoStartAtLoginToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.autoStartAtLoginToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.autoStartAtLoginToolStripMenuItem.Text = "AutoStart at Login";
             this.autoStartAtLoginToolStripMenuItem.Click += new System.EventHandler(this.autoStartAtLoginToolStripMenuItem_Click);
             // 
@@ -9249,6 +9252,20 @@ namespace Assistant
             this.openmaplocation.Filter = "Executable Files|*.exe";
             this.openmaplocation.RestoreDirectory = true;
             this.openmaplocation.Title = "Select Enhanced Map";
+            // 
+            // GridContainerViewButton
+            // 
+            this.GridContainerViewButton.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.GridContainerViewButton.Image = global::Assistant.Properties.Resources.applications_utilities;
+            this.GridContainerViewButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.GridContainerViewButton.Location = new System.Drawing.Point(133, 4);
+            this.GridContainerViewButton.Name = "GridContainerViewButton";
+            this.GridContainerViewButton.Size = new System.Drawing.Size(53, 23);
+            this.GridContainerViewButton.TabIndex = 81;
+            this.GridContainerViewButton.Text = "Viewer";
+            this.GridContainerViewButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.GridContainerViewButton.UseVisualStyleBackColor = true;
+            this.GridContainerViewButton.Click += new System.EventHandler(this.GridContainerViewButton_Click);
             // 
             // MainForm
             // 
@@ -10352,6 +10369,11 @@ namespace Assistant
                     // Misc.SendMessage(path);
                 }
             }
+        }
+
+        private void GridContainerViewButton_Click(object sender, EventArgs e)
+        {
+            Targeting.OneTimeTarget(false, new Targeting.TargetResponseCallback(Commands.GetContainerViewerTarget_Callback));
         }
     }
 }
