@@ -1069,7 +1069,7 @@ namespace RazorEnhanced
         public static void Message(Mobile mobile, int hue, string message, bool wait = true)
         {
             // Prevent spamm message on left bottom screen
-            if (World.Player == null || Utility.Distance(World.Player.Position.X, World.Player.Position.Y, mobile.Position.X, mobile.Position.Y) > 11)
+            if (World.Player == null || Utility.Distance(World.Player.Position.X, World.Player.Position.Y, mobile.Position.X, mobile.Position.Y) > 24)
                 return;
 
             if (wait)
@@ -1086,7 +1086,7 @@ namespace RazorEnhanced
                 return;
 
             // Prevent spamm message on left bottom screen
-            if (World.Player == null || Utility.Distance(World.Player.Position.X, World.Player.Position.Y, mobile.Position.X, mobile.Position.Y) > 11)
+            if (World.Player == null || Utility.Distance(World.Player.Position.X, World.Player.Position.Y, mobile.Position.X, mobile.Position.Y) > 24)
                 return;
 
             if (wait)

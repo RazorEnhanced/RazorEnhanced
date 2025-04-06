@@ -2169,7 +2169,7 @@ namespace RazorEnhanced
         public static void Message(Item item, int hue, string message)
         {
             // Prevent spamm message on left bottom screen
-            if (World.Player == null || Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) > 11)
+            if (World.Player == null || Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) > 24)
                 return;
 
             Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(item.Serial, item.TypeID, MessageType.Regular, hue, 3, Language.CliLocName, item.Name, message));
@@ -2183,7 +2183,7 @@ namespace RazorEnhanced
                 return;
 
             // Prevent spamm message on left bottom screen
-            if (World.Player == null || Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) > 11)
+            if (World.Player == null || Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) > 24)
                 return;
 
             Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(item.Serial, item.TypeID, MessageType.Regular, hue, 3, Language.CliLocName, item.Name, message));
