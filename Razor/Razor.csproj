@@ -1687,7 +1687,12 @@ XCOPY  "$(SolutionDir)BuildSupplementalFiles\"*  "$(TargetDir)"  /y /s</PostBuil
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3065.39" />
-        <PackageReference Include="Accord" Version="3.8.0" />
+        <PackageReference Include="Accord" Version="3.8.0" GeneratePathProperty="true" />
     </ItemGroup>
+    <PropertyGroup>
+        <AccordTargetsPath>$(PkgAccord)\build\Accord.targets</AccordTargetsPath>
+    </PropertyGroup>
+
+    <Import Project="$(AccordTargetsPath)" Condition="Exists('$(AccordTargetsPath)')" />    
   <Import Project="..\CustomIntermediateDirs.props" />
 </Project>
