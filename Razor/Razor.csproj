@@ -125,10 +125,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-      <PackageReference Include="Grpc.Tools" Version="2.70.0">
-          <PrivateAssets>All</PrivateAssets>
-      </PackageReference>
-      <Reference Include="Accord, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+    <Reference Include="Accord, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
       <HintPath>..\packages\Accord.3.8.0\lib\net462\Accord.dll</HintPath>
       <Private>True</Private>
     </Reference>
@@ -1679,20 +1676,10 @@ XCOPY  "$(SolutionDir)BuildSupplementalFiles\"*  "$(TargetDir)"  /y /s</PostBuil
     <Error Condition="!Exists('..\packages\Grpc.Tools.2.70.0\build\Grpc.Tools.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Grpc.Tools.2.70.0\build\Grpc.Tools.targets'))" />
     <Error Condition="!Exists('..\packages\Microsoft.Web.WebView2.1.0.3065.39\build\Microsoft.Web.WebView2.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Web.WebView2.1.0.3065.39\build\Microsoft.Web.WebView2.targets'))" />
   </Target>
-    <ItemGroup>
-        <PackageReference Include="NETStandard.Library" Version="2.0.3" />
-        <PackageReference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform" Version="4.1.0" />
-        <PackageReference Include="Grpc.Tools" Version="2.70.0">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
-        <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3065.39" />
-        <PackageReference Include="Accord" Version="3.8.0" GeneratePathProperty="true" />
-    </ItemGroup>
-    <PropertyGroup>
-        <AccordTargetsPath>$(PkgAccord)\build\Accord.targets</AccordTargetsPath>
-    </PropertyGroup>
-
-    <Import Project="$(AccordTargetsPath)" Condition="Exists('$(AccordTargetsPath)')" />    
+  <Import Project="..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets')" />
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" />
+  <Import Project="..\packages\Accord.Video.FFMPEG.3.8.0\build\Accord.Video.FFMPEG.targets" Condition="Exists('..\packages\Accord.Video.FFMPEG.3.8.0\build\Accord.Video.FFMPEG.targets')" />
   <Import Project="..\CustomIntermediateDirs.props" />
+  <Import Project="..\packages\Grpc.Tools.2.70.0\build\Grpc.Tools.targets" Condition="Exists('..\packages\Grpc.Tools.2.70.0\build\Grpc.Tools.targets')" />
+  <Import Project="..\packages\Microsoft.Web.WebView2.1.0.3065.39\build\Microsoft.Web.WebView2.targets" Condition="Exists('..\packages\Microsoft.Web.WebView2.1.0.3065.39\build\Microsoft.Web.WebView2.targets')" />
 </Project>
