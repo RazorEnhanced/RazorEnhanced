@@ -5,6 +5,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
+using static RazorEnhanced.Config;
 
 namespace Assistant
 {
@@ -97,6 +98,7 @@ namespace Assistant
             public string Name { get; set; }
 
             [JsonProperty("graphic")]
+            [JsonConverter(typeof(HexIntConverter))]
             public int Graphic { get; set; }
 
             [JsonProperty("primary")]
@@ -128,7 +130,7 @@ namespace Assistant
                             retSet[w.Graphic] = w;
                         }
                     }
-                    pathName = Path.Combine(Assistant.Engine.RootPath, "Data", "weapons.json");
+                    pathName = Path.Combine(Assistant.Engine.RootPath, "Data", "weapons.json"); 
                     if (File.Exists(pathName))
                     {
                         List<Weapon> weaponList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Weapon>>(File.ReadAllText(pathName));

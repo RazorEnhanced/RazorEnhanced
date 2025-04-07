@@ -11,6 +11,30 @@ namespace RazorEnhanced
 {
     public class Config
     {
+        public class HexIntConverter : JsonConverter<int>
+        {
+            public override int ReadJson(JsonReader reader, Type objectType, int existingValue, bool hasExistingValue, JsonSerializer serializer)
+            {
+                if (reader.TokenType == JsonToken.String)
+                {
+                    var hexStr = (string)reader.Value;
+                    return Convert.ToInt32(hexStr, 16);
+                }
+                else if (reader.TokenType == JsonToken.Integer)
+                {
+                    return Convert.ToInt32(reader.Value);
+                }
+
+                throw new JsonSerializationException("Unexpected token type for HexIntConverter");
+            }
+
+            public override void WriteJson(JsonWriter writer, int value, JsonSerializer serializer)
+            {
+                writer.WriteValue("0x" + value.ToString("X"));
+            }
+        }
+
+
         #region Defines
         public static readonly string PATH_CONFIG = "Config";
         public static readonly string PATH_DATA = "Data";
