@@ -86,7 +86,27 @@ namespace RazorEnhanced
             ManualResetEvent waitOrFizzleEvent = new(false);
             void watchForFizzle(PacketReader p, PacketHandlerEventArgs args)
             {
-                waitOrFizzleEvent.Set();
+                byte[] b = p.CopyBytes(2, 2);
+                byte[] x = p.CopyBytes(6, 2);
+                byte[] y = p.CopyBytes(8, 2);
+                byte[] z = p.CopyBytes(10, 2);
+
+                Array.Reverse(b);
+                Array.Reverse(x);
+                Array.Reverse(y);
+                Array.Reverse(z);
+
+                ushort ib = BitConverter.ToUInt16(b, 0);
+                ushort ix = BitConverter.ToUInt16(x, 0);
+                ushort iy = BitConverter.ToUInt16(y, 0);
+                ushort iz = BitConverter.ToUInt16(z, 0);
+
+                if (ib == 0x5C && 
+                    ix == Player.Position.X && iy == Player.Position.Y && iz == Player.Position.Z)
+                {
+                    // Fizzle
+                    waitOrFizzleEvent.Set();
+                }
             }
             PacketHandler.RegisterServerToClientViewer(0x54, watchForFizzle);
             var waitOrFizzleTask = Task.Run(() => {
