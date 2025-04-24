@@ -568,6 +568,7 @@
     <Compile Include="RazorEnhanced\Gumps.cs" />
     <Compile Include="RazorEnhanced\Shards.cs" />
     <Compile Include="RazorEnhanced\Trade.cs" />
+    <Compile Include="RazorEnhanced\UI\EnhancedMacroStatusGump.cs" />
     <Compile Include="RazorEnhanced\UI\RE_MessageBox.cs">
       <SubType>Form</SubType>
     </Compile>

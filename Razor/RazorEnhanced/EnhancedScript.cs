@@ -412,6 +412,7 @@ namespace RazorEnhanced
                     if (m_Thread != null) { Stop(); }
                     m_Thread = new Thread(AsyncStart);
                     m_Thread.Start();
+                    RazorEnhanced.UI.EnhancedMacroStatusGump.UpdateGump();
                     //while (!m_Thread.IsAlive){ Misc.Pause(1); }
 
                     //m_Run = true;
@@ -466,6 +467,7 @@ namespace RazorEnhanced
                             m_Thread.Abort();
                             m_Thread.Join();
                             m_Thread = null;
+                            RazorEnhanced.UI.EnhancedMacroStatusGump.UpdateGump();
                         }
                     }
                     catch { }

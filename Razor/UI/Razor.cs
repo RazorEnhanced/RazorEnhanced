@@ -734,6 +734,12 @@ namespace Assistant
         private ColumnHeader columnHeader19;
         private ColumnHeader columnHeader20;
         private CheckBox remoteControl;
+        private GroupBox groupBox6;
+        private CheckBox chkgump;
+        private TextBox txtgumpheight;
+        private TextBox txtgumpwidth;
+        private Label label85;
+        private Label label84;
         private CheckBox useUo3D;
 
         internal MainForm()
@@ -823,6 +829,12 @@ namespace Assistant
             this.opacityLabel = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.moreOptTab = new System.Windows.Forms.TabPage();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.label85 = new System.Windows.Forms.Label();
+            this.label84 = new System.Windows.Forms.Label();
+            this.txtgumpheight = new System.Windows.Forms.TextBox();
+            this.txtgumpwidth = new System.Windows.Forms.TextBox();
+            this.chkgump = new System.Windows.Forms.CheckBox();
             this.remoteControl = new System.Windows.Forms.CheckBox();
             this.druidClericPackets = new System.Windows.Forms.CheckBox();
             this.allowHiddenLooting = new System.Windows.Forms.CheckBox();
@@ -1499,6 +1511,7 @@ namespace Assistant
             ((System.ComponentModel.ISupportInitialize)(this.opacity)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.moreOptTab.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.groupBox17.SuspendLayout();
             this.enhancedFilterTab.SuspendLayout();
             this.FilterPages.SuspendLayout();
@@ -2028,6 +2041,7 @@ namespace Assistant
             // 
             // moreOptTab
             // 
+            this.moreOptTab.Controls.Add(this.groupBox6);
             this.moreOptTab.Controls.Add(this.remoteControl);
             this.moreOptTab.Controls.Add(this.druidClericPackets);
             this.moreOptTab.Controls.Add(this.allowHiddenLooting);
@@ -2092,6 +2106,66 @@ namespace Assistant
             this.moreOptTab.TabIndex = 5;
             this.moreOptTab.Text = "Options";
             // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.label85);
+            this.groupBox6.Controls.Add(this.label84);
+            this.groupBox6.Controls.Add(this.txtgumpheight);
+            this.groupBox6.Controls.Add(this.txtgumpwidth);
+            this.groupBox6.Controls.Add(this.chkgump);
+            this.groupBox6.Location = new System.Drawing.Point(7, 317);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(187, 45);
+            this.groupBox6.TabIndex = 11;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Macro Status Gump";
+            // 
+            // label85
+            // 
+            this.label85.AutoSize = true;
+            this.label85.Location = new System.Drawing.Point(105, 18);
+            this.label85.Name = "label85";
+            this.label85.Size = new System.Drawing.Size(37, 14);
+            this.label85.TabIndex = 85;
+            this.label85.Text = "Height";
+            // 
+            // label84
+            // 
+            this.label84.AutoSize = true;
+            this.label84.Location = new System.Drawing.Point(26, 18);
+            this.label84.Name = "label84";
+            this.label84.Size = new System.Drawing.Size(34, 14);
+            this.label84.TabIndex = 85;
+            this.label84.Text = "Width";
+            // 
+            // txtgumpheight
+            // 
+            this.txtgumpheight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtgumpheight.Location = new System.Drawing.Point(148, 16);
+            this.txtgumpheight.Name = "txtgumpheight";
+            this.txtgumpheight.Size = new System.Drawing.Size(33, 20);
+            this.txtgumpheight.TabIndex = 88;
+            this.txtgumpheight.Text = "300";
+            // 
+            // txtgumpwidth
+            // 
+            this.txtgumpwidth.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtgumpwidth.Location = new System.Drawing.Point(66, 16);
+            this.txtgumpwidth.Name = "txtgumpwidth";
+            this.txtgumpwidth.Size = new System.Drawing.Size(33, 20);
+            this.txtgumpwidth.TabIndex = 87;
+            this.txtgumpwidth.Text = "100";
+            // 
+            // chkgump
+            // 
+            this.chkgump.AutoSize = true;
+            this.chkgump.Location = new System.Drawing.Point(3, 19);
+            this.chkgump.Name = "chkgump";
+            this.chkgump.Size = new System.Drawing.Size(15, 14);
+            this.chkgump.TabIndex = 85;
+            this.chkgump.UseVisualStyleBackColor = true;
+            this.chkgump.CheckedChanged += new System.EventHandler(this.chkgump_CheckedChanged);
+            // 
             // remoteControl
             // 
             this.remoteControl.AutoSize = true;
@@ -2137,7 +2211,7 @@ namespace Assistant
             this.groupBox17.Controls.Add(this.setpathmapbutton);
             this.groupBox17.Controls.Add(this.label72);
             this.groupBox17.Controls.Add(this.enhancedmappathTextBox);
-            this.groupBox17.Location = new System.Drawing.Point(7, 285);
+            this.groupBox17.Location = new System.Drawing.Point(7, 253);
             this.groupBox17.Name = "groupBox17";
             this.groupBox17.Size = new System.Drawing.Size(187, 58);
             this.groupBox17.TabIndex = 80;
@@ -3279,13 +3353,13 @@ namespace Assistant
             this.datagridMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.deleteRowToolStripMenuItem});
             this.datagridMenuStrip.Name = "datagridMenuStrip";
-            this.datagridMenuStrip.Size = new System.Drawing.Size(134, 26);
+            this.datagridMenuStrip.Size = new System.Drawing.Size(136, 26);
             this.datagridMenuStrip.Click += new System.EventHandler(this.datagridMenuStrip_Click);
             // 
             // deleteRowToolStripMenuItem
             // 
             this.deleteRowToolStripMenuItem.Name = "deleteRowToolStripMenuItem";
-            this.deleteRowToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.deleteRowToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.deleteRowToolStripMenuItem.Text = "Delete Row";
             // 
             // AllScripts
@@ -9144,42 +9218,42 @@ namespace Assistant
             // addToolStripMenuItem
             // 
             this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-            this.addToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.addToolStripMenuItem.Text = "Add";
             this.addToolStripMenuItem.Click += new System.EventHandler(this.addToolStripMenuItem_Click);
             // 
             // removeToolStripMenuItem
             // 
             this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
-            this.removeToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.removeToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.removeToolStripMenuItem.Text = "Remove";
             this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // moveUpToolStripMenuItem
             // 
             this.moveUpToolStripMenuItem.Name = "moveUpToolStripMenuItem";
-            this.moveUpToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.moveUpToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.moveUpToolStripMenuItem.Text = "Move Up";
             this.moveUpToolStripMenuItem.Click += new System.EventHandler(this.moveUpToolStripMenuItem_Click);
             // 
             // moveDownToolStripMenuItem
             // 
             this.moveDownToolStripMenuItem.Name = "moveDownToolStripMenuItem";
-            this.moveDownToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.moveDownToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.moveDownToolStripMenuItem.Text = "Move Down";
             this.moveDownToolStripMenuItem.Click += new System.EventHandler(this.moveDownToolStripMenuItem_Click);
             // 
             // moveToToolStripMenuItem
             // 
             this.moveToToolStripMenuItem.Name = "moveToToolStripMenuItem";
-            this.moveToToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.moveToToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.moveToToolStripMenuItem.Text = "Move To";
             this.moveToToolStripMenuItem.Click += new System.EventHandler(this.moveToToolStripMenuItem_Click);
             // 
@@ -9197,28 +9271,28 @@ namespace Assistant
             // loopModeToolStripMenuItem
             // 
             this.loopModeToolStripMenuItem.Name = "loopModeToolStripMenuItem";
-            this.loopModeToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.loopModeToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.loopModeToolStripMenuItem.Text = "Loop Mode";
             this.loopModeToolStripMenuItem.Click += new System.EventHandler(this.loopModeToolStripMenuItem_Click);
             // 
             // preloadToolStripMenuItem
             // 
             this.preloadToolStripMenuItem.Name = "preloadToolStripMenuItem";
-            this.preloadToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.preloadToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.preloadToolStripMenuItem.Text = "Preload";
             this.preloadToolStripMenuItem.Click += new System.EventHandler(this.preloadToolStripMenuItem_Click);
             // 
             // waitBeforeInterruptToolStripMenuItem
             // 
             this.waitBeforeInterruptToolStripMenuItem.Name = "waitBeforeInterruptToolStripMenuItem";
-            this.waitBeforeInterruptToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.waitBeforeInterruptToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.waitBeforeInterruptToolStripMenuItem.Text = "Wait Before Interrupt";
             this.waitBeforeInterruptToolStripMenuItem.Click += new System.EventHandler(this.waitBeforeInterruptToolStripMenuItem_Click);
             // 
             // autoStartAtLoginToolStripMenuItem
             // 
             this.autoStartAtLoginToolStripMenuItem.Name = "autoStartAtLoginToolStripMenuItem";
-            this.autoStartAtLoginToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.autoStartAtLoginToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.autoStartAtLoginToolStripMenuItem.Text = "AutoStart at Login";
             this.autoStartAtLoginToolStripMenuItem.Click += new System.EventHandler(this.autoStartAtLoginToolStripMenuItem_Click);
             // 
@@ -9278,6 +9352,8 @@ namespace Assistant
             this.groupBox1.ResumeLayout(false);
             this.moreOptTab.ResumeLayout(false);
             this.moreOptTab.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
             this.groupBox17.ResumeLayout(false);
             this.groupBox17.PerformLayout();
             this.enhancedFilterTab.ResumeLayout(false);
@@ -9677,7 +9753,13 @@ namespace Assistant
             chknorunStealth.Checked = RazorEnhanced.Settings.General.ReadBool("ChkNoRunStealth");
             enhancedmappathTextBox.Text = Settings.General.ReadString("EnhancedMapPath");
             autoScriptReload.Checked = RazorEnhanced.Settings.General.ReadBool("AutoScriptReload");
-
+            //chkgump.Checked = RazorEnhanced.Settings.General.ReadBool("CheckGump");
+            //txtgumpwidth.Text = RazorEnhanced.Settings.General.ReadInt("GumpWidth").ToString();
+            //txtgumpheight.Text = RazorEnhanced.Settings.General.ReadInt("GumpHeight").ToString();
+            chkgump.Checked = true;
+            txtgumpwidth.Text = "100";
+            txtgumpheight.Text = "200";
+            
             chkForceSpeechHue.Checked = setSpeechHue.Enabled = RazorEnhanced.Settings.General.ReadBool("ForceSpeechHue");
             chkForceSpellHue.Checked = setBeneHue.Enabled = setNeuHue.Enabled = setHarmHue.Enabled = RazorEnhanced.Settings.General.ReadBool("ForceSpellHue");
             if (RazorEnhanced.Settings.General.ReadInt("LTHilight") != 0)
