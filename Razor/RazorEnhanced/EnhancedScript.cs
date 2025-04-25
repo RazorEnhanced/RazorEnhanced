@@ -494,6 +494,7 @@ namespace RazorEnhanced
                 {
 
                     case ThreadState.AbortRequested:
+                        RazorEnhanced.UI.EnhancedMacroStatusGump.UpdateGump();
                         return "Stopping";
 
                     case ThreadState.WaitSleepJoin:
@@ -504,6 +505,7 @@ namespace RazorEnhanced
                     default:
                     case ThreadState.Unstarted:
                     case ThreadState.Aborted:
+                        RazorEnhanced.UI.EnhancedMacroStatusGump.UpdateGump();
                         return "Stopped";
                 }
             }
