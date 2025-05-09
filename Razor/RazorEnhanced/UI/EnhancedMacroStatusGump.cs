@@ -14,6 +14,8 @@ namespace RazorEnhanced.UI
 {
     public class EnhancedMacroStatusGump
     {
+        static uint X;
+        static uint Y;
         static int Width;
         static int Height;
         static Gumps.GumpData gd;
@@ -29,8 +31,11 @@ namespace RazorEnhanced.UI
             _timer.Start();
         }
 
-        public static void SetSize(string width, string height)
+        public static void SetSize(bool isrunning, string x, string y, string width, string height)
         {
+            isRunning = isrunning;
+            X = Convert.ToUInt32(x);
+            Y = Convert.ToUInt32(y);
             Width = Convert.ToInt32(width);
             Height = Convert.ToInt32(height);
 
@@ -86,18 +91,15 @@ namespace RazorEnhanced.UI
 
                     step += 20;
                 }
+                gd.x = X;
+                gd.y = Y;
                 Gumps.SendGump(gd, 0, 0);
             }
         }
 
-        public static void ShowGump()
-        {
-            isRunning = true;
-            UpdateGump();
-        }
-
         public static void CloseGump()
         {
+            isRunning = false;
             if (Assistant.World.Player != null)
                 Gumps.CloseGump(0x0fe00000);
         }

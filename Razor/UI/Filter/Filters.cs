@@ -672,12 +672,19 @@ namespace Assistant
 
         private void chkgump_CheckedChanged(object sender, EventArgs e)
         {
-            RazorEnhanced.UI.EnhancedMacroStatusGump.SetSize(txtgumpwidth.Text, txtgumpheight.Text);
+            if ((sender as Control).Focused)
+            {
+                RazorEnhanced.Settings.General.WriteBool("CheckGump", (sender as CheckBox).Checked);
+            }
 
             if ((sender as CheckBox).Checked)
-                RazorEnhanced.UI.EnhancedMacroStatusGump.ShowGump();
+            {
+                RazorEnhanced.UI.EnhancedMacroStatusGump.SetSize(chkgump.Checked, txtgumpx.Text, txtgumpy.Text, txtgumpwidth.Text, txtgumpheight.Text);
+            }
             else
+            {
                 RazorEnhanced.UI.EnhancedMacroStatusGump.CloseGump();
+            }
         }
 
         private void txtgumpwidth_TextChanged(object sender, EventArgs e)
@@ -690,7 +697,7 @@ namespace Assistant
                 if ((sender as Control).Focused)
                 {
                     RazorEnhanced.Settings.General.WriteInt("GumpWidth", value);
-                    RazorEnhanced.UI.EnhancedMacroStatusGump.SetSize(txtgumpwidth.Text, txtgumpheight.Text);
+                    RazorEnhanced.UI.EnhancedMacroStatusGump.SetSize(chkgump.Checked, txtgumpx.Text, txtgumpy.Text, txtgumpwidth.Text, txtgumpheight.Text);
                 }
             }
             catch { }
@@ -705,18 +712,42 @@ namespace Assistant
                 if ((sender as Control).Focused)
                 {
                     RazorEnhanced.Settings.General.WriteInt("GumpHeight", value);
-                    RazorEnhanced.UI.EnhancedMacroStatusGump.SetSize(txtgumpwidth.Text, txtgumpheight.Text);
+                    RazorEnhanced.UI.EnhancedMacroStatusGump.SetSize(chkgump.Checked, txtgumpx.Text, txtgumpy.Text, txtgumpwidth.Text, txtgumpheight.Text);
                 }
             }
             catch { }
         }
 
-        private void txtgumpkeypress_KeyPress(object sender, KeyPressEventArgs e)
+        private void txtgumpx_TextChanged(object sender, EventArgs e)
         {
-            if (!char.IsDigit(e.KeyChar) && e.KeyChar != 8)
+            int value = 0;
+            Int32.TryParse((sender as TextBox).Text, out value);
+
+            try
             {
-                e.Handled = true;
+                if ((sender as Control).Focused)
+                {
+                    RazorEnhanced.Settings.General.WriteInt("GumpX", value);
+                    RazorEnhanced.UI.EnhancedMacroStatusGump.SetSize(chkgump.Checked, txtgumpx.Text, txtgumpy.Text, txtgumpwidth.Text, txtgumpheight.Text);
+                }
             }
+            catch { }
+        }
+
+        private void txtgumpy_TextChanged(object sender, EventArgs e)
+        {
+            int value = 0;
+            Int32.TryParse((sender as TextBox).Text, out value);
+
+            try
+            {
+                if ((sender as Control).Focused)
+                {
+                    RazorEnhanced.Settings.General.WriteInt("GumpY", value);
+                    RazorEnhanced.UI.EnhancedMacroStatusGump.SetSize(chkgump.Checked, txtgumpx.Text, txtgumpy.Text, txtgumpwidth.Text, txtgumpheight.Text);
+                }
+            }
+            catch { }
         }
     }
 }
