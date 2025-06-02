@@ -151,6 +151,7 @@ namespace RazorEnhanced
         private int m_Position;
 
         private Thread m_Thread;
+        private Thread m_UpdateGumpThread;
 
         internal EnhancedScriptEngine m_ScriptEngine;
         internal bool StartMessage;
@@ -450,6 +451,15 @@ namespace RazorEnhanced
 
                 Misc.Pause(1);
             } while (Loop);
+
+            m_UpdateGumpThread = new Thread(() =>
+            {
+                // 1√  ¥Î±‚
+                Thread.Sleep(1000);
+                RazorEnhanced.UI.EnhancedMacroStatusGump.UpdateGump();
+            });
+
+            m_UpdateGumpThread.Start();
         }
 
         internal void Stop()
