@@ -210,7 +210,7 @@ namespace RazorEnhanced
                     moveIsOk = Check(map, items.Where(x => x.Position.X == xForward && x.Position.Y == yForward + 1), xForward, yForward + 1, startTop, startZ, ignoremob, out newZ);
                 }
             }
-            else if (b.X > loc.X && b.Y == loc.Y) //West
+            else if (b.X < loc.X && b.Y == loc.Y) //West
             {
                 if (moveIsOk)
                 {
@@ -816,18 +816,24 @@ namespace RazorEnhanced
         {
             var path = new List<Tile>();
             var current = _goal;
-            path.Add(current);
 
-            while (!current.Equals(_start))
+            while (true)
             {
-                if (!CameFrom.ContainsKey(current.ToString()))
+                if (!CameFrom.ContainsKey(current.ToString()) && !current.Equals(_start))
                 {
                     return null;
                 }
+
                 path.Add(current);
+
+                if (current.Equals(_start))
+                {
+                    break;
+                }
+
                 current = CameFrom[current.ToString()];
             }
-            // path.Add(start);
+
             path.Reverse();
             return path;
         }
