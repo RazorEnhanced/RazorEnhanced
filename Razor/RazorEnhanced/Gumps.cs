@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Threading;
+using System.Drawing;
+using System.IO;
+using System.Net;
 
 namespace RazorEnhanced
 {
@@ -410,6 +413,42 @@ namespace RazorEnhanced
         }
 
         /// <summary>
+        /// Add image from an HTTP URL, scaled if width and height are provided.
+        /// </summary>
+        public static void AddHTTPImage(ref GumpData gd, string url, int x, int y, int width, int height)
+        {
+            string key = url + "|" + width + "|" + height;
+            if (!m_httpImages.TryGetValue(key, out int gumpId))
+            {
+                if (m_nextHttpImageId == -1)
+                    m_nextHttpImageId = Ultima.Gumps.GetCount() - 1;
+
+                gumpId = m_nextHttpImageId--;
+
+                using (WebClient wc = new WebClient())
+                {
+                    byte[] data = wc.DownloadData(url);
+                    using (MemoryStream ms = new MemoryStream(data))
+                    {
+                        Bitmap bmp = new Bitmap(ms);
+                        if (width > 0 && height > 0 && (bmp.Width != width || bmp.Height != height))
+                        {
+                            Bitmap resized = new Bitmap(bmp, width, height);
+                            bmp.Dispose();
+                            bmp = resized;
+                        }
+                        Ultima.Gumps.ReplaceGump(gumpId, bmp);
+                    }
+                }
+
+                m_httpImages[key] = gumpId;
+            }
+
+            string textEntry2 = String.Format("{{ gumppic {0} {1} {2} }}", x, y, gumpId);
+            gd.gumpDefinition += textEntry2;
+        }
+
+        /// <summary>
         /// Add image from the Gumps.mul replicated enough to fill an area
         /// </summary>
         /// <param name="gd"> GumpData structure</param>
@@ -643,6 +682,8 @@ namespace RazorEnhanced
 
         internal static Dictionary<uint, GumpData> m_gumpData = new();
         internal static Dictionary<uint, IncomingGumpData> m_incomingData = new();
+        internal static Dictionary<string, int> m_httpImages = new();
+        private static int m_nextHttpImageId = -1;
 
         /// <summary>
         /// Sends a gump using an existing GumpData structure
