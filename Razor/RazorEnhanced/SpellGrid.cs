@@ -835,7 +835,7 @@ namespace RazorEnhanced
                 if (x > (m_panellist.Count - 1) || x > (items.Count - 1))
                     return;
 
-                int imageid = 0;
+                int imageid = 31;
 
                 GroupType g;
                 if (Enum.TryParse<GroupType>(items[x].Group, out g))
@@ -865,7 +865,15 @@ namespace RazorEnhanced
                         break;
 
                     default:
-                        m_panellist[x].BackgroundImage = Ultima.Gumps.GetGump(imageid);
+                        try
+                        {
+                            m_panellist[x].BackgroundImage = Ultima.Gumps.GetGump(imageid);
+                        }
+                        catch (Exception ex)
+                        {
+                            Utility.Logger.Error("Error loading image {0} for {1} - {2}", imageid, items[x].Spell, ex.Message);
+                            m_panellist[x].BackgroundImage = Ultima.Gumps.GetGump(31); // a red flag
+                        }
                         m_panellist[x].Enabled = true;
                         break;
                 }
