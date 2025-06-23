@@ -298,7 +298,7 @@ namespace Assistant
 
             Assistant.Client.Instance.SetConnectionInfo(Engine.IP, (int)port);
 
-            Ultima.Multis.PostHSFormat = UsePostHSChanges;
+            //Ultima.Multis.PostHSFormat = UsePostHSChanges; //new Ultima library takes care of this
 
         }
         [DllImport("user32.dll")]

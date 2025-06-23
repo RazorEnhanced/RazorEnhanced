@@ -814,6 +814,20 @@ namespace Assistant
             return true;
         }
 
+        public static bool IsCompressedCli()
+        {
+            string filePath = Ultima.Files.GetFilePath(String.Format("cliloc.{0}", m_CliLocName));
+            using (var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                if (stream.Length < 4)
+                    return false; // Or throw, depending on your use case
+
+                stream.Position = 3;
+                int value = stream.ReadByte();
+                return value == 0x8E;
+            }
+        }
+
         public static void LoadCliLoc()
         {
             if (m_CliLocName == null || m_CliLocName.Length <= 0)
@@ -822,7 +836,8 @@ namespace Assistant
             try
             {
                 Utility.Logger.Info($"Attempting to load cliloc from {m_CliLocName}");
-                m_CliLoc = new Ultima.StringList(m_CliLocName);
+
+                m_CliLoc = new Ultima.StringList(m_CliLocName, IsCompressedCli());
                 Utility.Logger.Info($"Success load cliloc with {m_CliLoc.Entries.Count} entries");
             }
             catch (Exception)
@@ -836,7 +851,7 @@ namespace Assistant
                     filePath = filePath + ".old";
                     Ultima.Files.SetMulPath(filePath, ("cliloc." + m_CliLocName).ToLower());
                     Utility.Logger.Info($"RE-Trying to load cliloc from {m_CliLocName} after setting filename to {filePath}");
-                    m_CliLoc = new Ultima.StringList(m_CliLocName);
+                    m_CliLoc = new Ultima.StringList(m_CliLocName, IsCompressedCli());
                     Utility.Logger.Info($"Success load cliloc with {m_CliLoc.Entries.Count} entries");
                 }
                 catch

@@ -144,7 +144,7 @@ namespace Assistant
 
                 foreach (HuedTile tile in staticTiles)
                 {
-                    ItemData id = RazorEnhanced.Statics.GetItemData(tile.ID & 0x3FFF);
+                    ItemData id = RazorEnhanced.Statics.GetItemData(tile.Id & 0x3FFF);
 
                     int calcTop = (tile.Z + id.CalcHeight);
 

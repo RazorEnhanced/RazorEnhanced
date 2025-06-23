@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{5D66ACE6-B2A4-400F-B5A5-24525959AC5C}</ProjectGuid>
     <OutputType>Library</OutputType>
-	  <LangVersion>preview</LangVersion>
+    <LangVersion>preview</LangVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Ultima</RootNamespace>
     <AssemblyName>Ultima</AssemblyName>
@@ -122,17 +122,30 @@
     <Compile Include="Ultima\Animdata.cs" />
     <Compile Include="Ultima\Art.cs" />
     <Compile Include="Ultima\ASCIIFont.cs" />
+    <Compile Include="Ultima\BinaryExtensions.cs" />
+    <Compile Include="Ultima\BodyConverter.cs" />
+    <Compile Include="Ultima\BodyTable.cs" />
     <Compile Include="Ultima\BwtDecompress.cs" />
     <Compile Include="Ultima\CalibrationInfo.cs" />
     <Compile Include="Ultima\Client.cs" />
-    <Compile Include="Ultima\ClientHandles.cs" />
     <Compile Include="Ultima\FileIndex.cs" />
     <Compile Include="Ultima\Files.cs" />
     <Compile Include="Ultima\Gumps.cs" />
+    <Compile Include="Ultima\Helpers\Extensions.cs" />
+    <Compile Include="Ultima\Helpers\HueHelpers.cs" />
+    <Compile Include="Ultima\Helpers\MapHelper.cs" />
+    <Compile Include="Ultima\Helpers\MoveToFront.cs" />
+    <Compile Include="Ultima\Helpers\MultiHelpers.cs" />
+    <Compile Include="Ultima\Helpers\MythicDecompress.cs" />
+    <Compile Include="Ultima\Helpers\RandomCompat.cs" />
+    <Compile Include="Ultima\Helpers\StreamExtensions.cs" />
+    <Compile Include="Ultima\Helpers\TileDataHelpers.cs" />
+    <Compile Include="Ultima\Helpers\UopUtils.cs" />
     <Compile Include="Ultima\Hues.cs" />
     <Compile Include="Ultima\Light.cs" />
     <Compile Include="Ultima\LocationPointer.cs" />
     <Compile Include="Ultima\Map.cs" />
+    <Compile Include="Ultima\MultiComponentList.cs" />
     <Compile Include="Ultima\MultiMap.cs" />
     <Compile Include="Ultima\Multis.cs" />
     <Compile Include="Ultima\NativeMethods.cs" />
@@ -155,6 +168,8 @@
     <Compile Include="Ultima\UOFileIndex.cs.cs" />
     <Compile Include="Ultima\UOFileUop.cs" />
     <Compile Include="Ultima\Verdata.cs" />
+    <Compile Include="Ultima\WaveFormat.cs" />
+    <Compile Include="Ultima\WaveFormatException.cs" />
     <Compile Include="Ultima\WindowProcessStream.cs" />
     <Compile Include="Ultima\ZLib\Adler32.cs" />
     <Compile Include="Ultima\ZLib\ZLib.cs" />
@@ -166,6 +181,9 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ZLib\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -796,7 +796,12 @@ namespace Assistant
 
         internal bool IsMulti
         {
-            get { return TypeID.Value >= 0x4000; }
+            get { return ArtID == 2; }
+        }
+
+        internal bool IsDamagable
+        {
+            get { return ArtID == 3; }
         }
 
         internal bool IsSearchable

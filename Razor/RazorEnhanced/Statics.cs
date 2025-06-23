@@ -24,12 +24,12 @@ namespace RazorEnhanced
         internal static void LoadMapData()
         {
             // Inizializza mappe
-            Ultima.Map.InitializeMap("Felucca");
-            Ultima.Map.InitializeMap("Trammel");
-            Ultima.Map.InitializeMap("Ilshenar");
-            Ultima.Map.InitializeMap("Malas");
-            Ultima.Map.InitializeMap("Tokuno");
-            Ultima.Map.InitializeMap("TerMur");
+            //Ultima.Map.InitializeMap("Felucca");
+            //Ultima.Map.InitializeMap("Trammel");
+            //Ultima.Map.InitializeMap("Ilshenar");
+            //Ultima.Map.InitializeMap("Malas");
+            //Ultima.Map.InitializeMap("Tokuno");
+            //Ultima.Map.InitializeMap("TerMur");
             m_loaded = true;
         }
 
@@ -56,17 +56,17 @@ namespace RazorEnhanced
             switch (map)
             {
                 case 0:
-                    return Ultima.Map.Felucca.Tiles.GetLandTile(x, y).ID;
+                    return Ultima.Map.Felucca.Tiles.GetLandTile(x, y).Id;
                 case 1:
-                    return Ultima.Map.Trammel.Tiles.GetLandTile(x, y).ID;
+                    return Ultima.Map.Trammel.Tiles.GetLandTile(x, y).Id;
                 case 2:
-                    return Ultima.Map.Ilshenar.Tiles.GetLandTile(x, y).ID;
+                    return Ultima.Map.Ilshenar.Tiles.GetLandTile(x, y).Id;
                 case 3:
-                    return Ultima.Map.Malas.Tiles.GetLandTile(x, y).ID;
+                    return Ultima.Map.Malas.Tiles.GetLandTile(x, y).Id;
                 case 4:
-                    return Ultima.Map.Tokuno.Tiles.GetLandTile(x, y).ID;
+                    return Ultima.Map.Tokuno.Tiles.GetLandTile(x, y).Id;
                 case 5:
-                    return Ultima.Map.TerMur.Tiles.GetLandTile(x, y).ID;
+                    return Ultima.Map.TerMur.Tiles.GetLandTile(x, y).Id;
                 default:
                     Scripts.SendMessageScriptError("Script Error: GetLandID Invalid Map!");
                     return 0;
@@ -468,7 +468,7 @@ namespace RazorEnhanced
                     Scripts.SendMessageScriptError("Script Error: GetLandZ Invalid Map!");
                     return tileinfo;
             }
-            tileinfo = new TileInfo(tile.ID, 0, tile.Z);
+            tileinfo = new TileInfo(tile.Id, 0, tile.Z);
 
             return tileinfo;
         }
@@ -525,7 +525,7 @@ namespace RazorEnhanced
                 foreach (Ultima.HuedTile tile in tiles)
                 {
                     Season season = (Season)Assistant.World.Player.Season;
-                    int graphic = SeasonManager.GetSeasonGraphic(season, tile.ID);
+                    int graphic = SeasonManager.GetSeasonGraphic(season, tile.Id);
                     tileinfo.Add(new TileInfo(graphic, tile.Hue, tile.Z));
                 }
             }

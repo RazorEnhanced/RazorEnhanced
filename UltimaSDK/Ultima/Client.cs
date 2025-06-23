@@ -1,25 +1,22 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace Ultima
 {
     /// <summary>
-    /// Provides methods to interact with the Ultima Onlin e Assistant.Client.Instance.
+    /// Provides methods to interact with the Ultima Online client.
     /// </summary>
-    public sealed class Client
+    public static class Client
     {
+        // ReSharper disable once InconsistentNaming
         private const int WM_CHAR = 0x102;
 
-        private static ClientWindowHandle m_Handle = ClientWindowHandle.Invalid;
+        private static ClientWindowHandle _handle = ClientWindowHandle.Invalid;
 
-        private static WindowProcessStream m_ProcStream;
-        private static LocationPointer m_LocationPointer;
-
-        private static bool m_Is_Iris2 = false;
-
-        private Client()
-        {
-        }
+        private static WindowProcessStream _procStream;
+        private static LocationPointer _locationPointer;
 
         /// <summary>
         /// Gets a <see cref="ProcessStream" /> instance which can be used to read the memory. Null is returned if the Client is not running.
@@ -28,23 +25,25 @@ namespace Ultima
         {
             get
             {
-                if (m_ProcStream == null || m_ProcStream.Window != Handle)
+                if (_procStream == null || _procStream.Window != Handle)
                 {
-                    if (Running)
-                        m_ProcStream = new WindowProcessStream(Handle);
-                    else
-                        m_ProcStream = null;
+                    _procStream = Running ? new WindowProcessStream(Handle) : null;
                 }
 
-                return m_ProcStream;
+                return _procStream;
             }
         }
 
         /// <summary>
-        /// Reads the current <paramref name="x" />, <paramref name="y" />, and <paramref name="z" /> from memory based on a <see cref="Calibrate">calibrated memory location</see>.
-        /// <seealso cref="Calibrate" />
-        /// <seealso cref="ProcessStream" />
-        /// <returns>True if the location was found, false if not</returns>
+        ///     Reads the current <paramref name="x" />, <paramref name="y" />, and <paramref name="z" /> from memory based on a
+        ///     <see
+        ///         cref="Calibrate">
+        ///         calibrated memory location
+        ///     </see>
+        ///     .
+        ///     <seealso cref="Calibrate" />
+        ///     <seealso cref="ProcessStream" />
+        ///     <returns>True if the location was found, false if not</returns>
         /// </summary>
         public static bool FindLocation(ref int x, ref int y, ref int z, ref int facet)
         {
@@ -52,7 +51,9 @@ namespace Ultima
             ProcessStream pc = ProcessStream;
 
             if (pc == null || lp == null)
+            {
                 return false;
+            }
 
             pc.BeginAccess();
 
@@ -87,15 +88,18 @@ namespace Ultima
 
         public static int Read(ProcessStream pc, int bytes)
         {
-            byte[] buffer = new byte[bytes];
+            var buffer = new byte[bytes];
 
             pc.Read(buffer, 0, bytes);
 
             switch (bytes)
             {
-                case 1: return (sbyte)buffer[0];
-                case 2: return (short)(buffer[0] | (buffer[1] << 8));
-                case 4: return buffer[0] | (buffer[1] << 8) | (buffer[2] << 16) | (buffer[3] << 24);
+                case 1:
+                    return (sbyte)buffer[0];
+                case 2:
+                    return (short)(buffer[0] | (buffer[1] << 8));
+                case 4:
+                    return buffer[0] | (buffer[1] << 8) | (buffer[2] << 16) | (buffer[3] << 24);
             }
 
             int val = 0;
@@ -110,42 +114,52 @@ namespace Ultima
             return val;
         }
 
-        public static int Search(ProcessStream pc, byte[] mask, byte[] vals)
+        public static int Search(ProcessStream pc, byte[] mask, byte[] values)
         {
-            if (mask.Length != vals.Length)
+            if (mask.Length != values.Length)
+            {
+                // TODO: maybe we need better exception here?
                 throw new Exception();
+            }
 
             const int chunkSize = 4096;
             int readSize = chunkSize + mask.Length;
 
             pc.BeginAccess();
 
-            byte[] read = new byte[readSize];
+            var read = new byte[readSize];
 
             for (int i = 0; ; ++i)
             {
                 pc.Seek(0x400000 + (i * chunkSize), SeekOrigin.Begin);
+
                 int count = pc.Read(read, 0, readSize);
 
                 if (count != readSize)
+                {
                     break;
+                }
 
                 for (int j = 0; j < chunkSize; ++j)
                 {
                     bool ok = true;
 
                     for (int k = 0; ok && k < mask.Length; ++k)
-                        ok = ((read[j + k] & mask[k]) == vals[k]);
+                    {
+                        ok = ((read[j + k] & mask[k]) == values[k]);
+                    }
 
                     if (ok)
                     {
                         pc.EndAccess();
+
                         return 0x400000 + (i * chunkSize) + j;
                     }
                 }
             }
 
             pc.EndAccess();
+
             return 0;
         }
 
@@ -156,7 +170,7 @@ namespace Ultima
 
             pc.BeginAccess();
 
-            byte[] read = new byte[readSize];
+            var read = new byte[readSize];
 
             for (int i = 0; ; ++i)
             {
@@ -164,14 +178,18 @@ namespace Ultima
                 int count = pc.Read(read, 0, readSize);
 
                 if (count != readSize)
+                {
                     break;
+                }
 
                 for (int j = 0; j < chunkSize; ++j)
                 {
                     bool ok = true;
 
                     for (int k = 0; ok && k < buffer.Length; ++k)
+                    {
                         ok = (buffer[k] == read[j + k]);
+                    }
 
                     if (ok)
                     {
@@ -186,21 +204,26 @@ namespace Ultima
         }
 
         /// <summary>
-        /// Attempts to calibrate the <see cref="FindLocation" /> method based on an input <paramref name="x" />, <paramref name="y" />, and <paramref name="z" />.
-        /// <seealso cref="FindLocation" />
-        /// <seealso cref="ProcessStream" />
+        ///     Attempts to calibrate the <see cref="FindLocation" /> method based on an input <paramref name="x" />,
+        ///     <paramref
+        ///         name="y" />
+        ///     , and <paramref name="z" />.
+        ///     <seealso cref="FindLocation" />
+        ///     <seealso cref="ProcessStream" />
         /// </summary>
         /// <returns>The calibrated memory location -or- 0 if it could not be found.</returns>
         public static void Calibrate(int x, int y, int z)
         {
-            m_LocationPointer = null;
+            _locationPointer = null;
 
             ProcessStream pc = ProcessStream;
 
             if (pc == null)
+            {
                 return;
+            }
 
-            byte[] buffer = new byte[12];
+            var buffer = new byte[12];
 
             buffer[0] = (byte)z;
             buffer[1] = (byte)(z >> 8);
@@ -220,9 +243,11 @@ namespace Ultima
             int ptr = Search(pc, buffer);
 
             if (ptr == 0)
+            {
                 return;
+            }
 
-            m_LocationPointer = new LocationPointer(ptr + 8, ptr + 4, ptr, 0, 4, 4, 4, 0);
+            _locationPointer = new LocationPointer(ptr + 8, ptr + 4, ptr, 0, 4, 4, 4, 0);
         }
 
         /// <summary>
@@ -231,7 +256,7 @@ namespace Ultima
         /// <returns>The calibrated memory location -or- 0 if it could not be found.</returns>
         public static void Calibrate()
         {
-            Calibrate(CalibrationInfo.GetList());
+            Calibrate(CalibrationInfo.Get());
         }
 
         /// <summary>
@@ -240,12 +265,14 @@ namespace Ultima
         /// <returns>The calibrated memory location -or- 0 if it could not be found.</returns>
         public static void Calibrate(CalibrationInfo[] info)
         {
-            m_LocationPointer = null;
+            _locationPointer = null;
 
             ProcessStream pc = ProcessStream;
 
             if (pc == null)
+            {
                 return;
+            }
 
             int ptrX = 0, sizeX = 0;
             int ptrY = 0, sizeY = 0;
@@ -259,26 +286,40 @@ namespace Ultima
                 int ptr = Search(pc, ci.Mask, ci.Vals);
 
                 if (ptr == 0)
+                {
                     continue;
+                }
 
                 if (ptrX == 0 && ci.DetX.Length > 0)
+                {
                     GetCoordDetails(pc, ptr, ci.DetX, out ptrX, out sizeX);
+                }
 
                 if (ptrY == 0 && ci.DetY.Length > 0)
+                {
                     GetCoordDetails(pc, ptr, ci.DetY, out ptrY, out sizeY);
+                }
 
                 if (ptrZ == 0 && ci.DetZ.Length > 0)
+                {
                     GetCoordDetails(pc, ptr, ci.DetZ, out ptrZ, out sizeZ);
+                }
 
                 if (ptrF == 0 && ci.DetF.Length > 0)
+                {
                     GetCoordDetails(pc, ptr, ci.DetF, out ptrF, out sizeF);
+                }
 
                 if (ptrX != 0 && ptrY != 0 && ptrZ != 0 && ptrF != 0)
+                {
                     break;
+                }
             }
 
             if (ptrX != 0 || ptrY != 0 || ptrZ != 0 || ptrF != 0)
-                m_LocationPointer = new LocationPointer(ptrX, ptrY, ptrZ, ptrF, sizeX, sizeY, sizeZ, sizeF);
+            {
+                _locationPointer = new LocationPointer(ptrX, ptrY, ptrZ, ptrF, sizeX, sizeY, sizeZ, sizeF);
+            }
         }
 
         private static void GetCoordDetails(ProcessStream pc, int ptr, byte[] dets, out int coordPointer, out int coordSize)
@@ -300,17 +341,17 @@ namespace Ultima
 
             /*
              * arul:
-             *  The variable 'dets[6]' represents an offset into the struct that holds an info about players current location.
-             *  Added not to break functionality with the older clients (I hope).
-             *
-             * The struct looks as follows:
-             *
-             *  DWORD fLoggedIn;
-             *  DWORD Z;
+             *	The variable 'dets[6]' represents an offset into the struct that holds an info about players current location.
+             *	Added not to break functionality with the older clients (I hope).
+             * 
+             * The struct looks as follows: 
+             * 
+             *  DWORD fLoggedIn; 
+             *	DWORD Z;
              *  DWORD Y;
-             *  DWORD X;
-             *  DWORD Facet;
-             *
+             *	DWORD X;
+             *	DWORD Facet;  
+             *  
              */
             if (dets.Length == 7 && dets[6] < 0xFF)
             {
@@ -326,8 +367,8 @@ namespace Ultima
         /// </summary>
         public static LocationPointer LocationPointer
         {
-            get { return m_LocationPointer; }
-            set { m_LocationPointer = value; }
+            get { return _locationPointer; }
+            set { _locationPointer = value; }
         }
 
         /// <summary>
@@ -338,33 +379,38 @@ namespace Ultima
         {
             get
             {
-                if (NativeMethods.IsWindow(m_Handle) == 0)
-                    m_Handle = FindHandle();
+                if (NativeMethods.IsWindow(_handle) == 0)
+                {
+                    _handle = FindHandle();
+                }
 
-                return m_Handle;
+                return _handle;
             }
+
+            set { _handle = value; }
         }
 
         /// <summary>
         /// Whether or not the Client is currently running.
-        /// <seealso cref="ClientHandle" />
+        /// <seealso cref="ClientWindowHandle" />
         /// </summary>
         public static bool Running
         {
             get
             {
-                return (!Handle.IsInvalid);
+                return !Handle.IsInvalid;
             }
         }
 
         /// <summary>
         /// Is Client Iris2
         /// </summary>
-        public static bool Is_Iris2
-        {
-            get { return m_Is_Iris2; }
-            set { m_Is_Iris2 = value; }
-        }
+        public static bool IsIris2 { get; set; }
+
+        /// <summary>
+        /// ClassicUO or OrionUO clients based on sdl_app
+        /// </summary>
+        public static bool IsAlternativeClient { get; set; }
 
         private static void SendChar(ClientWindowHandle hWnd, char c)
         {
@@ -395,7 +441,7 @@ namespace Ultima
         }
 
         /// <summary>
-        /// Sends a <see cref="String" /> of characters (<paramref name="text" />) to th e Assistant.Client.Instance. The string is followed by a carriage return and line feed.
+        /// Sends a <see cref="string" /> of characters (<paramref name="text" />) to the Client. The string is followed by a carriage return and line feed.
         /// </summary>
         /// <returns>True if the Client is running, false if not.</returns>
         public static bool SendText(string text)
@@ -405,10 +451,23 @@ namespace Ultima
             if (!hWnd.IsInvalid)
             {
                 for (int i = 0; i < text.Length; ++i)
+                {
                     SendChar(hWnd, text[i]);
+                }
 
-                SendChar(hWnd, '\r');
-                SendChar(hWnd, '\n');
+                if (IsAlternativeClient)
+                {
+                    const int WM_KEYDOWN = 0x100;
+                    const int WM_KEYUP = 0x101;
+                    const int VK_RETURN = 0x0D;
+
+                    NativeMethods.PostMessage(hWnd, WM_KEYDOWN, VK_RETURN, 0x001C0001);
+                    NativeMethods.PostMessage(hWnd, WM_KEYUP, VK_RETURN, 0x001C0001);
+                }
+                else
+                {
+                    SendChar(hWnd, '\r');
+                }
 
                 return true;
             }
@@ -419,7 +478,12 @@ namespace Ultima
         }
 
         /// <summary>
-        /// Sends a formatted <see cref="String" /> of characters to th e Assistant.Client.Instance. The string is followed by a carriage return and line feed. The format functionality is the same as <see cref="String.Format">String.Format</see>.
+        ///     Sends a formatted <see cref="string" /> of characters to the Client. The string is followed by a carriage return and line feed. The format functionality is the same as
+        ///     <see
+        ///         cref="Format">
+        ///         String.Format
+        ///     </see>
+        ///     .
         /// </summary>
         /// <returns>True if the Client is running, false if not.</returns>
         public static bool SendText(string format, params object[] args)
@@ -431,18 +495,75 @@ namespace Ultima
         {
             ClientWindowHandle hWnd;
 
-            if (NativeMethods.IsWindow(hWnd = NativeMethods.FindWindowA("Ultima Online", null)) != 0)
+            if (NativeMethods.IsWindow(hWnd = NativeMethods.FindWindowA("SDL_app", null)) != 0)
+            {
+                IsAlternativeClient = true;
                 return hWnd;
+            }
+
+            if (NativeMethods.IsWindow(hWnd = NativeMethods.FindWindowA("Ultima Online", null)) != 0)
+            {
+                return hWnd;
+            }
 
             if (NativeMethods.IsWindow(hWnd = NativeMethods.FindWindowA("Ultima Online Third Dawn", null)) != 0)
+            {
                 return hWnd;
+            }
+
             if (NativeMethods.IsWindow(hWnd = NativeMethods.FindWindowA("OgreGLWindow", null)) != 0)
             {
-                m_Is_Iris2 = true;
+                IsIris2 = true;
                 return hWnd;
             }
 
             return ClientWindowHandle.Invalid;
+        }
+
+        /// <summary> Get the text for the window pointed to by hWnd </summary>
+        public static string GetWindowText(IntPtr hWnd)
+        {
+            int size = NativeMethods.GetWindowTextLength(hWnd);
+            if (size <= 0)
+            {
+                return string.Empty;
+            }
+
+            var builder = new StringBuilder(size + 1);
+
+            NativeMethods.GetWindowText(hWnd, builder, builder.Capacity);
+
+            return builder.ToString();
+        }
+
+        /// <summary> Find all windows that match the given filter </summary>
+        /// <param name="filter"> A delegate that returns true for windows
+        ///    that should be returned and false for windows that should
+        ///    not be returned </param>
+        private static IEnumerable<IntPtr> FindWindows(NativeMethods.EnumWindowsProc filter)
+        {
+            List<IntPtr> windows = new List<IntPtr>();
+
+            NativeMethods.EnumWindows(delegate (IntPtr wnd, IntPtr param)
+            {
+                if (filter(wnd, param))
+                {
+                    // only add the windows that pass the filter
+                    windows.Add(wnd);
+                }
+
+                // but return true here so that we iterate all windows
+                return true;
+            }, IntPtr.Zero);
+
+            return windows;
+        }
+
+        /// <summary> Find all windows that contain the given title text </summary>
+        /// <param name="titleText"> The text that the window title must contain. </param>
+        public static IEnumerable<IntPtr> FindWindowsWithText(string titleText)
+        {
+            return FindWindows((wnd, param) => GetWindowText(wnd).Contains(titleText));
         }
     }
 }

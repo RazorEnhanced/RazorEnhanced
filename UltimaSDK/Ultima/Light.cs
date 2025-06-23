@@ -6,31 +6,34 @@ namespace Ultima
 {
     public sealed class Light
     {
-        private static FileIndex m_FileIndex = new FileIndex("lightidx.mul", "light.mul", 100, -1);
-        private static Bitmap[] m_Cache = new Bitmap[100];
-        private static bool[] m_Removed = new bool[100];
-        private static byte[] m_StreamBuffer;
+        private static FileIndex _fileIndex = new FileIndex("lightidx.mul", "light.mul", 100, -1);
+        private static Bitmap[] _cache = new Bitmap[100];
+        private static bool[] _removed = new bool[100];
+        private static byte[] _streamBuffer;
 
         /// <summary>
         /// ReReads light.mul
         /// </summary>
         public static void Reload()
         {
-            m_FileIndex = new FileIndex("lightidx.mul", "light.mul", 100, -1);
-            m_Cache = new Bitmap[100];
-            m_Removed = new bool[100];
+            _fileIndex = new FileIndex("lightidx.mul", "light.mul", 100, -1);
+            _cache = new Bitmap[100];
+            _removed = new bool[100];
         }
 
         /// <summary>
-        /// Gets count of definied lights
+        /// Gets count of defined lights
         /// </summary>
         /// <returns></returns>
         public static int GetCount()
         {
             string idxPath = Files.GetFilePath("lightidx.mul");
             if (idxPath == null)
+            {
                 return 0;
-            using (FileStream index = new FileStream(idxPath, FileMode.Open, FileAccess.Read, FileShare.Read))
+            }
+
+            using (var index = new FileStream(idxPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
                 return (int)(index.Length / 12);
             }
@@ -43,34 +46,38 @@ namespace Ultima
         /// <returns></returns>
         public static bool TestLight(int index)
         {
-            if (m_Removed[index])
+            if (_removed[index])
+            {
                 return false;
-            if (m_Cache[index] != null)
+            }
+
+            if (_cache[index] != null)
+            {
                 return true;
+            }
 
-            int length, extra;
-            bool patched;
-
-            Stream stream = m_FileIndex.Seek(index, out length, out extra, out patched);
+            Stream stream = _fileIndex.Seek(index, out int _, out int extra, out bool _);
 
             if (stream == null)
+            {
                 return false;
+            }
+
             stream.Close();
+
             int width = (extra & 0xFFFF);
             int height = ((extra >> 16) & 0xFFFF);
-            if ((width > 0) && (height > 0))
-                return true;
 
-            return false;
+            return (width > 0) && (height > 0);
         }
 
         /// <summary>
-        /// Removes Light <see cref="m_Removed"/>
+        /// Removes Light <see cref="_removed"/>
         /// </summary>
         /// <param name="index"></param>
         public static void Remove(int index)
         {
-            m_Removed[index] = true;
+            _removed[index] = true;
         }
 
         /// <summary>
@@ -80,68 +87,78 @@ namespace Ultima
         /// <param name="bmp"></param>
         public static void Replace(int index, Bitmap bmp)
         {
-            m_Cache[index] = bmp;
-            m_Removed[index] = false;
+            _cache[index] = bmp;
+            _removed[index] = false;
         }
 
-        public unsafe static byte[] GetRawLight(int index, out int width, out int height)
+        public static byte[] GetRawLight(int index, out int width, out int height)
         {
             width = 0;
             height = 0;
-            if (m_Removed[index])
+            if (_removed[index])
+            {
                 return null;
-            int length, extra;
-            bool patched;
+            }
 
-            Stream stream = m_FileIndex.Seek(index, out length, out extra, out patched);
+            Stream stream = _fileIndex.Seek(index, out int length, out int extra, out bool _);
 
             if (stream == null)
+            {
                 return null;
+            }
 
             width = (extra & 0xFFFF);
             height = ((extra >> 16) & 0xFFFF);
-            byte[] buffer = new byte[length];
-            stream.Read(buffer, 0, length);
+            var buffer = new byte[length];
+            _ = stream.Read(buffer, 0, length);
             stream.Close();
+
             return buffer;
         }
-
         /// <summary>
         /// Returns Bitmap of given index
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        public unsafe static Bitmap GetLight(int index)
+        public static unsafe Bitmap GetLight(int index)
         {
-            if (m_Removed[index])
+            if (_removed[index])
+            {
                 return null;
-            if (m_Cache[index] != null)
-                return m_Cache[index];
+            }
 
-            int length, extra;
-            bool patched;
+            if (_cache[index] != null)
+            {
+                return _cache[index];
+            }
 
-            Stream stream = m_FileIndex.Seek(index, out length, out extra, out patched);
+            Stream stream = _fileIndex.Seek(index, out int length, out int extra, out bool _);
 
             if (stream == null)
+            {
                 return null;
+            }
 
             int width = (extra & 0xFFFF);
             int height = ((extra >> 16) & 0xFFFF);
 
-            if (m_StreamBuffer == null || m_StreamBuffer.Length < length)
-                m_StreamBuffer = new byte[length];
-            stream.Read(m_StreamBuffer, 0, length);
+            if (_streamBuffer == null || _streamBuffer.Length < length)
+            {
+                _streamBuffer = new byte[length];
+            }
 
-            Bitmap bmp = new Bitmap(width, height, PixelFormat.Format16bppArgb1555);
-            BitmapData bd = bmp.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.WriteOnly, PixelFormat.Format16bppArgb1555);
+            _ = stream.Read(_streamBuffer, 0, length);
 
-            ushort* line = (ushort*)bd.Scan0;
+            var bmp = new Bitmap(width, height, PixelFormat.Format16bppArgb1555);
+            BitmapData bd = bmp.LockBits(
+                new Rectangle(0, 0, width, height), ImageLockMode.WriteOnly, PixelFormat.Format16bppArgb1555);
+
+            var line = (ushort*)bd.Scan0;
             int delta = bd.Stride >> 1;
 
-            fixed (byte* data = m_StreamBuffer)
+            fixed (byte* data = _streamBuffer)
             {
-                sbyte* bindat = (sbyte*)data;
+                var bindat = (sbyte*)data;
                 for (int y = 0; y < height; ++y, line += delta)
                 {
                     ushort* cur = line;
@@ -158,59 +175,93 @@ namespace Ultima
             bmp.UnlockBits(bd);
             stream.Close();
             if (!Files.CacheData)
-                return m_Cache[index] = bmp;
-            else
-                return bmp;
+            {
+                return _cache[index] = bmp;
+            }
+
+            return bmp;
         }
 
-        public unsafe static void Save(string path)
+        public static unsafe void Save(string path)
         {
             string idx = Path.Combine(path, "lightidx.mul");
             string mul = Path.Combine(path, "light.mul");
-            using (FileStream fsidx = new FileStream(idx, FileMode.Create, FileAccess.Write, FileShare.Write),
-                              fsmul = new FileStream(mul, FileMode.Create, FileAccess.Write, FileShare.Write))
+
+            using (var fsidx = new FileStream(idx, FileMode.Create, FileAccess.Write, FileShare.Write))
+            using (var fsmul = new FileStream(mul, FileMode.Create, FileAccess.Write, FileShare.Write))
+            using (var binidx = new BinaryWriter(fsidx))
+            using (var binmul = new BinaryWriter(fsmul))
             {
-                using (BinaryWriter binidx = new BinaryWriter(fsidx),
-                                    binmul = new BinaryWriter(fsmul))
+                for (int index = 0; index < _cache.Length; index++)
                 {
-                    for (int index = 0; index < m_Cache.Length; index++)
+                    if (_cache[index] == null)
                     {
-                        if (m_Cache[index] == null)
-                            m_Cache[index] = GetLight(index);
-                        Bitmap bmp = m_Cache[index];
+                        _cache[index] = GetLight(index);
+                    }
 
-                        if ((bmp == null) || (m_Removed[index]))
+                    Bitmap bmp = _cache[index];
+
+                    if ((bmp == null) || (_removed[index]))
+                    {
+                        // TODO: check what should be here because ServUO version has the version below
+                        /*
+                        binidx.Write(-1); // lookup
+                        binidx.Write(-1); // length
+                        binidx.Write(-1); // extra
+                         */
+                        binidx.Write(-1); // lookup
+                        binidx.Write(0); // length
+                        binidx.Write(0); // extra
+                    }
+                    else
+                    {
+                        BitmapData bd = bmp.LockBits(
+                            new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadOnly,
+                            PixelFormat.Format16bppArgb1555);
+                        var line = (ushort*)bd.Scan0;
+                        int delta = bd.Stride >> 1;
+
+                        binidx.Write((int)fsmul.Position); //lookup
+                        var length = (int)fsmul.Position;
+
+                        for (int y = 0; y < bmp.Height; ++y, line += delta)
                         {
-                            binidx.Write(-1); // lookup
-                            binidx.Write(-1); // length
-                            binidx.Write(-1); // extra
-                        }
-                        else
-                        {
-                            BitmapData bd = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadOnly, PixelFormat.Format16bppArgb1555);
-                            ushort* line = (ushort*)bd.Scan0;
-                            int delta = bd.Stride >> 1;
-
-                            binidx.Write((int)fsmul.Position); //lookup
-                            int length = (int)fsmul.Position;
-
-                            for (int Y = 0; Y < bmp.Height; ++Y, line += delta)
+                            ushort* cur = line;
+                            ushort* end = cur + bmp.Width;
+                            while (cur < end)
                             {
-                                ushort* cur = line;
-                                ushort* end = cur + bmp.Width;
-                                while (cur < end)
+                                // TODO: maybe this below will be better replacement? Needs checking. It comes from ServUO Ultima.dll version
+                                /*
+                                var value = (sbyte)(((*cur++ >> 10) & 0xffff) - 0x1f);
+                                if (value > 0) // wtf? but it works...
                                 {
-                                    sbyte value = (sbyte)(((*cur++ >> 10) & 0xffff) - 0x1f);
-                                    if (value > 0) // wtf? but it works...
-                                        --value;
-                                    binmul.Write(value);
+                                    --value;
                                 }
+                                
+                                binmul.Write(value);
+                                */
+
+                                ushort ccur = *cur++;
+                                sbyte value = 0;
+
+                                if (ccur > 0) // Zero should stay zero cause it means transparence
+                                {
+                                    value = (sbyte)(((ccur >> 10) & 0xffff) - 0x1f);
+                                }
+
+                                if (value > 0) // wtf? but it works...
+                                {
+                                    --value;
+                                }
+
+                                binmul.Write(value);
                             }
-                            length = (int)fsmul.Position - length;
-                            binidx.Write(length);
-                            binidx.Write((bmp.Width << 16) + bmp.Height);
-                            bmp.UnlockBits(bd);
                         }
+
+                        length = (int)fsmul.Position - length;
+                        binidx.Write(length);
+                        binidx.Write((bmp.Height << 16) + bmp.Width); // TODO: first should be bmp.Width?
+                        bmp.UnlockBits(bd);
                     }
                 }
             }

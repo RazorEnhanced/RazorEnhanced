@@ -124,7 +124,7 @@ namespace RazorEnhanced
     {
         public static bool Ignored(this Ultima.Tile tile)
         {
-            return (tile.ID == 2 || tile.ID == 0x1DB || (tile.ID >= 0x1AE && tile.ID <= 0x1B5));
+            return (tile.Id == 2 || tile.Id == 0x1DB || (tile.Id >= 0x1AE && tile.Id <= 0x1B5));
         }
     }
 
@@ -276,7 +276,7 @@ namespace RazorEnhanced
             //Ultima.HuedTile[] tiles = map.Tiles.GetStaticTiles(x, y, true);
             List<Statics.TileInfo> tiles = Statics.GetStaticsTileInfo(x, y, Player.Map);
             var landTile = map.Tiles.GetLandTile(x, y);
-            var landData = TileData.LandTable[landTile.ID & (TileData.LandTable.Length - 1)];
+            var landData = TileData.LandTable[landTile.Id & (TileData.LandTable.Length - 1)];
             var landBlocks = (landData.Flags & TileFlag.Impassable) != 0;
             var considerLand = !landTile.Ignored();
 
@@ -559,7 +559,7 @@ namespace RazorEnhanced
         {
             int xCheck = loc.X, yCheck = loc.Y;
             var landTile = map.Tiles.GetLandTile(xCheck, yCheck);
-            var landData = TileData.LandTable[landTile.ID & (TileData.LandTable.Length - 1)];
+            var landData = TileData.LandTable[landTile.Id & (TileData.LandTable.Length - 1)];
             var landBlocks = (landData.Flags & TileFlag.Impassable) != 0;
 
 
@@ -584,7 +584,7 @@ namespace RazorEnhanced
 
             foreach (var tile in staticTiles)
             {
-                var tileData = TileData.ItemTable[tile.ID & (TileData.ItemTable.Length - 1)];
+                var tileData = TileData.ItemTable[tile.Id & (TileData.ItemTable.Length - 1)];
                 var calcTop = (tile.Z + tileData.CalcHeight);
 
                 if (isSet && calcTop < zCenter)

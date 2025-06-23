@@ -262,7 +262,7 @@ namespace RazorEnhanced.UI
             try
             {
                 int m_hue = m_mobile.Hue;
-                Ultima.Frame[] m_animationframe = Ultima.Animations.GetAnimation(m_mobile.TypeID, 0, 1, ref m_hue, false, true);
+                Ultima.AnimationFrame[] m_animationframe = Ultima.Animations.GetAnimation(m_mobile.TypeID, 0, 1, ref m_hue, false, true);
                 imagepanel.BackgroundImage = m_animationframe[0].Bitmap;
             }
             catch

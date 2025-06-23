@@ -1,34 +1,36 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using Ultima.Helpers;
 
 namespace Ultima
 {
     public sealed class Gumps
     {
-        private static FileIndex m_FileIndex = new FileIndex("Gumpidx.mul", "Gumpart.mul", "gumpartLegacyMUL.uop", 0xFFFF, 12, ".tga", -1, true);
+        private static FileIndex _fileIndex = new FileIndex(
+            "Gumpidx.mul", "Gumpart.mul", "gumpartLegacyMUL.uop", 0xFFFF, 12, ".tga", -1, true);
 
-        private static Bitmap[] m_Cache;
-        private static bool[] m_Removed;
-        private static Hashtable m_patched = new Hashtable();
+        private static Bitmap[] _cache;
+        private static bool[] _removed;
+        private static readonly Dictionary<int, bool> _patched = new Dictionary<int, bool>();
 
-        private static byte[] m_PixelBuffer;
-        private static byte[] m_StreamBuffer;
-        private static byte[] m_ColorTable;
+        private static byte[] _pixelBuffer;
+        private static byte[] _streamBuffer;
+        private static byte[] _colorTable;
 
         static Gumps()
         {
-            if (m_FileIndex != null)
+            if (_fileIndex != null)
             {
-                m_Cache = new Bitmap[m_FileIndex.Index.Length];
-                m_Removed = new bool[m_FileIndex.Index.Length];
+                _cache = new Bitmap[_fileIndex.IndexLength];
+                _removed = new bool[_fileIndex.IndexLength];
             }
             else
             {
-                m_Cache = new Bitmap[0xFFFF];
-                m_Removed = new bool[0xFFFF];
+                _cache = new Bitmap[0xFFFF];
+                _removed = new bool[0xFFFF];
             }
         }
 
@@ -39,99 +41,173 @@ namespace Ultima
         {
             try
             {
-                m_FileIndex = new FileIndex("Gumpidx.mul", "Gumpart.mul", "gumpartLegacyMUL.uop", 12, -1, ".tga", -1, true);
-                m_Cache = new Bitmap[m_FileIndex.Index.Length];
-                m_Removed = new bool[m_FileIndex.Index.Length];
+                _fileIndex = new FileIndex("Gumpidx.mul", "Gumpart.mul", "gumpartLegacyMUL.uop", 0xFFFF, 12, ".tga", -1, true);
+                _cache = new Bitmap[_fileIndex.IndexLength];
+                _removed = new bool[_fileIndex.IndexLength];
             }
             catch
             {
-                m_FileIndex = null;
-                m_Cache = new Bitmap[0xFFFF];
-                m_Removed = new bool[0xFFFF];
+                _fileIndex = null;
+                _cache = new Bitmap[0xFFFF];
+                _removed = new bool[0xFFFF];
             }
 
-            m_PixelBuffer = null;
-            m_StreamBuffer = null;
-            m_ColorTable = null;
-            m_patched.Clear();
+            //_pixelBuffer = null;
+            _streamBuffer = null;
+            //_colorTable = null;
+            _patched.Clear();
         }
 
         public static int GetCount()
         {
-            return m_Cache.Length;
+            return _cache.Length;
         }
 
         /// <summary>
-        /// Replaces Gump <see cref="m_Cache"/>
+        /// Replaces Gump <see cref="_cache"/>
         /// </summary>
         /// <param name="index"></param>
         /// <param name="bmp"></param>
         public static void ReplaceGump(int index, Bitmap bmp)
         {
-            m_Cache[index] = bmp;
-            m_Removed[index] = false;
-            if (m_patched.Contains(index))
-                m_patched.Remove(index);
+            _cache[index] = bmp;
+            _removed[index] = false;
+            _patched.Remove(index);
         }
 
         /// <summary>
-        /// Removes Gumpindex <see cref="m_Removed"/>
+        /// Removes Gumpindex <see cref="_removed"/>
         /// </summary>
         /// <param name="index"></param>
         public static void RemoveGump(int index)
         {
-            m_Removed[index] = true;
+            _removed[index] = true;
         }
 
         /// <summary>
-        /// Tests if index is definied
+        /// Tests if index is defined
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
         public static bool IsValidIndex(int index)
         {
-            if (m_FileIndex == null)
+            if (_fileIndex == null)
+            {
                 return false;
-            if (index > m_Cache.Length - 1)
-                return false;
-            if (m_Removed[index])
-                return false;
-            if (m_Cache[index] != null)
-                return true;
-            int length, extra;
-            bool patched;
+            }
 
-            if (!m_FileIndex.Valid(index, out length, out extra, out patched))
+            if (index > _cache.Length - 1)
+            {
                 return false;
+            }
+
+            if (_removed[index])
+            {
+                return false;
+            }
+
+            if (_cache[index] != null)
+            {
+                return true;
+            }
+
+            if (!_fileIndex.Valid(index, out int _, out int extra, out bool _))
+            {
+                return false;
+            }
+
             if (extra == -1)
+            {
                 return false;
+            }
+
             int width = (extra >> 16) & 0xFFFF;
             int height = extra & 0xFFFF;
 
-            if (width <= 0 || height <= 0)
-                return false;
-
-            return true;
+            return width > 0 && height > 0;
         }
 
         public static byte[] GetRawGump(int index, out int width, out int height)
         {
             width = -1;
             height = -1;
-            int length, extra;
-            bool patched;
-            Stream stream = m_FileIndex.Seek(index, out length, out extra, out patched);
-            if (stream == null)
+
+            IEntry entry = null;
+            Stream stream = _fileIndex.Seek(index, ref entry, out bool patched);
+            if (stream == null || entry == null)
+            {
                 return null;
-            if (extra == -1)
+            }
+
+            if (entry.Extra1 == -1)
+            {
                 return null;
-            width = (extra >> 16) & 0xFFFF;
-            height = extra & 0xFFFF;
+            }
+
+            // Compressed UOPs
+            if (entry.Flag >= CompressionFlag.Zlib)
+            {
+                if (patched)
+                {
+                    throw new InvalidOperationException("Verdata.mul is not supported for compressed UOP");
+                }
+
+                if (_streamBuffer == null || _streamBuffer.Length < entry.Length)
+                {
+                    _streamBuffer = new byte[entry.Length];
+                }
+
+                stream.Read(_streamBuffer, 0, entry.Length);
+
+                var result = UopUtils.Decompress(_streamBuffer);
+                if (result.success is false)
+                {
+                    return null;
+                }
+
+                if (entry.Flag == CompressionFlag.Mythic)
+                {
+                    _streamBuffer = MythicDecompress.Decompress(result.data);
+                }
+
+                using (BinaryReader reader = new BinaryReader(new MemoryStream(_streamBuffer)))
+                {
+                    byte[] extra = reader.ReadBytes(8);
+
+                    width = (extra[3] << 24) | (extra[2] << 16) | (extra[1] << 8) | extra[0];
+                    height = (extra[7] << 24) | (extra[6] << 16) | (extra[5] << 8) | extra[4];
+
+                    // TODO: Tbh, whole code needs to be reworked with readers, as we're doing useless work here just re-reading everything but 8 first bytes
+                    _streamBuffer = reader.ReadBytes(_streamBuffer.Length - 8);
+                }
+
+                entry.Extra1 = width;
+                entry.Extra2 = height;
+            }
+
+            width = entry.Extra1;
+            height = entry.Extra2;
+
             if (width <= 0 || height <= 0)
+            {
                 return null;
-            byte[] buffer = new byte[length];
-            stream.Read(buffer, 0, length);
+            }
+
+            if (entry.Flag == CompressionFlag.Mythic)
+            {
+                return _streamBuffer;
+            }
+
+            var length = entry.Length;
+            if (patched)
+            {
+                length = entry.Length & 0x7FFFFFFF;
+            }
+
+            var buffer = new byte[length];
+            stream.ReadExactly(buffer, 0, length);
             stream.Close();
+
             return buffer;
         }
 
@@ -141,14 +217,18 @@ namespace Ultima
         /// <param name="index"></param>
         /// <param name="hue"></param>
         /// <param name="onlyHueGrayPixels"></param>
+        /// <param name="patched"></param>
         /// <returns></returns>
-        public unsafe static Bitmap GetGump(int index, Hue hue, bool onlyHueGrayPixels, out bool patched)
+        // TODO: Currently unused and may be broken because of recent UOP changes. Needs verdata `patched` checks and compression handling
+        public static unsafe Bitmap GetGump(int index, Hue hue, bool onlyHueGrayPixels, out bool patched)
         {
-            int length, extra;
-            Stream stream = m_FileIndex.Seek(index, out length, out extra, out patched);
+            Stream stream = _fileIndex.Seek(index, out int length, out int extra, out patched);
 
             if (stream == null)
+            {
                 return null;
+            }
+
             if (extra == -1)
             {
                 stream.Close();
@@ -171,24 +251,30 @@ namespace Ultima
             int pixelsPerStride = (width + 1) & ~1;
             int pixelsPerStrideDelta = pixelsPerStride - width;
 
-            byte[] pixelBuffer = m_PixelBuffer;
+            byte[] pixelBuffer = _pixelBuffer;
 
             if (pixelBuffer == null || pixelBuffer.Length < bytesForImage)
-                m_PixelBuffer = pixelBuffer = new byte[(bytesForImage + 2047) & ~2047];
+            {
+                _pixelBuffer = pixelBuffer = new byte[(bytesForImage + 2047) & ~2047];
+            }
 
-            byte[] streamBuffer = m_StreamBuffer;
+            byte[] streamBuffer = _streamBuffer;
 
             if (streamBuffer == null || streamBuffer.Length < length)
-                m_StreamBuffer = streamBuffer = new byte[(length + 2047) & ~2047];
+            {
+                _streamBuffer = streamBuffer = new byte[(length + 2047) & ~2047];
+            }
 
-            byte[] colorTable = m_ColorTable;
+            byte[] colorTable = _colorTable;
 
             if (colorTable == null)
-                m_ColorTable = colorTable = new byte[128];
+            {
+                _colorTable = colorTable = new byte[128];
+            }
 
             stream.Read(streamBuffer, 0, length);
 
-            fixed (short* psHueColors = hue.Colors)
+            fixed (ushort* psHueColors = hue.Colors)
             {
                 fixed (byte* pbStream = streamBuffer)
                 {
@@ -196,25 +282,27 @@ namespace Ultima
                     {
                         fixed (byte* pbColorTable = colorTable)
                         {
-                            ushort* pHueColors = (ushort*)psHueColors;
+                            var pHueColors = psHueColors;
                             ushort* pHueColorsEnd = pHueColors + 32;
 
-                            ushort* pColorTable = (ushort*)pbColorTable;
+                            var pColorTable = (ushort*)pbColorTable;
 
                             ushort* pColorTableOpaque = pColorTable;
 
                             while (pHueColors < pHueColorsEnd)
+                            {
                                 *pColorTableOpaque++ = *pHueColors++;
+                            }
 
-                            ushort* pPixelDataStart = (ushort*)pbPixels;
+                            var pPixelDataStart = (ushort*)pbPixels;
 
-                            int* pLookup = (int*)pbStream;
+                            var pLookup = (int*)pbStream;
                             int* pLookupEnd = pLookup + height;
                             int* pPixelRleStart = pLookup;
                             int* pPixelRle;
 
                             ushort* pPixel = pPixelDataStart;
-                            ushort* pRleEnd = pPixel;
+                            ushort* pRleEnd;
                             ushort* pPixelEnd = pPixel + width;
 
                             ushort color, count;
@@ -235,12 +323,18 @@ namespace Ultima
                                         pRleEnd += count;
 
                                         if (color != 0 && (color & 0x1F) == ((color >> 5) & 0x1F) && (color & 0x1F) == ((color >> 10) & 0x1F))
+                                        {
                                             color = pColorTable[color >> 10];
+                                        }
                                         else if (color != 0)
+                                        {
                                             color ^= 0x8000;
+                                        }
 
                                         while (pPixel < pRleEnd)
+                                        {
                                             *pPixel++ = color;
+                                        }
                                     }
 
                                     pPixel += pixelsPerStrideDelta;
@@ -263,17 +357,23 @@ namespace Ultima
                                         pRleEnd += count;
 
                                         if (color != 0)
+                                        {
                                             color = pColorTable[color >> 10];
+                                        }
 
                                         while (pPixel < pRleEnd)
+                                        {
                                             *pPixel++ = color;
+                                        }
                                     }
 
                                     pPixel += pixelsPerStrideDelta;
                                     pPixelEnd += pixelsPerStride;
                                 }
                             }
+
                             stream.Close();
+
                             return new Bitmap(width, height, bytesPerStride, PixelFormat.Format16bppArgb1555, (IntPtr)pPixelDataStart);
                         }
                     }
@@ -286,10 +386,9 @@ namespace Ultima
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        public unsafe static Bitmap GetGump(int index)
+        public static Bitmap GetGump(int index)
         {
-            bool patched;
-            return GetGump(index, out patched);
+            return GetGump(index, out bool _);
         }
 
         /// <summary>
@@ -298,150 +397,232 @@ namespace Ultima
         /// <param name="index"></param>
         /// <param name="patched"></param>
         /// <returns></returns>
-        public unsafe static Bitmap GetGump(int index, out bool patched)
+        public static unsafe Bitmap GetGump(int index, out bool patched)
         {
-            if (m_patched.Contains(index))
-                patched = (bool)m_patched[index];
-            else
-                patched = false;
-            if (index > m_Cache.Length - 1)
+            patched = _patched.ContainsKey(index) && _patched[index];
+
+            if (index > _cache.Length - 1)
+            {
                 return null;
-            if (m_Removed[index])
+            }
+
+            if (_removed[index])
+            {
                 return null;
-            if (m_Cache[index] != null)
-                return m_Cache[index];
-            int length, extra;
-            Stream stream = m_FileIndex.Seek(index, out length, out extra, out patched);
-            if (stream == null)
+            }
+
+            if (_cache[index] != null)
+            {
+                return _cache[index];
+            }
+
+            IEntry entry = null;
+            Stream stream = _fileIndex.Seek(index, ref entry, out patched);
+            if (stream == null || entry == null)
+            {
                 return null;
-            if (extra == -1)
+            }
+
+            if (entry.Extra1 == -1)
             {
                 stream.Close();
                 return null;
             }
-            if (patched)
-                m_patched[index] = true;
 
-            int width = (extra >> 16) & 0xFFFF;
-            int height = extra & 0xFFFF;
+            if (patched)
+            {
+                _patched[index] = true;
+            }
+
+            var length = entry.Length;
+            if (patched)
+            {
+                length = entry.Length & 0x7FFFFFFF;
+            }
+
+            _streamBuffer = new byte[length];
+
+            stream.Read(_streamBuffer, 0, length);
+
+            uint width = (uint)entry.Extra1;
+            uint height = (uint)entry.Extra2;
+
+            // Compressed UOPs
+            if (entry.Flag >= CompressionFlag.Zlib)
+            {
+                var result = UopUtils.Decompress(_streamBuffer);
+                if (result.success is false)
+                {
+                    return null;
+                }
+                if (entry.Flag == CompressionFlag.Mythic)
+                {
+                    _streamBuffer = MythicDecompress.Decompress(result.data);
+                }
+                using (BinaryReader reader = new BinaryReader(new MemoryStream(_streamBuffer)))
+                {
+                    byte[] extra = reader.ReadBytes(8);
+
+                    width = (uint)((extra[3] << 24) | (extra[2] << 16) | (extra[1] << 8) | extra[0]);
+                    height = (uint)((extra[7] << 24) | (extra[6] << 16) | (extra[5] << 8) | extra[4]);
+
+                    // TODO: Tbh, whole code needs to be reworked with readers, as we're doing useless work here just re-reading everything but 8 first bytes
+                    _streamBuffer = reader.ReadBytes(_streamBuffer.Length - 8);
+                }
+
+                entry.Extra1 = (int)width;
+                entry.Extra2 = (int)height;
+            }
 
             if (width <= 0 || height <= 0)
-                return null;
-            Bitmap bmp = new Bitmap(width, height, PixelFormat.Format16bppArgb1555);
-            BitmapData bd = bmp.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.WriteOnly, PixelFormat.Format16bppArgb1555);
-
-            if (m_StreamBuffer == null || m_StreamBuffer.Length < length)
-                m_StreamBuffer = new byte[length];
-            stream.Read(m_StreamBuffer, 0, length);
-
-            fixed (byte* data = m_StreamBuffer)
             {
-                int* lookup = (int*)data;
-                ushort* dat = (ushort*)data;
+                return null;
+            }
 
-                ushort* line = (ushort*)bd.Scan0;
-                int delta = bd.Stride >> 1;
-                int count = 0;
-                for (int y = 0; y < height; ++y, line += delta)
+            try
+            {
+                var bmp = new Bitmap((int)width, (int)height, PixelFormat.Format16bppArgb1555);
+                BitmapData bd = bmp.LockBits(
+                    new Rectangle(0, 0, (int)width, (int)height), ImageLockMode.WriteOnly, PixelFormat.Format16bppArgb1555);
+
+                fixed (byte* data = _streamBuffer)
                 {
-                    count = (*lookup++ * 2);
+                    var lookup = (int*)data;
+                    var dat = (ushort*)data;
 
-                    ushort* cur = line;
-                    ushort* end = line + bd.Width;
+                    var line = (ushort*)bd.Scan0;
+                    int delta = bd.Stride >> 1;
 
-                    while (cur < end)
+                    for (int y = 0; y < (int)height; ++y, line += delta)
                     {
-                        ushort color = dat[count++];
-                        ushort* next = cur + dat[count++];
+                        int count = (*lookup++ * 2);
 
-                        if (color == 0)
-                            cur = next;
-                        else
+                        ushort* cur = line;
+                        ushort* end = line + bd.Width;
+
+                        while (cur < end)
                         {
-                            color ^= 0x8000;
-                            while (cur < next)
-                                *cur++ = color;
+                            ushort color = dat[count++];
+                            ushort* next = cur + dat[count++];
+
+                            if (color == 0)
+                            {
+                                cur = next;
+                            }
+                            else
+                            {
+                                color ^= 0x8000;
+                                while (cur < next)
+                                {
+                                    *cur++ = color;
+                                }
+                            }
                         }
                     }
                 }
-            }
 
-            bmp.UnlockBits(bd);
-            if (Files.CacheData)
-                return m_Cache[index] = bmp;
-            else
+                bmp.UnlockBits(bd);
+
+                if (Files.CacheData)
+                {
+                    return _cache[index] = bmp;
+                }
+
                 return bmp;
+            }
+            catch (Exception)
+            {
+                // ignored
+                return null;
+            }
         }
 
         public static unsafe void Save(string path)
         {
             string idx = Path.Combine(path, "Gumpidx.mul");
             string mul = Path.Combine(path, "Gumpart.mul");
-            using (FileStream fsidx = new FileStream(idx, FileMode.Create, FileAccess.Write, FileShare.Write),
-                              fsmul = new FileStream(mul, FileMode.Create, FileAccess.Write, FileShare.Write))
+
+            using (var fsidx = new FileStream(idx, FileMode.Create, FileAccess.Write, FileShare.Write))
+            using (var fsmul = new FileStream(mul, FileMode.Create, FileAccess.Write, FileShare.Write))
+            using (var binidx = new BinaryWriter(fsidx))
+            using (var binmul = new BinaryWriter(fsmul))
             {
-                using (BinaryWriter binidx = new BinaryWriter(fsidx),
-                                    binmul = new BinaryWriter(fsmul))
+                for (int index = 0; index < _cache.Length; index++)
                 {
-                    for (int index = 0; index < m_Cache.Length; index++)
+                    Files.FireFileSaveEvent();
+                    if (_cache[index] == null)
                     {
-                        if (m_Cache[index] == null)
-                            m_Cache[index] = GetGump(index);
+                        _cache[index] = GetGump(index);
+                    }
 
-                        Bitmap bmp = m_Cache[index];
-                        if ((bmp == null) || (m_Removed[index]))
+                    Bitmap bmp = _cache[index];
+                    if ((bmp == null) || (_removed[index]))
+                    {
+                        binidx.Write(-1); // lookup
+                        binidx.Write(0); // length
+                        binidx.Write(0); // extra
+                    }
+                    else
+                    {
+                        BitmapData bd = bmp.LockBits(
+                            new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadOnly,
+                            PixelFormat.Format16bppArgb1555);
+
+                        var line = (ushort*)bd.Scan0;
+                        int delta = bd.Stride >> 1;
+
+                        binidx.Write((int)fsmul.Position); // lookup
+                        var length = (int)fsmul.Position;
+                        const int fill = 0;
+                        for (int i = 0; i < bmp.Height; ++i)
                         {
-                            binidx.Write(-1); // lookup
-                            binidx.Write(-1); // length
-                            binidx.Write(-1); // extra
+                            binmul.Write(fill);
                         }
-                        else
+
+                        for (int y = 0; y < bmp.Height; ++y, line += delta)
                         {
-                            BitmapData bd = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadOnly, PixelFormat.Format16bppArgb1555);
-                            ushort* line = (ushort*)bd.Scan0;
-                            int delta = bd.Stride >> 1;
+                            ushort* cur = line;
 
-                            binidx.Write((int)fsmul.Position); //lookup
-                            int length = (int)fsmul.Position;
-                            int fill = 0;
-                            for (int i = 0; i < bmp.Height; ++i)
+                            int x = 0;
+                            var current = (int)fsmul.Position;
+                            fsmul.Seek(length + (y * 4), SeekOrigin.Begin);
+                            int offset = (current - length) / 4;
+                            binmul.Write(offset);
+                            fsmul.Seek(length + (offset * 4), SeekOrigin.Begin);
+
+                            while (x < bd.Width)
                             {
-                                binmul.Write(fill);
-                            }
-                            for (int Y = 0; Y < bmp.Height; ++Y, line += delta)
-                            {
-                                ushort* cur = line;
-
-                                int X = 0;
-                                int current = (int)fsmul.Position;
-                                fsmul.Seek(length + Y * 4, SeekOrigin.Begin);
-                                int offset = (current - length) / 4;
-                                binmul.Write(offset);
-                                fsmul.Seek(length + offset * 4, SeekOrigin.Begin);
-
-                                while (X < bd.Width)
+                                int run = 1;
+                                ushort c = cur[x];
+                                while ((x + run) < bd.Width)
                                 {
-                                    int Run = 1;
-                                    ushort c = cur[X];
-                                    while ((X + Run) < bd.Width)
+                                    if (c != cur[x + run])
                                     {
-                                        if (c != cur[X + Run])
-                                            break;
-                                        ++Run;
+                                        break;
                                     }
-                                    if (c == 0)
-                                        binmul.Write(c);
-                                    else
-                                        binmul.Write((ushort)(c ^ 0x8000));
-                                    binmul.Write((short)Run);
-                                    X += Run;
+
+                                    ++run;
                                 }
+
+                                if (c == 0)
+                                {
+                                    binmul.Write(c);
+                                }
+                                else
+                                {
+                                    binmul.Write((ushort)(c ^ 0x8000));
+                                }
+
+                                binmul.Write((short)run);
+                                x += run;
                             }
-                            length = (int)fsmul.Position - length;
-                            binidx.Write(length);
-                            binidx.Write((bmp.Width << 16) + bmp.Height);
-                            bmp.UnlockBits(bd);
                         }
+
+                        length = (int)fsmul.Position - length;
+                        binidx.Write(length);
+                        binidx.Write((bmp.Width << 16) + bmp.Height);
+
+                        bmp.UnlockBits(bd);
                     }
                 }
             }
