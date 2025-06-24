@@ -81,6 +81,8 @@ namespace RazorEnhanced.UI
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.razorButton1 = new System.Windows.Forms.Button();
+            this.dmgAbleLabel = new System.Windows.Forms.Label();
+            this.dmgAbleValue = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -489,6 +491,8 @@ namespace RazorEnhanced.UI
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.dmgAbleValue);
+            this.groupBox4.Controls.Add(this.dmgAbleLabel);
             this.groupBox4.Controls.Add(this.visibleflaglabel);
             this.groupBox4.Controls.Add(this.groudflaglabel);
             this.groupBox4.Controls.Add(this.twohandflaglabel);
@@ -509,7 +513,7 @@ namespace RazorEnhanced.UI
             this.groupBox4.Controls.Add(this.label11);
             this.groupBox4.Location = new System.Drawing.Point(380, 11);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(127, 302);
+            this.groupBox4.Size = new System.Drawing.Size(127, 326);
             this.groupBox4.TabIndex = 11;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Flags";
@@ -686,6 +690,24 @@ namespace RazorEnhanced.UI
             this.razorButton1.UseVisualStyleBackColor = true;
             this.razorButton1.Click += new System.EventHandler(this.RazorButton1_Click);
             // 
+            // dmgAbleLabel
+            // 
+            this.dmgAbleLabel.AutoSize = true;
+            this.dmgAbleLabel.Location = new System.Drawing.Point(6, 299);
+            this.dmgAbleLabel.Name = "dmgAbleLabel";
+            this.dmgAbleLabel.Size = new System.Drawing.Size(69, 14);
+            this.dmgAbleLabel.TabIndex = 37;
+            this.dmgAbleLabel.Text = "Damageable:";
+            // 
+            // dmgAbleValue
+            // 
+            this.dmgAbleValue.AutoSize = true;
+            this.dmgAbleValue.Location = new System.Drawing.Point(87, 299);
+            this.dmgAbleValue.Name = "dmgAbleValue";
+            this.dmgAbleValue.Size = new System.Drawing.Size(13, 14);
+            this.dmgAbleValue.TabIndex = 38;
+            this.dmgAbleValue.Text = "0";
+            // 
             // EnhancedItemInspector
             // 
             this.ClientSize = new System.Drawing.Size(841, 451);
@@ -770,5 +792,7 @@ namespace RazorEnhanced.UI
         private System.Windows.Forms.Label groudflaglabel;
         private System.Windows.Forms.Label twohandflaglabel;
         private System.Windows.Forms.Panel imagepanel;
+        private System.Windows.Forms.Label dmgAbleLabel;
+        private System.Windows.Forms.Label dmgAbleValue;
     }
 }

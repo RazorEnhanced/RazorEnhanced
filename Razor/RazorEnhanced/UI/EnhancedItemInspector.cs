@@ -172,6 +172,9 @@ namespace RazorEnhanced.UI
             movableflaglabel.Text = (m_itemTarg.Movable) ? "Yes" : "No";
             movableflaglabel.ForeColor = (m_itemTarg.Movable) ? Color.Green : Color.Red;
 
+            dmgAbleValue.Text = (m_itemTarg.IsDamagable) ? "Yes" : "No";
+            dmgAbleValue.ForeColor = (m_itemTarg.IsDamagable) ? Color.Green : Color.Red;
+
             twohandflaglabel.Text = (m_itemTarg.IsTwoHanded) ? "Yes" : "No";
             twohandflaglabel.ForeColor = (m_itemTarg.IsTwoHanded) ? Color.Green : Color.Red;
 
