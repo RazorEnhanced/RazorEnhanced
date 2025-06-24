@@ -107,6 +107,11 @@ namespace RazorEnhanced
 
         // KR Attribute
         /// <summary>
+        /// Get total Hit Chance Increase.
+        /// </summary>
+        public static int HitChanceIncrease { get { return World.Player.HitChanceIncrease; } }
+        // KR Attribute
+        /// <summary>
         /// Get total Swing Speed Increase.
         /// </summary>
         public static int SwingSpeedIncrease { get { return World.Player.SwingSpeedIncrease; } }
