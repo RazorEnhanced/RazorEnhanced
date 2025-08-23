@@ -2464,7 +2464,20 @@ namespace Assistant
             this.enhancedFilterTab.Size = new System.Drawing.Size(678, 365);
             this.enhancedFilterTab.TabIndex = 10;
             this.enhancedFilterTab.Text = "Filters";
-
+            // 
+            // FilterPages
+            // 
+            this.FilterPages.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.FilterPages.Controls.Add(this.JournalFilterPage);
+            this.FilterPages.Controls.Add(this.targettingTab);
+            this.FilterPages.Controls.Add(this.MiscFilterPage);
+            this.FilterPages.Location = new System.Drawing.Point(-2, 2);
+            this.FilterPages.Name = "FilterPages";
+            this.FilterPages.SelectedIndex = 0;
+            this.FilterPages.Size = new System.Drawing.Size(657, 371);
+            this.FilterPages.TabIndex = 0;
             #endregion
             #region Virtual Tab 
             #region Filters Group
@@ -2611,7 +2624,6 @@ namespace Assistant
             #endregion
             #endregion
             #region Targetting Tab
-            #region dont u se old targetting tab
             // 
             // targettingTab
             // 
@@ -2630,7 +2642,6 @@ namespace Assistant
             this.targettingTab.Size = new System.Drawing.Size(678, 365);
             this.targettingTab.TabIndex = 3;
             this.targettingTab.Text = "Targetting";
-            #endregion
             #region Shortcut Group
             // 
             // groupBox43
