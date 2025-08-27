@@ -151,6 +151,7 @@ namespace RazorEnhanced
         private int m_Position;
 
         private Thread m_Thread;
+        private Thread m_UpdateGumpThread;
 
         internal EnhancedScriptEngine m_ScriptEngine;
         internal bool StartMessage;
@@ -412,6 +413,7 @@ namespace RazorEnhanced
                     if (m_Thread != null) { Stop(); }
                     m_Thread = new Thread(AsyncStart);
                     m_Thread.Start();
+                    RazorEnhanced.UI.EnhancedMacroStatusGump.UpdateGump();
                     //while (!m_Thread.IsAlive){ Misc.Pause(1); }
 
                     //m_Run = true;
@@ -449,6 +451,15 @@ namespace RazorEnhanced
 
                 Misc.Pause(1);
             } while (Loop);
+
+            m_UpdateGumpThread = new Thread(() =>
+            {
+                // 1√  ¥Î±‚
+                Thread.Sleep(1000);
+                RazorEnhanced.UI.EnhancedMacroStatusGump.UpdateGump();
+            });
+
+            m_UpdateGumpThread.Start();
         }
 
         internal void Stop()
@@ -466,6 +477,7 @@ namespace RazorEnhanced
                             m_Thread.Abort();
                             m_Thread.Join();
                             m_Thread = null;
+                            RazorEnhanced.UI.EnhancedMacroStatusGump.UpdateGump();
                         }
                     }
                     catch { }
@@ -492,6 +504,7 @@ namespace RazorEnhanced
                 {
 
                     case ThreadState.AbortRequested:
+                        RazorEnhanced.UI.EnhancedMacroStatusGump.UpdateGump();
                         return "Stopping";
 
                     case ThreadState.WaitSleepJoin:
@@ -502,6 +515,7 @@ namespace RazorEnhanced
                     default:
                     case ThreadState.Unstarted:
                     case ThreadState.Aborted:
+                        RazorEnhanced.UI.EnhancedMacroStatusGump.UpdateGump();
                         return "Stopped";
                 }
             }

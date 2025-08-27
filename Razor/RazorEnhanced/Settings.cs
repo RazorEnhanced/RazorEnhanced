@@ -2437,6 +2437,11 @@ namespace RazorEnhanced
             general.Columns.Add("FilterPoison", typeof(bool));
             general.Columns.Add("EnhancedMapPath", typeof(string));
             general.Columns.Add("FilterNPC", typeof(bool));
+            general.Columns.Add("CheckGump", typeof(bool));
+            general.Columns.Add("GumpX", typeof(int));
+            general.Columns.Add("GumpY", typeof(int));
+            general.Columns.Add("GumpWidth", typeof(int));
+            general.Columns.Add("GumpHeight", typeof(int));
 
             // Parametri Tab (Options -> Hues)
             general.Columns.Add("LTHilight", typeof(int));
@@ -5475,6 +5480,24 @@ namespace RazorEnhanced
                 realVersion = 19;
                 General.WriteInt("SettingVersion", realVersion);
             }
+
+            if (realVersion == 19)
+            {
+                DataTable general = m_Dataset.Tables["General"];
+                general.Columns.Add("CheckGump", typeof(bool));
+                general.Columns.Add("GumpX", typeof(int));
+                general.Columns.Add("GumpY", typeof(int));
+                general.Columns.Add("GumpWidth", typeof(int));
+                general.Columns.Add("GumpHeight", typeof(int));
+                RazorEnhanced.Settings.General.WriteBool("CheckGump", false);
+                RazorEnhanced.Settings.General.WriteInt("GumpX", 0);
+                RazorEnhanced.Settings.General.WriteInt("GumpY", 0);
+                RazorEnhanced.Settings.General.WriteInt("GumpWidth", 100);
+                RazorEnhanced.Settings.General.WriteInt("GumpHeight", 200);
+                realVersion = 20;
+                General.WriteInt("SettingVersion", realVersion);
+            }
+
             {
                 // These always run and must be protected to ensure a patch is not applied twice
                 bool found = false;
