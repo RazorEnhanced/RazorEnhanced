@@ -94,7 +94,27 @@ namespace RazorEnhanced
 
                 void watchForFizzle(PacketReader p, PacketHandlerEventArgs args)
                 {
-                    waitOrFizzleEvent.Set();
+                    // 0x54 is Play Sound Effect
+                    byte[] soundModel = p.CopyBytes(2, 2);
+                    byte[] xLoc = p.CopyBytes(6, 2);
+                    byte[] yLoc = p.CopyBytes(8, 2);
+                    byte[] zLoc = p.CopyBytes(10, 2);
+
+                    Array.Reverse(soundModel);
+                    Array.Reverse(xLoc);
+                    Array.Reverse(yLoc);
+                    Array.Reverse(zLoc);
+
+                    ushort soundId = BitConverter.ToUInt16(soundModel, 0);
+                    ushort x = BitConverter.ToUInt16(xLoc, 0);
+                    ushort y = BitConverter.ToUInt16(yLoc, 0);
+                    ushort z = BitConverter.ToUInt16(zLoc, 0);
+
+                    if (soundId == 0x5C &&  //Fizzle Sound ID
+                        x == Player.Position.X && y == Player.Position.Y && z == Player.Position.Z)
+                    {
+                        waitOrFizzleEvent.Set();
+                    }
                 }
                 try
                 {
