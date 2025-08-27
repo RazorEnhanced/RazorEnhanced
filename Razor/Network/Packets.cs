@@ -2109,6 +2109,15 @@ namespace Assistant
         }
     }
 
-
-
+    internal sealed class HelpButtonRequest : Packet
+    {
+        internal HelpButtonRequest()
+            : base(0x9B, 258)
+        {
+            for (int i = 0; i < 257; i++)
+            {
+                Write((byte)0);
+            }
+        }
+    }
 }

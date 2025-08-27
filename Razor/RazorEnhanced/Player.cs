@@ -3038,5 +3038,13 @@ namespace RazorEnhanced
             }
             return 0;  // Non esiste
         }
+
+        /// <summary>
+        /// Request Help Button
+        /// </summary>
+        public static void OpenHelpGump()
+        {
+            Assistant.Client.Instance.SendToServerWait(new HelpButtonRequest());
+        }
     }
 }
