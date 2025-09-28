@@ -690,15 +690,19 @@ namespace RazorEnhanced
                     if (GetGump != null)
                     {
                         var gump = GetGump.Invoke(ClassicUOClient.CUOAssembly, new object[] { serial });
-                        if (gump != null && gump.GetType().FullName == "ClassicUO.Game.UI.Gumps.ContainerGump")
+                        if (gump != null)
                         {
-                            var Gumps = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Game.UI.Gumps.Gump");
-                            if (Gumps != null)
+                            var gumpTypeName = gump.GetType().FullName;
+                            if (gumpTypeName == "ClassicUO.Game.UI.Gumps.ContainerGump" || gumpTypeName == "ClassicUO.Game.UI.Gumps.GridContainer")
                             {
-                                MethodInfo Dispose = Gumps.GetMethod("Dispose");
-                                if (Dispose != null)
+                                var Gumps = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Game.UI.Gumps.Gump");
+                                if (Gumps != null)
                                 {
-                                    Dispose.Invoke(gump, new object[] { });
+                                    MethodInfo Dispose = Gumps.GetMethod("Dispose");
+                                    if (Dispose != null)
+                                    {
+                                        Dispose.Invoke(gump, new object[] { });
+                                    }
                                 }
                             }
                         }
