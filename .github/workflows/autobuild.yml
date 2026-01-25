@@ -4,6 +4,25 @@ on:
   workflow_dispatch:
   push:
     branches: [ release/0.8 ]
+
+
+on:
+  workflow_dispatch:  # Keep manual trigger
+  push:
+    branches:
+      - main  # or whatever branch you want to trigger on
+    paths-ignore:
+      - '.github/**'
+      - '.git/**'
+      - '.gitattributes'            
+      - '.vscode/**'
+      - '.gitignore'
+      - '*.md'
+      - 'docs/**'
+      - 'dokuwiki/**'
+      - 'NLog.config'
+      - 'LICENSE.txt'
+      - 'UOS_Documentation.html'      
   
 env:
   SOLUTION_FILE_PATH: .
