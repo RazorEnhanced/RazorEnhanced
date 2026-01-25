@@ -1,4 +1,4 @@
-name: release-updated
+name: release
 
 on:
   workflow_dispatch:
@@ -17,7 +17,7 @@ jobs:
     runs-on: windows-latest
 
     steps:         
-    - uses: actions/checkout@v4   
+    - uses: actions/checkout@v3   
     
     - name: Grab Version
       id: get_version
@@ -118,21 +118,94 @@ jobs:
         Write-Host "Tag created and pushed successfully: $tag"
       shell: pwsh
 
-    # Create or Update Release and Upload Asset (replaces multiple old steps)
-    - name: Create or Update Release
-      uses: softprops/action-gh-release@v2
-      with:
-        tag_name: v${{ steps.get_version.outputs.version }}
-        name: RazorEnhanced ${{ steps.get_version.outputs.version }}
-        files: ./RazorEnhanced-${{ steps.get_version.outputs.version }}.zip
-        draft: false
-        prerelease: false
+    # Now check if release exists after ensuring tag exists
+    - name: Check if release exists
+      id: check_release
+      run: |
+        $headers = @{
+          Authorization = "token ${{ secrets.GITHUB_TOKEN }}"
+          Accept = "application/vnd.github.v3+json"
+        }
+        try {
+          $response = Invoke-RestMethod -Uri "https://api.github.com/repos/${{ github.repository }}/releases/tags/v${{ steps.get_version.outputs.version }}" -Method Get -Headers $headers
+          "exists=true" >> $env:GITHUB_OUTPUT
+          "release_id=$($response.id)" >> $env:GITHUB_OUTPUT
+          Write-Host "Release already exists with ID: $($response.id)"
+        } catch {
+          if ($_.Exception.Response.StatusCode -eq 404) {
+            "exists=false" >> $env:GITHUB_OUTPUT
+            Write-Host "Release does not exist"
+          } else {
+            Write-Error "Error checking release: $_"
+            exit 1
+          }
+        }
+      shell: pwsh
+
+    # Create Release if it doesn't exist
+    - name: Create Release
+      id: create_release
+      if: steps.check_release.outputs.exists == 'false'
+      uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v${{ steps.get_version.outputs.version }}
+        release_name: RazorEnhanced ${{ steps.get_version.outputs.version }}
+        draft: false
+        prerelease: false
+
+    # Set upload URL based on whether release was created or already existed
+    - name: Set upload URL
+      id: set_upload_url
+      run: |
+        if ("${{ steps.check_release.outputs.exists }}" -eq "true") {
+          "upload_url=https://uploads.github.com/repos/${{ github.repository }}/releases/${{ steps.check_release.outputs.release_id }}/assets{?name,label}" >> $env:GITHUB_OUTPUT
+        } else {
+          "upload_url=${{ steps.create_release.outputs.upload_url }}" >> $env:GITHUB_OUTPUT
+        }
+      shell: pwsh
+        
+    # Delete existing asset if it exists (for updates)
+    - name: Delete existing asset
+      if: steps.check_release.outputs.exists == 'true'
+      run: |
+        $headers = @{
+          Authorization = "token ${{ secrets.GITHUB_TOKEN }}"
+          Accept = "application/vnd.github.v3+json"
+        }
+        
+        # Get assets for the release
+        $assetsUrl = "https://api.github.com/repos/${{ github.repository }}/releases/${{ steps.check_release.outputs.release_id }}/assets"
+        $assets = Invoke-RestMethod -Uri $assetsUrl -Method Get -Headers $headers
+        
+        # Find matching asset
+        $assetName = "RazorEnhanced-${{ steps.get_version.outputs.version }}.zip"
+        $asset = $assets | Where-Object { $_.name -eq $assetName }
+        
+        if ($asset) {
+          Write-Host "Found existing asset with ID: $($asset.id). Deleting it..."
+          Invoke-RestMethod -Uri "https://api.github.com/repos/${{ github.repository }}/releases/assets/$($asset.id)" -Method Delete -Headers $headers
+          Write-Host "Asset deleted successfully"
+        } else {
+          Write-Host "No existing asset found to delete"
+        }
+      shell: pwsh
+
+    # Upload the zip file as a release asset
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.set_upload_url.outputs.upload_url }}
+        asset_path: ./RazorEnhanced-${{ steps.get_version.outputs.version }}.zip
+        asset_name: RazorEnhanced-${{ steps.get_version.outputs.version }}.zip
+        asset_content_type: application/zip
 
     # Checkout the GitHub Pages repo to update latest.json and other files
     - name: Checkout GitHub Pages Repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v3
       with:
         repository: RazorEnhanced/razorenhanced.github.io
         path: gh-pages
