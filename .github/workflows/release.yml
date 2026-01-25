@@ -2,6 +2,9 @@ name: release
 
 on:
   workflow_dispatch:
+
+permissions:
+  contents: write  
   
 env:
   SOLUTION_FILE_PATH: .
