@@ -1324,7 +1324,7 @@ namespace RazorEnhanced
         /// </summary>
         /// <param name="item">Item object to drop.</param>
         /// <param name="amount">Amount to move. (default: 0, the whole stack)</param>
-        public static void DropItemGroundSelf(Item item, int amount = 0)
+        public static void DropItemGroundSelf(Item item, int amount = 0, int direction = 0)
         {
             if (item == null)
             {
@@ -1336,8 +1336,37 @@ namespace RazorEnhanced
             if ((item.Amount < amount) || (amount == 0))
                 amounttodrop = item.Amount;
 
-            MoveOnGround(item.Serial, amounttodrop, Player.Position.X, Player.Position.Y, Player.Position.Z);
+            int xoffset = 0;
+            int yoffset = 0;
+
+            switch(direction)
+            {
+                default:
+                case 0:
+                    xoffset = 1;
+                    yoffset = 0;
+                    break;
+                case 1: // north
+                    xoffset = 0;
+                    yoffset = -1;
+                    break;
+                case 2: //east
+                    xoffset = 1;
+                    yoffset = 0;
+                    break;
+                case 3: //south
+                    xoffset = 0;
+                    yoffset = 1;
+                    break;
+                case 4: //west
+                    xoffset = -1;
+                    yoffset = 0;
+                    break;
+            }
+
+            MoveOnGround(item.Serial, amounttodrop, Player.Position.X + xoffset, Player.Position.Y + yoffset, Player.Position.Z);
         }
+
 
         /// <summary>
         /// This function seldom works because the servers dont allow drop where your standing

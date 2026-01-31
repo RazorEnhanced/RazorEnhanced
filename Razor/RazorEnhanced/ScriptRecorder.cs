@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static IronPython.Modules.PythonIterTools;
 
 namespace RazorEnhanced
 {
@@ -143,6 +144,9 @@ namespace RazorEnhanced
     {
         public ScriptRecorderOutput Output;
 
+        public static uint _lastPickedUpSerial = 0;
+        public static int _lastPickedUpAmount = 0;
+
         internal struct UsedObjectData
         {
             internal uint serial;
@@ -264,10 +268,14 @@ namespace RazorEnhanced
 
         internal override void Record_DropRequest(Assistant.Item i, Assistant.Serial dest)
         {
+            int amt = 1;
+            if (_lastPickedUpSerial == i.Serial)
+                amt = _lastPickedUpAmount;
+
             if (dest != 0xFFFFFFFF)
-                AddLog("Items.Move(0x" + i.Serial.Value.ToString("X8") + ", 0x" + dest.Value.ToString("X8") + ", " + i.Amount + ")");
+                AddLog("Items.Move(0x" + i.Serial.Value.ToString("X8") + ", 0x" + dest.Value.ToString("X8") + ", " + amt + ")");
             else
-                AddLog("Items.DropItemGroundSelf(0x" + i.Serial.Value.ToString("X8") + ", " + i.Amount + ")");
+                AddLog("Items.DropItemGroundSelf(0x" + i.Serial.Value.ToString("X8") + ", " + amt + ")");
         }
         /*internal static void Record_ClientSingleClick(Assistant.Serial ser)
         {
@@ -391,6 +399,10 @@ namespace RazorEnhanced
                     AddLog("Spells.CastNecro(\"" + Utility.CapitalizeAllWords(Language.GetString(s.Name)) + "\")");
                 else if (id >= 201 && id <= 210)
                     AddLog("Spells.CastChivalry(\"" + Utility.CapitalizeAllWords(Language.GetString(s.Name)) + "\")");
+                else if (id >= 302 && id <= 321)
+                    AddLog("Spells.CastDruid(\"" + Utility.CapitalizeAllWords(Language.GetString(s.Name)) + "\")");
+                else if (id >= 342 && id <= 353)
+                    AddLog("Spells.CastCleric(\"" + Utility.CapitalizeAllWords(Language.GetString(s.Name)) + "\")");
                 else if (id >= 401 && id <= 406)
                     AddLog("Spells.CastBushido(\"" + Utility.CapitalizeAllWords(Language.GetString(s.Name)) + "\")");
                 else if (id >= 501 && id <= 508)
@@ -635,17 +647,21 @@ namespace RazorEnhanced
                     return;
                 }
             }
+            int amt = 1;
+            if( _lastPickedUpSerial == i.Serial)
+                amt = _lastPickedUpAmount;
+
             if (dest != 0xFFFFFFFF)
             {
                 if (dest == Player.Backpack.Serial)
                 {
-                    AddLog($"moveitem {i.Serial:x} backpack {i.Position.X} {i.Position.Y} {i.Amount}");
+                    AddLog($"moveitem {i.Serial:x} backpack {i.Position.X} {i.Position.Y} {amt}");
                 }
                 else
-                    AddLog($"moveitem {i.Serial:x} 0x{dest:x} {i.Position.X} {i.Position.Y} {i.Amount}");
+                    AddLog($"moveitem {i.Serial:x} 0x{dest:x} {i.Position.X} {i.Position.Y} {amt}");
             }
             else
-                AddLog($"moveitem {i.Serial:x} ground {i.Position.X} {i.Position.Y} {i.Position.Z} {i.Amount}");
+                AddLog($"moveitem {i.Serial:x} ground {i.Position.X} {i.Position.Y} {i.Position.Z} {amt}");
         }
         /*internal static void Record_ClientSingleClick(Assistant.Serial ser)
         {

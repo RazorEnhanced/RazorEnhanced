@@ -2165,6 +2165,11 @@ namespace RazorEnhanced
             Assistant.Client.Instance.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Emote, color, 1, msg));
         }
 
+        public static void ChatEmote(string msg)
+        {
+            Player.ChatEmote(1153, msg);
+        }
+
         public static void EmoteAction(string action)
         {
             Assistant.Client.Instance.SendToServer(new EmoteAction(action));
@@ -2191,6 +2196,11 @@ namespace RazorEnhanced
             ChatWhisper(color, msg.ToString());
         }
 
+        public static void ChatWhisper(string msg)
+        {
+            ChatWhisper(1153, msg);
+        }
+
 
         /// <summary>
         /// Send an yell message.
@@ -2206,6 +2216,10 @@ namespace RazorEnhanced
             ChatYell(color, msg.ToString());
         }
 
+        public static void ChatYell(string msg)
+        {
+            ChatYell(1153, msg);
+        }
 
         /// <summary>
         /// Send an chat channel message.

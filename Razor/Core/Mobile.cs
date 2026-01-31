@@ -40,6 +40,7 @@ namespace Assistant
         private bool m_Blessed; // Yellow Hits
         private bool m_Warmode;
         private bool m_Paralized;
+        private bool m_Mounted;
         private bool m_Flying;
 
         // Stats & Props
@@ -241,6 +242,11 @@ namespace Assistant
         {
             get { return m_Paralized; }
             set { m_Paralized = value; }
+        }
+
+        internal bool Mounted
+        {
+            get { return GetItemOnLayer(Layer.Mount) != null; }
         }
 
         internal bool Flying
