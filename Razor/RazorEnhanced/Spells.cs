@@ -1,7 +1,10 @@
 using Assistant;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading;
+using Newtonsoft.Json;
 
 namespace RazorEnhanced
 {
@@ -811,7 +814,7 @@ namespace RazorEnhanced
                 CastOnlyDruid(guessedSpellName, wait, waitAfter);
             }
         }
-
+    
         public static void CastDruid(string SpellName, Mobile mobile, bool wait = true)
         {
             CastDruid(SpellName, (uint)mobile.Serial, wait);
@@ -1329,7 +1332,81 @@ namespace RazorEnhanced
             { "ManaSpring", "[cs manaspring" },
             { "Hibernate", "[cs hibernate" },
         };
-        private static readonly Dictionary<string, int> m_AllSpells = AllSpells();
+        //private static readonly Dictionary<string, int> m_AllSpells = AllSpells();
+
+        private static readonly Dictionary<string, int> m_AllSpells = LoadAllSpells();
+
+        /// <summary>
+        /// Loads spells from CustomSpells.json if available, otherwise uses default spell list
+        /// </summary>
+        private static Dictionary<string, int> LoadAllSpells()
+        {
+            string customSpellsPath = Path.Combine(Assistant.Engine.RootPath, "Data", "CustomSpells.json");
+
+            // Check if custom spells file exists
+            if (File.Exists(customSpellsPath))
+            {
+                try
+                {
+                    string jsonContent = File.ReadAllText(customSpellsPath);
+                    var customSpells = JsonConvert.DeserializeObject<Dictionary<string, int>>(jsonContent);
+
+                    if (customSpells != null && customSpells.Count > 0)
+                    {
+                        Utility.Logger.Info($"Loaded {customSpells.Count} custom spells from CustomSpells.json");
+                        return customSpells;
+                    }
+                    else
+                    {
+                        Utility.Logger.Error("CustomSpells.json exists but is empty or invalid. Using default spells.");
+                    }
+                }
+                catch (JsonException ex)
+                {
+                    Utility.Logger.Error($"Error parsing CustomSpells.json: {ex.Message}. Using default spells.");
+                }
+                catch (IOException ex)
+                {
+                    Utility.Logger.Error($"Error reading CustomSpells.json: {ex.Message}. Using default spells.");
+                }
+                catch (Exception ex)
+                {
+                    Utility.Logger.Error($"Unexpected error loading CustomSpells.json: {ex.Message}. Using default spells.");
+                }
+            }
+
+            // Fall back to default spells
+            return AllSpells();
+        }
+
+
+        /// <summary>
+        /// Exports current spell list to CustomSpells.json for customization
+        /// </summary>
+        public static void ExportSpellsToJson()
+        {
+            string customSpellsPath = Path.Combine(Assistant.Engine.RootPath, "Data", "CustomSpells.json");
+
+            try
+            {
+                // Ensure Data directory exists
+                string dataDir = Path.GetDirectoryName(customSpellsPath);
+                if (!Directory.Exists(dataDir))
+                {
+                    Directory.CreateDirectory(dataDir);
+                }
+
+                var allSpells = AllSpells();
+                string jsonContent = JsonConvert.SerializeObject(allSpells, Formatting.Indented);
+                File.WriteAllText(customSpellsPath, jsonContent);
+
+                Utility.Logger.Info($"Exported {allSpells.Count} spells to CustomSpells.json");
+            }
+            catch (Exception ex)
+            {
+                Utility.Logger.Error($"Error exporting spells to JSON: {ex.Message}");
+            }
+        }
 
         private static Dictionary<string, int> AllSpells()
         {

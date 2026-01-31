@@ -7,6 +7,7 @@ using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using static IronPython.Modules._ast;
 
 namespace Assistant
 {
@@ -443,6 +444,8 @@ namespace Assistant
 
             RazorEnhanced.ScriptRecorderService.Instance.Record_UnicodeSpeech(type, text, hue);
 
+            // Record speech for macro system
+            RazorEnhanced.Macros.MacroManager.RecordSpeech(hue, text);
 
             text = text.Trim();
 

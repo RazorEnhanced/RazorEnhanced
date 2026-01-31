@@ -89,6 +89,7 @@ namespace Assistant
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.ComboBox imgFmt;
         internal System.Windows.Forms.ToolTip m_Tip;
+        private System.Windows.Forms.TabPage MacrosTab;
 
         #endregion Class Variables
         private System.Windows.Forms.CheckBox preAOSstatbar;
@@ -1496,6 +1497,9 @@ namespace Assistant
             this.DPSMeterPauseButton = new System.Windows.Forms.Button();
             this.DPSMeterStopButton = new System.Windows.Forms.Button();
             this.DPSMeterStartButton = new System.Windows.Forms.Button();
+
+            this.MacrosTab = new System.Windows.Forms.TabPage();
+
             this.DPSMeterClearButton = new System.Windows.Forms.Button();
             this.statusTab = new System.Windows.Forms.TabPage();
             this.technicalTab = new System.Windows.Forms.TabPage();
@@ -1531,6 +1535,7 @@ namespace Assistant
             this.timertitlestatusbar = new System.Windows.Forms.Timer(this.components);
             this.openmaplocation = new System.Windows.Forms.OpenFileDialog();
             this.m_Tip = new System.Windows.Forms.ToolTip(this.components);
+            this.MacrosTab.SuspendLayout();
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             this.technicalTab.SuspendLayout();
@@ -1748,6 +1753,7 @@ namespace Assistant
             this.tabs.Controls.Add(this.moreOptTab);
             this.tabs.Controls.Add(this.enhancedFilterTab);
             this.tabs.Controls.Add(this.AllScripts);
+            this.tabs.Controls.Add(this.MacrosTab);  // NEW LINE - Macros tab
             this.tabs.Controls.Add(this.EnhancedAgent);
             this.tabs.Controls.Add(this.toolbarTab);
             this.tabs.Controls.Add(this.skillsTab);
@@ -4587,6 +4593,20 @@ namespace Assistant
             this.showscriptmessageCheckBox.Text = "Show Script Error Message";
             this.showscriptmessageCheckBox.CheckedChanged += new System.EventHandler(this.showscriptmessageCheckBox_CheckedChanged);
             #endregion
+            #endregion
+            #region Macros Tab
+            // 
+            // MacrosTab
+            // 
+            this.MacrosTab.Location = new System.Drawing.Point(4, 29);
+            this.MacrosTab.Name = "MacrosTab";
+            this.MacrosTab.Padding = new System.Windows.Forms.Padding(3);
+            this.MacrosTab.Size = new System.Drawing.Size(678, 390);
+            this.MacrosTab.TabIndex = 16;
+            this.MacrosTab.Text = "Macros";
+            this.MacrosTab.UseVisualStyleBackColor = true;
+            // Initialize Macro Tab UI
+            InitializeMacroTab();
             #endregion
             #region Agents Tab
             // 
@@ -9652,6 +9672,8 @@ namespace Assistant
             this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
             this.Move += new System.EventHandler(this.MainForm_Move);
             this.Resize += new System.EventHandler(this.MainForm_Resize);
+            this.MacrosTab.ResumeLayout(false);
+            this.MacrosTab.PerformLayout();
             this.tabs.ResumeLayout(false);
             this.generalTab.ResumeLayout(false);
             this.generalTab.PerformLayout();

@@ -461,6 +461,53 @@
     <Compile Include="RazorEnhanced\CUO.cs" />
     <Compile Include="RazorEnhanced\EncodedSpeech.cs" />
     <Compile Include="RazorEnhanced\EnhancedScript.cs" />
+    <Compile Include="RazorEnhanced\Macros\Actions\ArmDisarmAction.cs" />
+    <Compile Include="RazorEnhanced\Macros\Actions\AttackAction.cs" />
+    <Compile Include="RazorEnhanced\Macros\Actions\BandageAction.cs" />
+    <Compile Include="RazorEnhanced\Macros\Actions\CastSpellAction.cs" />
+    <Compile Include="RazorEnhanced\Macros\Actions\ClearJournalAction.cs" />
+    <Compile Include="RazorEnhanced\Macros\Actions\CommentAction.cs" />
+    <Compile Include="RazorEnhanced\Macros\Actions\DisconnectAction.cs" />
+    <Compile Include="RazorEnhanced\Macros\Actions\DoubleClickAction.cs" />
+    <Compile Include="RazorEnhanced\Macros\Actions\DropAction.cs" />
+    <Compile Include="RazorEnhanced\Macros\Actions\ElseAction.cs" />
+    <Compile Include="RazorEnhanced\Macros\Actions\ElseIfAction.cs" />
+    <Compile Include="RazorEnhanced\Macros\Actions\EndForAction.cs" />
+    <Compile Include="RazorEnhanced\Macros\Actions\EndIfAction.cs" />
+    <Compile Include="RazorEnhanced\Macros\Actions\EndWhileAction.cs" />
+    <Compile Include="RazorEnhanced\Macros\Actions\FlyAction.cs" />
+    <Compile Include="RazorEnhanced\Macros\Actions\ForAction.cs" />
+    <Compile Include="RazorEnhanced\Macros\Actions\GumpResponseAction.cs" />
+    <Compile Include="RazorEnhanced\Macros\Actions\IfAction.cs" />
+    <Compile Include="RazorEnhanced\Macros\Actions\InvokeVirtueAction.cs" />
+    <Compile Include="RazorEnhanced\Macros\Actions\MessagingAction.cs" />
+    <Compile Include="RazorEnhanced\Macros\Actions\MountAction.cs" />
+    <Compile Include="RazorEnhanced\Macros\Actions\MoveItemAction.cs" />
+    <Compile Include="RazorEnhanced\Macros\Actions\MovementAction.cs" />
+    <Compile Include="RazorEnhanced\Macros\Actions\PauseAction.cs" />
+    <Compile Include="RazorEnhanced\Macros\Actions\PickupAction.cs" />
+    <Compile Include="RazorEnhanced\Macros\Actions\PromptResponseAction.cs" />
+    <Compile Include="RazorEnhanced\Macros\Actions\QueryStringResponseAction.cs" />
+    <Compile Include="RazorEnhanced\Macros\Actions\RemoveAliasAction.cs" />
+    <Compile Include="RazorEnhanced\Macros\Actions\RenameMobileAction.cs" />
+    <Compile Include="RazorEnhanced\Macros\Actions\ResyncAction.cs" />
+    <Compile Include="RazorEnhanced\Macros\Actions\RunOrganizerOnceAction.cs" />
+    <Compile Include="RazorEnhanced\Macros\Actions\SetAbilityAction.cs" />
+    <Compile Include="RazorEnhanced\Macros\Actions\SetAliasAction.cs.cs" />
+    <Compile Include="RazorEnhanced\Macros\Actions\TargetAction.cs" />
+    <Compile Include="RazorEnhanced\Macros\Actions\TargetResource.cs" />
+    <Compile Include="RazorEnhanced\Macros\Actions\ToggleWarModeAction.cs" />
+    <Compile Include="RazorEnhanced\Macros\Actions\UseContextMenuAction.cs" />
+    <Compile Include="RazorEnhanced\Macros\Actions\UseEmoteAction.cs" />
+    <Compile Include="RazorEnhanced\Macros\Actions\UsePotionAction.cs" />
+    <Compile Include="RazorEnhanced\Macros\Actions\UseSkillAction.cs" />
+    <Compile Include="RazorEnhanced\Macros\Actions\WaitForGumpAction.cs" />
+    <Compile Include="RazorEnhanced\Macros\Actions\WaitForTargetAction.cs" />
+    <Compile Include="RazorEnhanced\Macros\Actions\WhileAction.cs" />
+    <Compile Include="RazorEnhanced\Macros\Macro.cs" />
+    <Compile Include="RazorEnhanced\Macros\MacroAction.cs" />
+    <Compile Include="RazorEnhanced\Macros\MacroActionFactory.cs" />
+    <Compile Include="RazorEnhanced\Macros\MacroManager.cs" />
     <Compile Include="RazorEnhanced\PacketLogger.cs" />
     <Compile Include="RazorEnhanced\Proto-Control\ProtoControl.cs" />
     <ProtoBuf Include="RazorEnhanced\Proto-Control\ProtoControl.proto" GrpcServices="None" />
@@ -728,6 +775,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\Filter\Filters.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\MacrosUI.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\Other\Hotkey.cs">

@@ -383,7 +383,7 @@ namespace RazorEnhanced
             }
         }
 
-        internal static int AutoRemountEDelay
+        public static int AutoRemountEDelay
         {
             get { return m_autoremountedelay; }
 
@@ -394,7 +394,7 @@ namespace RazorEnhanced
             }
         }
 
-        internal static int AutoRemountSerial
+        public static int AutoRemountSerial
         {
             get { return m_autoremountserial; }
 

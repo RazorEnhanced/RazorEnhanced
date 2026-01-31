@@ -9,7 +9,7 @@ using static RazorEnhanced.Config;
 
 namespace Assistant
 {
-    internal enum Layer : byte
+    public enum Layer : byte
     {
         Invalid = 0x00,
 

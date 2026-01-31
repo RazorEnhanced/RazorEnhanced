@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
+using Ultima;
 
 
 namespace Assistant
@@ -311,6 +312,7 @@ namespace Assistant
                         //  ent = World.FindItem(ser);
 
                         RazorEnhanced.ScriptRecorderService.Instance.Record_ContextMenuResponse(ser, idx);
+                        RazorEnhanced.Macros.MacroManager.RecordContextMenuResponse(ser, idx);
 
                         World.Player.HasContext = false;
                         World.Player.ContextID = 0;
@@ -369,6 +371,7 @@ namespace Assistant
                         catch { break; }
 
                         RazorEnhanced.ScriptRecorderService.Instance.Record_ClientTextCommand(1, skillIndex);
+                        RazorEnhanced.Macros.MacroManager.RecordClientTextCommand(1, skillIndex); // Add this line
 
                         if (World.Player != null)
                             World.Player.LastSkill = skillIndex;
@@ -470,6 +473,7 @@ namespace Assistant
                 Serial ser = p.ReadUInt32();
                 string name = p.ReadStringSafe(30);
                 RazorEnhanced.ScriptRecorderService.Instance.Record_RenameMobile((int)ser, name);
+                RazorEnhanced.Macros.MacroManager.RecordRenameMobile((int)ser, name);
             }
         }
 
@@ -502,7 +506,7 @@ namespace Assistant
         {
             World.Player.HasQueryString = false;
 
-            if (!RazorEnhanced.ScriptRecorderService.Instance.Active()) { return; }
+            if (!RazorEnhanced.ScriptRecorderService.Instance.Active() && !RazorEnhanced.Macros.MacroManager.IsRecording) { return; }
 
             p.ReadUInt32(); //  Serial
             p.ReadByte(); // Parent ID
@@ -511,6 +515,7 @@ namespace Assistant
             int textlenght = p.ReadInt16();
             string text = p.ReadStringSafe(textlenght);
             RazorEnhanced.ScriptRecorderService.Instance.Record_ResponseStringQuery(yesno, text);
+            RazorEnhanced.Macros.MacroManager.RecordQueryStringResponse(yesno, text);
         }
 
         private static void LiftRequest(PacketReader p, PacketHandlerEventArgs args)
@@ -529,6 +534,9 @@ namespace Assistant
                     ScriptRecorder.enqueueUsedObject(serial, mob.Serial, item.TypeID, item.Hue);
                 }
                 iid = item.TypeID.Value;
+
+                ScriptRecorder._lastPickedUpSerial = serial;    
+                ScriptRecorder._lastPickedUpAmount = amount;
             }
 
             if (RazorEnhanced.Settings.General.ReadBool("QueueActions"))
@@ -1317,8 +1325,17 @@ namespace Assistant
             World.Player.PromptID = id;
             World.Player.PromptType = type;
 
-            //string lang = p.ReadStringSafe(4);
-            //string message = p.ReadUnicodeStringSafe();
+            // ADD RECORDING HERE - READ TEXT CORRECTLY:
+            if (RazorEnhanced.ScriptRecorderService.Instance.Active() || RazorEnhanced.Macros.MacroManager.IsRecording)
+            {
+                string lang = p.ReadStringSafe(4);
+
+                // FIX: Use ReadUnicodeStringLE (Little Endian) with null terminator
+                string text = p.ReadUnicodeStringLE();
+
+                RazorEnhanced.ScriptRecorderService.Instance.Record_AsciiPromptResponse(type, text);
+                RazorEnhanced.Macros.MacroManager.RecordAsciiPromptResponse(type, text);
+            }
         }
 
         private static void UnicodePromptRecevied(PacketReader p, PacketHandlerEventArgs args)
@@ -2565,6 +2582,8 @@ namespace Assistant
             World.Player.HasGump = true;
             RazorEnhanced.GumpInspector.NewGumpStandardAddLog(World.Player.CurrentGumpS, World.Player.CurrentGumpI);
             RazorEnhanced.Gumps.AddGump(World.Player.CurrentGumpS, World.Player.CurrentGumpI);
+
+            RazorEnhanced.Macros.MacroManager.RecordAction(new RazorEnhanced.Macros.Actions.WaitForGumpAction(World.Player.CurrentGumpI, 10000));
         }
 
         internal static void ClientGumpResponse(PacketReader p, PacketHandlerEventArgs args)
@@ -2641,6 +2660,7 @@ namespace Assistant
             RazorEnhanced.GumpInspector.GumpResponseAddLogEnd();
 
             RazorEnhanced.ScriptRecorderService.Instance.Record_GumpsResponse(gumpID, bid, gd);
+            RazorEnhanced.Macros.MacroManager.RecordGumpResponse(gumpID, bid, gd); // ADD THIS LINE
 
             if (gd != null)
             {
@@ -3316,13 +3336,14 @@ namespace Assistant
 
         private static void ClientAsciiPromptResponse(PacketReader p, PacketHandlerEventArgs args)
         {
-            if (!RazorEnhanced.ScriptRecorderService.Instance.Active()) { return; }
+            if (!RazorEnhanced.ScriptRecorderService.Instance.Active() && !RazorEnhanced.Macros.MacroManager.IsRecording) { return; }
 
             p.ReadUInt32(); // sender serial
             p.ReadUInt32(); // Prompt ID
             uint type = p.ReadUInt32(); // type
             string text = p.ReadUnicodeStringSafe();
             RazorEnhanced.ScriptRecorderService.Instance.Record_AsciiPromptResponse(type, text);
+            RazorEnhanced.Macros.MacroManager.RecordAsciiPromptResponse(type, text);
         }
 
         private static void ResyncRequest(PacketReader p, PacketHandlerEventArgs args)
@@ -3520,6 +3541,11 @@ namespace Assistant
                 RazorEnhanced.GumpInspector.NewGumpCompressedAddLog(currentgumps, currentgumpi);
 
                 RazorEnhanced.Gumps.AddGump(currentgumps, currentgumpi);
+
+                RazorEnhanced.Macros.MacroManager.RecordAction(new RazorEnhanced.Macros.Actions.WaitForGumpAction(currentgumpi, 10000));
+                
+
+
                 RazorEnhanced.Gumps.AddResponse(currentgumpi, x, y, layout, textsInGump, dataInGump, stringlistparse, gumpPieces);
                 World.Player.CurrentGumpRawLayout = layout; // Get raw data of current gump
                 World.Player.CurrentGumpRawText = stringlistparse; // Get raw text data of current gump
