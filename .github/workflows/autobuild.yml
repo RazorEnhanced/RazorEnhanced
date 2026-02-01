@@ -1,16 +1,11 @@
 name: autobuild
 
 on:
-  workflow_dispatch:
-  push:
-    branches: [ release/0.8 ]
-
-
-on:
   workflow_dispatch:  # Keep manual trigger
   push:
     branches:
-      - main  # or whatever branch you want to trigger on
+      - release/0.8
+      - release/1.0
     paths-ignore:
       - '.github/**'
       - '.git/**'
