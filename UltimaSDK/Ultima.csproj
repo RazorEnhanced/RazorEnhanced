@@ -11,6 +11,8 @@
     <RootNamespace>Ultima</RootNamespace>
     <AssemblyName>Ultima</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+	<Nullable>disable</Nullable>
+	<NoWarn>CS8618;CS8625;CS8600;CS8601;CS8602;CS8603;CS8604</NoWarn>	  
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>

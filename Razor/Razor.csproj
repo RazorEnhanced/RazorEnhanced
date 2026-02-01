@@ -29,7 +29,11 @@
     </UpgradeBackupLocation>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <LangVersion>9.0</LangVersion>
-    <OldToolsVersion>2.0</OldToolsVersion>
+      <!-- Disable nullable reference type warnings for this old project -->
+      <!-- Disable xml comment missing  -->
+      <Nullable>disable</Nullable>
+    <NoWarn>CS8618;CS8619;CS8625;CS8600;CS8601;CS8602;CS8603;CS8604;CS1591</NoWarn>
+      <OldToolsVersion>2.0</OldToolsVersion>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
