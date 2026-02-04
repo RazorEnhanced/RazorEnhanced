@@ -7,6 +7,10 @@ on:
     branches: [ wine-fix ]
   workflow_dispatch:
 
+env:
+  SOLUTION_FILE_PATH: .
+  BUILD_CONFIGURATION: Release
+
 jobs:
   build:
     runs-on: windows-latest
@@ -14,28 +18,21 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Setup .NET Framework
-      uses: microsoft/setup-msbuild@v2
-
-    - name: Setup NuGet
-      uses: NuGet/setup-nuget@v2
+    - name: Add MSBuild to PATH
+      uses: microsoft/setup-msbuild@v1.1
 
     - name: Restore NuGet packages
-      run: nuget restore Razor.sln
+      run: nuget restore ${{env.SOLUTION_FILE_PATH}}
 
-    - name: Build Debug (skipping C++ projects)
-      run: |
-        msbuild UltimaSDK/Ultima.csproj /p:Configuration=Debug /p:Platform=x86
-        msbuild FastColoredTextBox/FastColoredTextBox.csproj /p:Configuration=Debug /p:Platform=AnyCPU
-        msbuild Razor/Razor.csproj /p:Configuration=Debug /p:Platform=x86
-      continue-on-error: false
+    - name: Build
+      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}}
 
     - name: Upload Razor artifacts
       uses: actions/upload-artifact@v4
       with:
         name: RazorEnhanced-WineFix
         path: |
-          bin/Win32/Debug/RazorEnhanced.exe
-          bin/Win32/Debug/*.dll
-          bin/Win32/Debug/*.pdb
+          bin/Win32/Release/RazorEnhanced.exe
+          bin/Win32/Release/*.dll
+          bin/Win32/Release/*.pdb
         if-no-files-found: warn
