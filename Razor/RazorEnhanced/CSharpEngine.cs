@@ -387,8 +387,10 @@ namespace RazorEnhanced
                 foreach (string file in sourceFiles)
                 {
                     string sourceCode = File.ReadAllText(file);
+                    // Use SourceText.From with explicit encoding to enable debug info emission
+                    var sourceText = SourceText.From(sourceCode, System.Text.Encoding.UTF8);
                     var syntaxTree = CSharpSyntaxTree.ParseText(
-                        sourceCode,
+                        sourceText,
                         CSharpParseOptions.Default.WithLanguageVersion(LanguageVersion.CSharp9),
                         path: file
                     );
