@@ -1,0 +1,44 @@
+name: Build Wine Fix
+
+on:
+  push:
+    branches: [ wine-fix ]
+  pull_request:
+    branches: [ wine-fix ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET Framework
+      uses: microsoft/setup-msbuild@v2
+
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v2
+
+    - name: Restore NuGet packages
+      run: nuget restore Razor.sln
+
+    - name: Build Release
+      run: msbuild Razor.sln /p:Configuration=Release /p:Platform="Mixed Platforms"
+
+    - name: Upload Razor artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: RazorEnhanced-WineFix
+        path: |
+          Razor/bin/**/Release/*.exe
+          Razor/bin/**/Release/*.dll
+          Razor/bin/**/Release/*.pdb
+        if-no-files-found: warn
+
+    - name: Upload Full Build
+      uses: actions/upload-artifact@v4
+      with:
+        name: RazorEnhanced-Full
+        path: bin/
+        if-no-files-found: warn

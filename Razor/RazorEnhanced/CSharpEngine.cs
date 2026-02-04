@@ -1,4 +1,7 @@
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.Emit;
+using Microsoft.CodeAnalysis.Text;
 using Microsoft.CodeDom.Providers.DotNetCompilerPlatform;
 using Microsoft.Scripting;
 using System;
@@ -327,6 +330,7 @@ namespace RazorEnhanced
         // https://docs.microsoft.com/it-it/dotnet/api/microsoft.csharp.csharpcodeprovider.-ctor?view=net-5.0
         // https://github.com/aspnet/RoslynCodeDomProvider/blob/main/src/Microsoft.CodeDom.Providers.DotNetCompilerPlatform/Util/IProviderOptions.cs
         // https://josephwoodward.co.uk/2016/12/in-memory-c-sharp-compilation-using-roslyn
+        // Modified to use Roslyn directly to avoid Wine/Mono impersonation issues with CodeDom
         public bool CompileFromFile(string path, bool debug, out List<string> errorwarnings, out Assembly assembly)
         {
             errorwarnings = new();
@@ -355,12 +359,8 @@ namespace RazorEnhanced
 
             DateTime start = DateTime.Now;
 
-            CompilerOptions m_opt = new();
-            CSharpCodeProvider m_provider = new(m_opt);
-            CompilerParameters m_compileParameters = CompilerSettings(true, assembliesList);
-
-            m_compileParameters.IncludeDebugInformation = debug;
-            CompilerResults results = m_provider.CompileAssemblyFromFile(m_compileParameters, filesList.ToArray()); // Compiling
+            // Use Roslyn directly instead of CodeDom to avoid Wine/Mono impersonation issues
+            bool has_error = CompileWithRoslyn(filesList, assembliesList, debug, out assembly, ref errorwarnings);
 
             DateTime stop = DateTime.Now;
 
@@ -369,12 +369,174 @@ namespace RazorEnhanced
                 Misc.SendMessage("Script compiled in " + (stop - start).TotalMilliseconds.ToString("F0") + " ms");
             }
 
-            bool has_error = ManageCompileResult(results, ref errorwarnings);
-            if (!has_error)
-            {
-                assembly = results.CompiledAssembly;
-            }
             return has_error;
+        }
+
+        /// <summary>
+        /// Compiles C# source files using Roslyn directly, bypassing CodeDom.
+        /// This avoids the Windows impersonation that CodeDom uses, which doesn't work under Wine/Mono.
+        /// </summary>
+        private bool CompileWithRoslyn(List<string> sourceFiles, List<string> assemblies, bool debug, out Assembly assembly, ref List<string> errorwarnings)
+        {
+            assembly = null;
+
+            try
+            {
+                // Parse all source files into syntax trees
+                var syntaxTrees = new List<SyntaxTree>();
+                foreach (string file in sourceFiles)
+                {
+                    string sourceCode = File.ReadAllText(file);
+                    var syntaxTree = CSharpSyntaxTree.ParseText(
+                        sourceCode,
+                        CSharpParseOptions.Default.WithLanguageVersion(LanguageVersion.CSharp9),
+                        path: file
+                    );
+                    syntaxTrees.Add(syntaxTree);
+                }
+
+                // Build metadata references from assemblies
+                var references = new List<MetadataReference>();
+
+                // Get the assemblies from Assemblies.cfg + directives
+                List<string> allAssemblies = GetReferenceAssemblies().Concat(assemblies).Distinct().ToList();
+
+                foreach (string assemblyPath in allAssemblies)
+                {
+                    string resolvedPath = assemblyPath;
+
+                    // Try to resolve assembly path
+                    if (!File.Exists(resolvedPath))
+                    {
+                        // Try in RE folder
+                        string rePath = Path.Combine(Assistant.Engine.RootPath, assemblyPath);
+                        if (File.Exists(rePath))
+                        {
+                            resolvedPath = rePath;
+                        }
+                        else
+                        {
+                            // Try to find in GAC or runtime directory
+                            try
+                            {
+                                var asm = Assembly.Load(Path.GetFileNameWithoutExtension(assemblyPath));
+                                if (asm != null && !string.IsNullOrEmpty(asm.Location))
+                                {
+                                    resolvedPath = asm.Location;
+                                }
+                            }
+                            catch
+                            {
+                                // Skip if we can't find it - will cause compile error if actually needed
+                                continue;
+                            }
+                        }
+                    }
+
+                    if (File.Exists(resolvedPath))
+                    {
+                        try
+                        {
+                            references.Add(MetadataReference.CreateFromFile(resolvedPath));
+                        }
+                        catch (Exception ex)
+                        {
+                            // Log but continue - some references may not be loadable
+                            if (debug)
+                            {
+                                Misc.SendMessage($"Warning: Could not load reference {resolvedPath}: {ex.Message}");
+                            }
+                        }
+                    }
+                }
+
+                // Add core .NET references that are typically needed
+                var coreAssemblies = new[]
+                {
+                    typeof(object).Assembly,                    // mscorlib/System.Private.CoreLib
+                    typeof(Console).Assembly,                   // System.Console
+                    typeof(System.Linq.Enumerable).Assembly,    // System.Linq
+                    typeof(System.Collections.Generic.List<>).Assembly, // System.Collections
+                };
+
+                foreach (var asm in coreAssemblies)
+                {
+                    if (!string.IsNullOrEmpty(asm.Location) && File.Exists(asm.Location))
+                    {
+                        try
+                        {
+                            var reference = MetadataReference.CreateFromFile(asm.Location);
+                            if (!references.Any(r => r.Display == reference.Display))
+                            {
+                                references.Add(reference);
+                            }
+                        }
+                        catch { }
+                    }
+                }
+
+                // Create compilation
+                var compilationOptions = new CSharpCompilationOptions(
+                    OutputKind.DynamicallyLinkedLibrary,
+                    optimizationLevel: debug ? OptimizationLevel.Debug : OptimizationLevel.Release,
+                    allowUnsafe: true
+                );
+
+                string assemblyName = Path.GetFileNameWithoutExtension(sourceFiles[0]) + "_" + Guid.NewGuid().ToString("N").Substring(0, 8);
+
+                var compilation = CSharpCompilation.Create(
+                    assemblyName,
+                    syntaxTrees,
+                    references,
+                    compilationOptions
+                );
+
+                // Emit to memory stream
+                using var ms = new MemoryStream();
+                using var pdbStream = debug ? new MemoryStream() : null;
+
+                EmitResult emitResult;
+                if (debug && pdbStream != null)
+                {
+                    emitResult = compilation.Emit(ms, pdbStream);
+                }
+                else
+                {
+                    emitResult = compilation.Emit(ms);
+                }
+
+                if (!emitResult.Success)
+                {
+                    // Collect errors
+                    foreach (var diagnostic in emitResult.Diagnostics)
+                    {
+                        if (diagnostic.Severity == DiagnosticSeverity.Error)
+                        {
+                            var lineSpan = diagnostic.Location.GetLineSpan();
+                            int line = lineSpan.StartLinePosition.Line + 1;
+                            errorwarnings.Add($"Error ({diagnostic.Id}) at line {line}: {diagnostic.GetMessage()}");
+                        }
+                        else if (diagnostic.Severity == DiagnosticSeverity.Warning)
+                        {
+                            var lineSpan = diagnostic.Location.GetLineSpan();
+                            int line = lineSpan.StartLinePosition.Line + 1;
+                            errorwarnings.Add($"Warning ({diagnostic.Id}) at line {line}: {diagnostic.GetMessage()}");
+                        }
+                    }
+                    return true; // has errors
+                }
+
+                // Load the assembly from memory
+                ms.Seek(0, SeekOrigin.Begin);
+                assembly = Assembly.Load(ms.ToArray());
+
+                return false; // no errors
+            }
+            catch (Exception ex)
+            {
+                errorwarnings.Add($"Compilation exception: {ex.Message}");
+                return true; // has errors
+            }
         }
 
         public void Execute(Assembly assembly)
