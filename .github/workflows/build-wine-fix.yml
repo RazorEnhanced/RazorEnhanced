@@ -23,22 +23,19 @@ jobs:
     - name: Restore NuGet packages
       run: nuget restore Razor.sln
 
-    - name: Build Release
-      run: msbuild Razor.sln /p:Configuration=Release /p:Platform="Mixed Platforms"
+    - name: Build Debug (skipping C++ projects)
+      run: |
+        msbuild UltimaSDK/Ultima.csproj /p:Configuration=Debug /p:Platform=x86
+        msbuild FastColoredTextBox/FastColoredTextBox.csproj /p:Configuration=Debug /p:Platform=AnyCPU
+        msbuild Razor/Razor.csproj /p:Configuration=Debug /p:Platform=x86
+      continue-on-error: false
 
     - name: Upload Razor artifacts
       uses: actions/upload-artifact@v4
       with:
         name: RazorEnhanced-WineFix
         path: |
-          Razor/bin/**/Release/*.exe
-          Razor/bin/**/Release/*.dll
-          Razor/bin/**/Release/*.pdb
-        if-no-files-found: warn
-
-    - name: Upload Full Build
-      uses: actions/upload-artifact@v4
-      with:
-        name: RazorEnhanced-Full
-        path: bin/
+          bin/Win32/Debug/RazorEnhanced.exe
+          bin/Win32/Debug/*.dll
+          bin/Win32/Debug/*.pdb
         if-no-files-found: warn
