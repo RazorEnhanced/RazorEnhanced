@@ -29,11 +29,11 @@
     </UpgradeBackupLocation>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <LangVersion>9.0</LangVersion>
-      <!-- Disable nullable reference type warnings for this old project -->
-      <!-- Disable xml comment missing  -->
-      <Nullable>disable</Nullable>
+    <!-- Disable nullable reference type warnings for this old project -->
+    <!-- Disable xml comment missing  -->
+    <Nullable>disable</Nullable>
     <NoWarn>CS8618;CS8619;CS8625;CS8600;CS8601;CS8602;CS8603;CS8604;CS1591</NoWarn>
-      <OldToolsVersion>2.0</OldToolsVersion>
+    <OldToolsVersion>2.0</OldToolsVersion>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -179,6 +179,12 @@
     </Reference>
     <Reference Include="Google.Protobuf, Version=3.29.3.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
       <HintPath>..\packages\Google.Protobuf.3.29.3\lib\net45\Google.Protobuf.dll</HintPath>
+    </Reference>
+    <Reference Include="Grpc.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=d754f35622e28bad, processorArchitecture=MSIL">
+      <HintPath>..\packages\Grpc.Core.2.37.1\lib\net45\Grpc.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Grpc.Core.Api, Version=2.0.0.0, Culture=neutral, PublicKeyToken=d754f35622e28bad, processorArchitecture=MSIL">
+      <HintPath>..\packages\Grpc.Core.Api.2.37.1\lib\net45\Grpc.Core.Api.dll</HintPath>
     </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.11.73.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.11.73\lib\Net45\HtmlAgilityPack.dll</HintPath>
@@ -513,8 +519,10 @@
     <Compile Include="RazorEnhanced\Macros\MacroActionFactory.cs" />
     <Compile Include="RazorEnhanced\Macros\MacroManager.cs" />
     <Compile Include="RazorEnhanced\PacketLogger.cs" />
+    <None Include="RazorEnhanced\Proto-Control\ProtoControl.proto" GrpcServices="Server" />
     <Compile Include="RazorEnhanced\Proto-Control\ProtoControl.cs" />
-    <ProtoBuf Include="RazorEnhanced\Proto-Control\ProtoControl.proto" GrpcServices="None" />
+    <Compile Include="RazorEnhanced\Proto-Control\ProtoControlGrpc.cs" />
+    <Compile Include="RazorEnhanced\Proto-Control\ProtoControlServer.cs" />
     <Compile Include="RazorEnhanced\PythonEngine.cs" />
     <Compile Include="RazorEnhanced\ScriptRecorder.cs" />
     <Compile Include="RazorEnhanced\PathFinding.cs" />
@@ -1729,6 +1737,7 @@ XCOPY  "$(SolutionDir)BuildSupplementalFiles\"*  "$(TargetDir)"  /y /s</PostBuil
     <Error Condition="!Exists('..\packages\Grpc.Tools.2.70.0\build\Grpc.Tools.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Grpc.Tools.2.70.0\build\Grpc.Tools.props'))" />
     <Error Condition="!Exists('..\packages\Grpc.Tools.2.70.0\build\Grpc.Tools.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Grpc.Tools.2.70.0\build\Grpc.Tools.targets'))" />
     <Error Condition="!Exists('..\packages\Microsoft.Web.WebView2.1.0.3065.39\build\Microsoft.Web.WebView2.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Web.WebView2.1.0.3065.39\build\Microsoft.Web.WebView2.targets'))" />
+    <Error Condition="!Exists('..\packages\Grpc.Core.2.37.1\build\net45\Grpc.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Grpc.Core.2.37.1\build\net45\Grpc.Core.targets'))" />
   </Target>
   <Import Project="..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" />
@@ -1736,4 +1745,5 @@ XCOPY  "$(SolutionDir)BuildSupplementalFiles\"*  "$(TargetDir)"  /y /s</PostBuil
   <Import Project="..\CustomIntermediateDirs.props" />
   <Import Project="..\packages\Grpc.Tools.2.70.0\build\Grpc.Tools.targets" Condition="Exists('..\packages\Grpc.Tools.2.70.0\build\Grpc.Tools.targets')" />
   <Import Project="..\packages\Microsoft.Web.WebView2.1.0.3065.39\build\Microsoft.Web.WebView2.targets" Condition="Exists('..\packages\Microsoft.Web.WebView2.1.0.3065.39\build\Microsoft.Web.WebView2.targets')" />
+  <Import Project="..\packages\Grpc.Core.2.37.1\build\net45\Grpc.Core.targets" Condition="Exists('..\packages\Grpc.Core.2.37.1\build\net45\Grpc.Core.targets')" />
 </Project>
