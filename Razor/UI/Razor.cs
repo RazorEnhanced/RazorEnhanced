@@ -9869,6 +9869,12 @@ namespace Assistant
         }
 
         #endregion Windows Form Designer generated code
+        private void InitializeMacroTab()
+        {
+            // Yes I know this is stupid, but the compiler couldnt find the method if I put it in the MacrosUI.cs file, so here we are
+            InitializeMacroTab2();
+
+        }
 
         protected override void WndProc(ref Message msg)
         {

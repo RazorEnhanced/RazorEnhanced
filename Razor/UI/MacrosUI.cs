@@ -28,7 +28,7 @@ namespace Assistant
         private TextBox txtMacroHotkey;
         private int? m_RecordFromActionIndex = null;
 
-        private void InitializeMacroTab()
+        private void InitializeMacroTab2()
         {
 
             // Macro List
