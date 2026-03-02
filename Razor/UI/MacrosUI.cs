@@ -14,152 +14,27 @@ namespace Assistant
     public partial class MainForm : System.Windows.Forms.Form
     {
         // Macro UI Controls
-        private ListBox macroListBox;
-        private Button btnMacroNew;
-        private Button btnMacroDelete;
-        private Button btnMacroSave;
-        private Button btnMacroPlay;
-        private Button btnMacroStop;
-        private Button btnMacroRecord;
-        private Button btnMacroStopRecord;
-        private ListView macroActionsListView;
-        private Label lblMacroStatus;
-        private CheckBox chkMacroLoop;
-        private TextBox txtMacroHotkey;
         private int? m_RecordFromActionIndex = null;
 
-        private void InitializeMacroTab2()
+        private void InitializeMacroTab()
         {
 
-            // Macro List
-            macroListBox = new ListBox
-            {
-                Location = new Point(10, 10),
-                Size = new Size(200, 300),
-                Name = "macroListBox"
-            };
-            macroListBox.SelectedIndexChanged += MacroListBox_SelectedIndexChanged;
-
-            // Buttons
-            btnMacroNew = new Button
-            {
-                Text = "New",
-                Location = new Point(10, 320),
-                Size = new Size(60, 25)
-            };
             btnMacroNew.Click += BtnMacroNew_Click;
-
-            btnMacroDelete = new Button
-            {
-                Text = "Delete",
-                Location = new Point(75, 320),
-                Size = new Size(60, 25)
-            };
             btnMacroDelete.Click += BtnMacroDelete_Click;
-
-            btnMacroSave = new Button
-            {
-                Text = "Save",
-                Location = new Point(140, 320), // Adjust as needed to be next to New and Delete
-                Size = new Size(60, 25)
-            };
             btnMacroSave.Click += BtnMacroSave_Click;
-
-            macroListBox = new ListBox
-            {
-                Location = new Point(10, 10),
-                Size = new Size(200, 300),
-                Name = "macroListBox"
-            };
             macroListBox.SelectedIndexChanged += MacroListBox_SelectedIndexChanged;
 
             CreateMacroListBoxContextMenu();
 
-            btnMacroRecord = new Button
-            {
-                Text = "Record",
-                Location = new Point(220, 10),
-                Size = new Size(80, 30),
-                BackColor = Color.LightCoral
-            };
             btnMacroRecord.Click += BtnMacroRecord_Click;
-
-            btnMacroStopRecord = new Button
-            {
-                Text = "Stop Record",
-                Location = new Point(220, 45),
-                Size = new Size(80, 30),
-                Enabled = false
-            };
             btnMacroStopRecord.Click += BtnMacroStopRecord_Click;
-
-            btnMacroPlay = new Button
-            {
-                Text = "Play",
-                Location = new Point(310, 10),
-                Size = new Size(60, 30),
-                BackColor = Color.LightGreen
-            };
             btnMacroPlay.Click += BtnMacroPlay_Click;
-
-            btnMacroStop = new Button
-            {
-                Text = "Stop",
-                Location = new Point(375, 10),
-                Size = new Size(60, 30),
-                Enabled = false
-            };
             btnMacroStop.Click += BtnMacroStop_Click;
-
-            // Actions ListView
-            macroActionsListView = new ListView
-            {
-                Location = new Point(220, 85),
-                Size = new Size(440, 230),
-                View = View.Details,
-                FullRowSelect = true,
-                GridLines = true
-            };
-            macroActionsListView.Columns.Add("Action", 150);
-            macroActionsListView.Columns.Add("Details", 280);
             macroActionsListView.DoubleClick += MacroActionsListView_DoubleClick;   
 
             CreateMacroActionsContextMenu();
 
-            // Status
-            lblMacroStatus = new Label
-            {
-                Location = new Point(220, 320),
-                Size = new Size(440, 20),
-                Text = "Ready"
-            };
-
-            // Loop checkbox
-            chkMacroLoop = new CheckBox
-            {
-                Text = "Loop",
-                Location = new Point(445, 10),
-                Size = new Size(60, 25)
-            };
             chkMacroLoop.CheckedChanged += ChkMacroLoop_CheckedChanged;
-
-            // Add all controls to MacrosTab
-            MacrosTab.Controls.AddRange(new Control[]
-            {
-        macroListBox,
-        btnMacroNew,
-        btnMacroDelete,
-        btnMacroSave, 
-        btnMacroRecord,
-        btnMacroStopRecord,
-        btnMacroPlay,
-        btnMacroStop,
-        macroActionsListView,
-        lblMacroStatus,
-        chkMacroLoop
-            });
-
-
 
             // Sub to MacroManager events
             MacroManager.MacrosChanged += OnMacrosChanged;
