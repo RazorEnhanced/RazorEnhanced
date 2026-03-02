@@ -1165,7 +1165,7 @@ namespace Assistant
             var existingNames = new HashSet<string>(macros.Select(m => m.Name), StringComparer.OrdinalIgnoreCase);
 
             // Also check for files in the Macros folder
-            string macrosFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Macros");
+            string macrosFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Scripts");
             if (Directory.Exists(macrosFolder))
             {
                 foreach (var file in Directory.GetFiles(macrosFolder, "*.macro"))
@@ -1248,7 +1248,7 @@ namespace Assistant
                 MacroManager.RemoveMacro(macro);
 
                 // Delete the .macro file from the Macros folder
-                string macrosFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Macros");
+                string macrosFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Scripts");
                 string safeName = string.Join("_", macro.Name.Split(Path.GetInvalidFileNameChars()));
                 string filePath = Path.Combine(macrosFolder, safeName + ".macro");
                 if (File.Exists(filePath))
@@ -1385,7 +1385,7 @@ namespace Assistant
 
             // Build the Macros folder path
             string mainFolder = AppDomain.CurrentDomain.BaseDirectory;
-            string macrosFolder = System.IO.Path.Combine(mainFolder, "Macros");
+            string macrosFolder = System.IO.Path.Combine(mainFolder, "Scripts");
             if (!System.IO.Directory.Exists(macrosFolder))
                 System.IO.Directory.CreateDirectory(macrosFolder);
 
@@ -1501,7 +1501,7 @@ namespace Assistant
 
             // Check for duplicates (in memory or on disk)
             var existingNames = new HashSet<string>(macros.Select(m => m.Name), StringComparer.OrdinalIgnoreCase);
-            string macrosFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Macros");
+            string macrosFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Scripts");
             if (Directory.Exists(macrosFolder))
             {
                 foreach (var file in Directory.GetFiles(macrosFolder, "*.macro"))

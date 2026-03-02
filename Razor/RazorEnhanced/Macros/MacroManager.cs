@@ -647,7 +647,7 @@ namespace RazorEnhanced.Macros
             string path = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                 "RazorEnhanced",
-                "Macros"
+                "Scripts"
             );
 
             if (!Directory.Exists(path))
@@ -706,7 +706,7 @@ namespace RazorEnhanced.Macros
 
         public static void LoadMacrosFromFiles()
         {
-            string macrosFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Macros");
+            string macrosFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Scripts");
             if (!Directory.Exists(macrosFolder))
                 Directory.CreateDirectory(macrosFolder);
 
