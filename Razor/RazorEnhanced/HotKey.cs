@@ -128,9 +128,11 @@ namespace RazorEnhanced
             Debug.WriteLine("KD Keys: 0x{0:X}", k);
             bool hotTextFocused = false;
             bool hotTextMasterFocused = false;
+            bool macroHotTextFocused = false;
             Engine.MainWindow.SafeAction(s => hotTextFocused = s.HotKeyTextBox.Focused);
             Engine.MainWindow.SafeAction(s => hotTextMasterFocused = s.HotKeyKeyMasterTextBox.Focused);
-            if (!hotTextFocused && !hotTextMasterFocused)
+            Engine.MainWindow.SafeAction(s => macroHotTextFocused = s.MacroHotKeyTextBox != null && s.MacroHotKeyTextBox.Focused);
+            if (!hotTextFocused && !hotTextMasterFocused && !macroHotTextFocused)
             {
                 if (k == RazorEnhanced.Settings.General.ReadKey("HotKeyMasterKey"))         // Pressione master key abilita o disabilita
                 {
@@ -156,6 +158,12 @@ namespace RazorEnhanced
                 m_key = k;
                 //Engine.MainWindow.HotKeyTextBox.Text = KeyString(k);
                 Engine.MainWindow.SafeAction(s => s.HotKeyTextBox.Text = KeyString(k));
+                return false;
+            }
+            else if (macroHotTextFocused)                // Macro tab hotkey assignment
+            {
+                m_key = k;
+                Engine.MainWindow.SafeAction(s => s.MacroHotKeyTextBox.Text = KeyString(k));
                 return false;
             }
             else if (hotTextMasterFocused)                // In caso di assegnazione hotKey primaria
@@ -448,6 +456,21 @@ namespace RazorEnhanced
                         string dresslist = RazorEnhanced.Settings.HotKey.FindDress(k);
                         Dress.ChangeList(dresslist);
                         Dress.DressFStart();
+                        break;
+
+                    case "MList":
+                        Macros.Macro macro = Macros.MacroManager.FindMacro(k);
+                        if (macro != null)
+                        {
+                            if (macro.IsRunning)
+                            {
+                                macro.Stop();
+                            }
+                            else
+                            {
+                                macro.Play();
+                            }
+                        }
                         break;
 
                     case "UseVirtue":
@@ -1931,6 +1954,15 @@ namespace RazorEnhanced
             foreach (HotKeyData keydata in keylist)
                 Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[8].Nodes.Add(GenerateNode(keydata));
 
+            // Macro
+            Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes.Add("Macro");
+
+            // Macro -> List
+            Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[9].Nodes.Add("MList", "List");
+            keylist = RazorEnhanced.Settings.HotKey.ReadMacro();
+            foreach (HotKeyData keydata in keylist)
+                Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[9].Nodes[0].Nodes.Add(GenerateNode(keydata));
+
             Engine.MainWindow.HotKeyTreeView.Nodes[0].Expand();
         }
 
@@ -1946,7 +1978,7 @@ namespace RazorEnhanced
 
             return a;
         }
-        private static void UpdateOldTreeView(TreeNodeCollection nodes, Keys k)
+        internal static void UpdateOldTreeView(TreeNodeCollection nodes, Keys k)
         {
             foreach (TreeNode node in nodes)
             {
@@ -1958,6 +1990,24 @@ namespace RazorEnhanced
                 }
                 UpdateOldTreeView(node.Nodes, k);
             }
+        }
+
+        internal static void UpdateMacroTreeNode(string macroName, Keys key)
+        {
+            try
+            {
+                var mlistNode = Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[9].Nodes[0]; // MList
+                foreach (TreeNode node in mlistNode.Nodes)
+                {
+                    if (node.Name == macroName)
+                    {
+                        node.Text = node.Name + " ( " + KeyString(key) + " )";
+                        node.ForeColor = key != Keys.None ? System.Drawing.Color.DarkGreen : System.Drawing.Color.Black;
+                        return;
+                    }
+                }
+            }
+            catch { }
         }
 
         internal static void UpdateKey(TreeNode node, bool passkey)
@@ -2063,6 +2113,31 @@ namespace RazorEnhanced
             Assistant.Engine.MainWindow.UpdateScriptGridKey();
         }
 
+        internal static void UpdateMacroKey(TreeNode node, bool passkey)
+        {
+            string name = node.Name;
+            if (!RazorEnhanced.Settings.HotKey.AssignedKey(m_key))
+            {
+                Macros.MacroManager.UpdateMacroKey(name, m_key, passkey);
+                node.Text = node.Name + " ( " + KeyString(m_key) + " )";
+                node.ForeColor = System.Drawing.Color.DarkGreen;
+            }
+            else
+            {
+                var dialogResult = RazorEnhanced.UI.RE_MessageBox.Show("Replace Existing HotKey?",
+                    $"Key: {KeyString(m_key)} already assigned!\r\nWant to replace?",
+                    ok: "Yes", no: "No", cancel: null, backColor: null);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    RazorEnhanced.Settings.HotKey.UnassignKey(m_key);
+                    Macros.MacroManager.UpdateMacroKey(name, m_key, passkey);
+                    UpdateOldTreeView(Assistant.Engine.MainWindow.HotKeyTreeView.Nodes, m_key);
+                    node.Text = node.Name + " ( " + KeyString(m_key) + " )";
+                    node.ForeColor = System.Drawing.Color.DarkGreen;
+                }
+            }
+        }
+
         internal static void UpdateMaster()
         {
             if (!RazorEnhanced.Settings.HotKey.AssignedKey(m_masterkey))
@@ -2091,6 +2166,10 @@ namespace RazorEnhanced
             {
                 Scripts.UpdateScriptKey(name, Keys.None, true);
                 Assistant.Engine.MainWindow.UpdateScriptGridKey();
+            }
+            else if (group == "MList")
+            {
+                Macros.MacroManager.UpdateMacroKey(name, Keys.None, true);
             }
             else if (group == "TList")
                 RazorEnhanced.Settings.HotKey.UpdateTargetKey(name, Keys.None, true);

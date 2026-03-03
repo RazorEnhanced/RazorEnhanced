@@ -767,6 +767,12 @@ namespace Assistant
         private Button btnMacroNew;
         private ListView macroActionsListView;
         private TextBox txtMacroHotkey;
+        private GroupBox grpMacroHotkey;
+        private Label lblMacroHotkey;
+        private RazorEnhanced.UI.RazorHotKeyTextBox macroHotkeyTextBox;
+        private System.Windows.Forms.CheckBox chkMacroPassKey;
+        private System.Windows.Forms.Button btnMacroSetHotkey;
+        private System.Windows.Forms.Button btnMacroClearHotkey;
         private ColumnHeader Action;
         private ColumnHeader Details;
         private CheckBox useUo3D;
@@ -1094,6 +1100,12 @@ namespace Assistant
             this.columnHeader20 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader18 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.MacrosTab = new System.Windows.Forms.TabPage();
+            this.grpMacroHotkey = new System.Windows.Forms.GroupBox();
+            this.lblMacroHotkey = new System.Windows.Forms.Label();
+            this.macroHotkeyTextBox = new RazorEnhanced.UI.RazorHotKeyTextBox();
+            this.chkMacroPassKey = new System.Windows.Forms.CheckBox();
+            this.btnMacroSetHotkey = new System.Windows.Forms.Button();
+            this.btnMacroClearHotkey = new System.Windows.Forms.Button();
             this.txtMacroHotkey = new System.Windows.Forms.TextBox();
             this.macroActionsListView = new System.Windows.Forms.ListView();
             this.Action = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -1610,6 +1622,7 @@ namespace Assistant
             this.uosScriptingTab.SuspendLayout();
             this.csScriptingTab.SuspendLayout();
             this.MacrosTab.SuspendLayout();
+            this.grpMacroHotkey.SuspendLayout();
             this.EnhancedAgent.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.eautoloot.SuspendLayout();
@@ -4532,7 +4545,7 @@ namespace Assistant
             // 
             // MacrosTab
             // 
-            this.MacrosTab.Controls.Add(this.txtMacroHotkey);
+            this.MacrosTab.Controls.Add(this.grpMacroHotkey);
             this.MacrosTab.Controls.Add(this.macroActionsListView);
             this.MacrosTab.Controls.Add(this.lblMacroStatus);
             this.MacrosTab.Controls.Add(this.btnMacroSave);
@@ -4552,12 +4565,72 @@ namespace Assistant
             this.MacrosTab.Text = "Macros";
             this.MacrosTab.UseVisualStyleBackColor = true;
             // 
-            // txtMacroHotkey
+            // grpMacroHotkey
             // 
-            this.txtMacroHotkey.Location = new System.Drawing.Point(468, 62);
-            this.txtMacroHotkey.Name = "txtMacroHotkey";
-            this.txtMacroHotkey.Size = new System.Drawing.Size(100, 20);
-            this.txtMacroHotkey.TabIndex = 11;
+
+            this.grpMacroHotkey.Controls.Add(this.lblMacroHotkey);
+            this.grpMacroHotkey.Controls.Add(this.macroHotkeyTextBox);
+            this.grpMacroHotkey.Controls.Add(this.chkMacroPassKey);
+            this.grpMacroHotkey.Controls.Add(this.btnMacroSetHotkey);
+            this.grpMacroHotkey.Controls.Add(this.btnMacroClearHotkey);
+            this.grpMacroHotkey.Location = new System.Drawing.Point(445, 28);
+            this.grpMacroHotkey.Name = "grpMacroHotkey";
+            this.grpMacroHotkey.Size = new System.Drawing.Size(187, 55);
+            this.grpMacroHotkey.TabIndex = 12;
+            this.grpMacroHotkey.TabStop = false;
+            this.grpMacroHotkey.Text = "Hot Key";
+            // 
+            // lblMacroHotkey
+            // 
+            this.lblMacroHotkey.AutoSize = true;
+            this.lblMacroHotkey.Location = new System.Drawing.Point(4, 17);
+            this.lblMacroHotkey.Name = "lblMacroHotkey";
+            this.lblMacroHotkey.Size = new System.Drawing.Size(28, 14);
+            this.lblMacroHotkey.TabIndex = 0;
+            this.lblMacroHotkey.Text = "Key:";
+            // 
+            // macroHotkeyTextBox
+            // 
+            this.macroHotkeyTextBox.BackColor = System.Drawing.Color.White;
+            this.macroHotkeyTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.macroHotkeyTextBox.Location = new System.Drawing.Point(35, 14);
+            this.macroHotkeyTextBox.Name = "macroHotkeyTextBox";
+            this.macroHotkeyTextBox.Size = new System.Drawing.Size(102, 20);
+            this.macroHotkeyTextBox.TabIndex = 1;
+            this.macroHotkeyTextBox.ReadOnly = true;
+            this.macroHotkeyTextBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HotKey_MouseDown);
+            this.macroHotkeyTextBox.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.HotKey_MouseRoll);
+            // 
+            // btnMacroSetHotkey
+            // 
+            this.btnMacroSetHotkey.Location = new System.Drawing.Point(143, 8);
+            this.btnMacroSetHotkey.Name = "btnMacroSetHotkey";
+            this.btnMacroSetHotkey.Size = new System.Drawing.Size(40, 21);
+            this.btnMacroSetHotkey.TabIndex = 2;
+            this.btnMacroSetHotkey.Text = "Set";
+            this.btnMacroSetHotkey.UseVisualStyleBackColor = true;
+            // 
+            // btnMacroClearHotkey
+            // 
+            this.btnMacroClearHotkey.Location = new System.Drawing.Point(143, 31);
+            this.btnMacroClearHotkey.Name = "btnMacroClearHotkey";
+            this.btnMacroClearHotkey.Size = new System.Drawing.Size(40, 21);
+            this.btnMacroClearHotkey.TabIndex = 3;
+            this.btnMacroClearHotkey.Text = "Clear";
+            this.btnMacroClearHotkey.UseVisualStyleBackColor = true;
+            // 
+            // chkMacroPassKey
+            // 
+            this.chkMacroPassKey.AutoSize = true;
+            this.chkMacroPassKey.Checked = true;
+            this.chkMacroPassKey.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkMacroPassKey.Location = new System.Drawing.Point(4, 36);
+            this.chkMacroPassKey.Name = "chkMacroPassKey";
+            this.chkMacroPassKey.Size = new System.Drawing.Size(100, 18);
+            this.chkMacroPassKey.TabIndex = 4;
+            this.chkMacroPassKey.Text = "Pass Key To UO";
+            this.m_Tip.SetToolTip(this.chkMacroPassKey, "Pass Key To UO");
+            this.chkMacroPassKey.UseVisualStyleBackColor = true;
             // 
             // macroActionsListView
             // 
@@ -9753,6 +9826,8 @@ namespace Assistant
             this.csScriptingTab.ResumeLayout(false);
             this.MacrosTab.ResumeLayout(false);
             this.MacrosTab.PerformLayout();
+            this.grpMacroHotkey.ResumeLayout(false);
+            this.grpMacroHotkey.PerformLayout();
             this.EnhancedAgent.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.eautoloot.ResumeLayout(false);

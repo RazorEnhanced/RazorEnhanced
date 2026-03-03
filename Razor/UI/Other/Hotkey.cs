@@ -7,6 +7,7 @@ namespace Assistant
     public partial class MainForm : System.Windows.Forms.Form
     {
         internal TextBox HotKeyTextBox { get { return hotkeytextbox; } }
+        internal TextBox MacroHotKeyTextBox { get { return macroHotkeyTextBox; } }
         internal TreeView HotKeyTreeView { get { return hotkeytreeView; } }
         internal Label HotKeyKeyMasterLabel { get { return hotkeyKeyMasterLabel; } }
         internal Label HotKeyStatusLabel { get { return hotkeyStatusLabel; } }
@@ -27,6 +28,10 @@ namespace Assistant
                     RazorEnhanced.HotKey.UpdateScriptKey(hotkeytreeView.SelectedNode, hotkeypassCheckBox.Checked);     // Aggiorno hotkey Script
                     // Can refresh the script tables, but it causes hotkey tables to collapse. not worth it
                     Scripts.PatchUpHotkeys(hotkeytreeView.SelectedNode.Name);
+                }
+                else if (hotkeytreeView.SelectedNode.Parent.Name != null && hotkeytreeView.SelectedNode.Parent.Name == "MList")
+                {
+                    RazorEnhanced.HotKey.UpdateMacroKey(hotkeytreeView.SelectedNode, hotkeypassCheckBox.Checked);     // Aggiorno hotkey Macro
                 }
                 else if (hotkeytreeView.SelectedNode.Parent.Name != null && hotkeytreeView.SelectedNode.Parent.Name == "DList")
                 {

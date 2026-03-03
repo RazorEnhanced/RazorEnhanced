@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace RazorEnhanced.Macros
 {
@@ -170,6 +171,54 @@ namespace RazorEnhanced.Macros
             {
                 macro.Stop();
             }
+        }
+
+        public static Macro FindMacro(Keys key)
+        {
+            return m_Macros.FirstOrDefault(m => m.Hotkey == key);
+        }
+
+        public static Macro FindMacro(string name)
+        {
+            return m_Macros.FirstOrDefault(m => m.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+        }
+
+        public static bool UsingKey(Keys key)
+        {
+            return m_Macros.Any(m => m.Hotkey == key);
+        }
+
+        public static void ClearMacroKey(Keys key)
+        {
+            foreach (var macro in m_Macros)
+            {
+                if (macro.Hotkey == key)
+                {
+                    macro.Hotkey = Keys.None;
+                    macro.HotKeyPass = true;
+                    SaveMacros();
+                    return;
+                }
+            }
+        }
+
+        public static void UpdateMacroKey(string name, Keys key, bool passkey)
+        {
+            foreach (var macro in m_Macros)
+            {
+                if (macro.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
+                {
+                    macro.Hotkey = key;
+                    macro.HotKeyPass = passkey;
+                    break;
+                }
+            }
+            SaveMacros();
+            try
+            {
+                Settings.HotKey.UpdateMacroKey(name, key, passkey);
+            }
+            catch { }
         }
 
         #region Recording Hooks
@@ -706,9 +755,34 @@ namespace RazorEnhanced.Macros
 
         public static void LoadMacrosFromFiles()
         {
-            string macrosFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Scripts");
+            string oldFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Macros");
+
+            string macrosFolder = Path.Combine(Assistant.Engine.RootPath, "Scripts");
             if (!Directory.Exists(macrosFolder))
                 Directory.CreateDirectory(macrosFolder);
+
+            if (Directory.Exists(oldFolder))
+            {
+                foreach (var oldFile in Directory.GetFiles(oldFolder, "*.macro"))
+                {
+                    string fileName = Path.GetFileNameWithoutExtension(oldFile);
+                    string destPath = Path.Combine(macrosFolder, Path.GetFileName(oldFile));
+
+                    if (File.Exists(destPath))
+                    {
+                        destPath = Path.Combine(macrosFolder, fileName + "-copy.macro");
+                    }
+
+                    try
+                    {
+                        File.Move(oldFile, destPath);
+                    }
+                    catch (Exception ex)
+                    {
+                        Misc.SendMessage($"Error moving macro '{fileName}': {ex.Message}", 33);
+                    }
+                }
+            }
 
             var macroFiles = Directory.GetFiles(macrosFolder, "*.macro");
             foreach (var file in macroFiles)
@@ -716,10 +790,43 @@ namespace RazorEnhanced.Macros
                 string macroName = Path.GetFileNameWithoutExtension(file);
                 var macro = new Macro { Name = macroName };
 
+                bool inActions = false;
                 foreach (var line in File.ReadAllLines(file))
                 {
                     if (string.IsNullOrWhiteSpace(line))
                         continue;
+
+                    if (!inActions)
+                    {
+                        if (line.StartsWith("Name:"))
+                        {
+                            macro.Name = line.Substring(5);
+                            continue;
+                        }
+                        else if (line.StartsWith("Hotkey:"))
+                        {
+                            if (int.TryParse(line.Substring(7), out int hk))
+                                macro.Hotkey = (Keys)hk;
+                            continue;
+                        }
+                        else if (line.StartsWith("HotKeyPass:"))
+                        {
+                            if (bool.TryParse(line.Substring(11), out bool pass))
+                                macro.HotKeyPass = pass;
+                            continue;
+                        }
+                        else if (line.StartsWith("Loop:"))
+                        {
+                            if (bool.TryParse(line.Substring(5), out bool loop))
+                                macro.Loop = loop;
+                            continue;
+                        }
+                        else if (line == "Actions:")
+                        {
+                            inActions = true;
+                            continue;
+                        }
+                    }
 
                     MacroAction action = MacroActionFactory.CreateFromSerialized(line);
                     if (action != null)
@@ -729,6 +836,35 @@ namespace RazorEnhanced.Macros
                 if (!m_Macros.Any(m => m.Name.Equals(macroName, StringComparison.OrdinalIgnoreCase)))
                     AddMacro(macro);
             }
+
+            ApplyHotKeysFromSettings();
+        }
+
+        public static void ApplyHotKeysFromSettings()
+        {
+            try
+            {
+                if (Settings.Dataset == null || !Settings.Dataset.Tables.Contains("HOTKEYS"))
+                    return;
+
+                foreach (System.Data.DataRow row in Settings.Dataset.Tables["HOTKEYS"].Rows)
+                {
+                    if ((string)row["Group"] == "MList")
+                    {
+                        string name = (string)row["Name"];
+                        Keys key = (Keys)Convert.ToInt32(row["Key"]);
+                        bool pass = (bool)row["Pass"];
+
+                        var macro = m_Macros.FirstOrDefault(m => m.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+                        if (macro != null)
+                        {
+                            macro.Hotkey = key;
+                            macro.HotKeyPass = pass;
+                        }
+                    }
+                }
+            }
+            catch { }
         }
 
     }

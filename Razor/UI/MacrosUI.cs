@@ -36,6 +36,9 @@ namespace Assistant
 
             chkMacroLoop.CheckedChanged += ChkMacroLoop_CheckedChanged;
 
+            btnMacroSetHotkey.Click += BtnMacroSetHotkey_Click;
+            btnMacroClearHotkey.Click += BtnMacroClearHotkey_Click;
+
             // Sub to MacroManager events
             MacroManager.MacrosChanged += OnMacrosChanged;
             MacroManager.RecordingStateChanged += OnRecordingStateChanged;
@@ -1142,6 +1145,9 @@ namespace Assistant
             DisplayMacroActions(macro);
             chkMacroLoop.Checked = macro.Loop;
 
+            macroHotkeyTextBox.Text = RazorEnhanced.HotKey.KeyString(macro.Hotkey);
+            chkMacroPassKey.Checked = macro.HotKeyPass;
+
             btnMacroRecord.Enabled = !MacroManager.IsRecording;
             btnMacroPlay.Enabled = !MacroManager.IsRecording && !macro.IsRunning;
             btnMacroStop.Enabled = macro.IsRunning;
@@ -1158,6 +1164,59 @@ namespace Assistant
             var macro = macros[macroListBox.SelectedIndex];
             macro.Loop = chkMacroLoop.Checked;
         }
+
+        private void BtnMacroSetHotkey_Click(object sender, EventArgs e)
+        {
+            if (macroListBox.SelectedIndex < 0) return;
+
+            var macros = MacroManager.GetMacros();
+            if (macroListBox.SelectedIndex >= macros.Count) return;
+
+            var macro = macros[macroListBox.SelectedIndex];
+            Keys key = RazorEnhanced.HotKey.NormalKey;
+
+            if (key == Keys.None || macroHotkeyTextBox.Text == "None" || macroHotkeyTextBox.Text == string.Empty)
+                return;
+
+            if (!RazorEnhanced.Settings.HotKey.AssignedKey(key))
+            {
+                MacroManager.UpdateMacroKey(macro.Name, key, chkMacroPassKey.Checked);
+                macroHotkeyTextBox.Text = RazorEnhanced.HotKey.KeyString(key);
+                RazorEnhanced.HotKey.UpdateMacroTreeNode(macro.Name, key);
+            }
+            else
+            {
+                var dialogResult = RazorEnhanced.UI.RE_MessageBox.Show("Replace Existing HotKey?",
+                    $"Key: {RazorEnhanced.HotKey.KeyString(key)} already assigned!\r\nWant to replace?",
+                    ok: "Yes", no: "No", cancel: null, backColor: null);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    RazorEnhanced.Settings.HotKey.UnassignKey(key);
+                    MacroManager.UpdateMacroKey(macro.Name, key, chkMacroPassKey.Checked);
+                    RazorEnhanced.HotKey.UpdateOldTreeView(Assistant.Engine.MainWindow.HotKeyTreeView.Nodes, key);
+                    RazorEnhanced.HotKey.UpdateMacroTreeNode(macro.Name, key);
+                    macroHotkeyTextBox.Text = RazorEnhanced.HotKey.KeyString(key);
+                }
+            }
+
+            RazorEnhanced.HotKey.NormalKey = Keys.None;
+        }
+
+        private void BtnMacroClearHotkey_Click(object sender, EventArgs e)
+        {
+            if (macroListBox.SelectedIndex < 0) return;
+
+            var macros = MacroManager.GetMacros();
+            if (macroListBox.SelectedIndex >= macros.Count) return;
+
+            var macro = macros[macroListBox.SelectedIndex];
+            MacroManager.UpdateMacroKey(macro.Name, Keys.None, true);
+            macroHotkeyTextBox.Text = RazorEnhanced.HotKey.KeyString(Keys.None);
+            chkMacroPassKey.Checked = true;
+            macroHotkeyTextBox.LastKey = Keys.None;
+            RazorEnhanced.HotKey.UpdateMacroTreeNode(macro.Name, Keys.None);
+        }
+
         private void BtnMacroNew_Click(object sender, EventArgs e)
         {
             // Gather all existing macro names (in memory and on disk)
@@ -1165,7 +1224,7 @@ namespace Assistant
             var existingNames = new HashSet<string>(macros.Select(m => m.Name), StringComparer.OrdinalIgnoreCase);
 
             // Also check for files in the Macros folder
-            string macrosFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Scripts");
+            string macrosFolder = Path.Combine(Assistant.Engine.RootPath, "Scripts");
             if (Directory.Exists(macrosFolder))
             {
                 foreach (var file in Directory.GetFiles(macrosFolder, "*.macro"))
@@ -1248,7 +1307,7 @@ namespace Assistant
                 MacroManager.RemoveMacro(macro);
 
                 // Delete the .macro file from the Macros folder
-                string macrosFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Scripts");
+                string macrosFolder = Path.Combine(Assistant.Engine.RootPath, "Scripts");
                 string safeName = string.Join("_", macro.Name.Split(Path.GetInvalidFileNameChars()));
                 string filePath = Path.Combine(macrosFolder, safeName + ".macro");
                 if (File.Exists(filePath))
@@ -1384,7 +1443,7 @@ namespace Assistant
             }
 
             // Build the Macros folder path
-            string mainFolder = AppDomain.CurrentDomain.BaseDirectory;
+            string mainFolder = Assistant.Engine.RootPath;
             string macrosFolder = System.IO.Path.Combine(mainFolder, "Scripts");
             if (!System.IO.Directory.Exists(macrosFolder))
                 System.IO.Directory.CreateDirectory(macrosFolder);
@@ -1501,7 +1560,7 @@ namespace Assistant
 
             // Check for duplicates (in memory or on disk)
             var existingNames = new HashSet<string>(macros.Select(m => m.Name), StringComparer.OrdinalIgnoreCase);
-            string macrosFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Scripts");
+            string macrosFolder = Path.Combine(Assistant.Engine.RootPath, "Scripts");
             if (Directory.Exists(macrosFolder))
             {
                 foreach (var file in Directory.GetFiles(macrosFolder, "*.macro"))
