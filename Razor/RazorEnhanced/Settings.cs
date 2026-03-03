@@ -4767,6 +4767,26 @@ namespace RazorEnhanced
                 return retList;
             }
 
+            internal static List<RazorEnhanced.HotKey.HotKeyData> ReadMacro()
+            {
+                List<RazorEnhanced.HotKey.HotKeyData> retList = new();
+
+                // Read saved macro hotkeys from HOTKEYS table
+                var savedKeys = ReadGroup("MList");
+
+                // Also include any macros that don't have a saved hotkey yet
+                foreach (var macro in Macros.MacroManager.GetMacros())
+                {
+                    if (!savedKeys.Any(k => k.Name == macro.Name))
+                    {
+                        retList.Add(new RazorEnhanced.HotKey.HotKeyData(macro.Name, Keys.None));
+                    }
+                }
+
+                retList.InsertRange(0, savedKeys);
+                return retList;
+            }
+
             internal static List<RazorEnhanced.HotKey.HotKeyData> ReadDress()
             {
                 return (from DataRow row in m_Dataset.Tables["DRESS_LISTS"].Rows let name = (string)row["Description"] let key = (Keys)Convert.ToInt32(row["HotKey"]) select new RazorEnhanced.HotKey.HotKeyData(name, key)).ToList();
@@ -4798,6 +4818,33 @@ namespace RazorEnhanced
                         theTarget.HotKeyPass = passkey;
                         break;
                     }
+                }
+
+                Save();
+            }
+
+            internal static void UpdateMacroKey(string name, Keys key, bool passkey)
+            {
+                bool found = false;
+                foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
+                {
+                    if ((string)row["Group"] == "MList" && (string)row["Name"] == name)
+                    {
+                        row["Key"] = key;
+                        row["Pass"] = passkey;
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (!found)
+                {
+                    DataRow newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+                    newRow["Group"] = "MList";
+                    newRow["Name"] = name;
+                    newRow["Key"] = key;
+                    newRow["Pass"] = passkey;
+                    m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
                 }
 
                 Save();
@@ -4847,6 +4894,8 @@ namespace RazorEnhanced
 
                 Scripts.ClearScriptKey(key);
 
+                Macros.MacroManager.ClearMacroKey(key);
+
                 foreach (DataRow row in m_Dataset.Tables["DRESS_LISTS"].Rows)
                 {
                     if ((Keys)Convert.ToInt32(row["HotKey"]) == key)
@@ -4875,6 +4924,10 @@ namespace RazorEnhanced
                 }
 
                 if (Scripts.UsingKey(key))
+                {
+                    return true;
+                }
+                if (Macros.MacroManager.UsingKey(key))
                 {
                     return true;
                 }
@@ -4926,6 +4979,17 @@ namespace RazorEnhanced
                     {
                         key = item.Hotkey;
                         passkey = item.HotKeyPass;
+                        found = true;
+                    }
+                }
+
+                if (!found)
+                {
+                    var macro = Macros.MacroManager.FindMacro(name);
+                    if (macro != null)
+                    {
+                        key = macro.Hotkey;
+                        passkey = macro.HotKeyPass;
                         found = true;
                     }
                 }
@@ -5021,6 +5085,17 @@ namespace RazorEnhanced
                     {
                         group = "SList";
                         pass = item.HotKeyPass;
+                        found = true;
+                    }
+                }
+
+                if (!found)
+                {
+                    var macro = Macros.MacroManager.FindMacro(key);
+                    if (macro != null)
+                    {
+                        group = "MList";
+                        pass = macro.HotKeyPass;
                         found = true;
                     }
                 }

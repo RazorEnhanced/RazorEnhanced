@@ -10,6 +10,7 @@ namespace RazorEnhanced.Macros
     {
         public string Name { get; set; }
         public Keys Hotkey { get; set; }
+        public bool HotKeyPass { get; set; }
         public bool Loop { get; set; }
         public List<MacroAction> Actions { get; set; }
         public bool IsRunning { get; private set; }
@@ -25,6 +26,7 @@ namespace RazorEnhanced.Macros
             Actions = new List<MacroAction>();
             Name = "New Macro";
             Hotkey = Keys.None;
+            HotKeyPass = true;
             Loop = false;
         }
 
@@ -471,6 +473,7 @@ namespace RazorEnhanced.Macros
             var sb = new System.Text.StringBuilder();
             sb.AppendLine($"Name:{Name}");
             sb.AppendLine($"Hotkey:{(int)Hotkey}");
+            sb.AppendLine($"HotKeyPass:{HotKeyPass}");
             sb.AppendLine($"Loop:{Loop}");
             sb.AppendLine("Actions:");
 
