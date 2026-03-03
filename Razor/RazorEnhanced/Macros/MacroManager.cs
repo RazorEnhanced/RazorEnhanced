@@ -755,9 +755,34 @@ namespace RazorEnhanced.Macros
 
         public static void LoadMacrosFromFiles()
         {
+            string oldFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Macros");
+
             string macrosFolder = Path.Combine(Assistant.Engine.RootPath, "Scripts");
             if (!Directory.Exists(macrosFolder))
                 Directory.CreateDirectory(macrosFolder);
+
+            if (Directory.Exists(oldFolder))
+            {
+                foreach (var oldFile in Directory.GetFiles(oldFolder, "*.macro"))
+                {
+                    string fileName = Path.GetFileNameWithoutExtension(oldFile);
+                    string destPath = Path.Combine(macrosFolder, Path.GetFileName(oldFile));
+
+                    if (File.Exists(destPath))
+                    {
+                        destPath = Path.Combine(macrosFolder, fileName + "-copy.macro");
+                    }
+
+                    try
+                    {
+                        File.Move(oldFile, destPath);
+                    }
+                    catch (Exception ex)
+                    {
+                        Misc.SendMessage($"Error moving macro '{fileName}': {ex.Message}", 33);
+                    }
+                }
+            }
 
             var macroFiles = Directory.GetFiles(macrosFolder, "*.macro");
             foreach (var file in macroFiles)
