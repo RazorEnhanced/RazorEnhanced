@@ -1,3 +1,53 @@
+// Crypt.cpp -- Main DLL implementation for Crypt.dll
+//
+// Crypt.dll is a Winsock-hooking DLL injected into the Ultima Online client.
+//
+// Architecture overview:
+//   The DLL intercepts all network I/O by patching the client's PE Import
+//   Address Table (IAT) to redirect Winsock calls (send / recv / connect /
+//   closesocket / select) through our own hook functions.
+//
+//   Two Windows message hooks (WH_CALLWNDPROCRET and WH_GETMESSAGE) are
+//   installed on the UO window thread to intercept window messages.  These are
+//   the transport mechanism for IPC commands from Razor: Razor PostMessages a
+//   WM_UONETEVENT to the UO window, the hook fires in the UO thread context,
+//   and MessageProc() dispatches the command.
+//
+// Injection sequence:
+//   1. Razor injects Crypt.dll into the UO process via CreateRemoteThread or
+//      a similar technique.
+//   2. DllMain (DLL_PROCESS_ATTACH) records the module handle and timer baseline.
+//   3. OnAttach() is called (via CreateRemoteThread or a hook) to:
+//      a. Create the named shared-memory block and mutex.
+//      b. Run MemFinder to locate the packet table, encryption keys, version
+//         string, and various patchable code addresses.
+//      c. Apply startup patches (multi-instance bypass, splash skip, etc.).
+//   4. Razor calls InstallLibrary(hRazorWnd, uoPid) to:
+//      a. Find the UO client window handle.
+//      b. Create / re-open the shared memory.
+//      c. Install WH_CALLWNDPROCRET and WH_GETMESSAGE hooks.
+//      d. Post WM_PROCREADY to the UO window to trigger the in-process part.
+//   5. WM_PROCREADY handler (in MessageProc, called from the UO thread) calls
+//      PatchMemory() to IAT-hook all five Winsock functions.
+//
+// Network data flow:
+//   Incoming (server -> client):
+//     Server sends encrypted bytes -> HookSelect intercepts select(), sees data
+//     ready -> calls RecvData() which calls the original recv() -> decrypts
+//     (OSIEncryption::DecryptFromServer or LoginEncryption::Decrypt) ->
+//     Huffman-decompresses -> writes plaintext into SharedMemory.InRecv ->
+//     SendMessages Razor via WM_UONETEVENT RECV.
+//     When Razor wants to inject packets back to the client, it fills OutRecv,
+//     and HookRecv returns that data (after re-compressing and re-encrypting).
+//
+//   Outgoing (client -> server):
+//     Client calls send() -> HookSend intercepts -> on first call, reads the
+//     seed, initialises encryption -> decrypts client data (LoginEncryption or
+//     OSIEncryption::DecryptFromClient) -> writes plaintext into InSend ->
+//     posts SEND to Razor.  Razor's injected packets are queued in OutSend and
+//     flushed by FlushSendData(), which re-encrypts with EncryptForServer()
+//     before calling the real send().
+
 #include "StdAfx.h"
 #include "Crypt.h"
 #include "uo_huffman.h"
@@ -12,69 +62,81 @@
 //*************************************************************************************
 //**************************************Varaibles**************************************
 //*************************************************************************************
+// Windows message hook handles installed on the UO window thread.
 HHOOK hWndProcRetHook = NULL;
-HHOOK hGetMsgHook = NULL;
-HWND hUOWindow = NULL;
-HWND hRazorWnd = NULL;
-HWND hMapWnd = NULL;
-DWORD UOProcId = 0;
+HHOOK hGetMsgHook = NULL;   // WH_GETMESSAGE hook (intercepts messages as they are retrieved).
+HWND hUOWindow = NULL;      // Handle to the UO client main window.
+HWND hRazorWnd = NULL;      // Handle to Razor's window (IPC target for PostMessage/SendMessage).
+HWND hMapWnd = NULL;        // Handle to the optional map overlay window (for focus tracking).
+DWORD UOProcId = 0;         // Process ID of the UO client process.
 
-HANDLE hFileMap = NULL;
-HMODULE hInstance = NULL;
-SOCKET CurrentConnection = 0;
-int ConnectedIP = 0;
+HANDLE hFileMap = NULL;     // Handle to the named file-mapping object (shared memory).
+HMODULE hInstance = NULL;   // This DLL's module handle.
+SOCKET CurrentConnection = 0; // The active Winsock socket handle being monitored.
+int ConnectedIP = 0;        // The IPv4 address of the server we last connected to.
 
-sockaddr_in CurrentConnectionAddr;
+sockaddr_in CurrentConnectionAddr; // Full sockaddr of the current connection (saved in HookConnect).
 
-HANDLE CommMutex = NULL;
+HANDLE CommMutex = NULL;    // Named mutex serialising all SharedMemory accesses.
 
-char *tempBuff = NULL;
+char* tempBuff = NULL;      // Temporary buffer for encrypted outgoing data in FlushSendData().
 
-SharedMemory *pShared = NULL;
+SharedMemory* pShared = NULL; // Mapped view of the named shared-memory block.
 
-LARGE_INTEGER PerfFreq, Counter;
+LARGE_INTEGER PerfFreq, Counter; // High-resolution timer used by SmartCPU to cap frame rate.
 
-DWORD DeathMsgAddr = 0xFFFFFFFF;
-HWND hUOAWnd = NULL;
+DWORD DeathMsgAddr = 0xFFFFFFFF; // Address of "You are dead." string inside the client (lazily found).
+HWND hUOAWnd = NULL;        // Handle to the helper "UOASSIST-TP-MSG-WND" message window.
 
-SIZE DesiredSize = { 0, 0 };
-SIZE OriginalSize = { 640, 480 };
-DWORD ResizeFuncaddr = 0;
-DWORD ABetterEntrypoint = 0;
+// Video resize state: track the desired viewport dimensions and the client's
+// internal size variable so we can force a custom resolution.
+SIZE DesiredSize = { 0, 0 };        // The resolution Razor wants (0,0 = use default).
+SIZE OriginalSize = { 640, 480 };   // The resolution the client had before we changed it.
+DWORD ResizeFuncaddr = 0;    // Address of the client's screen resize function.
+DWORD ABetterEntrypoint = 0; // Address within the resize function to call directly.
 
-BYTE SavedInstructions[5];
+BYTE SavedInstructions[5];   // Original bytes at the jump we patched in BypassResize().
 
+// Original (pre-hook) function pointers for the five Winsock functions we intercept.
+// These are the real function addresses as read from the IAT before patching.
 unsigned long OldRecv, OldSend, OldConnect, OldCloseSocket, OldSelect, OldCreateFileA;
+// The IAT slot addresses (where we wrote the new function pointers).
 unsigned long RecvAddress, SendAddress, ConnectAddress, CloseSocketAddress, SelectAddress, CreateFileAAddress;
 
 
-bool Seeded = false;
-bool FirstRecv = true;
-bool FirstSend = true;
-bool LoginServer = false;
-bool Active = true;
-bool SmartCPU = false;
-bool ServerNegotiated = false;
-bool InGame = false;
-bool CopyFailed = true;
-bool Forwarding = false;
-bool Forwarded = false;
-bool ClientEncrypted = false;
-bool ServerEncrypted = false;
-bool DwmAttrState = true;
-bool connected = false;
+// Connection / protocol state flags.
+bool Seeded = false;         // True after the 4-byte connection seed has been seen in HookSend.
+bool FirstRecv = true;       // True before the first recv() call on this connection.
+bool FirstSend = true;       // True before the first send() call on this connection.
+bool LoginServer = false;    // True when the current connection is to the login server.
+bool Active = true;          // Tracks UO window activation state (WM_ACTIVATE).
+bool SmartCPU = false;       // If true, cap game loop to ~30 fps via select() timeout.
+bool ServerNegotiated = false; // True after the AuthBits handshake succeeded.
+bool InGame = false;         // True after the "play character" (0x5D) packet is sent.
+bool CopyFailed = true;      // True if OnAttach() could not locate the packet table.
+bool Forwarding = false;     // True when a login-to-game-server forward is in progress.
+bool Forwarded = false;      // True once the forward handshake has completed.
+bool ClientEncrypted = false;// True if client-side encryption is enabled (login + game phase).
+bool ServerEncrypted = false;// True if server-side encryption is enabled.
+bool DwmAttrState = true;    // Tracks current DWM NCRENDERING_POLICY state.
+bool connected = false;      // True while CurrentConnection is an active socket.
 
+// Which UO client variant is running.
 enum class CLIENT_TYPE { TWOD = 1, THREED = 2 };
 CLIENT_TYPE ClientType = CLIENT_TYPE::TWOD;
 
-BYTE CryptChecksum[16] = { 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15, };
+BYTE CryptChecksum[16] = { 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15, }; // Unused checksum placeholder.
 
 //**************************************OSI Only Stuff*********************************
+// The connection seed read from the first 4 bytes the client sends.  Defaults to
+// 127.0.0.1 as a safe fallback before the real seed is observed.
 DWORD CryptSeed = 0x7f000001;
-OSIEncryption *ClientCrypt = NULL;
-OSIEncryption *ServerCrypt = NULL;
-LoginEncryption *ClientLogin = NULL;
-LoginEncryption *ServerLogin = NULL;
+// Separate encryption instances for each direction (client-side vs server-side)
+// to allow independent cipher state when the DLL sits between both endpoints.
+OSIEncryption* ClientCrypt = NULL;  // Game-phase cipher for client-facing traffic.
+OSIEncryption* ServerCrypt = NULL;  // Game-phase cipher for server-facing traffic.
+LoginEncryption* ClientLogin = NULL;// Login-phase cipher for client-facing traffic.
+LoginEncryption* ServerLogin = NULL;// Login-phase cipher for server-facing traffic.
 //*************************************************************************************
 
 //*************************************************************************************
@@ -83,29 +145,44 @@ LoginEncryption *ServerLogin = NULL;
 LRESULT CALLBACK WndProcRetHookFunc(int, WPARAM, LPARAM);
 LRESULT CALLBACK GetMsgHookFunc(int, WPARAM, LPARAM);
 
-bool HookFunction(const char *, const char *, int, unsigned long, unsigned long *, unsigned long *);
+bool HookFunction(const char*, const char*, int, unsigned long, unsigned long*, unsigned long*);
 void FlushSendData();
 
 bool CreateSharedMemory();
 void CloseSharedMemory();
 
 //Hooks:
-int PASCAL HookRecv(SOCKET, char *, int, int);
-int PASCAL HookSend(SOCKET, char *, int, int);
-int PASCAL HookConnect(SOCKET, const sockaddr *, int);
+int PASCAL HookRecv(SOCKET, char*, int, int);
+int PASCAL HookSend(SOCKET, char*, int, int);
+int PASCAL HookConnect(SOCKET, const sockaddr*, int);
 int PASCAL HookCloseSocket(SOCKET);
-int PASCAL HookSelect(int, fd_set*, fd_set*, fd_set*, const struct timeval *);
+int PASCAL HookSelect(int, fd_set*, fd_set*, fd_set*, const struct timeval*);
 //HANDLE WINAPI CreateFileAHook( LPCTSTR, DWORD, DWORD, LPSECURITY_ATTRIBUTES, DWORD, DWORD, HANDLE );
 
-typedef int (PASCAL *NetIOFunc)(SOCKET, char *, int, int);
-typedef int (PASCAL *ConnFunc)(SOCKET, const sockaddr *, int);
-typedef int (PASCAL *CLSFunc)(SOCKET);
-typedef int (PASCAL *SelectFunc)(int, fd_set*, fd_set*, fd_set*, const struct timeval*);
-typedef HANDLE(WINAPI *CreateFileAFunc)(LPCTSTR, DWORD, DWORD, LPSECURITY_ATTRIBUTES, DWORD, DWORD, HANDLE);
-typedef char *(__cdecl *GetUOVersionFunc)();
+typedef int (PASCAL* NetIOFunc)(SOCKET, char*, int, int);
+typedef int (PASCAL* ConnFunc)(SOCKET, const sockaddr*, int);
+typedef int (PASCAL* CLSFunc)(SOCKET);
+typedef int (PASCAL* SelectFunc)(int, fd_set*, fd_set*, fd_set*, const struct timeval*);
+typedef HANDLE(WINAPI* CreateFileAFunc)(LPCTSTR, DWORD, DWORD, LPSECURITY_ATTRIBUTES, DWORD, DWORD, HANDLE);
+typedef char* (__cdecl* GetUOVersionFunc)();
 
 GetUOVersionFunc NativeGetUOVersion = NULL;
 
+// ---------------------------------------------------------------------------
+// DllMain() -- DLL entry point called by the OS loader.
+//
+// DLL_PROCESS_ATTACH:
+//   * Disables per-thread notifications (we don't need them).
+//   * Snapshots the high-resolution performance counter so SmartCPU has a
+//     baseline for the 30 fps limiter logic in HookSelect().
+//
+// DLL_PROCESS_DETACH:
+//   * If we are being unloaded from the UO process (not just unmapped from
+//     another process that loaded us for exports), notify Razor via CLOSE
+//     and tear down shared memory.
+//   * If hRazorWnd belongs to this process we are being unloaded in the Razor
+//     process, not the UO process -- take no network action.
+// ---------------------------------------------------------------------------
 BOOL APIENTRY DllMain(HANDLE hModule, DWORD dwReason, LPVOID)
 {
 	DWORD postID, thisID;
@@ -115,7 +192,9 @@ BOOL APIENTRY DllMain(HANDLE hModule, DWORD dwReason, LPVOID)
 	{
 	case DLL_PROCESS_ATTACH:
 		//Log("Process Attach");
+		// Suppress DLL_THREAD_ATTACH / DLL_THREAD_DETACH notifications for efficiency.
 		DisableThreadLibraryCalls(hInstance);
+		// Record timer frequency and baseline counter for SmartCPU.
 		QueryPerformanceFrequency(&PerfFreq);
 		QueryPerformanceCounter(&Counter);
 		break;
@@ -124,14 +203,18 @@ BOOL APIENTRY DllMain(HANDLE hModule, DWORD dwReason, LPVOID)
 		//Log("Process Detach");
 		postID = 0;
 		thisID = GetCurrentProcessId();
+		// Determine which process owns Razor's window.
 		if (IsWindow(hRazorWnd))
 			GetWindowThreadProcessId(hRazorWnd, &postID);
 
+		// Only perform cleanup if unloading from the UO process.
 		if (thisID == postID || thisID == UOProcId)
 		{
+			// Notify Razor that the DLL is going away.
 			if (IsWindow(hRazorWnd))
 				PostMessage(hRazorWnd, WM_UONETEVENT, CLOSE, 0);
 
+			// Post WM_QUIT to the UO window to terminate the client.
 			if (IsWindow(hUOWindow))
 			{
 				PostMessage(hUOWindow, WM_QUIT, 0, 0);
@@ -139,6 +222,7 @@ BOOL APIENTRY DllMain(HANDLE hModule, DWORD dwReason, LPVOID)
 				SetFocus(hUOWindow);
 			}
 
+			// Unmap shared memory, release hooks, delete encryption objects.
 			CloseSharedMemory();
 		}
 		break;
@@ -152,29 +236,42 @@ BOOL APIENTRY DllMain(HANDLE hModule, DWORD dwReason, LPVOID)
 }
 
 
-DLLFUNCTION void *GetSharedAddress()
+// ---------------------------------------------------------------------------
+// GetSharedAddress() -- exported; returns the pShared pointer to Razor.
+// Razor MapViewOfFile()s the same section independently, but this export
+// lets C# callers get the pointer without a second mapping if needed.
+// ---------------------------------------------------------------------------
+DLLFUNCTION void* GetSharedAddress()
 {
 	//Log("GetSharedAddress Get shared address [0x%x]", pShared);
 	return pShared;
 }
 
+// ---------------------------------------------------------------------------
+// FindUOWindow() -- exported; locate the UO client main window.
+//
+// Tries both the 2D client class name ("Ultima Online") and the Third Dawn
+// class name ("Ultima Online Third Dawn").  Returns the cached hUOWindow if
+// it is still a valid window, otherwise does a fresh FindWindow search.
+// ---------------------------------------------------------------------------
 DLLFUNCTION HWND FindUOWindow(void)
 {
 	//Log("FindUOWindow");
 	if (hUOWindow == NULL || !IsWindow(hUOWindow))
 	{
+		// Try the 2D client window class first.
 		HWND hWnd = FindWindow("Ultima Online", NULL);
 		if (hWnd == NULL)
-			hWnd = FindWindow("Ultima Online Third Dawn", NULL);
+			hWnd = FindWindow("Ultima Online Third Dawn", NULL); // 3D client fallback.
 		return hWnd;
 	}
 	else
 	{
-		return hUOWindow;
+		return hUOWindow; // Already have a valid cached window handle.
 	}
 }
 
-DLLFUNCTION void SetDataPath(const char *path)
+DLLFUNCTION void SetDataPath(const char* path)
 {
 	//Log("SetDataPath");
 	WaitForSingleObject(CommMutex, INFINITE);
@@ -182,7 +279,7 @@ DLLFUNCTION void SetDataPath(const char *path)
 	ReleaseMutex(CommMutex);
 }
 
-DLLFUNCTION void SetDeathMsg(const char *msg)
+DLLFUNCTION void SetDeathMsg(const char* msg)
 {
 	//Log("SetDeathMsg");
 	WaitForSingleObject(CommMutex, INFINITE);
@@ -205,6 +302,29 @@ void PatchDeathMsg()
 	}
 }
 
+// ---------------------------------------------------------------------------
+// InstallLibrary() -- exported; set up the DLL-to-Razor communication channel.
+//
+// Called from Razor (NOT from inside the UO process) after the UO client is
+// already running.  It:
+//   1. Locates the UO window for the given PID.
+//   2. Creates / opens the named shared memory block.
+//   3. Installs WH_CALLWNDPROCRET and WH_GETMESSAGE hooks on the UO thread.
+//      These hooks cause GetMsgHookFunc / WndProcRetHookFunc to run in the
+//      UO thread context when the UO window processes messages.
+//   4. Creates a small hidden helper window ("UOASSIST-TP-MSG-WND") in Razor's
+//      process for receiving UOAssist-compatible messages.
+//   5. Posts WM_PROCREADY to the UO window to trigger PatchMemory() (IAT
+//      hooking) from inside the UO process.
+//
+// Parameters:
+//   PostWindow -- Razor's HWND; all UONET_MESSAGE events will be sent here.
+//   pid        -- UO client process ID; 0 = find any UO window.
+//   flags      -- bitfield: 0x04 = allow negotiate, 0x08 = client encrypted,
+//                 0x10 = server encrypted.
+//
+// Returns an IError code (SUCCESS on success).
+// ---------------------------------------------------------------------------
 DLLFUNCTION int InstallLibrary(HWND PostWindow, DWORD pid, int flags)
 {
 	DWORD UOTId = 0;
@@ -247,6 +367,7 @@ DLLFUNCTION int InstallLibrary(HWND PostWindow, DWORD pid, int flags)
 
 	hUOWindow = hWnd;
 	hRazorWnd = PostWindow;
+	Log("InstallLibrary: hUOWindow=0x%x hRazorWnd=0x%x pid=%d", hUOWindow, hRazorWnd, pid);
 
 	if (hUOWindow == NULL)
 		return NO_UOWND;
@@ -289,13 +410,14 @@ DLLFUNCTION int InstallLibrary(HWND PostWindow, DWORD pid, int flags)
 	ServerEncrypted = (flags & 0x10) != 0;
 	ClientEncrypted = (flags & 0x08) != 0;
 
+	Log("InstallLibrary: posting WM_PROCREADY to UO 0x%x flags=0x%x hRazorWnd=0x%x", hUOWindow, flags, hRazorWnd);
 	PostMessage(hUOWindow, WM_PROCREADY, (WPARAM)flags, (LPARAM)hRazorWnd);
 	return SUCCESS;
 }
 
 DLLFUNCTION void WaitForWindow(DWORD pid)
 {
-	//Log("WaitForWindow");
+	Log("WaitForWindow: pid=%d", pid);
 	DWORD UOTId = 0;
 	DWORD exitCode;
 	HANDLE hProc = OpenProcess(PROCESS_QUERY_INFORMATION, FALSE, pid);
@@ -334,7 +456,7 @@ DLLFUNCTION void WaitForWindow(DWORD pid)
 
 DLLFUNCTION void Shutdown(bool close)
 {
-	//Log("Shutdown");
+	Log("Shutdown: close=%d", close);
 
 	if (hUOAWnd && IsWindow(hUOAWnd))
 	{
@@ -383,6 +505,7 @@ DLLFUNCTION bool IsCalibrated()
 
 DLLFUNCTION void CalibratePosition(int x, int y, int z)
 {
+	Log("CalibratePosition: x=%d y=%d z=%d", x, y, z);
 	pShared->Position[2] = x;
 	pShared->Position[1] = y;
 	pShared->Position[0] = z;
@@ -390,7 +513,7 @@ DLLFUNCTION void CalibratePosition(int x, int y, int z)
 	PostMessage(hUOWindow, WM_UONETEVENT, CALIBRATE_POS, 0);
 }
 
-DLLFUNCTION bool GetPosition(int *x, int *y, int *z)
+DLLFUNCTION bool GetPosition(int* x, int* y, int* z)
 {
 	if (IsCalibrated())
 	{
@@ -441,6 +564,7 @@ DLLFUNCTION bool GetPosition(int *x, int *y, int *z)
 
 DLLFUNCTION void BringToFront(HWND hWnd)
 {
+	Log("BringToFront: hWnd=0x%x", hWnd);
 	SetWindowPos(hWnd, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
 	ShowWindow(hWnd, SW_SHOW);
 	SetForegroundWindow(hWnd);
@@ -452,6 +576,7 @@ DLLFUNCTION void BringToFront(HWND hWnd)
 
 DLLFUNCTION void SetAllowDisconn(bool newVal)
 {
+	Log("SetAllowDisconn: newVal=%d", newVal);
 	if (pShared && CommMutex)
 	{
 		WaitForSingleObject(CommMutex, INFINITE);
@@ -462,7 +587,7 @@ DLLFUNCTION void SetAllowDisconn(bool newVal)
 
 DLLFUNCTION BOOL HandleNegotiate(__int64 features)
 {
-	//Log("HandleNegotiate");
+	Log("HandleNegotiate: features=0x%llx", features);
 	if (pShared && pShared->AuthBits && pShared->AllowNegotiate)
 	{
 		memcpy(pShared->AuthBits, &features, 8);
@@ -478,11 +603,39 @@ DLLFUNCTION BOOL HandleNegotiate(__int64 features)
 }
 
 
-SIZE *SizePtr = NULL;
+SIZE* SizePtr = NULL;
 
-DLLFUNCTION void __stdcall OnAttach(void *params, int paramsLen)
+// ---------------------------------------------------------------------------
+// OnAttach() -- runs INSIDE the UO process to scan memory and apply patches.
+//
+// This function is called very early (before the UO window may exist) via a
+// remote thread or the WM_PROCREADY hook mechanism.  It performs all the
+// one-time memory scanning and patching that must happen from within the
+// client process:
+//
+//   1. Creates shared memory and mutex.
+//   2. Copies the static packet length table into SharedMemory.PacketTable.
+//   3. Runs MemFinder over the executable image to locate:
+//        - The client's internal packet length table (ClientPacketInfo array).
+//        - Login encryption keys (Key1 and Key2 pointers).
+//        - The screen-size variable and resize function.
+//        - Version strings and other patchable constants.
+//   4. Replaces the located client packet table in SharedMemory so Razor
+//      sees the client's authoritative lengths rather than the static fallback.
+//   5. Calls LoginEncryption::SetKeys() with the located key pointers.
+//   6. Applies several in-memory patches:
+//        - "UoClientApp" string -> "UoApp<pid>" (multi-instance support).
+//        - "Another copy of " / "Multiple Instances Running" conditional jumps
+//          -> unconditional jumps (bypass single-instance check).
+//        - "report\0" -> "r<pid>" (per-instance report tag).
+//        - Splash screen delay: 5000 ms -> 1 ms.
+//        - Intro BIK filename -> garbage to skip video.
+//        - "Electronic Arts Inc." banner -> RazorEnhanced credit.
+//   7. Resolves NativeGetUOVersion (the client's own version-string function).
+// ---------------------------------------------------------------------------
+DLLFUNCTION void __stdcall OnAttach(void* params, int paramsLen)
 {
-	//Log("OnAttach");
+	Log("OnAttach: paramsLen=%d", paramsLen);
 	int count = 0;
 	DWORD addr = 0, oldProt;
 	MemFinder mf;
@@ -496,6 +649,7 @@ DLLFUNCTION void __stdcall OnAttach(void *params, int paramsLen)
 
 	CopyFailed = false;
 
+	// Register all patterns that MemFinder should locate in a single pass.
 	mf.AddEntry("UoClientApp", 12, 0x00500000);
 	mf.AddEntry("report\0", 8, 0x00500000);
 	mf.AddEntry("Another copy of ", 16, 0x00500000);
@@ -572,7 +726,7 @@ DLLFUNCTION void __stdcall OnAttach(void *params, int paramsLen)
 		addr += PACKET_TBL_OFFSET;
 		if (IsBadReadPtr((void*)addr, sizeof(ClientPacketInfo) * 128))
 			continue;
-		ClientPacketInfo *tbl = (ClientPacketInfo*)addr;
+		ClientPacketInfo* tbl = (ClientPacketInfo*)addr;
 
 		if (tbl[0].Id == 1 || tbl[0].Id == 2 || tbl[0].Id >= 256)
 			continue;
@@ -668,8 +822,8 @@ DLLFUNCTION void __stdcall OnAttach(void *params, int paramsLen)
 			{
 				addr += CRYPT_KEY_MORE_NEW_LEN;
 
-				const DWORD *pKey1 = *((DWORD**)addr);
-				const DWORD *pKey2 = pKey1 + 1;
+				const DWORD* pKey1 = *((DWORD**)addr);
+				const DWORD* pKey2 = pKey1 + 1;
 				if (IsBadReadPtr(pKey2, 4) || IsBadReadPtr(pKey1, 4))
 					CopyFailed = true;
 				else
@@ -680,8 +834,8 @@ DLLFUNCTION void __stdcall OnAttach(void *params, int paramsLen)
 		{
 			addr += CRYPT_KEY_NEW_LEN;
 
-			const DWORD *pKey1 = *((DWORD**)addr);
-			const DWORD *pKey2 = pKey1 - 1;
+			const DWORD* pKey1 = *((DWORD**)addr);
+			const DWORD* pKey2 = pKey1 - 1;
 			if (IsBadReadPtr(pKey2, 4) || IsBadReadPtr(pKey1, 4))
 				CopyFailed = true;
 			else
@@ -845,7 +999,7 @@ DLLFUNCTION void __stdcall OnAttach(void *params, int paramsLen)
 
 DLLFUNCTION void SetServer(unsigned int addr, unsigned short port)
 {
-	//Log("SetServer");
+	Log("SetServer: addr=0x%x port=%d", addr, port);
 	if (pShared)
 	{
 		pShared->ServerIP = addr;
@@ -853,9 +1007,9 @@ DLLFUNCTION void SetServer(unsigned int addr, unsigned short port)
 	}
 }
 
-DLLFUNCTION const char *GetUOVersion()
+DLLFUNCTION const char* GetUOVersion()
 {
-	//Log("GetUOVersion");
+	Log("GetUOVersion");
 	if (pShared)
 	{
 		std::cout << "pshared";
@@ -903,6 +1057,19 @@ void RestoreResize() {
 	}
 }
 
+// ---------------------------------------------------------------------------
+// CreateSharedMemory() -- create (or open) the named shared memory block.
+//
+// Uses the UO process ID in the object names so multiple UO instances can
+// coexist without colliding:
+//   Mutex  : "UONetSharedCOMM_<pid>"  -- serialises all pShared accesses.
+//   Mapping: "UONetSharedFM_<pid>"    -- sizeof(SharedMemory) bytes (~2.1 MB).
+//
+// Called from both the Razor side (InstallLibrary) and the UO side (OnAttach /
+// WM_PROCREADY).  CreateFileMapping / CreateMutex will open the existing objects
+// if they already exist (same name), so both processes end up sharing the same
+// memory and the same mutex.
+// ---------------------------------------------------------------------------
 bool CreateSharedMemory()
 {
 	char name[256];
@@ -911,18 +1078,21 @@ bool CreateSharedMemory()
 	hFileMap = NULL;
 	pShared = NULL;
 
-	//Log("Creating shared mem, proc: %x", UOProcId);
+	Log("CreateSharedMemory: UOProcId=0x%x", UOProcId);
 
+	// Create or open the named mutex for serialised access.
 	sprintf(name, "UONetSharedCOMM_%x", UOProcId);
 	CommMutex = CreateMutex(NULL, FALSE, name);
 	if (!CommMutex)
 		return false;
 
+	// Create or open the named file mapping backed by the page file.
 	sprintf(name, "UONetSharedFM_%x", UOProcId);
 	hFileMap = CreateFileMapping(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, sizeof(SharedMemory), name);
 	if (!hFileMap)
 		return false;
 
+	// Map the whole region into this process's address space.
 	pShared = (SharedMemory*)MapViewOfFile(hFileMap, FILE_MAP_ALL_ACCESS, 0, 0, 0);
 	if (!pShared)
 		return false;
@@ -932,10 +1102,18 @@ bool CreateSharedMemory()
 	return true;
 }
 
+// ---------------------------------------------------------------------------
+// CloseSharedMemory() -- tear down all resources allocated by CreateSharedMemory.
+//
+// Removes the Windows message hooks, releases the mutex and file-mapping
+// handles, and deletes the encryption objects.  Called from DllMain
+// DLL_PROCESS_DETACH and from Shutdown().
+// ---------------------------------------------------------------------------
 void CloseSharedMemory()
 {
-	//Log("Close shared memory");
+	Log("CloseSharedMemory");
 
+	// Remove the message hooks so they no longer fire in the UO thread.
 	if (hWndProcRetHook)
 		UnhookWindowsHookEx(hWndProcRetHook);
 	if (hGetMsgHook)
@@ -968,20 +1146,33 @@ void CloseSharedMemory()
 	ServerLogin = NULL;
 }
 
+// ---------------------------------------------------------------------------
+// CreateEncryption() -- (re)allocate cipher objects for a new connection.
+//
+// Called from HookConnect() every time a new socket connection is established
+// to ensure fresh cipher state.  Old objects are deleted before new ones are
+// created so there is no state bleed across sessions.
+//
+// ClientEncrypted / ServerEncrypted control which sets of objects are created;
+// both flags are set from the 'flags' argument of InstallLibrary() / WM_PROCREADY.
+// ---------------------------------------------------------------------------
 void CreateEncryption()
 {
-	//Log("CreateEncryption");
+	Log("CreateEncryption: ClientEncrypted=%d ServerEncrypted=%d", ClientEncrypted, ServerEncrypted);
+	// Destroy any existing cipher objects to reset state.
 	delete ClientCrypt;
 	delete ClientLogin;
 	delete ServerCrypt;
 	delete ServerLogin;
 
+	// Allocate ciphers for the client-facing (DLL <-> client) direction.
 	if (ClientEncrypted)
 	{
 		ClientCrypt = new OSIEncryption();
 		ClientLogin = new LoginEncryption();
 	}
 
+	// Allocate ciphers for the server-facing (DLL <-> server) direction.
 	if (ServerEncrypted)
 	{
 		ServerCrypt = new OSIEncryption();
@@ -989,27 +1180,63 @@ void CreateEncryption()
 	}
 }
 
-inline void Maintenance(Buffer &buff)
+// ---------------------------------------------------------------------------
+// Maintenance() -- defragment a shared-memory ring buffer.
+//
+// The Buffer uses Start as a read pointer that advances as data is consumed.
+// When all data has been consumed (Length <= 0) we reset Start to 0 to keep
+// the write position near the beginning.
+//
+// When Start drifts past the halfway point but there is still live data, we
+// memmove() the live bytes back to offset 0.  This prevents the "write position"
+// (Start + Length) from running off the end of the 512 KB Buff array.
+// ---------------------------------------------------------------------------
+inline void Maintenance(Buffer& buff)
 {
 	//Log("Maintenance");
 	if (buff.Length <= 0)
 	{
+		// Buffer is empty; reset to beginning for next write.
 		buff.Start = 0;
 		buff.Length = 0;
 	}
 	else if (buff.Start > SHARED_BUFF_SIZE / 2)
 	{
+		// Live data is in the back half of the buffer; move it to the front
+		// to reclaim space for future writes.
 		//shift all the data to the begining of the buffer
 		memmove(buff.Buff, &buff.Buff[buff.Start], buff.Length);
 		buff.Start = 0;
 	}
 }
 
+// ---------------------------------------------------------------------------
+// RecvData() -- pull incoming data from the real socket and process it.
+//
+// Called from HookSelect() when select() reports that CurrentConnection has
+// data ready to read.  We call the original recv() on the real socket, then:
+//
+//   Login server path (LoginServer == true):
+//     Data arrives uncompressed; copy directly into InRecv for Razor.
+//
+//   Game server path:
+//     1. Decrypt with ServerCrypt->DecryptFromServer() (XOR stream).
+//     2. Huffman-decompress into InRecv.
+//     3. If negotiation is pending and AllowNegotiate, scan for the 0xA9
+//        (character list) packet to extract AuthBits and verify the MD5 hash.
+//
+//   On SOCKET_ERROR (not WSAEWOULDBLOCK): set ForceDisconn to signal
+//   HookRecv() to simulate a connection reset to the client.
+//
+// The decrypted, decompressed data in InRecv is then available for Razor to
+// read at any time.  A SendMessage(hRazorWnd, RECV) notifies Razor.
+// ---------------------------------------------------------------------------
 int RecvData()
 {
 	int len = SHARED_BUFF_SIZE;
 	std::vector<char> buff(len);
 
+	// Call the real (pre-hook) recv() to get data from the server.
 	int ackLen = (*(NetIOFunc)OldRecv)(CurrentConnection, reinterpret_cast<char*>(buff.data()), buff.size(), 0);
 
 	if (ackLen == SOCKET_ERROR)
@@ -1058,7 +1285,7 @@ int RecvData()
 			if (!ServerNegotiated && !InGame && pShared && pShared->AllowNegotiate)
 			{
 				int pos = pShared->InRecv.Start;
-				unsigned char *p_buff = &pShared->InRecv.Buff[pos];
+				unsigned char* p_buff = &pShared->InRecv.Buff[pos];
 
 				while (pos < pShared->InRecv.Length)
 				{
@@ -1110,19 +1337,43 @@ int RecvData()
 
 		ReleaseMutex(CommMutex);
 
+		Log("RecvData: SendMessage RECV to hRazorWnd=0x%x ackLen=%d", hRazorWnd, ackLen);
 		SendMessage(hRazorWnd, WM_UONETEVENT, RECV, 0);
 	}
 
 	return ackLen;
 }
 
-int PASCAL HookRecv(SOCKET sock, char *buff, int len, int flags)
+// ---------------------------------------------------------------------------
+// HookRecv() -- Winsock recv() intercept.
+//
+// The UO client calls recv() to retrieve data from the server.  We intercept
+// this call so we can:
+//   1. Force a disconnect: if ForceDisconn is set and the OutRecv queue is
+//      empty, return WSAECONNRESET to make the client think the server closed
+//      the connection.
+//   2. Inject data from Razor: if OutRecv has data, compress it (Huffman) and
+//      optionally re-encrypt it (EncryptForClient), then return it to the
+//      client as if it came from the server.
+//   3. For login-server connections, inject OutRecv data verbatim (no
+//      compression or encryption on the login path).
+//
+// If the socket is not CurrentConnection, the original recv() is called
+// transparently (pass-through for unmonitored sockets).
+//
+// Note: actual inbound data from the real server is processed by RecvData()
+// which is driven by HookSelect(), NOT by HookRecv().  HookRecv() only
+// handles the "client reads data" half of the loop.
+// ---------------------------------------------------------------------------
+int PASCAL HookRecv(SOCKET sock, char* buff, int len, int flags)
 {
 	int ackLen;
-
+	Log("HookRecv: sock=%d CurrentConnection=%d len=%d", sock, CurrentConnection, len);
 	if (sock == CurrentConnection && CurrentConnection)
 	{
 		WaitForSingleObject(CommMutex, INFINITE);
+		// Force disconnect: signal WSAECONNRESET if Razor requested a disconnect
+		// and the client has consumed all injected data from OutRecv.
 		if (pShared->ForceDisconn && pShared->AllowDisconn && pShared->OutRecv.Length <= 0)
 		{
 			ReleaseMutex(CommMutex);
@@ -1193,16 +1444,39 @@ int PASCAL HookRecv(SOCKET sock, char *buff, int len, int flags)
 	}
 }
 
+// ---------------------------------------------------------------------------
+// HookSend() -- Winsock send() intercept.
+//
+// The UO client calls send() to transmit packets to the server.  We intercept
+// to:
+//   1. Capture the 4-byte connection seed (the very first data the client sends)
+//      and use it to initialise the cipher objects (Initialize() on both
+//      OSIEncryption and LoginEncryption instances).
+//   2. After seeding, decrypt the outgoing packet stream:
+//        - LoginServer + ClientEncrypted: use ClientLogin->Decrypt() (XOR cipher).
+//        - Game server + ClientEncrypted: use ClientCrypt->DecryptFromClient() (Twofish).
+//        - Forwarded (post-0x8C redirect): reinitialise with GenerateBadSeed() then decrypt.
+//   3. Store the decrypted plaintext in InSend so Razor can inspect it.
+//   4. Post SEND to Razor so it can act on the outgoing packet.
+//   5. Call FlushSendData() to send any queued Razor->server packets (OutSend).
+//   6. Lie to the client: always return 'len' as the sent count so the client
+//      doesn't retry.  The actual transmission of OutSend happens in FlushSendData.
+//
+// The 0xEF prefix detection skips 16 bytes (a UO protocol handshake prefix that
+// some servers use instead of the normal 4-byte seed).
+// ---------------------------------------------------------------------------
 int SkipSendData = 0;
-int PASCAL HookSend(SOCKET sock, char *buff, int len, int flags)
+int PASCAL HookSend(SOCKET sock, char* buff, int len, int flags)
 {
 	int ackLen;
 
+	Log("HookSend: sock=%d CurrentConnection=%d len=%d", sock, CurrentConnection, len);
 	if (sock == CurrentConnection && CurrentConnection)
 	{
 		if (!Seeded)
 		{
-			//Log("Not seeded");
+			Log("HookSend: not seeded yet");
+			// 0xEF prefix: this is a pre-seed protocol header; skip the next 16 bytes.
 			if (len > 0 && ((BYTE)*buff) == ((BYTE)0xEF))
 				SkipSendData = 16;
 
@@ -1239,16 +1513,16 @@ int PASCAL HookSend(SOCKET sock, char *buff, int len, int flags)
 				//Log("FirstSend");
 				FirstSend = false;
 
-                if (ClientEncrypted)
-                {
-                    LoginServer = ClientLogin->TestForLogin((BYTE)buff[0]);
-                    // OSI was messing up the TestForLogin sometimes so
-                    // if it isn't the login server IP, FORCE LoginServer to false
-                    if (CurrentConnectionAddr.sin_addr.S_un.S_addr != pShared->ServerIP)
-                    {
-                        LoginServer = false;
-                    }
-                }
+				if (ClientEncrypted)
+				{
+					LoginServer = ClientLogin->TestForLogin((BYTE)buff[0]);
+					// OSI was messing up the TestForLogin sometimes so
+					// if it isn't the login server IP, FORCE LoginServer to false
+					if (CurrentConnectionAddr.sin_addr.S_un.S_addr != pShared->ServerIP)
+					{
+						LoginServer = false;
+					}
+				}
 				else
 					LoginServer = LoginEncryption::IsLoginByte((BYTE)buff[0]);
 
@@ -1297,6 +1571,7 @@ int PASCAL HookSend(SOCKET sock, char *buff, int len, int flags)
 			pShared->InSend.Length += len;
 			ReleaseMutex(CommMutex);
 
+			Log("HookSend: SendMessage SEND to hRazorWnd=0x%x len=%d", hRazorWnd, len);
 			SendMessage(hRazorWnd, WM_UONETEVENT, SEND, 0);
 
 			WaitForSingleObject(CommMutex, INFINITE);
@@ -1323,8 +1598,23 @@ int PASCAL HookSend(SOCKET sock, char *buff, int len, int flags)
 #define RAZOR_ID_KEY "\x9\x11\x83+\x4\x17\x83\x5\x24\x85\x7\x17\x87\x6\x19\x88"
 #define RAZOR_ID_KEY_LEN 16
 
+// ---------------------------------------------------------------------------
+// FlushSendData() -- transmit Razor's queued outgoing packets to the server.
+//
+// Called from HookSend() and from the SEND message handler in MessageProc().
+// Drains OutSend by:
+//   1. Scanning for 0x5D (play character) and 0x00 with sentinel 0xEDEDEDED
+//      (char creation) packets -- embeds AuthBits + RAZOR_ID_KEY for server
+//      feature negotiation.
+//   2. If ServerEncrypted:
+//        - Login phase: encrypts with ServerLogin->Encrypt() (XOR cipher).
+//        - Game phase: encrypts with ServerCrypt->EncryptForServer() (Twofish).
+//   3. Calls the real send() with the encrypted data.
+//   4. Updates OutSend.Start / OutSend.Length to reflect what was sent.
+// ---------------------------------------------------------------------------
 void FlushSendData()
 {
+	Log("FlushSendData: OutSend.Length=%d CurrentConnection=%d", pShared ? pShared->OutSend.Length : -1, CurrentConnection);
 	WaitForSingleObject(CommMutex, INFINITE);
 	if (pShared->OutSend.Length > 0 && CurrentConnection)
 	{
@@ -1334,7 +1624,7 @@ void FlushSendData()
 		if (!InGame && !LoginServer)
 		{
 			int pos = pShared->OutSend.Start;
-			unsigned char *buff = &pShared->OutSend.Buff[pos];
+			unsigned char* buff = &pShared->OutSend.Buff[pos];
 
 			while (pos < outLen)
 			{
@@ -1388,14 +1678,14 @@ void FlushSendData()
 			if (tempBuff == NULL)
 				tempBuff = new char[SHARED_BUFF_SIZE];
 
-            if (LoginServer)
-            {
-                ServerLogin->Encrypt((BYTE*)&pShared->OutSend.Buff[pShared->OutSend.Start], (BYTE*)tempBuff, outLen);
-            }
-            else
-            {
-                ServerCrypt->EncryptForServer((BYTE*)&pShared->OutSend.Buff[pShared->OutSend.Start], (BYTE*)tempBuff, outLen);
-            }
+			if (LoginServer)
+			{
+				ServerLogin->Encrypt((BYTE*)&pShared->OutSend.Buff[pShared->OutSend.Start], (BYTE*)tempBuff, outLen);
+			}
+			else
+			{
+				ServerCrypt->EncryptForServer((BYTE*)&pShared->OutSend.Buff[pShared->OutSend.Start], (BYTE*)tempBuff, outLen);
+			}
 
 			ackLen = (*(NetIOFunc)OldSend)(CurrentConnection, tempBuff, outLen, 0);
 		}
@@ -1422,37 +1712,50 @@ void FlushSendData()
 	ReleaseMutex(CommMutex);
 }
 
-int PASCAL HookConnect(SOCKET sock, const sockaddr *addr, int addrlen)
+// ---------------------------------------------------------------------------
+// HookConnect() -- Winsock connect() intercept.
+//
+// Intercepts every outbound TCP connection attempt by the UO client.  When
+// the UO client tries to connect to a game server:
+//   1. If Razor has set a server IP/port in pShared (and we haven't been
+//      forwarded yet), substitute Razor's address for the one the client
+//      originally targeted.  This lets Razor redirect the client to a
+//      different server without the client knowing.
+//   2. Record the connection address in CurrentConnectionAddr (used later in
+//      HookSend to distinguish login vs game server connections).
+//   3. On success: allocate fresh cipher objects, reset all state flags,
+//      record the socket as CurrentConnection, and notify Razor via CONNECT.
+// ---------------------------------------------------------------------------
+int PASCAL HookConnect(SOCKET sock, const sockaddr* addr, int addrlen)
 {
 	int retVal;
-	//Log("HookConnect");
+	Log("HookConnect: sock=%d hRazorWnd=0x%x", sock, hRazorWnd);
 	if (addr && addrlen >= sizeof(sockaddr_in))
 	{
-		const sockaddr_in *old_addr = (const sockaddr_in *)addr;
+		const sockaddr_in* old_addr = (const sockaddr_in*)addr;
 		sockaddr_in useAddr;
 
 		memcpy(&useAddr, old_addr, sizeof(sockaddr_in));
+
+		Log("HookConnect: original target ip=0x%x port=%d pShared->ServerIP=0x%x pShared->ServerPort=%d Forwarded=%d",
+			old_addr->sin_addr.S_un.S_addr, ntohs(old_addr->sin_port),
+			pShared ? pShared->ServerIP : 0, pShared ? pShared->ServerPort : 0, Forwarded);
 
 		if (!Forwarded && pShared->ServerIP != 0)
 		{
 			useAddr.sin_addr.S_un.S_addr = pShared->ServerIP;
 			useAddr.sin_port = htons(pShared->ServerPort);
+			Log("HookConnect: redirecting to ip=0x%x port=%d", useAddr.sin_addr.S_un.S_addr, ntohs(useAddr.sin_port));
 		}
 
-        CurrentConnectionAddr = useAddr;
-		/*
-        char blah[256];
-		sprintf(blah, "%08X - %08X", useAddr.sin_addr.S_un.S_addr, pShared->ServerIP);
-		MessageBox(NULL, blah, "Connect To:", MB_OK);
-        */
+		CurrentConnectionAddr = useAddr;
 		retVal = (*(ConnFunc)OldConnect)(sock, (sockaddr*)&useAddr, sizeof(sockaddr_in));
 
 		ConnectedIP = useAddr.sin_addr.S_un.S_addr;
 
 		if (retVal != SOCKET_ERROR)
 		{
-			//Log("Connecting to %i", sock);
-
+			Log("HookConnect: connect succeeded sock=%d ip=0x%x", sock, useAddr.sin_addr.S_un.S_addr);
 			CreateEncryption();
 
 			Seeded = false;
@@ -1467,8 +1770,14 @@ int PASCAL HookConnect(SOCKET sock, const sockaddr *addr, int addrlen)
 			pShared->ForceDisconn = false;
 			ReleaseMutex(CommMutex);
 
+			Log("HookConnect: PostMessage CONNECT to hRazorWnd=0x%x ip=0x%x", hRazorWnd, useAddr.sin_addr.S_un.S_addr);
 			PostMessage(hRazorWnd, WM_UONETEVENT, CONNECT, useAddr.sin_addr.S_un.S_addr);
 			connected = true;
+		}
+		else
+		{
+			Log("HookConnect: connect FAILED sock=%d WSAError=%d ip=0x%x port=%d",
+				sock, WSAGetLastError(), useAddr.sin_addr.S_un.S_addr, ntohs(useAddr.sin_port));
 		}
 	}
 	else
@@ -1479,9 +1788,20 @@ int PASCAL HookConnect(SOCKET sock, const sockaddr *addr, int addrlen)
 	return retVal;
 }
 
+// ---------------------------------------------------------------------------
+// HookCloseSocket() -- Winsock closesocket() intercept.
+//
+// When the UO client closes the active socket:
+//   1. Calls the real closesocket().
+//   2. Clears CurrentConnection and all shared buffer lengths.
+//   3. Resets the player position / stats counters.
+//   4. If we were in-game, restore the screen size to 640x480 and undo the
+//      resize bypass patch.
+//   5. Notifies Razor via DISCONNECT.
+// ---------------------------------------------------------------------------
 int PASCAL HookCloseSocket(SOCKET sock)
 {
-	//Log("HookCloseSocket");
+	Log("HookCloseSocket: sock=%d CurrentConnection=%d", sock, CurrentConnection);
 	int retVal = (*(CLSFunc)OldCloseSocket)(sock);
 
 	if (sock == CurrentConnection && sock != 0)
@@ -1518,7 +1838,28 @@ int PASCAL HookCloseSocket(SOCKET sock)
 	return retVal;
 }
 
-int PASCAL HookSelect(int ndfs, fd_set *readfd, fd_set *writefd, fd_set *exceptfd, const struct timeval *timeout)
+// ---------------------------------------------------------------------------
+// HookSelect() -- Winsock select() intercept.
+//
+// select() is the UO client's main network wait function.  It blocks until one
+// or more sockets are ready for I/O.  We intercept it to:
+//
+//   1. SmartCPU: if enabled, cap the select() timeout so the game loop runs at
+//      ~30 fps (33,333 microseconds).  Saves CPU when the game is idle.
+//
+//   2. Server receive: if CurrentConnection was in readfd when select() returns
+//      with data ready, remove it from readfd (so the client doesn't call recv()
+//      itself), then call RecvData() to do our decryption and buffering.
+//      Afterwards, if InRecv or OutRecv have data, add CurrentConnection back
+//      to readfd so the client does call HookRecv() to get that data.
+//
+//   3. Force disconnect: if ForceDisconn is set, add CurrentConnection to
+//      exceptfd so the client sees an error and initiates a clean disconnect.
+//
+// This architecture means the client never calls recv() on the real socket
+// directly -- all server data flows through RecvData() first.
+// ---------------------------------------------------------------------------
+int PASCAL HookSelect(int ndfs, fd_set* readfd, fd_set* writefd, fd_set* exceptfd, const struct timeval* timeout)
 {
 	bool checkRecv = false;
 	bool checkErr = false;
@@ -1602,31 +1943,60 @@ int PASCAL HookSelect(int ndfs, fd_set *readfd, fd_set *writefd, fd_set *exceptf
 	}
 }
 
-bool HookFunction(const char *Dll, const char *FuncName, int Ordinal, unsigned long NewAddr,
-	unsigned long *OldAddr, unsigned long *PatchAddr)
+// ---------------------------------------------------------------------------
+// HookFunction() -- patch one entry in the PE Import Address Table (IAT).
+//
+// Winsock hooking is implemented by overwriting the function pointer that the
+// UO client's executable stores for each imported Winsock function.  When the
+// client calls (e.g.) wsock32!recv, it goes through a thunk that reads the
+// pointer from the IAT -- we replace that pointer with our hook function.
+//
+// Algorithm:
+//   1. Walk the PE IMAGE_IMPORT_DESCRIPTOR list to find 'Dll'.
+//   2. Walk that DLL's thunk chains (OriginalFirstThunk for names, FirstThunk
+//      for the actual function pointers) to find the entry matching 'FuncName'
+//      or 'Ordinal'.
+//   3. Save the original pointer in *OldAddr (so the hook can call-through).
+//   4. Save the IAT slot address in *PatchAddr.
+//   5. Call MemoryPatch() to write 'NewAddr' into the IAT slot (temporarily
+//      changing page permissions with VirtualProtect).
+//
+// Parameters:
+//   Dll       : DLL name to search (e.g., "wsock32.dll"), case-insensitive.
+//   FuncName  : Exported function name (NULL if matching by ordinal only).
+//   Ordinal   : Import ordinal (0 if matching by name only).
+//   NewAddr   : Address of our hook function to install.
+//   OldAddr   : Receives the original (pre-hook) function pointer.
+//   PatchAddr : Receives the address of the IAT slot we patched.
+//
+// Returns true on success.
+// ---------------------------------------------------------------------------
+bool HookFunction(const char* Dll, const char* FuncName, int Ordinal, unsigned long NewAddr,
+	unsigned long* OldAddr, unsigned long* PatchAddr)
 {
+	Log("HookFunction: Dll=%s FuncName=%s Ordinal=%d", Dll, FuncName ? FuncName : "(null)", Ordinal);
 	DWORD baseAddr = (DWORD)GetModuleHandle(NULL);
 	if (!baseAddr)
 		return false;
 
-	IMAGE_DOS_HEADER *idh = (IMAGE_DOS_HEADER *)baseAddr;
+	IMAGE_DOS_HEADER* idh = (IMAGE_DOS_HEADER*)baseAddr;
 
-	IMAGE_FILE_HEADER *ifh = (IMAGE_FILE_HEADER *)(baseAddr + idh->e_lfanew + sizeof(DWORD));
+	IMAGE_FILE_HEADER* ifh = (IMAGE_FILE_HEADER*)(baseAddr + idh->e_lfanew + sizeof(DWORD));
 
-	IMAGE_OPTIONAL_HEADER *ioh = (IMAGE_OPTIONAL_HEADER *)((DWORD)(ifh)+sizeof(IMAGE_FILE_HEADER));
+	IMAGE_OPTIONAL_HEADER* ioh = (IMAGE_OPTIONAL_HEADER*)((DWORD)(ifh)+sizeof(IMAGE_FILE_HEADER));
 
-	IMAGE_IMPORT_DESCRIPTOR *iid = (IMAGE_IMPORT_DESCRIPTOR *)(baseAddr + ioh->DataDirectory[IMAGE_DIRECTORY_ENTRY_IMPORT].VirtualAddress);
+	IMAGE_IMPORT_DESCRIPTOR* iid = (IMAGE_IMPORT_DESCRIPTOR*)(baseAddr + ioh->DataDirectory[IMAGE_DIRECTORY_ENTRY_IMPORT].VirtualAddress);
 
 	while (iid->Name)
 	{
-		if (_stricmp(Dll, (char *)(baseAddr + iid->Name)) == 0)
+		if (_stricmp(Dll, (char*)(baseAddr + iid->Name)) == 0)
 		{
-			IMAGE_THUNK_DATA * pThunk = (IMAGE_THUNK_DATA *)((DWORD)iid->OriginalFirstThunk + baseAddr);
-			IMAGE_THUNK_DATA * pThunk2 = (IMAGE_THUNK_DATA *)((DWORD)iid->FirstThunk + baseAddr);
+			IMAGE_THUNK_DATA* pThunk = (IMAGE_THUNK_DATA*)((DWORD)iid->OriginalFirstThunk + baseAddr);
+			IMAGE_THUNK_DATA* pThunk2 = (IMAGE_THUNK_DATA*)((DWORD)iid->FirstThunk + baseAddr);
 
 			while (pThunk->u1.AddressOfData)
 			{
-				char *name = NULL;
+				char* name = NULL;
 				int ord;
 
 				if (pThunk->u1.Ordinal & 0x80000000)
@@ -1637,9 +2007,9 @@ bool HookFunction(const char *Dll, const char *FuncName, int Ordinal, unsigned l
 				else
 				{
 					// Imported by name (with ordinal hint)
-					IMAGE_IMPORT_BY_NAME * pName = (IMAGE_IMPORT_BY_NAME *)((DWORD)pThunk->u1.AddressOfData + baseAddr);
+					IMAGE_IMPORT_BY_NAME* pName = (IMAGE_IMPORT_BY_NAME*)((DWORD)pThunk->u1.AddressOfData + baseAddr);
 					ord = pName->Hint;
-					name = (char *)pName->Name;
+					name = (char*)pName->Name;
 				}
 
 				if (ord == Ordinal || (name && FuncName && !strcmp(name, FuncName)))
@@ -1661,30 +2031,30 @@ bool HookFunction(const char *Dll, const char *FuncName, int Ordinal, unsigned l
 	return false;
 }
 
-bool FindFunction(const char *Dll, const char *FuncName, int Ordinal, unsigned long *ImpAddr, unsigned long *CallAddr)
+bool FindFunction(const char* Dll, const char* FuncName, int Ordinal, unsigned long* ImpAddr, unsigned long* CallAddr)
 {
 	DWORD baseAddr = (DWORD)GetModuleHandle(NULL);
 	if (!baseAddr)
 		return false;
 
-	IMAGE_DOS_HEADER *idh = (IMAGE_DOS_HEADER *)baseAddr;
+	IMAGE_DOS_HEADER* idh = (IMAGE_DOS_HEADER*)baseAddr;
 
-	IMAGE_FILE_HEADER *ifh = (IMAGE_FILE_HEADER *)(baseAddr + idh->e_lfanew + sizeof(DWORD));
+	IMAGE_FILE_HEADER* ifh = (IMAGE_FILE_HEADER*)(baseAddr + idh->e_lfanew + sizeof(DWORD));
 
-	IMAGE_OPTIONAL_HEADER *ioh = (IMAGE_OPTIONAL_HEADER *)((DWORD)(ifh)+sizeof(IMAGE_FILE_HEADER));
+	IMAGE_OPTIONAL_HEADER* ioh = (IMAGE_OPTIONAL_HEADER*)((DWORD)(ifh)+sizeof(IMAGE_FILE_HEADER));
 
-	IMAGE_IMPORT_DESCRIPTOR *iid = (IMAGE_IMPORT_DESCRIPTOR *)(baseAddr + ioh->DataDirectory[IMAGE_DIRECTORY_ENTRY_IMPORT].VirtualAddress);
+	IMAGE_IMPORT_DESCRIPTOR* iid = (IMAGE_IMPORT_DESCRIPTOR*)(baseAddr + ioh->DataDirectory[IMAGE_DIRECTORY_ENTRY_IMPORT].VirtualAddress);
 
 	while (iid->Name)
 	{
-		if (_stricmp(Dll, (char *)(baseAddr + iid->Name)) == 0)
+		if (_stricmp(Dll, (char*)(baseAddr + iid->Name)) == 0)
 		{
-			IMAGE_THUNK_DATA * pThunk = (IMAGE_THUNK_DATA *)((DWORD)iid->OriginalFirstThunk + baseAddr);
-			IMAGE_THUNK_DATA * pThunk2 = (IMAGE_THUNK_DATA *)((DWORD)iid->FirstThunk + baseAddr);
+			IMAGE_THUNK_DATA* pThunk = (IMAGE_THUNK_DATA*)((DWORD)iid->OriginalFirstThunk + baseAddr);
+			IMAGE_THUNK_DATA* pThunk2 = (IMAGE_THUNK_DATA*)((DWORD)iid->FirstThunk + baseAddr);
 
 			while (pThunk->u1.AddressOfData)
 			{
-				char *name = NULL;
+				char* name = NULL;
 				int ord;
 
 				if (pThunk->u1.Ordinal & 0x80000000)
@@ -1695,9 +2065,9 @@ bool FindFunction(const char *Dll, const char *FuncName, int Ordinal, unsigned l
 				else
 				{
 					// Imported by name (with ordinal hint)
-					IMAGE_IMPORT_BY_NAME * pName = (IMAGE_IMPORT_BY_NAME *)((DWORD)pThunk->u1.AddressOfData + baseAddr);
+					IMAGE_IMPORT_BY_NAME* pName = (IMAGE_IMPORT_BY_NAME*)((DWORD)pThunk->u1.AddressOfData + baseAddr);
 					ord = pName->Hint;
-					name = (char *)pName->Name;
+					name = (char*)pName->Name;
 				}
 
 				if (ord == Ordinal || (name && FuncName && !strcmp(name, FuncName)))
@@ -1724,6 +2094,7 @@ bool FindFunction(const char *Dll, const char *FuncName, int Ordinal, unsigned l
 DWORD NotoLoc = 0;
 void SetCustomNotoHue(int hue)
 {
+	Log("SetCustomNotoHue: hue=%d", hue);
 	if (!NotoLoc)
 	{
 		NotoLoc = MemFinder::Find(NOTO_HUE_STR, NOTO_HUE_LEN);
@@ -1735,9 +2106,25 @@ void SetCustomNotoHue(int hue)
 		*((int*)(NotoLoc + 8 * 4)) = hue;
 }
 
+// ---------------------------------------------------------------------------
+// PatchMemory() -- install all five Winsock hooks via IAT patching.
+//
+// Called from the WM_PROCREADY handler (MessageProc) which runs in the UO
+// thread context -- required because GetModuleHandle(NULL) must return the UO
+// executable base, not Razor's.
+//
+// The five hooks form the complete interception chain:
+//   closesocket -- detect disconnect, clean up state, notify Razor.
+//   connect     -- intercept server address, create cipher objects.
+//   recv        -- serve injected data from OutRecv back to the client.
+//   select      -- the primary recv pump; call RecvData() here.
+//   send        -- capture seed, decrypt client->server, store in InSend.
+//
+// Returns true only if ALL five hooks succeed (one failure = no hooks).
+// ---------------------------------------------------------------------------
 bool PatchMemory(void)
 {
-	//Log("Patching client functions.");
+	Log("PatchMemory: installing IAT hooks");
 
 	return
 		HookFunction("wsock32.dll", "closesocket", 3, (unsigned long)HookCloseSocket, &OldCloseSocket, &CloseSocketAddress) &&
@@ -1750,6 +2137,18 @@ bool PatchMemory(void)
 	//HookFunction( "wsock32.dll", "WSAAsyncSelect", 101, (unsigned long)HookAsyncSelect, &OldAsyncSelect, &AsyncSelectAddress );
 }
 
+// ---------------------------------------------------------------------------
+// MemoryPatch() -- overloads for writing to read-only client memory regions.
+//
+// The UO .text section is PAGE_EXECUTE_READ; IAT slots are PAGE_READONLY.
+// To patch either, we temporarily change the page protection to PAGE_READWRITE,
+// write the new value, then restore the original protection.
+//
+// Three overloads:
+//   (Address, DWORD)             -- write a 4-byte DWORD value.
+//   (Address, int, numBytes)     -- write the low 'numBytes' of an integer.
+//   (Address, void*, length)     -- write arbitrary 'length' bytes.
+// ---------------------------------------------------------------------------
 void MemoryPatch(unsigned long Address, unsigned long value)
 {
 	MemoryPatch(Address, &value, 4); // sizeof(int)
@@ -1760,15 +2159,17 @@ void MemoryPatch(unsigned long Address, int value, int numBytes)
 	MemoryPatch(Address, &value, numBytes);
 }
 
-void MemoryPatch(unsigned long Address, const void *value, int length)
+void MemoryPatch(unsigned long Address, const void* value, int length)
 {
 	DWORD OldProtect;
-	if (!VirtualProtect((void *)Address, length, PAGE_READWRITE, &OldProtect))
+	// Make the target page writable.
+	if (!VirtualProtect((void*)Address, length, PAGE_READWRITE, &OldProtect))
 		return;
 
-	memcpy((void *)Address, value, length);
+	memcpy((void*)Address, value, length);
 
-	VirtualProtect((void *)Address, length, OldProtect, &OldProtect);
+	// Restore the original page protection.
+	VirtualProtect((void*)Address, length, OldProtect, &OldProtect);
 }
 
 bool CheckParent(HWND hCheck, HWND hComp)
@@ -1830,7 +2231,7 @@ void CALLBACK MessageProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam, MS
 {
 	HWND hFore;
 
-	//Log("MessageProc hwnd=0x%x, nMsg=0x%x, wParam=0x%x, lPARAM=0x%x", hWnd, nMsg, wParam, lParam);
+	Log("MessageProc hwnd=0x%x, nMsg=0x%x, wParam=0x%x, lPARAM=0x%x", hWnd, nMsg, wParam, lParam);
 	switch (nMsg)
 	{
 		// Custom messages
@@ -1838,6 +2239,7 @@ void CALLBACK MessageProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam, MS
 		hRazorWnd = (HWND)lParam;
 		UOProcId = GetCurrentProcessId();
 		hUOWindow = hWnd;
+		Log("WM_PROCREADY: hRazorWnd=0x%x UOProcId=%d hUOWindow=0x%x", hRazorWnd, UOProcId, hUOWindow);
 
 		ClientEncrypted = (wParam & 0x08) != 0;
 		ServerEncrypted = (wParam & 0x10) != 0;
@@ -1848,13 +2250,25 @@ void CALLBACK MessageProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam, MS
 			OnAttach(NULL, 0);
 
 		if (!pShared)
+		{
+			Log("WM_PROCREADY: posting NOT_READY (NO_SHAREMEM)");
 			PostMessage(hRazorWnd, WM_UONETEVENT, NOT_READY, NO_SHAREMEM);
+		}
 		else if (CopyFailed)
+		{
+			Log("WM_PROCREADY: posting NOT_READY (NO_COPY)");
 			PostMessage(hRazorWnd, WM_UONETEVENT, NOT_READY, NO_COPY);
+		}
 		else if (!PatchMemory())
+		{
+			Log("WM_PROCREADY: posting NOT_READY (NO_PATCH)");
 			PostMessage(hRazorWnd, WM_UONETEVENT, NOT_READY, NO_PATCH);
+		}
 		else
+		{
+			Log("WM_PROCREADY: posting READY");
 			PostMessage(hRazorWnd, WM_UONETEVENT, READY, SUCCESS);
+		}
 
 		if (pShared)
 		{
@@ -1961,7 +2375,7 @@ void CALLBACK MessageProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam, MS
 				DesiredSize.cy = 0;
 			}
 		}
-			break;
+		break;
 
 		case FINDDATA:
 			FindList((DWORD)lParam, HIWORD(wParam));
@@ -1987,145 +2401,164 @@ void CALLBACK MessageProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam, MS
 			*/
 		}
 		break;
-		case WM_MOVE:
+	case WM_MOVE:
+	{
+		UINT width = LOWORD(lParam);
+		UINT height = HIWORD(lParam);
+		Log("WM_MOVE called with width: %d, height: %d", width, height);
+		if (SizePtr != 0)
 		{
-			UINT width = LOWORD(lParam);
-			UINT height = HIWORD(lParam);
-			Log("WM_MOVE called with width: %d, height: %d", width, height);
-			if (SizePtr != 0)
+			if ((DesiredSize.cy != 0 && DesiredSize.cx != 0) && (SizePtr->cx != DesiredSize.cx && SizePtr->cy != DesiredSize.cy))
 			{
-				if ((DesiredSize.cy != 0 && DesiredSize.cx != 0) && (SizePtr->cx != DesiredSize.cx && SizePtr->cy != DesiredSize.cy))
+				if (InGame == true)
 				{
-					if (InGame == true)
-					{
-						SizePtr->cx = DesiredSize.cx;
-						SizePtr->cy = DesiredSize.cy;
-					}
-					else
-					{
-						SizePtr->cx = 640;
-						SizePtr->cy = 480;
-					}
-					if (ABetterEntrypoint)
-					{
-						((void(*)(int))ABetterEntrypoint)(SizePtr->cx);
-					}
-
+					SizePtr->cx = DesiredSize.cx;
+					SizePtr->cy = DesiredSize.cy;
 				}
-			}
+				else
+				{
+					SizePtr->cx = 640;
+					SizePtr->cy = 480;
+				}
+				if (ABetterEntrypoint)
+				{
+					((void(*)(int))ABetterEntrypoint)(SizePtr->cx);
+				}
 
-
-		}
-		break;
-		//case WM_SIZE:
-		//break;
-		/*if (wParam == 2 && pMsg && pMsg->hwnd == hWnd)
-		pMsg->lParam = lParam = MAKELONG( 800, 600 );
-		break;
-		*/
-		case WM_GETMINMAXINFO:
-			if (false /*SetMaxSize*/)
-			{
-				int x = ((MINMAXINFO*)lParam)->ptMaxSize.x;
-				int y = ((MINMAXINFO*)lParam)->ptMaxSize.y;
-				int x_track = ((MINMAXINFO*)lParam)->ptMaxTrackSize.x;
-				int y_track = ((MINMAXINFO*)lParam)->ptMaxTrackSize.y;
-				Log("WM_GETMINMAXINFO called with x: %d y: %d x_track: %d y_track: %d", x, y, x_track, y_track);
-				/*
-			((MINMAXINFO *)lParam)->ptMaxSize.x = 800;
-			((MINMAXINFO *)lParam)->ptMaxSize.y = 600;
-			((MINMAXINFO *)lParam)->ptMaxTrackSize.x = 800;
-			((MINMAXINFO *)lParam)->ptMaxTrackSize.y = 600;
-			*/
-			}
-			break;
-
-			// Macro stuff
-		case WM_SYSKEYDOWN:
-		case WM_KEYDOWN:
-		{
-			/** Get the shift state and send it along with the keypress **/
-			int lcontrol = (int)(GetAsyncKeyState(VK_CONTROL));
-			int lalt = (int)(GetAsyncKeyState(VK_MENU));
-			int lshift = (int)(GetAsyncKeyState(VK_SHIFT));
-			unsigned int mods = 0;
-			if (lcontrol != 0)
-			{
-				mods |= 131072;
-			}
-			if (lshift != 0)
-			{
-				mods |= 65536;
-			}
-			if (lalt != 0)
-			{
-				mods |= 262144;
-			}
-			mods |= ((int)wParam);
-
-			if (pMsg && !SendMessage(hRazorWnd, WM_UONETEVENT, KEYDOWN, mods))
-			{
-				// dont give the key to the client
-				pMsg->message = WM_NULL;
-				pMsg->lParam = 0;
-				pMsg->wParam = 0;
 			}
 		}
-		break;
 
-		case WM_SYSKEYUP:
-		case WM_KEYUP:
-			if (pMsg && wParam == VK_SNAPSHOT) // VK_SNAPSHOT (Print Screen) Doesn't seem to send a KeyDown message
-				SendMessage(hRazorWnd, WM_UONETEVENT, KEYDOWN, wParam);
-			break;
 
-		case WM_MOUSEWHEEL:
-			PostMessage(hRazorWnd, WM_UONETEVENT, MOUSE, MAKELONG(0, (((short)HIWORD(wParam)) < 0 ? -1 : 1)));
-			break;
-		case WM_MBUTTONDOWN:
-			PostMessage(hRazorWnd, WM_UONETEVENT, MOUSE, MAKELONG(1, 0));
-			break;
-		case WM_XBUTTONDOWN:
-			PostMessage(hRazorWnd, WM_UONETEVENT, MOUSE, MAKELONG(HIWORD(wParam) + 1, 0));
-			break;
-
-			//Activation tracking :
-		case WM_ACTIVATE:
-			Active = wParam;
-			PostMessage(hRazorWnd, WM_UONETEVENT, ACTIVATE, wParam);
-			break;
-		case WM_KILLFOCUS:
-			hFore = GetForegroundWindow();
-			if (((HWND)wParam) != hRazorWnd && hFore != hRazorWnd && ((HWND)wParam) != hMapWnd && hFore != hMapWnd
-				&& !CheckParent(hFore, hRazorWnd))
-			{
-				PostMessage(hRazorWnd, WM_UONETEVENT, FOCUS, FALSE);
-			}
-			break;
-		case WM_SETFOCUS:
-			PostMessage(hRazorWnd, WM_UONETEVENT, FOCUS, TRUE);
-			break;
-
-			//Custom title bar:
-		case WM_NCACTIVATE:
-			Active = wParam;
-			//fallthrough
-		case WM_NCPAINT:
-		case WM_GETICON:
-		case WM_SETTEXT:
-		case WM_CUSTOMTITLE:
-			CheckTitlebarAttr(hWnd);
-			RedrawTitleBar(hWnd, Active);
-			break;
-		}
-		return;
 	}
+	break;
+	//case WM_SIZE:
+	//break;
+	/*if (wParam == 2 && pMsg && pMsg->hwnd == hWnd)
+	pMsg->lParam = lParam = MAKELONG( 800, 600 );
+	break;
+	*/
+	case WM_GETMINMAXINFO:
+		if (false /*SetMaxSize*/)
+		{
+			int x = ((MINMAXINFO*)lParam)->ptMaxSize.x;
+			int y = ((MINMAXINFO*)lParam)->ptMaxSize.y;
+			int x_track = ((MINMAXINFO*)lParam)->ptMaxTrackSize.x;
+			int y_track = ((MINMAXINFO*)lParam)->ptMaxTrackSize.y;
+			Log("WM_GETMINMAXINFO called with x: %d y: %d x_track: %d y_track: %d", x, y, x_track, y_track);
+			/*
+		((MINMAXINFO *)lParam)->ptMaxSize.x = 800;
+		((MINMAXINFO *)lParam)->ptMaxSize.y = 600;
+		((MINMAXINFO *)lParam)->ptMaxTrackSize.x = 800;
+		((MINMAXINFO *)lParam)->ptMaxTrackSize.y = 600;
+		*/
+		}
+		break;
 
+		// Macro stuff
+	case WM_SYSKEYDOWN:
+	case WM_KEYDOWN:
+	{
+		/** Get the shift state and send it along with the keypress **/
+		int lcontrol = (int)(GetAsyncKeyState(VK_CONTROL));
+		int lalt = (int)(GetAsyncKeyState(VK_MENU));
+		int lshift = (int)(GetAsyncKeyState(VK_SHIFT));
+		unsigned int mods = 0;
+		if (lcontrol != 0)
+		{
+			mods |= 131072;
+		}
+		if (lshift != 0)
+		{
+			mods |= 65536;
+		}
+		if (lalt != 0)
+		{
+			mods |= 262144;
+		}
+		mods |= ((int)wParam);
+
+		if (pMsg && !SendMessage(hRazorWnd, WM_UONETEVENT, KEYDOWN, mods))
+		{
+			// dont give the key to the client
+			pMsg->message = WM_NULL;
+			pMsg->lParam = 0;
+			pMsg->wParam = 0;
+		}
+	}
+	break;
+
+	case WM_SYSKEYUP:
+	case WM_KEYUP:
+		if (pMsg && wParam == VK_SNAPSHOT) // VK_SNAPSHOT (Print Screen) Doesn't seem to send a KeyDown message
+			SendMessage(hRazorWnd, WM_UONETEVENT, KEYDOWN, wParam);
+		break;
+
+	case WM_MOUSEWHEEL:
+		PostMessage(hRazorWnd, WM_UONETEVENT, MOUSE, MAKELONG(0, (((short)HIWORD(wParam)) < 0 ? -1 : 1)));
+		break;
+	case WM_MBUTTONDOWN:
+		PostMessage(hRazorWnd, WM_UONETEVENT, MOUSE, MAKELONG(1, 0));
+		break;
+	case WM_XBUTTONDOWN:
+		PostMessage(hRazorWnd, WM_UONETEVENT, MOUSE, MAKELONG(HIWORD(wParam) + 1, 0));
+		break;
+
+		//Activation tracking :
+	case WM_ACTIVATE:
+		Active = wParam;
+		PostMessage(hRazorWnd, WM_UONETEVENT, ACTIVATE, wParam);
+		break;
+	case WM_KILLFOCUS:
+		hFore = GetForegroundWindow();
+		if (((HWND)wParam) != hRazorWnd && hFore != hRazorWnd && ((HWND)wParam) != hMapWnd && hFore != hMapWnd
+			&& !CheckParent(hFore, hRazorWnd))
+		{
+			PostMessage(hRazorWnd, WM_UONETEVENT, FOCUS, FALSE);
+		}
+		break;
+	case WM_SETFOCUS:
+		PostMessage(hRazorWnd, WM_UONETEVENT, FOCUS, TRUE);
+		break;
+
+		//Custom title bar:
+	case WM_NCACTIVATE:
+		Active = wParam;
+		//fallthrough
+	case WM_NCPAINT:
+	case WM_GETICON:
+	case WM_SETTEXT:
+	case WM_CUSTOMTITLE:
+		CheckTitlebarAttr(hWnd);
+		RedrawTitleBar(hWnd, Active);
+		break;
+	}
+	return;
+}
+
+// ---------------------------------------------------------------------------
+// GetMsgHookFunc() -- WH_GETMESSAGE hook callback.
+//
+// Fires inside the UO thread when a message is retrieved (removed) from the
+// UO thread message queue.  This is the primary IPC path from Razor:
+//   - Razor PostMessages WM_PROCREADY / WM_UONETEVENT to hUOWindow.
+//   - The hook fires, MessageProc() processes the command, and we can safely
+//     call any Win32 API that requires the UO thread context.
+//
+// We only process messages directed to hUOWindow (or WM_PROCREADY before
+// hUOWindow is known).  All other messages are passed through unchanged.
+// 'pMsg' is a MSG* that can be modified (e.g., setting message = WM_NULL
+// suppresses delivery to the UO window's wndproc).
+// ---------------------------------------------------------------------------
 LRESULT CALLBACK GetMsgHookFunc(int Code, WPARAM Flag, LPARAM pMsg)
 {
+	if (Code >= 0 && Flag != PM_NOREMOVE)
+	{
+		MSG* DbgMsg = (MSG*)pMsg;
+		Log("GetMsgHookFunc: Code=%d msg=0x%x hwnd=0x%x", Code, DbgMsg->message, DbgMsg->hwnd);
+	}
 	if (Code >= 0 && Flag != PM_NOREMOVE) //dont process messages until they are removed from the queue
 	{
-		MSG *Msg = (MSG*)pMsg;
+		MSG* Msg = (MSG*)pMsg;
 		/*
 		Msg->message ^= 0x11;
 		Msg->message ^= Disabled * 101;
@@ -2139,11 +2572,23 @@ LRESULT CALLBACK GetMsgHookFunc(int Code, WPARAM Flag, LPARAM pMsg)
 	return CallNextHookEx(NULL, Code, Flag, pMsg);
 }
 
+// ---------------------------------------------------------------------------
+// WndProcRetHookFunc() -- WH_CALLWNDPROCRET hook callback.
+//
+// Fires inside the UO thread after the UO window procedure has processed a
+// message.  Used for messages that must be handled after the UO wndproc runs
+// (e.g., WM_NCPAINT / WM_NCACTIVATE for the custom title bar) where we draw
+// on top of whatever the UO wndproc painted.
+//
+// Unlike GetMsgHookFunc, the MSG pointer here is not modifiable (CWPRETSTRUCT).
+// MessageProc() receives NULL for pMsg to indicate this.
+// ---------------------------------------------------------------------------
 LRESULT CALLBACK WndProcRetHookFunc(int Code, WPARAM Flag, LPARAM pMsg)
 {
 	if (Code >= 0)
 	{
-		CWPRETSTRUCT *Msg = (CWPRETSTRUCT *)(pMsg);
+		CWPRETSTRUCT* Msg = (CWPRETSTRUCT*)(pMsg);
+		Log("WndProcRetHookFunc: Code=%d msg=0x%x hwnd=0x%x", Code, Msg->message, Msg->hwnd);
 		/*
 		Msg->message ^= 0x11;
 		Msg->message ^= Disabled * 101;
@@ -2157,23 +2602,36 @@ LRESULT CALLBACK WndProcRetHookFunc(int Code, WPARAM Flag, LPARAM pMsg)
 	return CallNextHookEx(NULL, Code, Flag, pMsg);
 }
 
+// ---------------------------------------------------------------------------
+// UOAWndProc() -- window procedure for the "UOASSIST-TP-MSG-WND" helper window.
+//
+// Razor creates this window class in InstallLibrary() to receive forwarded
+// UOAssist-compatible messages (WM_USER+200 .. WM_USER+314).  Any message in
+// that range is forwarded to hRazorWnd; all others get default processing.
+// ---------------------------------------------------------------------------
 LRESULT CALLBACK UOAWndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
 {
 	if (nMsg >= WM_USER + 200 && nMsg < WM_USER + 315)
-		return SendMessage(hRazorWnd, nMsg, wParam, lParam);
+		return SendMessage(hRazorWnd, nMsg, wParam, lParam); // Forward to Razor.
 	else
 		return DefWindowProc(hWnd, nMsg, wParam, lParam);
 }
 
-void Log(const char *format, ...)
+// ---------------------------------------------------------------------------
+// Log() -- optional debug logging to C:\Crypt.log.
+//
+// Only active when _DEBUG and LOGGING are both defined at compile time.
+// Each call appends a timestamped line.  Safe to call from any thread.
+// ---------------------------------------------------------------------------
+void Log(const char* format, ...)
 {
 #ifdef _DEBUG
 #ifdef LOGGING
-	FILE *log = fopen("C:\\Crypt.log", "a");
+	FILE* log = fopen("C:\\RazorCrypt.log", "a");
 	if (log)
 	{
 		char timeStr[256];
-		struct tm *newtime;
+		struct tm* newtime;
 		time_t aclock;
 
 		time(&aclock);

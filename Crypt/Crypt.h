@@ -1,106 +1,162 @@
 #pragma once
 #pragma pack(1)
 
+// Crypt.h -- Main header for Crypt.dll
+//
+// Crypt.dll is injected into the Ultima Online client process. Once inside, it:
+//   1. Hooks Winsock functions (send/recv/connect/closesocket/select) by patching
+//      the client's PE import address table (IAT) so that every network call goes
+//      through our replacement functions first.
+//   2. Decrypts all traffic using LoginEncryption (XOR stream cipher, login phase)
+//      or OSIEncryption (Twofish + MD5-XOR stream, game phase).
+//   3. Places decrypted data into a named shared-memory region (SharedMemory below)
+//      that Razor / UO_CoPilot reads via MapViewOfFile.
+//   4. Communicates events (CONNECT, RECV, SEND, DISCONNECT, ...) back to Razor's
+//      window via PostMessage / SendMessage using the UONET_MESSAGE codes below.
+//
+// Two injection paths exist:
+//   * OnAttach()        -- called very early, before the UO window exists, to
+//                          scan memory for encryption keys / packet table.
+//   * InstallLibrary()  -- called by Razor after the UO window is visible; installs
+//                          the Windows message hooks (WH_CALLWNDPROCRET / WH_GETMESSAGE)
+//                          that drive the message-processing loop.
+
+// Exported DLL version strings used for compatibility checks with Razor.
 #define DLL_VERSION "0.6.62"
 #define DLL_VERSION_OLD "1.0.14"  // Not change IT!
 
+// Convenience macros so every exported symbol has __declspec(dllexport).
 #define DLLFUNCTION __declspec(dllexport)
 #define DLLVAR DLLFUNCTION
 
 #ifdef _DEBUG
-  //#define LOGGING
+  //#define LOGGING   // Uncomment to enable file logging in debug builds.
 #endif
 
+// ---------------------------------------------------------------------------
+// IError -- return codes from InstallLibrary() and related setup functions.
+// ---------------------------------------------------------------------------
 enum IError
 {
-	SUCCESS,
-	NO_UOWND,
-	NO_TID,
-	NO_HOOK,
-	NO_SHAREMEM,
-	LIB_DISABLED,
-	NO_PATCH,
-	NO_COPY,
-	INVALID_PARAMS,
+	SUCCESS,       // Everything went fine.
+	NO_UOWND,      // Could not find the UO client window (FindWindow failed).
+	NO_TID,        // Could not get the UO thread/process ID.
+	NO_HOOK,       // SetWindowsHookEx failed (e.g., insufficient permissions).
+	NO_SHAREMEM,   // CreateFileMapping / MapViewOfFile failed.
+	LIB_DISABLED,  // Library has been administratively disabled.
+	NO_PATCH,      // IAT patching of Winsock functions failed.
+	NO_COPY,       // Memory scan for the packet table or crypto keys failed.
+	INVALID_PARAMS,// Caller passed bad arguments.
 
-	UNKNOWN,
+	UNKNOWN,       // Unclassified failure.
 };
 
+// ---------------------------------------------------------------------------
+// UONET_MESSAGE -- IPC message identifiers sent via PostMessage / WM_UONETEVENT
+// to Razor's window so it knows what just happened on the network.
+// ---------------------------------------------------------------------------
 enum UONET_MESSAGE
 {
-	SEND = 1,
-	RECV = 2,
-	READY = 3,
-	NOT_READY = 4,
-	CONNECT = 5,
-	DISCONNECT = 6,
-	KEYDOWN = 7,
-	MOUSE = 8,
+	SEND = 1,         // Outgoing (client -> server) packet data is ready in InSend.
+	RECV = 2,         // Incoming (server -> client) packet data is ready in InRecv.
+	READY = 3,        // DLL is fully initialised and hooks are in place.
+	NOT_READY = 4,    // Initialisation failed; lParam carries the IError code.
+	CONNECT = 5,      // Socket connected; lParam is the server IP address.
+	DISCONNECT = 6,   // Socket closed or reset.
+	KEYDOWN = 7,      // Key press forwarded from the UO window.
+	MOUSE = 8,        // Mouse wheel / middle / X-button event.
 
-	ACTIVATE = 9,
-	FOCUS = 10,
+	ACTIVATE = 9,     // WM_ACTIVATE forwarded (UO window active/inactive).
+	FOCUS = 10,       // WM_SETFOCUS / WM_KILLFOCUS forwarded.
 
-	CLOSE = 11,
-	STAT_BAR = 12,
-	NOTO_HUE = 13,
-	DLL_ERROR = 14,
+	CLOSE = 11,       // DLL is being unloaded (DllMain DLL_PROCESS_DETACH).
+	STAT_BAR = 12,    // Request to draw the custom stat bar.
+	NOTO_HUE = 13,    // Set a custom notoriety hue value in client memory.
+	DLL_ERROR = 14,   // An internal error occurred; lParam carries IError.
 
-	DEATH_MSG = 15,
+	DEATH_MSG = 15,   // Patch the "You are dead." string in the client.
 
-	CALIBRATE_POS = 16,
-	GET_POS = 17,
+	CALIBRATE_POS = 16, // Scan client memory to find the player position structure.
+	GET_POS = 17,       // Read the player position from the located structure.
 
-	OPEN_RPV = 18,
+	OPEN_RPV = 18,    // Open the Razor packet viewer.
 
-	SETWNDSIZE = 19,
+	SETWNDSIZE = 19,  // Resize the UO client viewport.
 
-	FINDDATA = 20,
+	FINDDATA = 20,    // Memory scan for a user-supplied data pattern.
 
-	SMART_CPU = 21,
-	NEGOTIATE = 22,
-	SET_MAP_HWND = 23,
+	SMART_CPU = 21,   // Enable/disable SmartCPU (30 fps cap via select() timeout).
+	NEGOTIATE = 22,   // Toggle server-feature negotiation (AuthBits handshake).
+	SET_MAP_HWND = 23,// Register the map overlay window so focus events are correct.
 
-	// ZIPPY REV 80	SET_FWD_HWND = 24,
+	// ZIPPY REV 80	SET_FWD_HWND = 24,  // (unused, preserved for ABI compat)
 };
 
+// ---------------------------------------------------------------------------
+// Buffer -- one ring-buffer slot inside SharedMemory.
+//
+// Start  : byte offset within Buff[] where valid data begins.
+// Length : number of valid bytes starting at Buff[Start].
+// Buff[] : raw storage; 512 KB per direction per side = ~2 MB total.
+//
+// When Start drifts past the halfway point, Maintenance() shifts the live
+// bytes back to offset 0 to prevent running off the end of the array.
+// ---------------------------------------------------------------------------
 //#define SHARED_BUFF_SIZE 0x80000 // Client's buffers are 500k
 #define SHARED_BUFF_SIZE 524288 // 262144 // 250k
 struct Buffer
 {
-	int Length;
-	int Start;
-	BYTE Buff[SHARED_BUFF_SIZE];
+	int Length;              // Number of valid bytes currently in Buff[Start..].
+	int Start;               // Index into Buff[] of the first valid byte.
+	BYTE Buff[SHARED_BUFF_SIZE]; // Raw packet data (plaintext after decryption).
 };
 
+// ---------------------------------------------------------------------------
+// SharedMemory -- the 2.1 MB named file mapping that Razor reads.
+//
+// Created by CreateSharedMemory() as "UONetSharedFM_<pid>" with PAGE_READWRITE.
+// A named mutex "UONetSharedCOMM_<pid>" serialises all accesses.
+//
+// Field layout (do NOT reorder -- Razor expects exact offsets):
+//   InRecv  : Decrypted data received FROM the server (written by HookRecv).
+//   OutRecv : Plaintext data that Razor wants TO INJECT as if the server sent it.
+//   InSend  : Decrypted data sent BY the client (written by HookSend).
+//   OutSend : Plaintext data that Razor wants to SEND on behalf of the client.
+// ---------------------------------------------------------------------------
 struct SharedMemory
 {
 	// Do *not* mess with this struct.  Really.  I mean it.
-	Buffer InRecv;
-	Buffer OutRecv;
-	Buffer InSend;
-	Buffer OutSend;
+	Buffer InRecv;               // Server -> client (decrypted), ready for Razor to read.
+	Buffer OutRecv;              // Razor -> client (will be compressed/encrypted by HookRecv).
+	Buffer InSend;               // Client -> server (decrypted), ready for Razor to read.
+	Buffer OutSend;              // Razor -> server (will be encrypted by FlushSendData).
 
-	char TitleBar[1024];
-	bool ForceDisconn;
-	bool AllowDisconn;
-	unsigned int TotalSend;
-	unsigned int TotalRecv;
-	unsigned short PacketTable[256];
-	char DataPath[256];
-	char DeathMsg[16];
-	int Position[3];
-	unsigned char CheatKey[16];
-	bool AllowNegotiate;
-	unsigned char AuthBits[8];
-	bool IsHaxed;
-	unsigned int ServerIP;
-	unsigned short ServerPort;
-	char UOVersion[16];
+	char TitleBar[1024];         // Custom title-bar text with embedded markup (color/icon tags).
+	bool ForceDisconn;           // If true, HookRecv returns WSAECONNRESET to force a disconnect.
+	bool AllowDisconn;           // Gates whether ForceDisconn actually fires (can be paused).
+	unsigned int TotalSend;      // Running byte count of outgoing data (approximate, not mutex'd).
+	unsigned int TotalRecv;      // Running byte count of incoming data.
+	unsigned short PacketTable[256]; // Per-packet-ID byte lengths; 0x8000+ = dynamic (read word).
+	char DataPath[256];          // Filesystem path to the UO data directory (art.mul, hues.mul, ...).
+	char DeathMsg[16];           // Replacement text for the "You are dead." string in client memory.
+	int Position[3];             // Player position (calibrated via CALIBRATE_POS): [z, y, x_or_addr].
+	unsigned char CheatKey[16];  // Anti-cheat token embedded in character-selection packets.
+	bool AllowNegotiate;         // If true, DLL participates in the AuthBits negotiation handshake.
+	unsigned char AuthBits[8];   // 8-byte authentication token extracted from the character list (0xA9).
+	bool IsHaxed;                // Internal flag; set false on InstallLibrary, true if tamper detected.
+	unsigned int ServerIP;       // Target server IPv4 address (used to redirect HookConnect).
+	unsigned short ServerPort;   // Target server port.
+	char UOVersion[16];          // UO client version string from the native GetUOVersion function.
 };
 
+// ---------------------------------------------------------------------------
+// PatchInfo -- RAII snapshot of a memory range before it is patched.
+// Stores the original bytes so the patch can be reversed if needed.
+// ---------------------------------------------------------------------------
 class PatchInfo
 {
 public:
+	// Snapshot 'len' bytes starting at 'addr'.
 	PatchInfo(DWORD addr, int len)
 	{
 		Address = addr;
@@ -114,64 +170,86 @@ public:
 		delete[] Data;
 	}
 
-	DWORD Address;
-	int Length;
-	char *Data;
+	DWORD Address; // Address of the patched region.
+	int Length;    // Number of bytes saved / patched.
+	char* Data;    // Original bytes before patching.
 };
 
-#define WM_PROCREADY WM_USER
-#define WM_UONETEVENT WM_USER+1
-#define WM_CUSTOMTITLE WM_USER+2
-#define WM_UOA_MSG WM_USER+3
+// ---------------------------------------------------------------------------
+// Windows user-message IDs used for Razor <-> DLL communication.
+// WM_USER is the first application-specific message number.
+// ---------------------------------------------------------------------------
+#define WM_PROCREADY WM_USER       // Sent from InstallLibrary() to the UO window to trigger DLL init.
+#define WM_UONETEVENT WM_USER+1    // General IPC event; wParam = UONET_MESSAGE code, lParam = data.
+#define WM_CUSTOMTITLE WM_USER+2   // Razor asks the DLL to repaint the custom title bar.
+#define WM_UOA_MSG WM_USER+3       // Forwarded UOAssist-compatible messages.
 // ZIPPY REV 80#define WM_SETFWDWND WM_USER+4
 // ZIPPY REV 80#define WM_FWDPACKET WM_USER+5
 
+// WM_XBUTTONDOWN may not be defined in older SDKs.
 #ifndef WM_XBUTTONDOWN
 #define WM_XBUTTONDOWN                  0x020B
 #endif
 
-extern HWND hUOWindow;
-extern HINSTANCE hInstance;
-extern SharedMemory *pShared;
-extern HANDLE CommMutex;
+// ---------------------------------------------------------------------------
+// Globals declared in Crypt.cpp, shared across translation units.
+// ---------------------------------------------------------------------------
+extern HWND hUOWindow;      // Handle to the UO client window.
+extern HINSTANCE hInstance; // Handle to this DLL module.
+extern SharedMemory* pShared;// Pointer to the mapped shared memory region.
+extern HANDLE CommMutex;    // Named mutex guarding pShared accesses.
 
-DLLFUNCTION int InstallLibrary(HWND PostWindow, DWORD pId);
-DLLFUNCTION void Shutdown(bool closeClient);
-DLLFUNCTION HWND FindUOWindow();
-DLLFUNCTION void *GetSharedAddress();
-DLLFUNCTION int GetPacketLength(unsigned char *data, int len);
-DLLFUNCTION bool IsDynLength(unsigned char packet);
-DLLFUNCTION int GetUOProcId();
-DLLFUNCTION DWORD InitializeLibrary(const char *);
-DLLFUNCTION HANDLE GetCommMutex();
+// ---------------------------------------------------------------------------
+// Exported API used by Razor / UO_CoPilot.
+// ---------------------------------------------------------------------------
+DLLFUNCTION int InstallLibrary(HWND PostWindow, DWORD pId); // Setup hooks, shared mem, window hooks.
+DLLFUNCTION void Shutdown(bool closeClient);                 // Tear down hooks, optionally kill client.
+DLLFUNCTION HWND FindUOWindow();                             // Locate the UO client window by class name.
+DLLFUNCTION void* GetSharedAddress();                        // Return the pShared pointer to Razor.
+DLLFUNCTION int GetPacketLength(unsigned char* data, int len);// Decode packet length from the table.
+DLLFUNCTION bool IsDynLength(unsigned char packet);          // True if the packet has a dynamic length.
+DLLFUNCTION int GetUOProcId();                               // Return the UO process ID.
+DLLFUNCTION DWORD InitializeLibrary(const char*);           // Alternate init path (legacy).
+DLLFUNCTION HANDLE GetCommMutex();                           // Return CommMutex to Razor.
 
-LRESULT CALLBACK UOAWndProc(HWND, UINT, WPARAM, LPARAM);
-void Log(const char *format, ...);
-void MemoryPatch(unsigned long, unsigned long);
-void MemoryPatch(unsigned long, int, int);
-void MemoryPatch(unsigned long, const void *, int);
-void RedrawTitleBar(HWND, bool);
-void CheckTitlebarAttr(HWND);
-void FreeArt();
-void InitThemes();
-bool PatchStatusBar(BOOL preAOS);
+// Internal callback prototypes (installed via SetWindowsHookEx).
+LRESULT CALLBACK UOAWndProc(HWND, UINT, WPARAM, LPARAM);    // Window proc for the helper message window.
+void Log(const char* format, ...);                           // Debug logging (only active if LOGGING is defined).
+void MemoryPatch(unsigned long, unsigned long);               // Overwrite a DWORD in client memory (VirtualProtect).
+void MemoryPatch(unsigned long, int, int);                   // Overwrite N bytes with an integer value.
+void MemoryPatch(unsigned long, const void*, int);          // Overwrite N bytes with arbitrary data.
+void RedrawTitleBar(HWND, bool);                             // Repaint the custom title bar for the UO window.
+void CheckTitlebarAttr(HWND);                                // Toggle DWM non-client rendering when title bar is active.
+void FreeArt();                                              // Release all cached UO art items from memory.
+void InitThemes();                                           // Dynamically load uxtheme.dll / dwmapi.dll for theming.
+bool PatchStatusBar(BOOL preAOS);                            // Install the custom HP/mana/stam status bar hook.
 
+// ---------------------------------------------------------------------------
+// Pattern strings used by MemFinder to locate data in client memory.
+// ---------------------------------------------------------------------------
+
+// PACKET_TBL_STR -- two adjacent DWORDs (7 and 3) that appear immediately
+// before the ClientPacketInfo array.  The offset PACKET_TBL_OFFSET is
+// subtracted from the match address to reach the table base.
 //#define PACKET_TBL_STR "Got Logout OK packet!\0\0\0"
 //#define PACKET_TS_LEN 24
 #define PACKET_TBL_STR "\x07\0\0\0\x03\0\0\0"
 #define PACKET_TS_LEN 8
-#define PACKET_TBL_OFFSET (0-(8+12+12))
+#define PACKET_TBL_OFFSET (0-(8+12+12))  // Bytes before the match where the table actually starts.
 
+// CRYPT_KEY_STR -- disassembly signature for the 2D client login-key update loop.
+// The two DWORDs at addr+CRYPT_KEY_LEN are Key1 and Key1+6 bytes later is Key2.
 //search disassembly for
 //static key1 C1 E2 1F D1 E8 D1 E9 0B C6 0B CA 35 static key2 81 F1 dynamic key 4D
 #define CRYPT_KEY_STR "\xC1\xE2\x1F\xD1\xE8\xD1\xE9\x0B\xC6\x0B\xCA\x35"
 #define CRYPT_KEY_LEN 12
 
+// CRYPT_KEY_STR_3D -- login-key pattern for the 3D (Third Dawn) client.
 //static key1 D1 E8 0B C6 C1 E2 1F 35 static key2 D1 E9 89 83 F0 00 42 00 8B 45 08 0B CA 81 F1 dynamic key 48
 #define CRYPT_KEY_STR_3D "\xD1\xE8\x0B\xC6\xC1\xE2\x1F\x35"
 #define CRYPT_KEY_3D_LEN 8
 
-/* To calculate login keys:
+/* Login key derivation formulae (for reference, not used at runtime):
 key1 = ( Major << 23 ) | ( Minor << 14 ) | ( Revision << 4 );
 key1 ^= ( Revision * Revision ) << 9;
 key1 ^= ( Minor * Minor );
@@ -204,6 +282,7 @@ key2 ^= 0xA31D527F;
 */
 // -- -- -- -- -- --
 // 1F D1 E8 0B C6 47 33 05 memoryloc_2 C1 E2 1F 89 83 F8 00 0A 00 D1 E8 0B C6 8B 35 memoryloc_2 33 C6 D1 E9 89 83 F8 00 0A 00 0B Ca 8b 15 memoryloc_1 33 CA
+// Pattern for newer 2D client builds where the key XOR pattern shifted slightly.
 #define CRYPT_KEY_STR_NEW "\x1F\xD1\xE8\x0B\xC6\x47\x33\x05"
 #define CRYPT_KEY_NEW_LEN 8
 
@@ -226,9 +305,14 @@ key2 ^= 0xA31D527F;
 .text:0041C5C7 85 DB                             test    ebx, ebx
 */
 // E8 C1 E7 1F 0B C7 33 05 memoryloc_2
+// Pattern for even newer 2D client versions (slightly different opcode sequencing).
 #define CRYPT_KEY_STR_MORE_NEW "\xE8\xC1\xE7\x1F\x0B\xC7\x33\x05"
 #define CRYPT_KEY_MORE_NEW_LEN 8
 
+// ---------------------------------------------------------------------------
+// Smooth-animation and speed-hack byte patterns (currently commented out in
+// OnAttach but left here for reference / future re-enabling).
+// ---------------------------------------------------------------------------
 #define ANIM_PATTERN_1 "\x55\x68"
 // \xn\xn\xn\xn
 #define ANIM_PATTERN_2 "\x68"
@@ -269,6 +353,7 @@ key2 ^= 0xA31D527F;
 0x3d, null, null, null, null        // cmp eax, dword
 };*/
 
+// Speed-hack pattern: locates the frame-rate limiter compare instruction.
 #define SPEEDHACK_PATTERN_1 "\x8B\xFE\x2B\x3D"
 // \xn\xn\xn\xn
 #define SPEEDHACK_PATTERN_2 "\x83\xFF"
