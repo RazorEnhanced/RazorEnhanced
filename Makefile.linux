@@ -1,0 +1,19 @@
+# =============================================================================
+# Makefile.linux — Linux / Mono platform variables
+# Included by the root Makefile; do not invoke directly.
+# =============================================================================
+
+# Solution that excludes native C++ projects (Crypt, Loader)
+SLN            := Razor.Linux.sln
+
+# msbuild from the mono-msbuild package (or dotnet CLI msbuild)
+MSBUILD        := msbuild
+
+# Solution-level platform used when building Razor.Linux.sln
+BUILD_PLATFORM := x64
+
+# Output directory produced by the x64 project configuration
+OUT_DIR         = bin/x64/$(CONFIG)
+
+# Managed executables require the Mono runtime on Linux
+RUN_CMD        := mono

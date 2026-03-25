@@ -1,0 +1,23 @@
+# =============================================================================
+# Makefile.windows — Windows / MSBuild platform variables
+# Included by the root Makefile; do not invoke directly.
+#
+# Prerequisites:
+#   msbuild must be on PATH.  The easiest way is to open a
+#   "Developer Command Prompt for VS" or run:
+#     "C:\Program Files\Microsoft Visual Studio\2022\*\MSBuild\Current\Bin\msbuild.exe"
+# =============================================================================
+
+# Full Windows solution including native C++ projects (Crypt, Loader)
+SLN            := Razor.sln
+
+MSBUILD        := msbuild.exe
+
+# "Any CPU" maps Razor → Debug|x86 and Crypt/Loader → Debug|Win32
+BUILD_PLATFORM := Any CPU
+
+# Output directory for the x86/Win32 configuration
+OUT_DIR         = bin/Win32/$(CONFIG)
+
+# On Windows the .exe is run directly; no runtime wrapper needed
+RUN_CMD        :=
