@@ -38,6 +38,7 @@ MSBUILD_FLAGS = -p:Configuration=$(CONFIG) "-p:Platform=$(BUILD_PLATFORM)"
 all: build
 
 build:
+	$(PREP_CMD)
 	$(MSBUILD) $(SLN) $(MSBUILD_FLAGS)
 
 run: build

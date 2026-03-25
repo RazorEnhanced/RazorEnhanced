@@ -17,3 +17,7 @@ OUT_DIR         = bin/x64/$(CONFIG)
 
 # Managed executables require the Mono runtime on Linux
 RUN_CMD        := mono
+
+# Mono's MSBuild does not create the intermediate output directory before
+# GenerateBindingRedirects runs, so we pre-create it here.
+PREP_CMD        = mkdir -p Razor/obj/x64/$(CONFIG)

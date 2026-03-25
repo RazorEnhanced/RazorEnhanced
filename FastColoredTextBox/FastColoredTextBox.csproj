@@ -7,12 +7,11 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{6DD14A85-CCFC-4774-BD26-0F5772512319}</ProjectGuid>
     <OutputType>Library</OutputType>
-	  <LangVersion>preview</LangVersion>
+    <LangVersion>preview</LangVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>FastColoredTextBoxNS</RootNamespace>
     <AssemblyName>FastColoredTextBox</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <LangVersion>9.0</LangVersion>
 	<Nullable>disable</Nullable>	
 	<NoWarn>CS8618;CS8625;CS8600;CS8601;CS8602;CS8603;CS8604</NoWarn>
     <FileAlignment>512</FileAlignment>
@@ -51,7 +50,7 @@
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
+    <LangVersion>preview</LangVersion>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>

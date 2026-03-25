@@ -21,3 +21,6 @@ OUT_DIR         = bin/Win32/$(CONFIG)
 
 # On Windows the .exe is run directly; no runtime wrapper needed
 RUN_CMD        :=
+
+# No pre-build directory prep needed on Windows
+PREP_CMD        :=
