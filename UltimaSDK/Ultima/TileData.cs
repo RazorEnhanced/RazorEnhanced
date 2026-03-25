@@ -444,10 +444,10 @@ namespace Ultima
     /// </summary>
     public struct ItemData
     {
-        public ItemData(string name, TileFlag flags, int unk1, int weight, int quality, int quantity, int value, int height, int anim, int hue, int stackingoffset, int MiscData, int unk2, int unk3)
+        public ItemData(string name, TileFlag flags, int unk1, int weight, int quality, int quantity, int value, int height, int anim, int hue, int stackingoffset, int miscData, int unk2, int unk3)
         {
             Name = name;
-            Flags = flags;            
+            Flags = flags;
             Weight = (byte)weight;
             Quality = (byte)quality;
             Quantity = (byte)quantity;
@@ -456,7 +456,7 @@ namespace Ultima
             Animation = (short)anim;
             Hue = (byte)hue;
             StackingOffset = (byte)stackingoffset;
-            MiscData = (short)MiscData;
+            MiscData = (short)miscData;
             Unk2 = (byte)unk2;
             Unk3 = (byte)unk3;
         }
