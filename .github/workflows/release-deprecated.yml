@@ -7,7 +7,7 @@ permissions:
   contents: write  
   
 env:
-  SOLUTION_FILE_PATH: .
+  SOLUTION_FILE_PATH: Razor.sln
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   DEPLOYMENT_TOKEN: ${{ secrets.DEPLOYMENT_TOKEN }}
   BUILD_CONFIGURATION: Debug
