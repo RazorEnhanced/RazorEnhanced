@@ -1724,11 +1724,11 @@
   <Target Name="PostBuild" AfterTargets="Build">
     <!-- Windows -->
     <Exec Condition="'$(OS)' == 'Windows_NT'"
-          Command="XCOPY &quot;$(SolutionDir)packages\IronPython.StdLib.3.4.2\contentFiles\any\any\lib&quot; &quot;$(TargetDir)Lib\&quot; /y /s &amp;&amp; XCOPY &quot;$(SolutionDir)BuildSupplementalFiles\&quot;* &quot;$(TargetDir)&quot; /y /s" />
+          Command="(FOR /D %%d IN (&quot;$(SolutionDir)packages\IronPython.StdLib.*&quot;) DO XCOPY &quot;%%d\contentFiles\any\any\lib&quot; &quot;$(TargetDir)Lib\&quot; /y /s) &amp;&amp; XCOPY &quot;$(SolutionDir)BuildSupplementalFiles\&quot;* &quot;$(TargetDir)&quot; /y /s" />
     <!-- Linux / macOS -->
     <MakeDir Condition="'$(OS)' != 'Windows_NT'" Directories="$(TargetDir)Lib" />
     <Exec Condition="'$(OS)' != 'Windows_NT'"
-          Command="cp -r &quot;$(SolutionDir)packages/IronPython.StdLib.3.4.2/contentFiles/any/any/lib/.&quot; &quot;$(TargetDir)Lib/&quot; &amp;&amp; cp -r &quot;$(SolutionDir)BuildSupplementalFiles/.&quot; &quot;$(TargetDir)&quot;" />
+          Command="for d in &quot;$(SolutionDir)packages/IronPython.StdLib.&quot;*; do cp -r &quot;$d/contentFiles/any/any/lib/.&quot; &quot;$(TargetDir)Lib/&quot;; done &amp;&amp; cp -r &quot;$(SolutionDir)BuildSupplementalFiles/.&quot; &quot;$(TargetDir)&quot;" />
   </Target>
   <Import Project="..\packages\Accord.3.8.0\build\Accord.targets" Condition="Exists('..\packages\Accord.3.8.0\build\Accord.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
