@@ -2321,8 +2321,7 @@ namespace RazorEnhanced.UOS
                     }
                     else
                     {
-                        // I dunno how to turn off
-                        Player.WeaponPrimarySA();
+                        Player.WeaponClearSA();
                     }
                     break;
                 case "secondary":
@@ -2332,8 +2331,7 @@ namespace RazorEnhanced.UOS
                     }
                     else
                     {
-                        // I dunno how to turn off
-                        Player.WeaponSecondarySA();
+                        Player.WeaponClearSA();
                     }
                     break;
                 case "stun":
@@ -2343,8 +2341,7 @@ namespace RazorEnhanced.UOS
                     }
                     else
                     {
-                        // I dunno how to turn off
-                        Player.WeaponStunSA();
+                        Player.WeaponClearSA();
                     }
                     break;
                 case "disarm":
@@ -2354,8 +2351,7 @@ namespace RazorEnhanced.UOS
                     }
                     else
                     {
-                        // I dunno how to turn off
-                        Player.WeaponDisarmSA();
+                        Player.WeaponClearSA();
                     }
                     break;
                 default:
