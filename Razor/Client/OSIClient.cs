@@ -1042,13 +1042,27 @@ namespace Assistant
 
         [DllImport("user32.dll")]
         internal static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+        [DllImport("user32.dll")]
+        internal static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
+        private const uint WM_KEYDOWN = 0x100;
+        private const uint WM_KEYUP = 0x101;
+        private const int VK_CONTROL = 0x11;
+        private const uint KEYEVENTF_KEYUP = 0x0002;
+
         public void KeyPress(int keyCode)
         {
-            const uint WM_KEYDOWN = 0x100;
-            const uint WM_KEYUP = 0x101;
             SendMessage(FindUOWindow(), WM_KEYDOWN, (IntPtr)keyCode, (IntPtr)1);
             Thread.Sleep(10);
             SendMessage(FindUOWindow(), WM_KEYUP, (IntPtr)keyCode, (IntPtr)1);
+        }
+
+        public void KeyChord(int modifierKeyCode, int keyCode)
+        {
+            keybd_event((byte)modifierKeyCode, 0, 0, UIntPtr.Zero);
+            Thread.Sleep(10);
+            KeyPress(keyCode);
+            Thread.Sleep(10);
+            keybd_event((byte)modifierKeyCode, 0, KEYEVENTF_KEYUP, UIntPtr.Zero);
         }
 
         public void KeySend(string keys)
@@ -1115,56 +1129,41 @@ namespace Assistant
         internal bool RequestMove(Direction m_Dir, bool run)
         {
             int keyToPress = 0;
-            string keyToSend = "";
-            if (run)
-            {
-                keyToSend += "^";
-            }
-
             switch (m_Dir)
             {
                 case Direction.down:
                     keyToPress = (int)KeyboardDir.Down;
-                    keyToSend += "{DOWN}";
                     break;
                 case Direction.east:
                     keyToPress = (int)KeyboardDir.East;
-                    keyToSend += "{PGDN}";
                     break;
                 case Direction.left:
                     keyToPress = (int)KeyboardDir.Left;
-                    keyToSend += "{Left}";
                     break;
                 case Direction.north:
                     keyToPress = (int)KeyboardDir.North;
-                    keyToSend += "{PGUP}";
                     break;
                 case Direction.right:
                     keyToPress = (int)KeyboardDir.Right;
-                    keyToSend += "{RIGHT}";
                     break;
                 case Direction.south:
                     keyToPress = (int)KeyboardDir.South;
-                    keyToSend += "{END}";
                     break;
                 case Direction.up:
                     keyToPress = (int)KeyboardDir.Up;
-                    keyToSend += "{UP}";
                     break;
                 case Direction.west:
                     keyToPress = (int)KeyboardDir.West;
-                    keyToSend += "{HOME}";
                     break;
                 default:
                     keyToPress = (int)KeyboardDir.Up;
-                    keyToSend += "{UP}";
                     break;
             }
 
             World.Player.WalkScriptRequest = 1;
             if (run)
             {
-                KeySend(keyToSend);  // this is only way I can send ctrl- and it forces focus to UO window
+                KeyChord(VK_CONTROL, keyToPress);
             }
             else
             {

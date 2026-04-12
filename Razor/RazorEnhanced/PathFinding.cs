@@ -1066,6 +1066,14 @@ namespace RazorEnhanced
             return followPath(false, timeout, debugMessage, useResync);
         }
 
+        private static void WaitForStepSettle(bool run)
+        {
+            // OSI movement state is updated optimistically from movement packets, which can
+            // get ahead of the visible client animation. Running via direct key messages made
+            // that timing gap more obvious, so add a small settle delay after accepted moves.
+            Misc.Pause(run ? 100 : 200);
+        }
+
         internal static List<Tile> BypassItem(List<Tile> path, int i)
         {
             int j = i;
@@ -1322,11 +1330,14 @@ namespace RazorEnhanced
                     {
                         if (debugMessage)
                             Misc.SendMessage("PathFind: Move action OK", 66);
+
+                        WaitForStepSettle(run);
                     }
                 }
 
                 if (Player.Position.X == dst.X && Player.Position.Y == dst.Y)
                 {
+                    WaitForStepSettle(run);
                     Misc.SendMessage("PathFind: Destination reached", 66);
                     Misc.Resync();
                     return true;
@@ -1373,5 +1384,3 @@ namespace RazorEnhanced
         }
     }
 }
-
-
