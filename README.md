@@ -48,6 +48,11 @@ To make sure that your bug report is properly handled, please follow these steps
 _In case you have multiple bugs you want to report, please open one issue for each one, separately._
 Suggestions are very welcome too.
 
+## Special Thanks
+
+The optimization of the pathfinder utilized NProfiler to reduce an end to end traversal of britania from over 5 minutes to under 30 seconds.
+The NProfiler company was nice enough to let me use their product, so if you can provide them business they are at [NProfiler Link](https://www.nprofiler.com).
+
 ## Contributions
 
 Contributions are always welcome, feel free to fork the repository and send us a pull request.\
