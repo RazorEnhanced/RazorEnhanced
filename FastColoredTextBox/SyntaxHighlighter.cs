@@ -1402,8 +1402,13 @@ yellowhits|war|criminal|enemy|friend|gray|innocent|murderer|bandage|restocking|c
             range.SetStyle(FunctionsStyle, UosFunctionsRegex);
             //keyword highlighting
             range.SetStyle(KeywordStyle, UosKeywordRegex);
-            //comment highlighting
-            range.SetStyle(CommentStyle, UosCommentRegex);
+            //comment highlighting - clear all other styles in comment ranges so
+            //keywords/functions inside comments only show the comment color
+            foreach (Range r in range.GetRanges(UosCommentRegex))
+            {
+                r.ClearStyle(StyleIndex.All);
+                r.SetStyle(CommentStyle);
+            }
 
             //clear folding markers
             range.ClearFoldingMarkers();
@@ -1442,8 +1447,8 @@ yellowhits|war|criminal|enemy|friend|gray|innocent|murderer|bandage|restocking|c
 
         protected void InitPythonRegex()
         {
-            PythonStringRegex1 = new Regex("\"[^\"\\\\]*(\\\\.[^\"\\\\]*)*\"", RegexCompiledOption);
-            PythonStringRegex2 = new Regex("'[^'\\\\]*(\\\\.[^'\\\\]*)*'", RegexCompiledOption);
+            PythonStringRegex1 = new Regex(@"""[^""\\\r\n]*(\\.[^""\\\r\n]*)*""", RegexCompiledOption);
+            PythonStringRegex2 = new Regex(@"'[^'\\\r\n]*(\\.[^'\\\r\n]*)*'", RegexCompiledOption);
 
             PythonCommentRegex = LuaCommentRegex1 = new Regex(@"#.*$", RegexOptions.Multiline | RegexCompiledOption);
 
