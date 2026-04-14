@@ -1,7 +1,9 @@
+using Accord.Collections;
 using Assistant;
 using Assistant.UI;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace RazorEnhanced
 {
@@ -2668,6 +2670,31 @@ namespace RazorEnhanced
         public static void PathFindTo(int x, int y, int z)
         {
             PathFindToPacket(x, y, z);
+        }
+
+        /// <summary>
+        /// Uses pathfinding filter to navigate to a specific location. 
+        /// </summary>
+        /// <param name="x">X map coordinates or Point3D</param>
+        /// <param name="y">Y map coordinates</param>
+        /// <param name="maxretry">How many times to retry</param>
+        /// <param name="run">True = run, False = walk</param>
+        /// <param name="stopifstuck">True = stop if cannot find path</param>
+        /// <param name="ignoremobile">True = Ignores any mobiles with the path calculation</param>
+        /// <param name="resync">True = resync client</param>
+        /// <param name="debug">True = debug message</param>
+        public static void PathFindTo(int x, int y, int maxretry, bool run = false, bool stopifstuck = false, bool ignoremobile = false, bool resync = true, bool debug = false )
+        {
+            PathFinding.Route coords = new PathFinding.Route();
+            coords.X = x;
+            coords.Y = y;
+            coords.Run = run;
+            coords.IgnoreMobile = ignoremobile;
+            coords.UseResync = resync;
+            coords.DebugMessage = debug;
+            coords.MaxRetry = maxretry;
+            coords.StopIfStuck = stopifstuck;
+            PathFinding.Go(coords);
         }
 
         /// <summary>
