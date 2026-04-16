@@ -1125,28 +1125,62 @@ namespace Assistant
         }
         void UpdateProperties()
         {
-            try
+            if (Engine.MainWindow.DisplayXYUnderMapCheckBox.Checked)
             {
-                Utility.Logger.Debug("{0} for {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, Serial);
-                if (MapItemHistory.ContainsKey(Serial))
+                try
                 {
-                    Utility.Logger.Debug("{0} has MapHistory for {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, Serial);
-                    int xCoord = MapOrigin.X + (int)(Multiplier * PinPosition.X);
-                    int yCoord = MapOrigin.Y + (int)(Multiplier * PinPosition.Y);
-                    string location = String.Format("({0}, {1})",
-                        xCoord,
-                        yCoord
-                        );
-                    m_ObjPropList.AddOrReplace(new Assistant.ObjectPropertyList.OPLEntry(1061114, location));
+                    Utility.Logger.Debug("{0} for {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, Serial);
+                    if (MapItemHistory.ContainsKey(Serial))
+                    {
+                        Utility.Logger.Debug("{0} has MapHistory for {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, Serial);
+                        int xCoord = MapOrigin.X + (int)(Multiplier * PinPosition.X);
+                        int yCoord = MapOrigin.Y + (int)(Multiplier * PinPosition.Y);
+                        string location = String.Format("({0}, {1})",
+                            xCoord,
+                            yCoord
+                            );
+
+
+                        if (Engine.MainWindow.CaptureTmapsCheckBox.Checked)
+                        {
+                            string tmapCapturePath = RazorEnhanced.Settings.General.ReadString("TmapCapturePath");
+                            string tmapLog;
+                            if (!string.IsNullOrEmpty(tmapCapturePath))
+                                tmapLog = Path.Combine(tmapCapturePath, "TreasureMapCapture.csv");
+                            else
+                                tmapLog = Path.Combine(Assistant.Engine.RootPath, "TreasureMapCapture.csv");
+
+                            string entry = $"{xCoord},{yCoord},{Facet},treasure map,interest,red,3";
+
+                            bool alreadyExists = false;
+                            if (File.Exists(tmapLog))
+                            {
+                                string existingContent = File.ReadAllText(tmapLog);
+                                alreadyExists = existingContent.Contains(entry);
+                            }
+
+                            if (!alreadyExists)
+                            {
+                                using (StreamWriter sw = File.AppendText(tmapLog))
+                                {
+                                    sw.WriteLine(entry);
+                                }
+
+                                World.Player.SendMessage(MsgLevel.Force, $"TMAP Captured: {xCoord},{yCoord}");
+                            }
+                        }
+
+                        m_ObjPropList.AddOrReplace(new Assistant.ObjectPropertyList.OPLEntry(1061114, location));
+                    }
+                    else
+                    {
+                        Utility.Logger.Debug("{0} No has MapHistory for {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, Serial);
+                    }
                 }
-                else
+                catch (Exception)
                 {
-                    Utility.Logger.Debug("{0} No has MapHistory for {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, Serial);
+                    m_ObjPropList.AddOrReplace(new Assistant.ObjectPropertyList.OPLEntry(1061114, "Error"));
                 }
-            }
-            catch (Exception)
-            {
-                m_ObjPropList.AddOrReplace(new Assistant.ObjectPropertyList.OPLEntry(1061114, "Error"));
             }
             Assistant.Client.Instance.SendToClient(new ObjectProperties(Serial, ObjPropList));
 

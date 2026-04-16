@@ -2325,6 +2325,15 @@ namespace RazorEnhanced
             general.Columns.Add("ColorFlagsSelfHighlightCheckBox", typeof(bool));
             general.Columns.Add("LimitDamageDisplayValue", typeof(int));
 
+            // Parametri Tab (Locations Filter)
+            general.Columns.Add("CaptureMibsCheckBox", typeof(bool));
+            general.Columns.Add("MibCapturePath", typeof(string));
+            general.Columns.Add("AddXYToGumpCheckBox", typeof(bool));
+            general.Columns.Add("MibGumpIds", typeof(string));
+            general.Columns.Add("CaptureTmapsCheckBox", typeof(bool));
+            general.Columns.Add("TmapCapturePath", typeof(string));
+            general.Columns.Add("DisplayXYUnderMapCheckBox", typeof(bool));
+
 
             // Parametri Tab (Enhanced ToolBar)
             general.Columns.Add("LockToolBarCheckBox", typeof(bool));
@@ -5548,6 +5557,33 @@ namespace RazorEnhanced
                 general.Columns.Add("RemoteControl", typeof(bool));
                 RazorEnhanced.Settings.General.WriteBool("RemoteControl", false);
                 realVersion = 19;
+                General.WriteInt("SettingVersion", realVersion);
+            }
+            if (realVersion == 19)
+            {
+                DataTable general = m_Dataset.Tables["GENERAL"];
+                if (!general.Columns.Contains("CaptureMibsCheckBox"))
+                    general.Columns.Add("CaptureMibsCheckBox", typeof(bool));
+                if (!general.Columns.Contains("MibCapturePath"))
+                    general.Columns.Add("MibCapturePath", typeof(string));
+                if (!general.Columns.Contains("AddXYToGumpCheckBox"))
+                    general.Columns.Add("AddXYToGumpCheckBox", typeof(bool));
+                if (!general.Columns.Contains("MibGumpIds"))
+                    general.Columns.Add("MibGumpIds", typeof(string));
+                if (!general.Columns.Contains("CaptureTmapsCheckBox"))
+                    general.Columns.Add("CaptureTmapsCheckBox", typeof(bool));
+                if (!general.Columns.Contains("TmapCapturePath"))
+                    general.Columns.Add("TmapCapturePath", typeof(string));
+                if (!general.Columns.Contains("DisplayXYUnderMapCheckBox"))
+                    general.Columns.Add("DisplayXYUnderMapCheckBox", typeof(bool));
+                RazorEnhanced.Settings.General.WriteBool("CaptureMibsCheckBox", false);
+                RazorEnhanced.Settings.General.WriteString("MibCapturePath", "");
+                RazorEnhanced.Settings.General.WriteBool("AddXYToGumpCheckBox", false);
+                RazorEnhanced.Settings.General.WriteString("MibGumpIds", "");
+                RazorEnhanced.Settings.General.WriteBool("CaptureTmapsCheckBox", false);
+                RazorEnhanced.Settings.General.WriteString("TmapCapturePath", "");
+                RazorEnhanced.Settings.General.WriteBool("DisplayXYUnderMapCheckBox", false);
+                realVersion = 20;
                 General.WriteInt("SettingVersion", realVersion);
             }
             {

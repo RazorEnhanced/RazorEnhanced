@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
   <PropertyGroup>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
@@ -409,6 +409,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Core\BuffInfo.cs" />
+    <Compile Include="Core\MessageInBottleCapture.cs" />
     <Compile Include="Enums\TargetFlags.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Network\PacketLogger.cs" />
@@ -777,6 +778,9 @@
     </Compile>
     <Compile Include="UI\Ext.cs" />
     <Compile Include="UI\Filter\EN-Filters.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Filter\LocationsFilter.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\Agent\Friends.cs">

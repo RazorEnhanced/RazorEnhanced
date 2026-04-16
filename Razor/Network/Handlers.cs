@@ -157,12 +157,30 @@ namespace Assistant
                         {
                             Item item = World.FindItem(s);
                             if (item == null)
+                            {
                                 return;
-
+                            }
                             item.ReadPropertyList(p);
                             item.PropsUpdated = true;
                             if (item is MapItem)
                             {
+                                args.Block = true;
+                                Assistant.Client.Instance.SendToClient(new ObjectProperties(item.Serial, item.ObjPropList));
+                            }
+                            else if((item.TypeID == 0x14EB || item.TypeID == 0x14EC))
+                            {
+                                if (MapItem.MapItemHistory.ContainsKey(s))
+                                {
+                                    MapItem historical = MapItem.MapItemHistory[s];
+                                    if (Engine.MainWindow.DisplayXYUnderMapCheckBox.Checked)
+                                    {
+                                        int xCoord = historical.MapOrigin.X + (int)(MapItem.Multiplier * historical.PinPosition.X);
+                                        int yCoord = historical.MapOrigin.Y + (int)(MapItem.Multiplier * historical.PinPosition.Y);
+                                        string location = String.Format("({0}, {1})", xCoord, yCoord);
+                                        item.ObjPropList.AddOrReplace(new Assistant.ObjectPropertyList.OPLEntry(1061114, location));
+                                    }
+                                }
+
                                 args.Block = true;
                                 Assistant.Client.Instance.SendToClient(new ObjectProperties(item.Serial, item.ObjPropList));
                             }
@@ -3536,16 +3554,49 @@ namespace Assistant
                     List<string> parsedStrings = ParseGumpString(gumpPieces, stringlistparse);
                     dataInGump.AddRange(parsedStrings);
                     World.Player.CurrentGumpStrings.AddRange(parsedStrings);
-
                 }
+
+                if (Assistant.MainForm.MibGumpIds.Contains(currentgumpi))
+                {
+                    string locationLabel = null;
+                    for (int i = 0; i < dataInGump.Count; i++)
+                    {
+                        if (Engine.MainWindow.CaptureMibsCheckBox.Checked)
+                            Assistant.Core.MessageInBottleCapture.CaptureMibCoordinates(dataInGump[i]);
+
+                        if (Engine.MainWindow.AddXYToGumpCheckBox.Checked && locationLabel == null)
+                            locationLabel = Assistant.Core.MessageInBottleCapture.GetMibCoordinatesLabel(dataInGump[i]);
+                    }
+
+                    if (locationLabel != null)
+                    {
+                        int textIndex = stringlistparse.Length;
+                        // Expand string list to add our label
+                        string[] newStringList = new string[textIndex + 1];
+                        Array.Copy(stringlistparse, newStringList, textIndex);
+                        newStringList[textIndex] = locationLabel;
+                        stringlistparse = newStringList;
+
+                        // Add a text element to the layout: text [x] [y] [color] [text-id]
+                        layout += String.Format("{{ text 150 240 0 {0} }}", textIndex);
+
+                        // Block original and send modified gump
+                        args.Block = true;
+                        List<string> gumpStrings = new();
+                        for (int i = 0; i < stringlistparse.Length; i++)
+                        {
+                            gumpStrings.Add(stringlistparse[i] ?? "");
+                        }
+                        Assistant.Client.Instance.SendToClient(new GenericGump(currentgumpi, currentgumps, (uint)x, (uint)y, layout, gumpStrings));
+                    }
+                }
+
                 RazorEnhanced.GumpInspector.NewGumpCompressedAddLog(currentgumps, currentgumpi);
 
                 RazorEnhanced.Gumps.AddGump(currentgumps, currentgumpi);
 
                 RazorEnhanced.Macros.MacroManager.RecordAction(new RazorEnhanced.Macros.Actions.WaitForGumpAction(currentgumpi, 10000));
                 
-
-
                 RazorEnhanced.Gumps.AddResponse(currentgumpi, x, y, layout, textsInGump, dataInGump, stringlistparse, gumpPieces);
                 World.Player.CurrentGumpRawLayout = layout; // Get raw data of current gump
                 World.Player.CurrentGumpRawText = stringlistparse; // Get raw text data of current gump

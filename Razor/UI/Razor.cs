@@ -612,6 +612,25 @@ namespace Assistant
         private TabControl AdvancedPages;
         private TabControl TechnicalPages;
         private TabPage MiscFilterPage;
+        private TabPage locationsFilterPage;
+        private GroupBox sosGroupBox;
+        private System.Windows.Forms.CheckBox captureMibsCheckBox;
+        private System.Windows.Forms.TextBox mibPathTextBox;
+        private System.Windows.Forms.Button mibSetPathButton;
+        private System.Windows.Forms.Button mibClearPathButton;
+        private System.Windows.Forms.CheckBox addXYToGumpCheckBox;
+        private RazorEnhanced.UI.RazorAgentNumHexTextBox mibGumpIdTextBox;
+        private System.Windows.Forms.Button mibGumpIdAddButton;
+        private System.Windows.Forms.ListBox mibGumpIdListBox;
+        private System.Windows.Forms.GroupBox mibGumpIdGroupBox;
+        private System.Windows.Forms.ContextMenuStrip mibGumpIdContextMenu;
+        private System.Windows.Forms.ToolStripMenuItem mibGumpIdRemoveMenuItem;
+        private GroupBox tmapGroupBox;
+        private System.Windows.Forms.CheckBox captureTmapsCheckBox;
+        private System.Windows.Forms.TextBox tmapPathTextBox;
+        private System.Windows.Forms.Button tmapSetPathButton;
+        private System.Windows.Forms.Button tmapClearPathButton;
+        private System.Windows.Forms.CheckBox displayXYUnderMapCheckBox;
         private GroupBox uomodgroupbox;
         private System.Windows.Forms.CheckBox uomodpaperdollCheckBox;
         private System.Windows.Forms.CheckBox uomodglobalsoundCheckBox;
@@ -984,6 +1003,25 @@ namespace Assistant
             this.targetaddTextBox = new System.Windows.Forms.TextBox();
             this.targetlistBox = new System.Windows.Forms.ListBox();
             this.MiscFilterPage = new System.Windows.Forms.TabPage();
+            this.locationsFilterPage = new System.Windows.Forms.TabPage();
+            this.sosGroupBox = new System.Windows.Forms.GroupBox();
+            this.captureMibsCheckBox = new System.Windows.Forms.CheckBox();
+            this.mibPathTextBox = new System.Windows.Forms.TextBox();
+            this.mibSetPathButton = new System.Windows.Forms.Button();
+            this.mibClearPathButton = new System.Windows.Forms.Button();
+            this.addXYToGumpCheckBox = new System.Windows.Forms.CheckBox();
+            this.mibGumpIdTextBox = new RazorEnhanced.UI.RazorAgentNumHexTextBox();
+            this.mibGumpIdAddButton = new System.Windows.Forms.Button();
+            this.mibGumpIdListBox = new System.Windows.Forms.ListBox();
+            this.mibGumpIdGroupBox = new System.Windows.Forms.GroupBox();
+            this.mibGumpIdContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.mibGumpIdRemoveMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tmapGroupBox = new System.Windows.Forms.GroupBox();
+            this.captureTmapsCheckBox = new System.Windows.Forms.CheckBox();
+            this.tmapPathTextBox = new System.Windows.Forms.TextBox();
+            this.tmapSetPathButton = new System.Windows.Forms.Button();
+            this.tmapClearPathButton = new System.Windows.Forms.Button();
+            this.displayXYUnderMapCheckBox = new System.Windows.Forms.CheckBox();
             this.DmgDsplyGroup = new System.Windows.Forms.GroupBox();
             this.minDmgShown = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
             this.label81 = new System.Windows.Forms.Label();
@@ -1604,6 +1642,11 @@ namespace Assistant
             ((System.ComponentModel.ISupportInitialize)(this.targetbodydataGridView)).BeginInit();
             this.groupBox43.SuspendLayout();
             this.MiscFilterPage.SuspendLayout();
+            this.locationsFilterPage.SuspendLayout();
+            this.sosGroupBox.SuspendLayout();
+            this.mibGumpIdGroupBox.SuspendLayout();
+            this.mibGumpIdContextMenu.SuspendLayout();
+            this.tmapGroupBox.SuspendLayout();
             this.DmgDsplyGroup.SuspendLayout();
             this.uomodgroupbox.SuspendLayout();
             this.groupBox32.SuspendLayout();
@@ -2481,6 +2524,7 @@ namespace Assistant
             | System.Windows.Forms.AnchorStyles.Right)));
             this.FilterPages.Controls.Add(this.JournalFilterPage);
             this.FilterPages.Controls.Add(this.targettingTab);
+            this.FilterPages.Controls.Add(this.locationsFilterPage);
             this.FilterPages.Controls.Add(this.MiscFilterPage);
             this.FilterPages.Location = new System.Drawing.Point(-2, 2);
             this.FilterPages.Name = "FilterPages";
@@ -3334,6 +3378,211 @@ namespace Assistant
             this.targetlistBox.Size = new System.Drawing.Size(113, 130);
             this.targetlistBox.TabIndex = 0;
             this.targetlistBox.SelectedIndexChanged += new System.EventHandler(this.targetlistBox_SelectedIndexChanged);
+            // 
+            // locationsFilterPage
+            // 
+            this.locationsFilterPage.Controls.Add(this.sosGroupBox);
+            this.locationsFilterPage.Controls.Add(this.tmapGroupBox);
+            this.locationsFilterPage.Location = new System.Drawing.Point(4, 22);
+            this.locationsFilterPage.Name = "locationsFilterPage";
+            this.locationsFilterPage.Padding = new System.Windows.Forms.Padding(3);
+            this.locationsFilterPage.Size = new System.Drawing.Size(649, 345);
+            this.locationsFilterPage.TabIndex = 3;
+            this.locationsFilterPage.Text = "Locations";
+            this.locationsFilterPage.UseVisualStyleBackColor = true;
+            // 
+            // sosGroupBox
+            // 
+            this.sosGroupBox.Controls.Add(this.captureMibsCheckBox);
+            this.sosGroupBox.Controls.Add(this.mibPathTextBox);
+            this.sosGroupBox.Controls.Add(this.mibSetPathButton);
+            this.sosGroupBox.Controls.Add(this.mibClearPathButton);
+            this.sosGroupBox.Controls.Add(this.addXYToGumpCheckBox);
+            this.sosGroupBox.Controls.Add(this.mibGumpIdTextBox);
+            this.sosGroupBox.Controls.Add(this.mibGumpIdAddButton);
+            this.sosGroupBox.Controls.Add(this.mibGumpIdGroupBox);
+            this.sosGroupBox.Location = new System.Drawing.Point(6, 6);
+            this.sosGroupBox.Name = "sosGroupBox";
+            this.sosGroupBox.Size = new System.Drawing.Size(637, 130);
+            this.sosGroupBox.TabIndex = 0;
+            this.sosGroupBox.TabStop = false;
+            this.sosGroupBox.Text = "SOS\'s";
+            // 
+            // captureMibsCheckBox
+            // 
+            this.captureMibsCheckBox.AutoSize = true;
+            this.captureMibsCheckBox.Location = new System.Drawing.Point(6, 20);
+            this.captureMibsCheckBox.Name = "captureMibsCheckBox";
+            this.captureMibsCheckBox.Size = new System.Drawing.Size(135, 18);
+            this.captureMibsCheckBox.TabIndex = 0;
+            this.captureMibsCheckBox.Text = "Capture MIBs to file";
+            this.captureMibsCheckBox.UseVisualStyleBackColor = true;
+            this.captureMibsCheckBox.CheckedChanged += new System.EventHandler(this.captureMibsCheckBox_CheckedChanged);
+            // 
+            // mibPathTextBox
+            // 
+            this.mibPathTextBox.BackColor = System.Drawing.Color.White;
+            this.mibPathTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.mibPathTextBox.Location = new System.Drawing.Point(6, 44);
+            this.mibPathTextBox.Name = "mibPathTextBox";
+            this.mibPathTextBox.ReadOnly = true;
+            this.mibPathTextBox.Size = new System.Drawing.Size(216, 20);
+            this.mibPathTextBox.TabIndex = 1;
+            // 
+            // mibSetPathButton
+            // 
+            this.mibSetPathButton.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mibSetPathButton.Location = new System.Drawing.Point(228, 43);
+            this.mibSetPathButton.Name = "mibSetPathButton";
+            this.mibSetPathButton.Size = new System.Drawing.Size(75, 21);
+            this.mibSetPathButton.TabIndex = 2;
+            this.mibSetPathButton.Text = "Set Path";
+            this.mibSetPathButton.UseVisualStyleBackColor = true;
+            this.mibSetPathButton.Click += new System.EventHandler(this.mibSetPathButton_Click);
+            // 
+            // mibClearPathButton
+            // 
+            this.mibClearPathButton.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mibClearPathButton.Location = new System.Drawing.Point(228, 66);
+            this.mibClearPathButton.Name = "mibClearPathButton";
+            this.mibClearPathButton.Size = new System.Drawing.Size(75, 21);
+            this.mibClearPathButton.TabIndex = 8;
+            this.mibClearPathButton.Text = "Clear";
+            this.mibClearPathButton.UseVisualStyleBackColor = true;
+            this.mibClearPathButton.Click += new System.EventHandler(this.mibClearPathButton_Click);
+            // 
+            // addXYToGumpCheckBox
+            // 
+            this.addXYToGumpCheckBox.AutoSize = true;
+            this.addXYToGumpCheckBox.Location = new System.Drawing.Point(6, 70);
+            this.addXYToGumpCheckBox.Name = "addXYToGumpCheckBox";
+            this.addXYToGumpCheckBox.Size = new System.Drawing.Size(121, 18);
+            this.addXYToGumpCheckBox.TabIndex = 3;
+            this.addXYToGumpCheckBox.Text = "Add X,Y to Gump";
+            this.addXYToGumpCheckBox.UseVisualStyleBackColor = true;
+            this.addXYToGumpCheckBox.CheckedChanged += new System.EventHandler(this.addXYToGumpCheckBox_CheckedChanged);
+            // 
+            // mibGumpIdTextBox
+            // 
+            this.mibGumpIdTextBox.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mibGumpIdTextBox.Location = new System.Drawing.Point(6, 96);
+            this.mibGumpIdTextBox.Name = "mibGumpIdTextBox";
+            this.mibGumpIdTextBox.Size = new System.Drawing.Size(100, 20);
+            this.mibGumpIdTextBox.TabIndex = 4;
+            // 
+            // mibGumpIdAddButton
+            // 
+            this.mibGumpIdAddButton.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mibGumpIdAddButton.Location = new System.Drawing.Point(112, 95);
+            this.mibGumpIdAddButton.Name = "mibGumpIdAddButton";
+            this.mibGumpIdAddButton.Size = new System.Drawing.Size(55, 21);
+            this.mibGumpIdAddButton.TabIndex = 5;
+            this.mibGumpIdAddButton.Text = "Add ID";
+            this.mibGumpIdAddButton.UseVisualStyleBackColor = true;
+            this.mibGumpIdAddButton.Click += new System.EventHandler(this.mibGumpIdAddButton_Click);
+            // 
+            // mibGumpIdGroupBox
+            // 
+            this.mibGumpIdGroupBox.Controls.Add(this.mibGumpIdListBox);
+            this.mibGumpIdGroupBox.Location = new System.Drawing.Point(316, 10);
+            this.mibGumpIdGroupBox.Name = "mibGumpIdGroupBox";
+            this.mibGumpIdGroupBox.Size = new System.Drawing.Size(315, 115);
+            this.mibGumpIdGroupBox.TabIndex = 2;
+            this.mibGumpIdGroupBox.TabStop = false;
+            this.mibGumpIdGroupBox.Text = "SOS Gump IDs";
+            // 
+            // mibGumpIdListBox
+            // 
+            this.mibGumpIdListBox.ContextMenuStrip = this.mibGumpIdContextMenu;
+            this.mibGumpIdListBox.FormattingEnabled = true;
+            this.mibGumpIdListBox.ItemHeight = 14;
+            this.mibGumpIdListBox.Location = new System.Drawing.Point(6, 16);
+            this.mibGumpIdListBox.Name = "mibGumpIdListBox";
+            this.mibGumpIdListBox.Size = new System.Drawing.Size(303, 88);
+            this.mibGumpIdListBox.TabIndex = 0;
+            // 
+            // mibGumpIdContextMenu
+            // 
+            this.mibGumpIdContextMenu.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.mibGumpIdContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mibGumpIdRemoveMenuItem});
+            this.mibGumpIdContextMenu.Name = "mibGumpIdContextMenu";
+            this.mibGumpIdContextMenu.Size = new System.Drawing.Size(118, 26);
+            // 
+            // mibGumpIdRemoveMenuItem
+            // 
+            this.mibGumpIdRemoveMenuItem.Name = "mibGumpIdRemoveMenuItem";
+            this.mibGumpIdRemoveMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.mibGumpIdRemoveMenuItem.Text = "Remove";
+            this.mibGumpIdRemoveMenuItem.Click += new System.EventHandler(this.mibGumpIdRemoveMenuItem_Click);
+            // 
+            // tmapGroupBox
+            // 
+            this.tmapGroupBox.Controls.Add(this.captureTmapsCheckBox);
+            this.tmapGroupBox.Controls.Add(this.tmapPathTextBox);
+            this.tmapGroupBox.Controls.Add(this.tmapSetPathButton);
+            this.tmapGroupBox.Controls.Add(this.tmapClearPathButton);
+            this.tmapGroupBox.Controls.Add(this.displayXYUnderMapCheckBox);
+            this.tmapGroupBox.Location = new System.Drawing.Point(6, 142);
+            this.tmapGroupBox.Name = "tmapGroupBox";
+            this.tmapGroupBox.Size = new System.Drawing.Size(310, 120);
+            this.tmapGroupBox.TabIndex = 1;
+            this.tmapGroupBox.TabStop = false;
+            this.tmapGroupBox.Text = "Treasure Maps";
+            // 
+            // captureTmapsCheckBox
+            // 
+            this.captureTmapsCheckBox.AutoSize = true;
+            this.captureTmapsCheckBox.Location = new System.Drawing.Point(6, 20);
+            this.captureTmapsCheckBox.Name = "captureTmapsCheckBox";
+            this.captureTmapsCheckBox.Size = new System.Drawing.Size(181, 18);
+            this.captureTmapsCheckBox.TabIndex = 0;
+            this.captureTmapsCheckBox.Text = "Capture Treasure Maps to File";
+            this.captureTmapsCheckBox.UseVisualStyleBackColor = true;
+            this.captureTmapsCheckBox.CheckedChanged += new System.EventHandler(this.captureTmapsCheckBox_CheckedChanged);
+            // 
+            // tmapPathTextBox
+            // 
+            this.tmapPathTextBox.BackColor = System.Drawing.Color.White;
+            this.tmapPathTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tmapPathTextBox.Location = new System.Drawing.Point(6, 44);
+            this.tmapPathTextBox.Name = "tmapPathTextBox";
+            this.tmapPathTextBox.ReadOnly = true;
+            this.tmapPathTextBox.Size = new System.Drawing.Size(216, 20);
+            this.tmapPathTextBox.TabIndex = 1;
+            // 
+            // tmapSetPathButton
+            // 
+            this.tmapSetPathButton.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tmapSetPathButton.Location = new System.Drawing.Point(228, 43);
+            this.tmapSetPathButton.Name = "tmapSetPathButton";
+            this.tmapSetPathButton.Size = new System.Drawing.Size(75, 21);
+            this.tmapSetPathButton.TabIndex = 2;
+            this.tmapSetPathButton.Text = "Set Path";
+            this.tmapSetPathButton.UseVisualStyleBackColor = true;
+            this.tmapSetPathButton.Click += new System.EventHandler(this.tmapSetPathButton_Click);
+            // 
+            // tmapClearPathButton
+            // 
+            this.tmapClearPathButton.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tmapClearPathButton.Location = new System.Drawing.Point(228, 66);
+            this.tmapClearPathButton.Name = "tmapClearPathButton";
+            this.tmapClearPathButton.Size = new System.Drawing.Size(75, 21);
+            this.tmapClearPathButton.TabIndex = 4;
+            this.tmapClearPathButton.Text = "Clear";
+            this.tmapClearPathButton.UseVisualStyleBackColor = true;
+            this.tmapClearPathButton.Click += new System.EventHandler(this.tmapClearPathButton_Click);
+            // 
+            // displayXYUnderMapCheckBox
+            // 
+            this.displayXYUnderMapCheckBox.AutoSize = true;
+            this.displayXYUnderMapCheckBox.Location = new System.Drawing.Point(6, 70);
+            this.displayXYUnderMapCheckBox.Name = "displayXYUnderMapCheckBox";
+            this.displayXYUnderMapCheckBox.Size = new System.Drawing.Size(155, 18);
+            this.displayXYUnderMapCheckBox.TabIndex = 3;
+            this.displayXYUnderMapCheckBox.Text = "Display X, Y Under Map";
+            this.displayXYUnderMapCheckBox.UseVisualStyleBackColor = true;
+            this.displayXYUnderMapCheckBox.CheckedChanged += new System.EventHandler(this.displayXYUnderMapCheckBox_CheckedChanged);
             // 
             // MiscFilterPage
             // 
@@ -9801,6 +10050,13 @@ namespace Assistant
             this.groupBox43.ResumeLayout(false);
             this.groupBox43.PerformLayout();
             this.MiscFilterPage.ResumeLayout(false);
+            this.locationsFilterPage.ResumeLayout(false);
+            this.sosGroupBox.ResumeLayout(false);
+            this.sosGroupBox.PerformLayout();
+            this.mibGumpIdGroupBox.ResumeLayout(false);
+            this.mibGumpIdContextMenu.ResumeLayout(false);
+            this.tmapGroupBox.ResumeLayout(false);
+            this.tmapGroupBox.PerformLayout();
             this.DmgDsplyGroup.ResumeLayout(false);
             this.DmgDsplyGroup.PerformLayout();
             this.uomodgroupbox.ResumeLayout(false);
