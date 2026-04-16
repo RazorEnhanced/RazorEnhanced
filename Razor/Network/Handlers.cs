@@ -3558,6 +3558,7 @@ namespace Assistant
 
                 if (Assistant.MainForm.MibGumpIds.Contains(currentgumpi))
                 {
+                    Misc.SendMessage("checking gump for mib data to capture.");
                     string locationLabel = null;
                     for (int i = 0; i < dataInGump.Count; i++)
                     {

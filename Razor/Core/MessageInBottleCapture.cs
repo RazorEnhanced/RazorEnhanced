@@ -20,6 +20,7 @@ using RazorEnhanced;
 using System;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Assistant.Core
 {
@@ -111,12 +112,18 @@ namespace Assistant.Core
             return $"[Location: {xAxis}, {yAxis}]";
         }
 
+        private static readonly Regex _coordPattern = new Regex(
+            @"(\d+)°(\d+)'([NS])\s*,\s*(\d+)°(\d+)'([EW])",
+            RegexOptions.Compiled);
+
         private static void ConvertCoords(string coords, ref int xAxis, ref int yAxis)
         {
-            string[] coordsSplit = coords.Split(',');
+            Match match = _coordPattern.Match(coords);
+            if (!match.Success)
+                return;
 
-            string yCoord = coordsSplit[0];
-            string xCoord = coordsSplit[1];
+            string yCoord = match.Groups[1].Value + "°" + match.Groups[2].Value + "'" + match.Groups[3].Value;
+            string xCoord = match.Groups[4].Value + "°" + match.Groups[5].Value + "'" + match.Groups[6].Value;
 
             // Calc Y first
             string[] ySplit = yCoord.Split('°');
