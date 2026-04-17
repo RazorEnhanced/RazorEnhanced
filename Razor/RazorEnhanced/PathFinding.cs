@@ -970,8 +970,9 @@ namespace RazorEnhanced
         /// Check if a destination is reachable.
         /// </summary>
         /// <param name="r">A customized Route object.</param>
+        /// <param name="stopKey">Shared variable key (see Misc.SetSharedValue). When the named key holds the boolean true the path is interrupted early and false is returned. (default: null, disabled)</param>
         /// <returns>True: if a destination is reachable.</returns>
-        public static bool Go(Route r)
+        public static bool Go(Route r, string stopKey = null)
         {
             try
             {
@@ -988,6 +989,8 @@ namespace RazorEnhanced
                 bool success;
                 while (r.MaxRetry == -1 || r.MaxRetry > 0)
                 {
+                    if (ShouldStop(stopKey))
+                        return false;
                     if (r.X == Player.Position.X && r.Y == Player.Position.Y)
                         return true;
                     road = PathMove.GetPath(r.X, r.Y, r.IgnoreMobile);
@@ -1002,9 +1005,11 @@ namespace RazorEnhanced
 
                     timeLeft = (int)timeEnd.Subtract(DateTime.Now).TotalSeconds;
                     if (r.Run)
-                        success = pf.runPath(timeLeft, r.DebugMessage, r.UseResync);
+                        success = pf.runPath(timeLeft, r.DebugMessage, r.UseResync, stopKey);
                     else
-                        success = pf.walkPath(timeLeft, r.DebugMessage, r.UseResync);
+                        success = pf.walkPath(timeLeft, r.DebugMessage, r.UseResync, stopKey);
+                    if (ShouldStop(stopKey))
+                        return false;
                     if (r.MaxRetry > 0) { r.MaxRetry -= 1; }
                     if (success) { return true; }
                     if (DateTime.Now.CompareTo(timeEnd) > 0) { return false; }
@@ -1038,17 +1043,27 @@ namespace RazorEnhanced
         /// <param name="timeout">Maximum amount of time to run the path. (default: -1, no limit)</param>
         /// <param name="debugMessage">Outputs a debug message.</param>
         /// <param name="useResync">ReSyncs the path calculation.</param>
+        /// <param name="stopKey">Shared variable key (see Misc.SetSharedValue). When the named key holds the boolean true the path is interrupted early and false is returned. (default: null, disabled)</param>
         /// <returns>True: if it finish the path in time. False: otherwise</returns>
-        public static bool RunPath(List<Tile> path, float timeout = -1, bool debugMessage = false, bool useResync = true)
+        public static bool RunPath(List<Tile> path, float timeout = -1, bool debugMessage = false, bool useResync = true, string stopKey = null)
         {
             PathFinding pf = new(path);
-            return pf.followPath(true, timeout, debugMessage, useResync);
+            return pf.followPath(true, timeout, debugMessage, useResync, stopKey);
         }
 
-        public static bool WalkPath(List<Tile> path, float timeout = -1, bool debugMessage = false, bool useResync = true)
+        /// <summary>
+        /// Walk a given path, represented as list of Tile (see PathFindig.GetPath).
+        /// </summary>
+        /// <param name="path">List of coordinates as Tile objects.</param>
+        /// <param name="timeout">Maximum amount of time to walk the path. (default: -1, no limit)</param>
+        /// <param name="debugMessage">Outputs a debug message.</param>
+        /// <param name="useResync">ReSyncs the path calculation.</param>
+        /// <param name="stopKey">Shared variable key (see Misc.SetSharedValue). When the named key holds the boolean true the path is interrupted early and false is returned. (default: null, disabled)</param>
+        /// <returns>True: if it finish the path in time. False: otherwise</returns>
+        public static bool WalkPath(List<Tile> path, float timeout = -1, bool debugMessage = false, bool useResync = true, string stopKey = null)
         {
             PathFinding pf = new(path);
-            return pf.followPath(false, timeout, debugMessage, useResync);
+            return pf.followPath(false, timeout, debugMessage, useResync, stopKey);
         }
 
 
@@ -1056,14 +1071,32 @@ namespace RazorEnhanced
         /// <param name="timeout">Maximum amount of time to run the path. (default: -1, no limit)</param>
         /// <param name="debugMessage">Outputs a debug message.</param>
         /// <param name="useResync">ReSyncs the path calculation.</param>
+        /// <param name="stopKey">Shared variable key (see Misc.SetSharedValue). When the named key holds the boolean true the path is interrupted early and false is returned. (default: null, disabled)</param>
         /// <returns>True: if it finish the path in time. False: otherwise</returns>
-        public bool runPath(float timeout = -1, bool debugMessage = false, bool useResync = true)
+        public bool runPath(float timeout = -1, bool debugMessage = false, bool useResync = true, string stopKey = null)
         {
-            return followPath(true, timeout, debugMessage, useResync);
+            return followPath(true, timeout, debugMessage, useResync, stopKey);
         }
-        public bool walkPath(float timeout = -1, bool debugMessage = false, bool useResync = true)
+
+        /// <summary>
+        /// Walk a given path, represented as list of Tile (see PathFindig.GetPath).
+        /// </summary>
+        /// <param name="path">List of coordinates as Tile objects.</param>
+        /// <param name="timeout">Maximum amount of time to walk the path. (default: -1, no limit)</param>
+        /// <param name="debugMessage">Outputs a debug message.</param>
+        /// <param name="useResync">ReSyncs the path calculation.</param>
+        /// <param name="stopKey">Shared variable key (see Misc.SetSharedValue). When the named key holds the boolean true the path is interrupted early and false is returned. (default: null, disabled)</param>
+        /// <returns>True: if it finish the path in time. False: otherwise</returns>
+        public bool walkPath(float timeout = -1, bool debugMessage = false, bool useResync = true, string stopKey = null)
         {
-            return followPath(false, timeout, debugMessage, useResync);
+            return followPath(false, timeout, debugMessage, useResync, stopKey);
+        }
+
+        private static bool ShouldStop(string stopKey)
+        {
+            return stopKey != null &&
+                   Misc.SharedScriptData.TryGetValue(stopKey, out var stopVal) &&
+                   stopVal is bool stop && stop;
         }
 
         internal static List<Tile> BypassItem(List<Tile> path, int i)
@@ -1138,7 +1171,7 @@ namespace RazorEnhanced
 
         }
 
-        internal bool followPath(bool run, float timeout, bool debugMessage, bool useResync)
+        internal bool followPath(bool run, float timeout, bool debugMessage, bool useResync, string stopKey = null)
         {
             try
             {
@@ -1152,6 +1185,9 @@ namespace RazorEnhanced
                 Tile dst = m_Path.Last();
                 for (int i = 0; i < m_Path.Count; i++)
                 {
+                    if (ShouldStop(stopKey))
+                        return false;
+
                     if (Player.Position.X == dst.X && Player.Position.Y == dst.Y)
                     {
                         Misc.SendMessage("PathFind: Destination reached", 66);
@@ -1312,7 +1348,7 @@ namespace RazorEnhanced
                                 Route fixit = new();
                                 fixit.X = step.X;
                                 fixit.Y = step.Y;
-                                Go(fixit);
+                                Go(fixit, stopKey);
                             }
                         }
 
@@ -1373,5 +1409,4 @@ namespace RazorEnhanced
         }
     }
 }
-
 
