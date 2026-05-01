@@ -3085,8 +3085,10 @@ namespace Assistant
                 case 0x04: // 3 = private, 4 = public
                     {
                         Serial from = p.ReadUInt32();
+                        Mobile fromPlayer = World.FindMobile(from);
+                        string name = fromPlayer != null ? fromPlayer.Name : "Unknown";
                         string text = p.ReadUnicodeStringSafe();
-                        Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(text, "Party", 0, "null", from));          // Journal buffer
+                        Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(text, "Party", 0, name, from));          // Journal buffer
                         break;
                     }
                 case 0x07: // party invite
