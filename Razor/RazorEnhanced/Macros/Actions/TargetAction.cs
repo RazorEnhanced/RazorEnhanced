@@ -183,7 +183,7 @@ namespace RazorEnhanced.Macros.Actions
                             return;
                         }
 
-                        int aliasSerial = (int)(uint)Misc.ReadSharedValue(AliasName.ToLower());
+                        int aliasSerial = Convert.ToInt32(Misc.ReadSharedValue(AliasName.ToLower()));
 
                         if (aliasSerial != 0 && aliasSerial != -1)
                         {
