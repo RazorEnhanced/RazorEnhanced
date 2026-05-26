@@ -7201,12 +7201,11 @@ namespace RazorEnhanced.UOS
                 return true;
             if (m_Engine.Namespace == Namespace.GlobalNamespace)
             {
-                return Misc.CheckSharedValue(alias.ToLower());
+                if (Misc.CheckSharedValue(alias.ToLower()))
+                    return true;
             }
-            else
-            {
-                return _alias.ContainsKey(alias);
-            }
+            // Always check the local alias dictionary too
+            return _alias.ContainsKey(alias);
         }
 
         public void UnSetAlias(string alias)
@@ -7228,7 +7227,8 @@ namespace RazorEnhanced.UOS
             {
                 Misc.SetSharedValue(alias, serial);
             }
-            _alias.TryAdd(alias, (int)serial);
+            // Use indexer to update existing alias or add new one
+            _alias[alias] = (int)serial;
         }
 
         public void CreateList(string name)
