@@ -332,7 +332,7 @@ namespace RazorEnhanced.Macros
 
             if (type == 1) // Use skill
             {
-                string skillName = GetSkillNameFromId((byte)id);
+                string skillName = RazorEnhanced.Skills.GetSkillName((byte)id);
                 if (!string.IsNullOrEmpty(skillName))
                 {
                     RecordAction(new Actions.UseSkillAction(skillName));
@@ -495,37 +495,6 @@ namespace RazorEnhanced.Macros
         {
             if (!IsRecording) return;
             // Single click handling if needed
-        }
-
-        private static string GetSkillNameFromId(byte id)
-        {
-            return id switch
-            {
-                1 => "Anatomy",
-                2 => "Animal Lore",
-                3 => "Item ID",
-                4 => "Arms Lore",
-                6 => "Begging",
-                9 => "Peacemaking",
-                12 => "Cartography",
-                14 => "Detect Hidden",
-                15 => "Discordance",
-                16 => "Eval Int",
-                19 => "Forensics",
-                21 => "Hiding",
-                22 => "Provocation",
-                23 => "Inscription",
-                30 => "Poisoning",
-                32 => "Spirit Speak",
-                33 => "Stealing",
-                35 => "Animal Taming",
-                36 => "Taste ID",
-                38 => "Tracking",
-                46 => "Meditation",
-                47 => "Stealth",
-                48 => "Remove Trap",
-                _ => null
-            };
         }
 
         private static void OnEquipItemPacket(PacketReader p, PacketHandlerEventArgs args)
