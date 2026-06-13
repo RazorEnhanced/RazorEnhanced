@@ -10465,7 +10465,7 @@ namespace Assistant
 
         private void razorButtonWebsite_Click(object sender, EventArgs e)
         {
-            ProcessStartInfo p = new("https://razorenhanced.github.io/");
+            ProcessStartInfo p = new("https://ultimatools.github.io/razorenhanced.github.io/");
             try
             {
                 Process.Start(p);
@@ -10530,7 +10530,7 @@ namespace Assistant
             try
             {
                 // Leave stuff thats already set up
-                AutoUpdater.Start("https://raw.githubusercontent.com/RazorEnhanced/razorenhanced.github.io/main/RazorEnhancedAutoUpdater.xml");
+                AutoUpdater.Start("https://raw.githubusercontent.com/UltimaTools/razorenhanced.github.io/main/RazorEnhancedAutoUpdater.xml");
             }
             catch
             {

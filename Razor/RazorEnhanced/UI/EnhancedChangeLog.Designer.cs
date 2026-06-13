@@ -41,8 +41,7 @@ namespace RazorEnhanced.UI
             this.webBrowser1.Name = "webBrowser1";
             this.webBrowser1.Size = new System.Drawing.Size(414, 468);
             this.webBrowser1.TabIndex = 0;
-            this.webBrowser1.Url = new System.Uri("https://raw.githubusercontent.com/RazorEnhanced/razorenhanced.github.io/main/chan" +
-        "gelog.html", System.UriKind.Absolute);
+            this.webBrowser1.Url = new System.Uri("https://raw.githubusercontent.com/UltimaTools/razorenhanced.github.io/main/changelog.html", System.UriKind.Absolute);
             // 
             // EnhancedChangeLog
             // 
