@@ -21,6 +21,7 @@ namespace RazorEnhanced.Macros.Actions
         public string PresetName { get; set; }
         public IfAction.InRangeMode RangeMode { get; set; }
         public int RangeSerial { get; set; }
+        public string RangeAlias { get; set; }
         public int RangeGraphic { get; set; }
         public int RangeColor { get; set; }
         public IfAction.FindMode FindEntityMode { get; set; }
@@ -37,7 +38,7 @@ namespace RazorEnhanced.Macros.Actions
             IfAction.PlayerStatType statType = IfAction.PlayerStatType.HitPoints,
             IfAction.PlayerStatusType statusType = IfAction.PlayerStatusType.Poisoned,
             IfAction.InRangeMode rangeMode = IfAction.InRangeMode.LastTarget,
-            int rangeSerial = 0, int rangeGraphic = 0, int rangeColor = -1,
+            int rangeSerial = 0, string rangeAlias = "", int rangeGraphic = 0, int rangeColor = -1,
             IfAction.FindMode findEntityMode = IfAction.FindMode.Item,
             IfAction.FindLocation findEntityLocation = IfAction.FindLocation.Backpack,
             int findContainerSerial = 0, int findRange = 2, bool findStoreSerial = false)
@@ -56,6 +57,7 @@ namespace RazorEnhanced.Macros.Actions
             BuffName = buffName ?? "";
             RangeMode = rangeMode;
             RangeSerial = rangeSerial;
+            RangeAlias = rangeAlias ?? string.Empty;
             RangeGraphic = rangeGraphic;
             RangeColor = rangeColor;
             FindEntityMode = findEntityMode;
@@ -76,7 +78,8 @@ namespace RazorEnhanced.Macros.Actions
 
         public override string Serialize()
         {
-            return $"While|{Type}|{Op}|{Value}|{Graphic}|{Color}|{Escape(SkillName)}|{Escape(ValueToken)}|{BooleanValue}|{Escape(PresetName)}|{Escape(BuffName)}|{StatType}|{StatusType}|{RangeMode}|{RangeSerial}|{RangeGraphic}|{RangeColor}|{FindEntityMode}|{FindEntityLocation}|{FindContainerSerial}|{FindRange}|{FindStoreSerial}";
+            // Put RangeAlias at the end to remain compatible with older saved formats
+            return $"While|{Type}|{Op}|{Value}|{Graphic}|{Color}|{Escape(SkillName)}|{Escape(ValueToken)}|{BooleanValue}|{Escape(PresetName)}|{Escape(BuffName)}|{StatType}|{StatusType}|{RangeMode}|{RangeSerial}|{RangeGraphic}|{RangeColor}|{FindEntityMode}|{FindEntityLocation}|{FindContainerSerial}|{FindRange}|{FindStoreSerial}|{Escape(RangeAlias)}";
         }
 
         public override void Deserialize(string data)
@@ -110,20 +113,48 @@ namespace RazorEnhanced.Macros.Actions
                 RangeMode = rangeMode;
             if (parts.Length >= 15 && int.TryParse(parts[14], out int rangeSerial))
                 RangeSerial = rangeSerial;
-            if (parts.Length >= 16 && int.TryParse(parts[15], out int rangeGraphic))
-                RangeGraphic = rangeGraphic;
-            if (parts.Length >= 17 && int.TryParse(parts[16], out int rangeColor))
-                RangeColor = rangeColor;
-            if (parts.Length >= 18 && Enum.TryParse(parts[17], out IfAction.FindMode findEntityMode))
-                FindEntityMode = findEntityMode;
-            if (parts.Length >= 19 && Enum.TryParse(parts[18], out IfAction.FindLocation findEntityLocation))
-                FindEntityLocation = findEntityLocation;
-            if (parts.Length >= 20 && int.TryParse(parts[19], out int findContainerSerial))
-                FindContainerSerial = findContainerSerial;
-            if (parts.Length >= 21 && int.TryParse(parts[20], out int findRange))
-                FindRange = findRange;
-            if (parts.Length >= 22 && bool.TryParse(parts[21], out bool findStoreSerial))
-                FindStoreSerial = findStoreSerial;
+
+            // Backwards-compatible parsing: accept original format (no alias) or new format
+            // where RangeAlias is appended at the end. Older macros had 22 parts; new ones
+            // have 23+ parts with the alias as the final token.
+            RangeAlias = string.Empty;
+            if (parts.Length == 22)
+            {
+                // old format (no RangeAlias)
+                if (parts.Length >= 16 && int.TryParse(parts[15], out int rangeGraphic))
+                    RangeGraphic = rangeGraphic;
+                if (parts.Length >= 17 && int.TryParse(parts[16], out int rangeColor))
+                    RangeColor = rangeColor;
+                if (parts.Length >= 18 && Enum.TryParse(parts[17], out IfAction.FindMode findEntityMode))
+                    FindEntityMode = findEntityMode;
+                if (parts.Length >= 19 && Enum.TryParse(parts[18], out IfAction.FindLocation findEntityLocation))
+                    FindEntityLocation = findEntityLocation;
+                if (parts.Length >= 20 && int.TryParse(parts[19], out int findContainerSerial))
+                    FindContainerSerial = findContainerSerial;
+                if (parts.Length >= 21 && int.TryParse(parts[20], out int findRange))
+                    FindRange = findRange;
+                if (parts.Length >= 22 && bool.TryParse(parts[21], out bool findStoreSerial))
+                    FindStoreSerial = findStoreSerial;
+            }
+            else if (parts.Length >= 23)
+            {
+                // new format: alias appended at the end
+                if (parts.Length >= 16 && int.TryParse(parts[15], out int rangeGraphic))
+                    RangeGraphic = rangeGraphic;
+                if (parts.Length >= 17 && int.TryParse(parts[16], out int rangeColor))
+                    RangeColor = rangeColor;
+                if (parts.Length >= 18 && Enum.TryParse(parts[17], out IfAction.FindMode findEntityMode))
+                    FindEntityMode = findEntityMode;
+                if (parts.Length >= 19 && Enum.TryParse(parts[18], out IfAction.FindLocation findEntityLocation))
+                    FindEntityLocation = findEntityLocation;
+                if (parts.Length >= 20 && int.TryParse(parts[19], out int findContainerSerial))
+                    FindContainerSerial = findContainerSerial;
+                if (parts.Length >= 21 && int.TryParse(parts[20], out int findRange))
+                    FindRange = findRange;
+                if (parts.Length >= 22 && bool.TryParse(parts[21], out bool findStoreSerial))
+                    FindStoreSerial = findStoreSerial;
+                RangeAlias = Unescape(parts[parts.Length - 1]);
+            }
         }
 
         // Add these helpers to the class:
