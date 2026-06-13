@@ -716,6 +716,15 @@ namespace RazorEnhanced
             AutoRemountSerial = Settings.General.ReadInt("MountSerial");
             MinDamageDisplayed = RazorEnhanced.Settings.General.ReadInt("LimitDamageDisplayValue");
 
+            // Locations tab
+            Engine.MainWindow.CaptureMibsCheckBox.Checked = Settings.General.ReadBool("CaptureMibsCheckBox");
+            Engine.MainWindow.MibPathTextBox.Text = Settings.General.ReadString("MibCapturePath");
+            Engine.MainWindow.AddXYToGumpCheckBox.Checked = Settings.General.ReadBool("AddXYToGumpCheckBox");
+            Engine.MainWindow.LoadMibGumpIds();
+            Engine.MainWindow.CaptureTmapsCheckBox.Checked = Settings.General.ReadBool("CaptureTmapsCheckBox");
+            Engine.MainWindow.TmapPathTextBox.Text = Settings.General.ReadString("TmapCapturePath");
+            Engine.MainWindow.DisplayXYUnderMapCheckBox.Checked = Settings.General.ReadBool("DisplayXYUnderMapCheckBox");
+
             InitGraphGrid();
             InitJournalFilterGrid();
         }
