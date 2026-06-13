@@ -104,6 +104,7 @@ namespace Assistant
             PacketHandler.RegisterServerToClientViewer(0xB0, new PacketViewerCallback(SendGump));
             PacketHandler.RegisterServerToClientViewer(0xB0, new PacketViewerCallback(ConfigFiles.GumpIgnore.CheckGumpIgnore));
             PacketHandler.RegisterServerToClientViewer(0xB8, new PacketViewerCallback(Profile));
+            PacketHandler.RegisterServerToClientViewer(0xB2, new PacketViewerCallback(OnChatText));
             PacketHandler.RegisterServerToClientViewer(0xB9, new PacketViewerCallback(Features));
             PacketHandler.RegisterServerToClientViewer(0xBA, new PacketViewerCallback(TrackingArrow));
             PacketHandler.RegisterServerToClientViewer(0xBC, new PacketViewerCallback(ChangeSeason));
@@ -124,6 +125,61 @@ namespace Assistant
             PacketHandler.RegisterServerToClientViewer(0xF3, new PacketViewerCallback(SAWorldItem));
             PacketHandler.RegisterServerToClientViewer(0xF5, new PacketViewerCallback(MapDetails));
             PacketHandler.RegisterServerToClientViewer(0xF6, new PacketViewerCallback(MoveBoatHS));
+        }
+
+        private static void OnChatText(PacketReader p, PacketHandlerEventArgs args)
+        {
+            // Packet 0xB2 - Ultima Messenger Chat Text
+            // Structure: https://docs.polserver.com/packets/index.php?Packet=0xB2
+            // 0xB2 (1 byte) - Packet ID
+            // Length (2 bytes) - Already read by PacketReader
+            // MessageType (2 bytes) - Determines subcommand structure
+
+            ushort messageType = p.ReadUInt16();
+
+            // Message types 0x0025 (Message), 0x0026 (Emote), 0x0027 (OOC) are actual chat messages
+            if (messageType == 0x0025 || messageType == 0x0026 || messageType == 0x0027)
+            {
+                // BYTE[3] Language Code (e.g., "ENU")
+                // BYTE[1] Null Terminator (00)
+                string lang = p.ReadString(3);
+                p.ReadByte(); // Null terminator
+
+                // BYTE[2] Message from (0x0030 = user, 0x0031 = moderator, 0x0032 = muted, 0x0034 = me, 0x0035 = system)
+                ushort messageFrom = p.ReadUInt16();
+
+                // BYTE[?] Username in Unicode
+                // BYTE[2] Null Terminator for Username (00 00)
+                string name = p.ReadUnicodeStringLESafe();
+
+                // BYTE[?] Unicode Message Sent
+                // BYTE[2] Null Terminator for Message
+                string text = p.ReadUnicodeStringLESafe();
+
+                // Determine message subtype for logging/debugging
+                string messageSubType = messageType == 0x0025 ? "Message" :
+                                       messageType == 0x0026 ? "Emote" :
+                                       messageType == 0x0027 ? "OOC" : "Unknown";
+
+                // Determine sender type for logging
+                string senderType = messageFrom == 0x0030 ? "User" :
+                                   messageFrom == 0x0031 ? "Moderator" :
+                                   messageFrom == 0x0032 ? "Muted" :
+                                   messageFrom == 0x0034 ? "Me" :
+                                   messageFrom == 0x0035 ? "System" : "Unknown";
+
+                // Add to journal with "Chat" type (all Ultima Messenger messages use this type)
+                Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(text, "Chat", 0, name, (int)Serial.MinusOne));
+
+                Utility.Logger.Debug($"Chat Text: type={messageSubType} (0x{messageType:X4}), from={senderType} (0x{messageFrom:X4}), lang={lang}, name={name}, text={text}");
+            }
+            else
+            {
+                // Other message types (0x0001-0x0024, 0x0028-0x002C, 0x03E8-0x03F1)
+                // These are system notifications, conference management, etc.
+                // For now, just log the message type for debugging
+                //Utility.Logger.Debug($"Chat System: messageType=0x{messageType:X4}");
+            }
         }
 
         private static void DisplayStringQuery(PacketReader p, PacketHandlerEventArgs args)
@@ -3047,8 +3103,10 @@ namespace Assistant
                 case 0x04: // 3 = private, 4 = public
                     {
                         Serial from = p.ReadUInt32();
+                        Mobile fromPlayer = World.FindMobile(from);
+                        string name = fromPlayer != null ? fromPlayer.Name : "Unknown";
                         string text = p.ReadUnicodeStringSafe();
-                        Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(text, "Party", 0, "null", from));          // Journal buffer
+                        Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(text, "Party", 0, name, from));          // Journal buffer
                         break;
                     }
                 case 0x07: // party invite

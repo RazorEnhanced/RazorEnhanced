@@ -1143,7 +1143,11 @@ namespace Assistant
 
             var macro = macros[macroListBox.SelectedIndex];
             DisplayMacroActions(macro);
+
+            // Temporarily unhook the event to avoid triggering save when setting programmatically
+            chkMacroLoop.CheckedChanged -= ChkMacroLoop_CheckedChanged;
             chkMacroLoop.Checked = macro.Loop;
+            chkMacroLoop.CheckedChanged += ChkMacroLoop_CheckedChanged;
 
             macroHotkeyTextBox.Text = RazorEnhanced.HotKey.KeyString(macro.Hotkey);
             chkMacroPassKey.Checked = macro.HotKeyPass;
@@ -1163,6 +1167,9 @@ namespace Assistant
 
             var macro = macros[macroListBox.SelectedIndex];
             macro.Loop = chkMacroLoop.Checked;
+
+            // Save macros to persist the Loop property change
+            RazorEnhanced.Macros.MacroManager.SaveMacros();
         }
 
         private void BtnMacroSetHotkey_Click(object sender, EventArgs e)
@@ -1454,13 +1461,8 @@ namespace Assistant
 
             try
             {
-                using (var writer = new System.IO.StreamWriter(filePath, false))
-                {
-                    foreach (var action in macro.Actions)
-                    {
-                        writer.WriteLine(action.Serialize());
-                    }
-                }
+                // Use macro.Serialize() to save all metadata including Loop property
+                System.IO.File.WriteAllText(filePath, macro.Serialize());
                 MessageBox.Show($"Macro saved to:\n{filePath}", "Save Macro", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)

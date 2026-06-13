@@ -148,6 +148,7 @@ namespace RazorEnhanced
             ///     Party
             ///     Encoded
             ///     Special
+            ///     Chat (Ultima Messenger)
             /// </summary>
             public string Type { get { return m_Type; } }
 
