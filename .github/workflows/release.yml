@@ -46,7 +46,7 @@ jobs:
         "version=$version" >> $env:GITHUB_OUTPUT
         
         # Generate the download URL and store it as an output
-        $downloadUrl = "https://github.com/RazorEnhanced/RazorEnhanced/releases/download/v${version}/RazorEnhanced-${version}.zip"
+        $downloadUrl = "https://github.com/UltimaTools/RazorEnhanced/releases/download/v${version}/RazorEnhanced-${version}.zip"
         "download_url=$downloadUrl" >> $env:GITHUB_OUTPUT
         Write-Host "Download URL: $downloadUrl"
     
@@ -134,7 +134,7 @@ jobs:
     - name: Checkout GitHub Pages Repository
       uses: actions/checkout@v4
       with:
-        repository: RazorEnhanced/razorenhanced.github.io
+        repository: UltimaTools/razorenhanced.github.io
         path: gh-pages
         token: ${{ secrets.DEPLOYMENT_TOKEN }}
 
@@ -168,7 +168,7 @@ jobs:
         Copy-Item -Path $indexFile -Destination "$indexFile.bak"
         
         # Pattern adjusted for GitHub release URL instead of local repository
-        $pattern = '(https://github\.com/RazorEnhanced/[^/]+/(?:releases|raw)/[^/]+/(?:releases/)?)[^"]+(" class="btn">)'
+        $pattern = '(https://github\.com/UltimaTools/[^/]+/(?:releases|raw)/[^/]+/(?:releases/)?)[^"]+(" class="btn">)'
         $replacement = "$releaseUrl`${2}"
         
         # Replace the old download link with the new one
@@ -270,7 +270,7 @@ jobs:
         
         # Create the GraphQL query for GitHub AI
         $query = @{
-          query = "query { repository(owner: ""RazorEnhanced"", name: ""RazorEnhanced"") { aiGenerated { summarizeCommits(prompt: ""Summarize these commit messages into a concise changelog with bullet points for the main changes. Focus on user-facing changes and improvements:\n$commitsJoined"") } } }"
+          query = "query { repository(owner: ""UltimaTools"", name: ""RazorEnhanced"") { aiGenerated { summarizeCommits(prompt: ""Summarize these commit messages into a concise changelog with bullet points for the main changes. Focus on user-facing changes and improvements:\n$commitsJoined"") } } }"
         } | ConvertTo-Json -Compress
         
         try {
