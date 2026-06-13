@@ -59,7 +59,7 @@ jobs:
         "version=$version" >> $env:GITHUB_OUTPUT
         
         # Generate the download URL and store it as an output
-        $downloadUrl = "https://github.com/RazorEnhanced/RazorEnhanced/releases/download/v${version}/RazorEnhanced-${version}.zip"
+        $downloadUrl = "https://github.com/UltimaTools/RazorEnhanced/releases/download/v${version}/RazorEnhanced-${version}.zip"
         "download_url=$downloadUrl" >> $env:GITHUB_OUTPUT
         Write-Host "Download URL: $downloadUrl"
     
