@@ -1958,8 +1958,10 @@ namespace Assistant
                     result.type, result.op, result.value, result.graphic, result.color,
                     result.skillName, result.valueToken, result.booleanValue, result.presetName,
                     result.buffName, result.statType, result.statusType, result.rangeMode,
-                    result.rangeSerial, result.rangeGraphic, result.rangeColor,
+                    result.rangeSerial, result.rangeAlias, result.rangeGraphic, result.rangeColor,
                     result.findEntityMode, result.findEntityLocation, result.findContainerSerial, result.findRange, result.findStoreSerial);
+
+                ifAction.RangeAlias = result.rangeMode == IfAction.InRangeMode.Alias ? result.rangeAlias : string.Empty;
 
                 int insertIndex = GetInsertPosition();
                 macro.Actions.Insert(insertIndex, ifAction);
@@ -2012,6 +2014,7 @@ namespace Assistant
                     ifAction.BuffName = result.buffName;
                     ifAction.RangeMode = result.rangeMode;
                     ifAction.RangeSerial = result.rangeSerial;
+                    ifAction.RangeAlias = result.rangeMode == IfAction.InRangeMode.Alias ? result.rangeAlias : string.Empty;
                     ifAction.RangeGraphic = result.rangeGraphic;
                     ifAction.RangeColor = result.rangeColor;
                     ifAction.FindEntityMode = result.findEntityMode;
@@ -2053,6 +2056,7 @@ namespace Assistant
                 ifAction.BuffName = result.buffName;
                 ifAction.RangeMode = result.rangeMode;
                 ifAction.RangeSerial = result.rangeSerial;
+                ifAction.RangeAlias = result.rangeMode == IfAction.InRangeMode.Alias ? result.rangeAlias : string.Empty;
                 ifAction.RangeGraphic = result.rangeGraphic;
                 ifAction.RangeColor = result.rangeColor;
                 ifAction.FindEntityMode = result.findEntityMode;
@@ -2143,7 +2147,8 @@ namespace Assistant
                 }
 
                 string colorStr = ifAction.Color == -1 ? "Any" : $"0x{ifAction.Color:X4}";
-                return $"Find {modeStr}: 0x{ifAction.Graphic:X4} ({colorStr}) in {locationStr}";
+                string aliasSetFind = ifAction.FindStoreSerial ? " set 'findfound'" : string.Empty;
+                return $"Find {modeStr}: 0x{ifAction.Graphic:X4} ({colorStr}) in {locationStr}{aliasSetFind}";
             }
 
             if (ifAction.Type == IfAction.ConditionType.InJournal)
@@ -2181,6 +2186,9 @@ namespace Assistant
                         string itemColorStr = ifAction.RangeColor == -1 ? "Any" : $"0x{ifAction.RangeColor:X4}";
                         targetDesc = $"ItemType 0x{ifAction.RangeGraphic:X4} ({itemColorStr})";
                         break;
+                    case IfAction.InRangeMode.Alias:
+                        targetDesc = string.IsNullOrEmpty(ifAction.RangeAlias) ? "(no alias)" : $"Alias '{ifAction.RangeAlias}'";
+                        break;
                     case IfAction.InRangeMode.MobileType:
                         string mobileColorStr = ifAction.RangeColor == -1 ? "Any" : $"0x{ifAction.RangeColor:X4}";
                         targetDesc = $"MobileType 0x{ifAction.RangeGraphic:X4} ({mobileColorStr})";
@@ -2189,7 +2197,8 @@ namespace Assistant
                         targetDesc = "Unknown";
                         break;
                 }
-                return $"{targetDesc} InRange {GetOperatorSymbol(ifAction.Op)} {ifAction.Value}";
+                string aliasSet = ifAction.FindStoreSerial ? " set 'findfound'" : string.Empty;
+                return $"{targetDesc} InRange {GetOperatorSymbol(ifAction.Op)} {ifAction.Value}{aliasSet}";
             }
 
             if (ifAction.Type == IfAction.ConditionType.Count)
@@ -2286,7 +2295,7 @@ namespace Assistant
                  int graphic, int color, string skillName, string valueToken, bool booleanValue,
                  string presetName, string buffName, IfAction.PlayerStatType statType,
                  IfAction.PlayerStatusType statusType, IfAction.InRangeMode rangeMode,
-                 int rangeSerial, int rangeGraphic, int rangeColor,
+                 int rangeSerial, string rangeAlias, int rangeGraphic, int rangeColor,
                  IfAction.FindMode findEntityMode, IfAction.FindLocation findEntityLocation,
                  int findContainerSerial, int findRange, bool findStoreSerial) ShowIfConditionDialog(IfAction ifAction)
         {
@@ -2348,7 +2357,8 @@ namespace Assistant
                 Width = 290,
                 DropDownStyle = ComboBoxStyle.DropDownList
             };
-            cmbRangeMode.Items.AddRange(new string[] { "Last Target", "Specific Serial", "Item Type", "Mobile Type" });
+            cmbRangeMode.Items.AddRange(new string[] { "Last Target", "Specific Serial", "Alias", "Item Type", "Mobile Type" });
+            int initialRangeModeIndex = (int)ifAction.RangeMode;
 
             // === RANGE SERIAL (Top = 100) ===
             Label lblRangeSerial = new Label { Left = 20, Top = 100, Text = "Serial:", Width = 120 };
@@ -2357,7 +2367,7 @@ namespace Assistant
                 Left = 150,
                 Top = 100,
                 Width = 200,
-                Text = ifAction.RangeSerial == 0 ? "" : $"0x{ifAction.RangeSerial:X8}"
+            Text = ifAction.RangeMode == IfAction.InRangeMode.Alias ? ifAction.RangeAlias : (ifAction.RangeSerial == 0 ? "" : $"0x{ifAction.RangeSerial:X8}")
             };
 
             Button btnTargetRangeSerial = new Button
@@ -2366,6 +2376,42 @@ namespace Assistant
                 Left = 360,
                 Top = 98,
                 Width = 80
+            };
+
+            // Checkbox for Alias mode: store found serial to 'findfound' alias
+            CheckBox chkRangeStoreSerial = new CheckBox
+            {
+                Left = 150,
+                Top = 130,
+                Width = 290,
+                Text = "Store serial to 'findfound' alias",
+                Checked = (ifAction.FindStoreSerial || string.Equals(ifAction.RangeAlias, "findfound", StringComparison.OrdinalIgnoreCase)),
+                Visible = false
+            };
+
+            // When checked, set alias to 'findfound' and disable alias editing
+            chkRangeStoreSerial.CheckedChanged += (s, ev) =>
+            {
+                if (chkRangeStoreSerial.Checked)
+                {
+                    txtRangeSerial.Text = "findfound";
+                    txtRangeSerial.Enabled = false;
+                    // Ensure the mode switches to Alias so the alias is saved and used
+                    cmbRangeMode.SelectedIndex = (int)IfAction.InRangeMode.Alias;
+                }
+                else
+                {
+                    // Re-enable editing; do not clear user-entered alias automatically
+                    txtRangeSerial.Enabled = true;
+                    if (string.Equals(txtRangeSerial.Text, "findfound", StringComparison.OrdinalIgnoreCase) && !string.IsNullOrEmpty(ifAction.RangeAlias) && !string.Equals(ifAction.RangeAlias, "findfound", StringComparison.OrdinalIgnoreCase))
+                    {
+                        // restore previous alias value if it existed
+                        txtRangeSerial.Text = ifAction.RangeAlias;
+                    }
+                    // restore previous range mode if it wasn't Alias
+                    if (initialRangeModeIndex != (int)IfAction.InRangeMode.Alias)
+                        cmbRangeMode.SelectedIndex = initialRangeModeIndex;
+                }
             };
 
             // === RANGE GRAPHIC (Top = 140) ===
@@ -2389,6 +2435,8 @@ namespace Assistant
             // === RANGE COLOR (Top = 180) ===
             Label lblRangeColor = new Label { Left = 20, Top = 180, Text = "Color (-1 = any):", Width = 120 };
             TextBox txtRangeColor = new TextBox { Left = 150, Top = 180, Width = 290, Text = ifAction.RangeColor.ToString() };
+
+            // Add alias store checkbox to dialog controls later
 
             // === NEW FIND MODE SELECTOR (Top = 60) ===
             Label lblFindMode = new Label { Left = 20, Top = 60, Text = "Find Mode:", Width = 120 };
@@ -2856,7 +2904,7 @@ namespace Assistant
             btnTargetRangeType.Click += (s, ev) =>
             {
                 var selectedMode = (IfAction.InRangeMode)cmbRangeMode.SelectedIndex;
-                string modeStr = selectedMode == IfAction.InRangeMode.ItemType ? "item" : "mobile";
+                string modeStr = selectedMode == IfAction.InRangeMode.ItemType ? "item" : selectedMode == IfAction.InRangeMode.MobileType ? "mobile" : "alias";
                 Misc.SendMessage($"Target a {modeStr} to get its type...", 88);
 
                 Assistant.Targeting.OneTimeTarget(false, new Assistant.Targeting.TargetResponseCallback((bool loc, Assistant.Serial serial, Assistant.Point3D p, ushort gfx) =>
@@ -3043,6 +3091,7 @@ namespace Assistant
                     lblFindGraphic.Visible = txtFindGraphic.Visible = btnTargetFindType.Visible = true;
                     lblFindColor.Visible = txtFindColor.Visible = true;
 
+                    // Only show store-serial checkbox when Find mode is active.
                     chkFindStoreSerial.Visible = true;
                     lblFindStoreNote.Visible = true;
                 }
@@ -3078,17 +3127,42 @@ namespace Assistant
                     bool isRangeSerial = rangeMode == IfAction.InRangeMode.Serial;
                     bool isRangeItemType = rangeMode == IfAction.InRangeMode.ItemType;
                     bool isRangeMobileType = rangeMode == IfAction.InRangeMode.MobileType;
+                    bool isRangeAlias = rangeMode == IfAction.InRangeMode.Alias;
                     bool isRangeType = isRangeItemType || isRangeMobileType;
 
-                    lblRangeSerial.Visible = txtRangeSerial.Visible = btnTargetRangeSerial.Visible = isRangeSerial;
+                    // Serial field visible for Serial mode and Alias mode
+                    lblRangeSerial.Visible = txtRangeSerial.Visible = isRangeSerial || isRangeAlias;
+                    // Target button only for Serial mode
+                    btnTargetRangeSerial.Visible = isRangeSerial;
+
+                    // Graphic/Color only for ItemType/MobileType
                     lblRangeGraphic.Visible = txtRangeGraphic.Visible = btnTargetRangeType.Visible = isRangeType;
                     lblRangeColor.Visible = txtRangeColor.Visible = isRangeType;
+
+                    // Alias uses serial field for alias name and shows alias store checkbox
+                    lblRangeSerial.Text = isRangeAlias ? "Alias:" : "Serial:";
+                    // Ensure the range-store checkbox only shows when Alias mode is active
+                    chkRangeStoreSerial.Visible = isRangeAlias;
+                    // if user wanted store-to-findfound, disable editing only when alias mode
+                    if (isRangeAlias && chkRangeStoreSerial.Checked)
+                    {
+                        txtRangeSerial.Text = "findfound";
+                        txtRangeSerial.Enabled = false;
+                    }
+                    else
+                    {
+                        txtRangeSerial.Enabled = true;
+                    }
                 }
                 else
                 {
                     lblRangeSerial.Visible = txtRangeSerial.Visible = btnTargetRangeSerial.Visible = false;
                     lblRangeGraphic.Visible = txtRangeGraphic.Visible = btnTargetRangeType.Visible = false;
                     lblRangeColor.Visible = txtRangeColor.Visible = false;
+                    // Ensure range-alias checkbox is hidden when not in InRange
+                    chkRangeStoreSerial.Visible = false;
+                    // Ensure serial textbox is enabled in non-alias contexts
+                    txtRangeSerial.Enabled = true;
                 }
 
                 // Show skill selector
@@ -3190,7 +3264,7 @@ namespace Assistant
 
                         break;
                     case IfAction.ConditionType.InRange:
-                        dialog.Height = lblRangeSerial.Visible ? 300 : lblRangeGraphic.Visible ? 340 : 240;
+                        dialog.Height = lblRangeSerial.Visible ? chkRangeStoreSerial.Visible ? 340 : 300 : lblRangeGraphic.Visible ? 340 : 260;
 
                         //range mode combobox and label
                         lblRangeMode.Top = 60;
@@ -3211,22 +3285,23 @@ namespace Assistant
                         lblRangeColor.Top = lblRangeSerial.Visible ? 180 : 140;
                         txtRangeColor.Top = lblRangeSerial.Visible ? 180 : 140;
 
+
                         //operator combobox and label
-                        lblOp.Top = lblRangeSerial.Visible ? 140 : lblRangeGraphic.Visible ? 180 : 100;
-                        cmbOp.Top = lblRangeSerial.Visible ? 140 : lblRangeGraphic.Visible ? 180 : 100;
+                        lblOp.Top = lblRangeSerial.Visible ? chkRangeStoreSerial.Visible ? 180 : 140 : lblRangeGraphic.Visible ? 180 : 100;
+                        cmbOp.Top = lblRangeSerial.Visible ? chkRangeStoreSerial.Visible ? 180 : 140 : lblRangeGraphic.Visible ? 180 : 100;
 
                         //value token combobox and label
-                        lblValue.Top = lblRangeSerial.Visible ? 180 : lblRangeGraphic.Visible ? 220 : 140;
-                        txtValue.Top = lblRangeSerial.Visible ? 180 : lblRangeGraphic.Visible ? 220 : 140;
+                        lblValue.Top = lblRangeSerial.Visible ? chkRangeStoreSerial.Visible ? 220 : 180 : lblRangeGraphic.Visible ? 220 : 140;
+                        txtValue.Top = lblRangeSerial.Visible ? chkRangeStoreSerial.Visible ? 220 : 180 : lblRangeGraphic.Visible ? 220 : 140;
 
 
 
 
                         //ok button
-                        btnOK.Top = lblRangeSerial.Visible ? 220 : lblRangeGraphic.Visible ? 260 : 160;
+                        btnOK.Top = lblRangeSerial.Visible ? chkRangeStoreSerial.Visible ? 260 : 220 : lblRangeGraphic.Visible ? 260 : 180;
 
                         //cancelbutton
-                        btnCancel.Top = lblRangeSerial.Visible ? 220 : lblRangeGraphic.Visible ? 260 : 160;
+                        btnCancel.Top = lblRangeSerial.Visible ? chkRangeStoreSerial.Visible ? 260 : 220 : lblRangeGraphic.Visible ? 260 : 180;
 
                         break;
                     case IfAction.ConditionType.TargetExists:
@@ -3503,6 +3578,7 @@ namespace Assistant
             dialog.Controls.Add(lblRangeSerial);
             dialog.Controls.Add(txtRangeSerial);
             dialog.Controls.Add(btnTargetRangeSerial);
+            dialog.Controls.Add(chkRangeStoreSerial);
             dialog.Controls.Add(lblRangeGraphic);
             dialog.Controls.Add(txtRangeGraphic);
             dialog.Controls.Add(btnTargetRangeType);
@@ -3640,10 +3716,19 @@ namespace Assistant
                 IfAction.InRangeMode rangeMode = (IfAction.InRangeMode)cmbRangeMode.SelectedIndex;
 
                 int rangeSerial = 0;
-                string rangeSerialStr = txtRangeSerial.Text.Replace("0x", "").Replace("0X", "").Trim();
-                if (!string.IsNullOrEmpty(rangeSerialStr))
+                string rangeAlias = "";
+                string rangeSerialStr = txtRangeSerial.Text.Trim();
+                if (rangeMode == IfAction.InRangeMode.Alias)
                 {
-                    int.TryParse(rangeSerialStr, System.Globalization.NumberStyles.HexNumber, null, out rangeSerial);
+                    rangeAlias = rangeSerialStr;
+                }
+                else
+                {
+                    rangeSerialStr = rangeSerialStr.Replace("0x", "").Replace("0X", "").Trim();
+                    if (!string.IsNullOrEmpty(rangeSerialStr))
+                    {
+                        int.TryParse(rangeSerialStr, System.Globalization.NumberStyles.HexNumber, null, out rangeSerial);
+                    }
                 }
 
                 int rangeGraphic = 0;
@@ -3671,13 +3756,16 @@ namespace Assistant
 
                 bool findStoreSerial = chkFindStoreSerial.Checked;
 
-                return (true, condType, op, value, graphic, color, skillName, valueToken, boolValue, presetName, buffName, statType, statusType, rangeMode, rangeSerial, rangeGraphic, rangeColor, findEntityMode, findEntityLocation, findContainerSerial, findRange, findStoreSerial);
+                bool isRangeAliasActive = cmbRangeMode.SelectedIndex == (int)IfAction.InRangeMode.Alias;
+                bool findStoreResult = chkFindStoreSerial.Checked || (isRangeAliasActive && chkRangeStoreSerial.Checked);
+
+                return (true, condType, op, value, graphic, color, skillName, valueToken, boolValue, presetName, buffName, statType, statusType, rangeMode, rangeSerial, rangeAlias, rangeGraphic, rangeColor, findEntityMode, findEntityLocation, findContainerSerial, findRange, findStoreResult);
             }
 
             return (false, ifAction.Type, ifAction.Op, ifAction.Value, ifAction.Graphic, ifAction.Color,
                     ifAction.SkillName, ifAction.ValueToken, ifAction.BooleanValue, ifAction.PresetName,
                     ifAction.BuffName, ifAction.StatType, ifAction.StatusType, ifAction.RangeMode,
-                    ifAction.RangeSerial, ifAction.RangeGraphic, ifAction.RangeColor,
+                    ifAction.RangeSerial, ifAction.RangeAlias, ifAction.RangeGraphic, ifAction.RangeColor,
                     ifAction.FindEntityMode, ifAction.FindEntityLocation, ifAction.FindContainerSerial, ifAction.FindRange, ifAction.FindStoreSerial);
         }
 
@@ -3701,7 +3789,7 @@ namespace Assistant
                     result.type, result.op, result.value, result.graphic, result.color,
                     result.skillName, result.valueToken, result.booleanValue, result.presetName,
                     result.buffName, result.statType, result.statusType, result.rangeMode,
-                    result.rangeSerial, result.rangeGraphic, result.rangeColor,
+                    result.rangeSerial, result.rangeAlias, result.rangeGraphic, result.rangeColor,
                     result.findEntityMode, result.findEntityLocation, result.findContainerSerial, result.findRange, result.findStoreSerial);
 
                 int insertIndex = GetInsertPosition();
@@ -3755,6 +3843,7 @@ namespace Assistant
                     elseIfAction.BuffName = result.buffName;
                     elseIfAction.RangeMode = result.rangeMode;
                     elseIfAction.RangeSerial = result.rangeSerial;
+                    elseIfAction.RangeAlias = result.rangeMode == IfAction.InRangeMode.Alias ? result.rangeAlias : string.Empty;
                     elseIfAction.RangeGraphic = result.rangeGraphic;
                     elseIfAction.RangeColor = result.rangeColor;
                     elseIfAction.FindEntityMode = result.findEntityMode;
@@ -3873,7 +3962,8 @@ namespace Assistant
                 }
 
                 string colorStr = elseIfAction.Color == -1 ? "Any" : $"0x{elseIfAction.Color:X4}";
-                return $"Find {modeStr}: 0x{elseIfAction.Graphic:X4} ({colorStr}) in {locationStr}";
+                string aliasSetFindElse = elseIfAction.FindStoreSerial ? " set 'findfound'" : string.Empty;
+                return $"Find {modeStr}: 0x{elseIfAction.Graphic:X4} ({colorStr}) in {locationStr}{aliasSetFindElse}";
             }
 
             if (elseIfAction.Type == IfAction.ConditionType.InJournal)
@@ -3911,6 +4001,9 @@ namespace Assistant
                         string itemColorStr = elseIfAction.RangeColor == -1 ? "Any" : $"0x{elseIfAction.RangeColor:X4}";
                         targetDesc = $"ItemType 0x{elseIfAction.RangeGraphic:X4} ({itemColorStr})";
                         break;
+                    case IfAction.InRangeMode.Alias:
+                        targetDesc = string.IsNullOrEmpty(elseIfAction.RangeAlias) ? "(no alias)" : $"Alias '{elseIfAction.RangeAlias}'";
+                        break;
                     case IfAction.InRangeMode.MobileType:
                         string mobileColorStr = elseIfAction.RangeColor == -1 ? "Any" : $"0x{elseIfAction.RangeColor:X4}";
                         targetDesc = $"MobileType 0x{elseIfAction.RangeGraphic:X4} ({mobileColorStr})";
@@ -3919,7 +4012,8 @@ namespace Assistant
                         targetDesc = "Unknown";
                         break;
                 }
-                return $"{targetDesc} InRange {GetOperatorSymbol(elseIfAction.Op)} {elseIfAction.Value}";
+                string aliasSetElse = elseIfAction.FindStoreSerial ? " set 'findfound'" : string.Empty;
+                return $"{targetDesc} InRange {GetOperatorSymbol(elseIfAction.Op)} {elseIfAction.Value}{aliasSetElse}";
             }
 
             if (elseIfAction.Type == IfAction.ConditionType.Count)
@@ -3940,7 +4034,7 @@ namespace Assistant
     int graphic, int color, string skillName, string valueToken, bool booleanValue,
     string presetName, string buffName, IfAction.PlayerStatType statType,
     IfAction.PlayerStatusType statusType, IfAction.InRangeMode rangeMode,
-    int rangeSerial, int rangeGraphic, int rangeColor,
+    int rangeSerial, string rangeAlias, int rangeGraphic, int rangeColor,
     IfAction.FindMode findEntityMode, IfAction.FindLocation findEntityLocation,
     int findContainerSerial, int findRange, bool findStoreSerial) ShowElseIfConditionDialog(ElseIfAction elseIfAction)
         {
@@ -3961,6 +4055,7 @@ namespace Assistant
                 BuffName = elseIfAction.BuffName,
                 RangeMode = elseIfAction.RangeMode,
                 RangeSerial = elseIfAction.RangeSerial,
+                RangeAlias = elseIfAction.RangeMode == IfAction.InRangeMode.Alias ? elseIfAction.RangeAlias : string.Empty,
                 RangeGraphic = elseIfAction.RangeGraphic,
                 RangeColor = elseIfAction.RangeColor,
                 FindEntityMode = elseIfAction.FindEntityMode,
@@ -3980,7 +4075,7 @@ namespace Assistant
             return (false, elseIfAction.Type, elseIfAction.Op, elseIfAction.Value, elseIfAction.Graphic, elseIfAction.Color,
                 elseIfAction.SkillName, elseIfAction.ValueToken, elseIfAction.BooleanValue, elseIfAction.PresetName,
                 elseIfAction.BuffName, elseIfAction.StatType, elseIfAction.StatusType, elseIfAction.RangeMode,
-                elseIfAction.RangeSerial, elseIfAction.RangeGraphic, elseIfAction.RangeColor,
+                elseIfAction.RangeSerial, elseIfAction.RangeAlias, elseIfAction.RangeGraphic, elseIfAction.RangeColor,
                 elseIfAction.FindEntityMode, elseIfAction.FindEntityLocation, elseIfAction.FindContainerSerial, elseIfAction.FindRange, elseIfAction.FindStoreSerial);
         }
 
@@ -9993,7 +10088,7 @@ string organizerName, int sourceBag, int destinationBag, int dragDelay)
                     result.type, result.op, result.value, result.graphic, result.color,
                     result.skillName, result.valueToken, result.booleanValue, result.presetName,
                     result.buffName, result.statType, result.statusType, result.rangeMode,
-                    result.rangeSerial, result.rangeGraphic, result.rangeColor,
+                    result.rangeSerial, result.rangeAlias, result.rangeGraphic, result.rangeColor,
                     result.findEntityMode, result.findEntityLocation, result.findContainerSerial, result.findRange, result.findStoreSerial);
 
                 int insertIndex = GetInsertPosition();
@@ -10045,8 +10140,9 @@ string organizerName, int sourceBag, int destinationBag, int dragDelay)
                     whileAction.SkillName = result.skillName;
                     whileAction.PresetName = result.presetName;
                     whileAction.BuffName = result.buffName;
-                    whileAction.RangeMode = result.rangeMode;
-                    whileAction.RangeSerial = result.rangeSerial;
+                whileAction.RangeMode = result.rangeMode;
+                whileAction.RangeSerial = result.rangeSerial;
+                whileAction.RangeAlias = result.rangeMode == IfAction.InRangeMode.Alias ? result.rangeAlias : string.Empty;
                     whileAction.RangeGraphic = result.rangeGraphic;
                     whileAction.RangeColor = result.rangeColor;
                     whileAction.FindEntityMode = result.findEntityMode;
@@ -10164,7 +10260,8 @@ string organizerName, int sourceBag, int destinationBag, int dragDelay)
                 }
 
                 string colorStr = whileAction.Color == -1 ? "Any" : $"0x{whileAction.Color:X4}";
-                return $"Find {modeStr}: 0x{whileAction.Graphic:X4} ({colorStr}) in {locationStr}";
+                string aliasSetFindWhile = whileAction.FindStoreSerial ? " set 'findfound'" : string.Empty;
+                return $"Find {modeStr}: 0x{whileAction.Graphic:X4} ({colorStr}) in {locationStr}{aliasSetFindWhile}";
             }
 
             if (whileAction.Type == IfAction.ConditionType.InJournal)
@@ -10202,6 +10299,9 @@ string organizerName, int sourceBag, int destinationBag, int dragDelay)
                         string itemColorStr = whileAction.RangeColor == -1 ? "Any" : $"0x{whileAction.RangeColor:X4}";
                         targetDesc = $"ItemType 0x{whileAction.RangeGraphic:X4} ({itemColorStr})";
                         break;
+                    case IfAction.InRangeMode.Alias:
+                        targetDesc = string.IsNullOrEmpty(whileAction.RangeAlias) ? "(no alias)" : $"Alias '{whileAction.RangeAlias}'";
+                        break;
                     case IfAction.InRangeMode.MobileType:
                         string mobileColorStr = whileAction.RangeColor == -1 ? "Any" : $"0x{whileAction.RangeColor:X4}";
                         targetDesc = $"MobileType 0x{whileAction.RangeGraphic:X4} ({mobileColorStr})";
@@ -10210,7 +10310,8 @@ string organizerName, int sourceBag, int destinationBag, int dragDelay)
                         targetDesc = "Unknown";
                         break;
                 }
-                return $"{targetDesc} InRange {GetOperatorSymbol(whileAction.Op)} {whileAction.Value}";
+                string aliasSetWhile = whileAction.FindStoreSerial ? " set 'findfound'" : string.Empty;
+                return $"{targetDesc} InRange {GetOperatorSymbol(whileAction.Op)} {whileAction.Value}{aliasSetWhile}";
             }
 
             if (whileAction.Type == IfAction.ConditionType.Count)
@@ -10231,7 +10332,7 @@ string organizerName, int sourceBag, int destinationBag, int dragDelay)
             int graphic, int color, string skillName, string valueToken, bool booleanValue,
             string presetName, string buffName, IfAction.PlayerStatType statType,
             IfAction.PlayerStatusType statusType, IfAction.InRangeMode rangeMode,
-            int rangeSerial, int rangeGraphic, int rangeColor,
+            int rangeSerial, string rangeAlias, int rangeGraphic, int rangeColor,
             IfAction.FindMode findEntityMode, IfAction.FindLocation findEntityLocation,
             int findContainerSerial, int findRange, bool findStoreSerial) ShowWhileConditionDialog(RazorEnhanced.Macros.Actions.WhileAction whileAction)
         {
@@ -10252,6 +10353,7 @@ string organizerName, int sourceBag, int destinationBag, int dragDelay)
                 BuffName = whileAction.BuffName,
                 RangeMode = whileAction.RangeMode,
                 RangeSerial = whileAction.RangeSerial,
+                RangeAlias = whileAction.RangeAlias,
                 RangeGraphic = whileAction.RangeGraphic,
                 RangeColor = whileAction.RangeColor,
                 FindEntityMode = whileAction.FindEntityMode,
@@ -10274,7 +10376,7 @@ string organizerName, int sourceBag, int destinationBag, int dragDelay)
             return (false, whileAction.Type, whileAction.Op, whileAction.Value, whileAction.Graphic, whileAction.Color,
                 whileAction.SkillName, whileAction.ValueToken, whileAction.BooleanValue, whileAction.PresetName,
                 whileAction.BuffName, whileAction.StatType, whileAction.StatusType, whileAction.RangeMode,
-                whileAction.RangeSerial, whileAction.RangeGraphic, whileAction.RangeColor,
+                whileAction.RangeSerial, whileAction.RangeAlias, whileAction.RangeGraphic, whileAction.RangeColor,
                 whileAction.FindEntityMode, whileAction.FindEntityLocation, whileAction.FindContainerSerial, whileAction.FindRange, whileAction.FindStoreSerial);
         }
 
