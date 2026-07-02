@@ -301,6 +301,45 @@ namespace Assistant
             //Ultima.Multis.PostHSFormat = UsePostHSChanges; //new Ultima library takes care of this
 
         }
+
+        protected static bool IsLoginCfgAddress(IPAddress ip, int port)
+        {
+            string logincfgPath = Path.Combine(Ultima.Files.Directory, "login.cfg");
+            if (!File.Exists(logincfgPath))
+                return false;
+
+            try
+            {
+                foreach (string line in File.ReadLines(logincfgPath))
+                {
+                    if (!line.StartsWith("LoginServer=", StringComparison.OrdinalIgnoreCase))
+                        continue;
+
+                    string value = line.Substring("LoginServer=".Length);
+                    string[] parts = value.Split(',');
+                    if (parts.Length < 2) continue;
+
+                    string host = parts[0].Trim();
+                    if (!ushort.TryParse(parts[1].Trim(), out ushort cfgPort)) continue;
+                    if (cfgPort != port) continue;
+
+                    IPAddress[] addrs = Dns.GetHostAddresses(host);
+                    foreach (IPAddress addr in addrs)
+                    {
+                        if (addr.AddressFamily != System.Net.Sockets.AddressFamily.InterNetwork)
+                            continue;
+
+                        if (addr.Equals(ip))
+                            return true;
+                    }
+                }
+            }
+            catch
+            {
+            }
+
+            return false;
+        }
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         static extern bool SetForegroundWindow(IntPtr hWnd);

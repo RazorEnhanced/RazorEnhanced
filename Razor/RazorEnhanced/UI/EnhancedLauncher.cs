@@ -2,6 +2,7 @@ using AutoUpdaterDotNET;
 using System;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -18,6 +19,7 @@ namespace RazorEnhanced.UI
                 this.AutoScaleMode = AutoScaleMode.Font;
             MaximizeBox = false;
             this.Text = m_Title;
+            m_Tip.ShowAlways = true;
         }
 
         private void RefreshGUI()
@@ -65,12 +67,14 @@ namespace RazorEnhanced.UI
             }
 
             var ip = Assistant.Client.Resolve(hostLabel.Text);
-            if (ip == null || ip == System.Net.IPAddress.None || Convert.ToInt32(portLabel.Text) == 0)
+            if (ip == null || ip == IPAddress.None || Convert.ToInt32(portLabel.Text) == 0)
             {
                 Shards.ShowLauncher = true;
                 launchCUO.Enabled = false;
                 launch.Enabled = false;
             }
+
+            UpdateOsiValidation();
         }
 
         internal void UpdateGUI()
@@ -194,6 +198,7 @@ namespace RazorEnhanced.UI
                 launchCUO.Enabled = false;
             }
 
+            UpdateOsiValidation();
         }
 
         private void PatchEncy_CheckedChanged(object sender, EventArgs e)
@@ -204,6 +209,68 @@ namespace RazorEnhanced.UI
         private void OsiEnc_CheckedChanged(object sender, EventArgs e)
         {
             UpdateGUI();
+            UpdateOsiValidation();
+        }
+
+        private void UpdateOsiValidation()
+        {
+            bool needsValidation = shardlistCombobox.Text.IndexOf("OSI", StringComparison.OrdinalIgnoreCase) >= 0 && osiEnc.Checked;
+            if (needsValidation && !IsValidOsiAddress())
+            {
+                launch.Enabled = false;
+                launchCUO.Enabled = false;
+                m_Tip.SetToolTip(hostLabel, "Must be a valid OSI server IP listed in login.cfg");
+            }
+            else
+            {
+                m_Tip.SetToolTip(hostLabel, "");
+            }
+        }
+
+        private bool IsValidOsiAddress()
+        {
+            string logincfgPath = Path.Combine(clientFolderLabel.Text, "login.cfg");
+            if (!File.Exists(logincfgPath))
+                return false;
+
+            var ip = Assistant.Client.Resolve(hostLabel.Text);
+            if (ip == null || ip == IPAddress.None)
+                return false;
+
+            if (!int.TryParse(portLabel.Text, out int port) || port == 0)
+                return false;
+
+            try
+            {
+                foreach (string line in File.ReadLines(logincfgPath))
+                {
+                    if (!line.StartsWith("LoginServer=", StringComparison.OrdinalIgnoreCase))
+                        continue;
+
+                    string value = line.Substring("LoginServer=".Length);
+                    string[] parts = value.Split(',');
+                    if (parts.Length < 2) continue;
+
+                    string host = parts[0].Trim();
+                    if (!ushort.TryParse(parts[1].Trim(), out ushort cfgPort)) continue;
+                    if (cfgPort != port) continue;
+
+                    IPAddress[] addrs = Dns.GetHostAddresses(host);
+                    foreach (IPAddress addr in addrs)
+                    {
+                        if (addr.AddressFamily != System.Net.Sockets.AddressFamily.InterNetwork)
+                            continue;
+
+                        if (addr.Equals(ip))
+                            return true;
+                    }
+                }
+            }
+            catch
+            {
+            }
+
+            return false;
         }
 
         private void ServeraddressT_TextChanged(object sender, EventArgs e)
@@ -259,33 +326,7 @@ namespace RazorEnhanced.UI
                              selected.OSIEnc, selected.Selected, selected.StartTypeSelected);
             }
 
-            // Genero Login.cfg
-            StreamWriter login;
-            string LoginString = "LoginServer=" + hostLabel.Text + "," + portLabel.Text;
-            string logincfgpath = clientPathLabel.Text.Substring(0, clientPathLabel.Text.LastIndexOf("\\") + 1);
-
-            try
-            {
-                if (!File.Exists(logincfgpath + "login.cfg"))
-                {
-                    login = new StreamWriter(logincfgpath + "login.cfg");
-                }
-                else
-                {
-                    File.Delete(logincfgpath + "login.cfg");
-                    login = new StreamWriter(logincfgpath + "login.cfg");
-                }
-                login.WriteLine(LoginString);
-                login.Close();
-            }
-            catch (Exception ex)
-            {
-                var dialogResult = RazorEnhanced.UI.RE_MessageBox.Show("Login Config Failure",
-                        $"Unable to read login file: {logincfgpath + "login.cfg"}\r\nError:\r\n{ex}",
-                        ok: "Ok", no: null, cancel: null, backColor: null);
-
-                this.Close();
-            }
+            // Login server is set dynamically via hook - no login.cfg needed
         }
 
 
@@ -303,10 +344,6 @@ namespace RazorEnhanced.UI
                              selected.OSIEnc, selected.Selected, selected.StartTypeSelected);
             }
 
-            // Need to fix up settuings.json
-            //StreamWriter login;
-            //string LoginString = "LoginServer=" + hostLabel.Text + "," + portLabel.Text;
-            //string logincfgpath = cuoClientLabel.Text.Substring(0, cuoClientLabel.Text.LastIndexOf("\\") + 1);
         }
 
 

@@ -290,7 +290,11 @@ namespace Assistant
             m_OutSend = (Buffer*)(baseAddr + sizeof(Buffer) * 3);
             m_TitleStr = baseAddr + sizeof(Buffer) * 4;
 
-            DLLImport.Razor.SetServer(m_ServerIP, m_ServerPort);
+            var ipAddr = new IPAddress(new byte[] { (byte)m_ServerIP, (byte)(m_ServerIP >> 8), (byte)(m_ServerIP >> 16), (byte)(m_ServerIP >> 24) });
+            if (IsLoginCfgAddress(ipAddr, m_ServerPort))
+                DLLImport.Razor.SetServer(0, 0);
+            else
+                DLLImport.Razor.SetServer(m_ServerIP, m_ServerPort);
 
             CommMutex = new Mutex { SafeWaitHandle = (new SafeWaitHandle(DLLImport.Razor.GetCommMutex(), true)) };
 

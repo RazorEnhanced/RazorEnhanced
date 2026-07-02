@@ -1241,13 +1241,13 @@ int PASCAL HookSend(SOCKET sock, char *buff, int len, int flags)
 
                 if (ClientEncrypted)
                 {
-                    LoginServer = ClientLogin->TestForLogin((BYTE)buff[0]);
-                    // OSI was messing up the TestForLogin sometimes so
-                    // if it isn't the login server IP, FORCE LoginServer to false
-                    if (CurrentConnectionAddr.sin_addr.S_un.S_addr != pShared->ServerIP)
-                    {
-                        LoginServer = false;
-                    }
+				LoginServer = ClientLogin->TestForLogin((BYTE)buff[0]);
+				// if ServerIP is set and this isn't the login server IP,
+				// TestForLogin might have a false positive - force to false
+				if (pShared->ServerIP != 0 && CurrentConnectionAddr.sin_addr.S_un.S_addr != pShared->ServerIP)
+				{
+					LoginServer = false;
+				}
                 }
 				else
 					LoginServer = LoginEncryption::IsLoginByte((BYTE)buff[0]);
@@ -1433,7 +1433,7 @@ int PASCAL HookConnect(SOCKET sock, const sockaddr *addr, int addrlen)
 
 		memcpy(&useAddr, old_addr, sizeof(sockaddr_in));
 
-		if (!Forwarded && pShared->ServerIP != 0)
+		if (!Forwarded && pShared->ServerIP != 0 && useAddr.sin_addr.S_un.S_addr != pShared->ServerIP)
 		{
 			useAddr.sin_addr.S_un.S_addr = pShared->ServerIP;
 			useAddr.sin_port = htons(pShared->ServerPort);
