@@ -74,7 +74,11 @@ namespace RazorEnhanced.UI
                 launch.Enabled = false;
             }
 
-            UpdateOsiValidation();
+            if (!UpdateOsiValidation())
+            {
+                launch.Enabled = false;
+                launchCUO.Enabled = false;
+            }
         }
 
         internal void UpdateGUI()
@@ -198,7 +202,11 @@ namespace RazorEnhanced.UI
                 launchCUO.Enabled = false;
             }
 
-            UpdateOsiValidation();
+            if (!UpdateOsiValidation())
+            {
+                launch.Enabled = false;
+                launchCUO.Enabled = false;
+            }
         }
 
         private void PatchEncy_CheckedChanged(object sender, EventArgs e)
@@ -209,21 +217,25 @@ namespace RazorEnhanced.UI
         private void OsiEnc_CheckedChanged(object sender, EventArgs e)
         {
             UpdateGUI();
-            UpdateOsiValidation();
+            if (!UpdateOsiValidation())
+            {
+                launch.Enabled = false;
+                launchCUO.Enabled = false;
+            }
         }
 
-        private void UpdateOsiValidation()
+        private bool UpdateOsiValidation()
         {
             bool needsValidation = shardlistCombobox.Text.IndexOf("OSI", StringComparison.OrdinalIgnoreCase) >= 0 && osiEnc.Checked;
             if (needsValidation && !IsValidOsiAddress())
             {
-                launch.Enabled = false;
-                launchCUO.Enabled = false;
                 m_Tip.SetToolTip(hostLabel, "Must be a valid OSI server IP listed in login.cfg");
+                return false;
             }
             else
             {
                 m_Tip.SetToolTip(hostLabel, "");
+                return true;
             }
         }
 
