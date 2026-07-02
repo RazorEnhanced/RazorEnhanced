@@ -227,31 +227,43 @@ namespace RazorEnhanced.UI
         private bool UpdateOsiValidation()
         {
             bool needsValidation = shardlistCombobox.Text.IndexOf("OSI", StringComparison.OrdinalIgnoreCase) >= 0 && osiEnc.Checked;
-            if (needsValidation && !IsValidOsiAddress())
+            if (needsValidation)
             {
-                m_Tip.SetToolTip(hostLabel, "Must be a valid OSI server IP listed in login.cfg");
-                return false;
+                string message;
+                if (!IsValidOsiAddress(out message))
+                {
+                    m_Tip.SetToolTip(hostLabel, message);
+                    return false;
+                }
             }
-            else
-            {
-                m_Tip.SetToolTip(hostLabel, "");
-                return true;
-            }
+
+            m_Tip.SetToolTip(hostLabel, "");
+            return true;
         }
 
-        private bool IsValidOsiAddress()
+        private bool IsValidOsiAddress(out string message)
         {
             string logincfgPath = Path.Combine(clientFolderLabel.Text, "login.cfg");
             if (!File.Exists(logincfgPath))
+            {
+                message = "UO folder must contain login.cfg";
                 return false;
+            }
 
             var ip = Assistant.Client.Resolve(hostLabel.Text);
             if (ip == null || ip == IPAddress.None)
+            {
+                message = "Enter a valid server address";
                 return false;
+            }
 
             if (!int.TryParse(portLabel.Text, out int port) || port == 0)
+            {
+                message = "Enter a valid port number";
                 return false;
+            }
 
+            bool anyPortMatched = false;
             try
             {
                 foreach (string line in File.ReadLines(logincfgPath))
@@ -267,6 +279,8 @@ namespace RazorEnhanced.UI
                     if (!ushort.TryParse(parts[1].Trim(), out ushort cfgPort)) continue;
                     if (cfgPort != port) continue;
 
+                    anyPortMatched = true;
+
                     IPAddress[] addrs = Dns.GetHostAddresses(host);
                     foreach (IPAddress addr in addrs)
                     {
@@ -274,14 +288,26 @@ namespace RazorEnhanced.UI
                             continue;
 
                         if (addr.Equals(ip))
+                        {
+                            message = null;
                             return true;
+                        }
                     }
                 }
             }
             catch
             {
+                message = "Error reading login.cfg";
+                return false;
             }
 
+            if (!anyPortMatched)
+            {
+                message = "Port not listed in login.cfg";
+                return false;
+            }
+
+            message = "Server address not listed in login.cfg";
             return false;
         }
 
