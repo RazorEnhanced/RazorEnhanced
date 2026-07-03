@@ -536,8 +536,6 @@ namespace RazorEnhanced
 
         ////////////////////////////////////////////////////
 
-        static internal uint m_spellGridGID = 9909999;
-
         internal static void GetSpellGridOrigin()
         {
             if (World.Player == null)
@@ -545,41 +543,9 @@ namespace RazorEnhanced
             m_save_state = m_open;
             if (m_open)
                 Close();
-            Gumps.GumpData gd = Gumps.CreateGump(false, true, true, false);
-            gd.gumpId = m_spellGridGID;
-            gd.serial = (uint)Player.Serial;
 
-            Gumps.AddPage(ref gd, 0);
-
-
-            Gumps.AddImageTiled(ref gd, 0, 0, 3000, 3000, 2624);
-            Gumps.AddAlphaRegion(ref gd, 0, 0, 3000, 3000);
-            Gumps.AddHtml(ref gd, 320, 215, 350, 85, @"Select a button where you would like the hotbar to open. This position will also be used if you enable auto-open on login.<br>If you have maually moved the hotbar since logging in you may have to logout and  login again for this to work", true, true);
-
-            Gumps.AddButton(ref gd, 700, 230, 241, 242, 0, 1, 0); // cancel
-            Gumps.AddButton(ref gd, 700, 260, 247, 248, 0, 1, 0); // options
-
-            int buttonID = 1;
-            int squareSize = 50;
-            for (int y = 0; y <= 1100; y += squareSize)
+            LocationPicker.Pick((x, y) =>
             {
-                for (int x = 0; x <= 2000; x += squareSize)
-                {
-                    Gumps.AddButton(ref gd, x, y, 1210, 1209, buttonID++, 1, 0);
-                }
-            }
-            gd.action = SetSpellGridOrigin;
-            Gumps.SendGump(gd, 0, 0);
-
-        }
-
-        internal static void SetSpellGridOrigin(Gumps.GumpData gd)
-        {
-            int buttonID = gd.buttonid;
-            if (buttonID > 0)
-            {
-                int x = ((buttonID % 41) - 1) * 50;
-                int y = (buttonID / 41) * 50;
                 if ((x != Engine.GridX) || (y != Engine.GridY))
                 {
                     Engine.GridX = x;
@@ -588,9 +554,9 @@ namespace RazorEnhanced
                     Settings.General.WriteInt("PosYGrid", Engine.GridY);
                     Engine.MainWindow.SafeAction(s => { s.GridLocationLabel.Text = "X: " + Engine.GridX + " - Y:" + Engine.GridY; });
                 }
-            }
-            if (m_save_state)
-                Open();
+                if (m_save_state)
+                    Open();
+            });
         }
 
         internal static void GumpSpellGrid()

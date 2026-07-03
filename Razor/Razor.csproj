@@ -554,6 +554,7 @@
     <Compile Include="RazorEnhanced\ToolBar.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="RazorEnhanced\AgentStatusGump.cs" />
     <Compile Include="RazorEnhanced\BandageHeal.cs" />
     <Compile Include="RazorEnhanced\Restock.cs" />
     <Compile Include="RazorEnhanced\Filters.cs" />
@@ -566,6 +567,7 @@
     <Compile Include="RazorEnhanced\Dress.cs" />
     <Compile Include="RazorEnhanced\GumpInspector.cs" />
     <Compile Include="RazorEnhanced\Gumps.cs" />
+    <Compile Include="RazorEnhanced\LocationPicker.cs" />
     <Compile Include="RazorEnhanced\Shards.cs" />
     <Compile Include="RazorEnhanced\Trade.cs" />
     <Compile Include="RazorEnhanced\UI\RE_MessageBox.cs">
@@ -704,6 +706,9 @@
     <Compile Include="RazorEnhanced\Property.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Agent\AgentStatusGump.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\Agent\AutoLoot.cs">
       <SubType>Form</SubType>

@@ -21,7 +21,7 @@ namespace RazorEnhanced
     internal class Settings
     {
         // Versione progressiva della struttura dei salvataggi per successive modifiche
-        private static readonly int SettingVersion = 19;
+        private static readonly int SettingVersion = 20;
 
         private static string m_profileName = null;
 
@@ -2538,6 +2538,12 @@ namespace RazorEnhanced
             general.Columns.Add("JournalSpecial", typeof(bool));
             general.Columns.Add("JournalFilterText", typeof(string));
 
+            // Parametri Agent Status Gump
+            general.Columns.Add("GumpStatusX", typeof(int));
+            general.Columns.Add("GumpStatusY", typeof(int));
+            general.Columns.Add("AgentGumpVertical", typeof(bool));
+            general.Columns.Add("GumpStatusEnabled", typeof(bool));
+
             // Composizione Parematri base primo avvio
             object[] generalstartparam = new object[] {
                     // Parametri primo avvio per tab agent Bandage heal
@@ -2610,6 +2616,9 @@ namespace RazorEnhanced
                      // Journal Filter Settings
                      true, true, true, true, true, true, true, true, true, true, true, true,
                      "text LIKE '*'",
+
+                     // Parametri Agent Status Gump
+                     200, 200, false, false,
                 };
 
             DataRow generalsettings = general.NewRow();
@@ -5473,6 +5482,20 @@ namespace RazorEnhanced
                 general.Columns.Add("RemoteControl", typeof(bool));
                 RazorEnhanced.Settings.General.WriteBool("RemoteControl", false);
                 realVersion = 19;
+                General.WriteInt("SettingVersion", realVersion);
+            }
+            if (realVersion == 19)
+            {
+                DataTable general = m_Dataset.Tables["GENERAL"];
+                general.Columns.Add("GumpStatusX", typeof(int));
+                general.Columns.Add("GumpStatusY", typeof(int));
+                general.Columns.Add("AgentGumpVertical", typeof(bool));
+                general.Columns.Add("GumpStatusEnabled", typeof(bool));
+                Settings.General.WriteInt("GumpStatusX", 200);
+                Settings.General.WriteInt("GumpStatusY", 200);
+                Settings.General.WriteBool("AgentGumpVertical", false);
+                Settings.General.WriteBool("GumpStatusEnabled", false);
+                realVersion = 20;
                 General.WriteInt("SettingVersion", realVersion);
             }
             {
