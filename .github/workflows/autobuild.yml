@@ -30,7 +30,7 @@ jobs:
     runs-on: windows-latest
 
     steps:         
-    - uses: actions/checkout@v3   
+    - uses: actions/checkout@v4   
     
     - name: Grab Version
       id: get_version
@@ -79,7 +79,7 @@ jobs:
     
     # Build steps  
     - name: Add MSBuild to PATH
-      uses: microsoft/setup-msbuild@v1.1
+      uses: microsoft/setup-msbuild@v2
       
     - name: Display MSBuild version
       run: msbuild -version
