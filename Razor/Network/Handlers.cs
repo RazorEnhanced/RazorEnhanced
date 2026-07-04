@@ -1280,6 +1280,9 @@ namespace Assistant
             if (Engine.MainWindow.BandageHealAutostartCheckBox.Checked)
                 RazorEnhanced.BandageHeal.LoginAutostart();
 
+            // Avvio agent status gump se abilitato
+            Engine.MainWindow.SafeAction(s => s.LoadAgentStatusGumpSettings());
+
         }
         internal static void DelayedTasks()
         {

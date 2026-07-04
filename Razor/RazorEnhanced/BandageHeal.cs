@@ -16,6 +16,17 @@ namespace RazorEnhanced
             set { m_AutoMode = value; }
         }
 
+        internal static bool CanEnable(out string reason)
+        {
+            if (Assistant.World.Player == null)
+            {
+                reason = "You are not logged in game!";
+                return false;
+            }
+            reason = null;
+            return true;
+        }
+
         internal static void AddLog(string addlog)
         {
             if (!Client.Running)

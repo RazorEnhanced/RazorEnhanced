@@ -105,17 +105,11 @@ namespace Assistant
 
         private void buyEnableCheckB_CheckedChanged(object sender, EventArgs e)
         {
-            if (World.Player == null)  // offline
+            if (buyEnableCheckBox.Checked && !RazorEnhanced.BuyAgent.CanEnable(out string reason))
             {
                 buyEnableCheckBox.Checked = false;
-                BuyAgent.AddLog("You are not logged in game!");
-                return;
-            }
-
-            if (buyListSelect.Text == String.Empty) // Nessuna lista
-            {
-                buyEnableCheckBox.Checked = false;
-                BuyAgent.AddLog("Item list not selected!");
+                RazorEnhanced.BuyAgent.AddLog(reason);
+                RazorEnhanced.Misc.SendMessage(reason, 33);
                 return;
             }
 
@@ -136,9 +130,12 @@ namespace Assistant
                 buyAddListButton.Enabled = true;
                 buyRemoveListButton.Enabled = true;
                 buyCloneButton.Enabled = true;
-                BuyAgent.AddLog("Remove item list " + buyListSelect.SelectedItem.ToString() + " filter ok!");
-                if (showagentmessageCheckBox.Checked)
-                    Misc.SendMessage("Remove item list " + buyListSelect.SelectedItem.ToString() + " filter ok!", false);
+                if (buyListSelect.Text != String.Empty)
+                {
+                    BuyAgent.AddLog("Remove item list " + buyListSelect.SelectedItem.ToString() + " filter ok!");
+                    if (showagentmessageCheckBox.Checked)
+                        Misc.SendMessage("Remove item list " + buyListSelect.SelectedItem.ToString() + " filter ok!", false);
+                }
             }
         }
 

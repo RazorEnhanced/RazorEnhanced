@@ -126,23 +126,11 @@ namespace Assistant
 
         private void autoLootEnable_CheckedChanged(object sender, EventArgs e)
         {
-            if (World.Player == null)  // offline
+            if (autoLootCheckBox.Checked && !RazorEnhanced.AutoLoot.CanEnable(out string reason))
             {
-                if (autoLootCheckBox.Checked)
-                {
-                    AutoLoot.AddLog("You are not logged in game!");
-                    autoLootCheckBox.Checked = false;
-                }
-                return;
-            }
-
-            if (autolootListSelect.Text == String.Empty) // Nessuna lista
-            {
-                if (autoLootCheckBox.Checked)
-                {
-                    autoLootCheckBox.Checked = false;
-                    AutoLoot.AddLog("Item list not selected!");
-                }
+                autoLootCheckBox.Checked = false;
+                RazorEnhanced.AutoLoot.AddLog(reason);
+                RazorEnhanced.Misc.SendMessage(reason, 33);
                 return;
             }
 

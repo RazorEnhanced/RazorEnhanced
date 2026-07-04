@@ -165,6 +165,22 @@ namespace RazorEnhanced
             set { m_AutoMode = value; }
         }
 
+        internal static bool CanEnable(out string reason)
+        {
+            if (Assistant.World.Player == null)
+            {
+                reason = "You are not logged in game!";
+                return false;
+            }
+            if (Settings.AutoLoot.ListsRead().Count == 0)
+            {
+                reason = "Item list not selected!";
+                return false;
+            }
+            reason = null;
+            return true;
+        }
+
         internal static string ListName
         {
             get { return m_autolootlist; }
