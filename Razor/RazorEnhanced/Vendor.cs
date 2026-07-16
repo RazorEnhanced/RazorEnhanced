@@ -362,31 +362,6 @@ namespace RazorEnhanced
         private static string m_listname;
         private static int m_sellbag;
 
-        internal static bool CanEnable(out string reason)
-        {
-            if (Assistant.World.Player == null)
-            {
-                reason = "You are not logged in game!";
-                return false;
-            }
-            if (Settings.SellAgent.ListsRead().Count == 0)
-            {
-                reason = "Item list not selected!";
-                return false;
-            }
-            if (SellBag != 0)
-            {
-                Assistant.Item bag = Assistant.World.FindItem(SellBag);
-                if (bag == null || !bag.IsLootableTarget)
-                {
-                    reason = "Invalid or not accessible Container!";
-                    return false;
-                }
-            }
-            reason = null;
-            return true;
-        }
-
         [Serializable]
         public class SellAgentItem : ListAbleItem
         {
@@ -796,23 +771,6 @@ namespace RazorEnhanced
         private static bool m_comparename;
         private static bool m_completeAmount;
         private static bool m_enabled;
-
-        internal static bool CanEnable(out string reason)
-        {
-            if (Assistant.World.Player == null)
-            {
-                reason = "You are not logged in game!";
-                return false;
-            }
-            if (Settings.BuyAgent.ListsRead().Count == 0)
-            {
-                reason = "Item list not selected!";
-                return false;
-            }
-            reason = null;
-            return true;
-        }
-
         [Serializable]
         public class BuyAgentItem : ListAbleItem
         {

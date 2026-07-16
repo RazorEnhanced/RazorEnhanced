@@ -36,27 +36,28 @@ namespace Assistant
 
         private void bandagehealenableCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            if (bandagehealenableCheckBox.Checked && !RazorEnhanced.BandageHeal.CanEnable(out string reason))
+            if (World.Player != null)
             {
-                bandagehealenableCheckBox.Checked = false;
-                RazorEnhanced.BandageHeal.AddLog(reason);
-                RazorEnhanced.Misc.SendMessage(reason, 33);
-                return;
-            }
-
-            if (bandagehealenableCheckBox.Checked)
-            {
-                RazorEnhanced.BandageHeal.AutoMode = true;
-                RazorEnhanced.BandageHeal.AddLog("BANDAGE HEAL: Engine Start...");
-                if (showagentmessageCheckBox.Checked)
-                    RazorEnhanced.Misc.SendMessage("BANDAGE HEAL: Engine Start...", false);
+                if (bandagehealenableCheckBox.Checked)
+                {
+                    RazorEnhanced.BandageHeal.AutoMode = true;
+                    RazorEnhanced.BandageHeal.AddLog("BANDAGE HEAL: Engine Start...");
+                    if (showagentmessageCheckBox.Checked)
+                        RazorEnhanced.Misc.SendMessage("BANDAGE HEAL: Engine Start...", false);
+                }
+                else
+                {
+                    // Stop BANDAGEHEAL
+                    RazorEnhanced.BandageHeal.AutoMode = false;
+                    if (showagentmessageCheckBox.Checked)
+                        RazorEnhanced.Misc.SendMessage("BANDAGE HEAL: Engine Stop...", false);
+                    RazorEnhanced.BandageHeal.AddLog("BANDAGE HEAL: Engine Stop...");
+                }
             }
             else
             {
-                RazorEnhanced.BandageHeal.AutoMode = false;
-                if (showagentmessageCheckBox.Checked)
-                    RazorEnhanced.Misc.SendMessage("BANDAGE HEAL: Engine Stop...", false);
-                RazorEnhanced.BandageHeal.AddLog("BANDAGE HEAL: Engine Stop...");
+                bandagehealenableCheckBox.Checked = false;
+                RazorEnhanced.BandageHeal.AddLog("You are not logged in game!");
             }
 
             if (bandagehealenableCheckBox.Checked)

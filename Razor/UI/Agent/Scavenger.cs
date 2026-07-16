@@ -183,11 +183,23 @@ namespace Assistant
 
         private void scavengerEnableCheck_CheckedChanged(object sender, EventArgs e)
         {
-            if (scavengerCheckBox.Checked && !RazorEnhanced.Scavenger.CanEnable(out string reason))
+            if (World.Player == null)  // offline
             {
-                scavengerCheckBox.Checked = false;
-                RazorEnhanced.Scavenger.AddLog(reason);
-                RazorEnhanced.Misc.SendMessage(reason, 33);
+                if (scavengerCheckBox.Checked)
+                {
+                    scavengerCheckBox.Checked = false;
+                    Scavenger.AddLog("You are not logged in game!");
+                }
+                return;
+            }
+
+            if (scavengerListSelect.Text == String.Empty) // Nessuna lista
+            {
+                if (scavengerCheckBox.Checked)
+                {
+                    scavengerCheckBox.Checked = false;
+                    Scavenger.AddLog("Item list not selected!");
+                }
                 return;
             }
 

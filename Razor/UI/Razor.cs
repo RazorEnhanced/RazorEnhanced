@@ -91,14 +91,6 @@ namespace Assistant
         private System.Windows.Forms.ComboBox imgFmt;
         internal System.Windows.Forms.ToolTip m_Tip;
         private System.Windows.Forms.TabPage MacrosTab;
-        private GroupBox gumpStatusGroupBox;
-        private CheckBox gumpStatusEnabledCheckBox;
-        private Button gumpPickLocationButton;
-        private Label gumpStatusXLabel;
-        private TextBox gumpStatusXTextBox;
-        private Label gumpStatusYLabel;
-        private TextBox gumpStatusYTextBox;
-        private ComboBox gumpOrientationComboBox;
 
         #endregion Class Variables
         private System.Windows.Forms.CheckBox preAOSstatbar;
@@ -1128,14 +1120,6 @@ namespace Assistant
             this.btnMacroPlay = new System.Windows.Forms.Button();
             this.btnMacroRecord = new System.Windows.Forms.Button();
             this.macroListBox = new System.Windows.Forms.ListBox();
-            this.gumpStatusGroupBox = new System.Windows.Forms.GroupBox();
-            this.gumpStatusEnabledCheckBox = new System.Windows.Forms.CheckBox();
-            this.gumpPickLocationButton = new System.Windows.Forms.Button();
-            this.gumpStatusXLabel = new System.Windows.Forms.Label();
-            this.gumpStatusXTextBox = new System.Windows.Forms.TextBox();
-            this.gumpStatusYLabel = new System.Windows.Forms.Label();
-            this.gumpStatusYTextBox = new System.Windows.Forms.TextBox();
-            this.gumpOrientationComboBox = new System.Windows.Forms.ComboBox();
             this.EnhancedAgent = new System.Windows.Forms.TabPage();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.eautoloot = new System.Windows.Forms.TabPage();
@@ -1639,7 +1623,6 @@ namespace Assistant
             this.csScriptingTab.SuspendLayout();
             this.MacrosTab.SuspendLayout();
             this.grpMacroHotkey.SuspendLayout();
-            this.gumpStatusGroupBox.SuspendLayout();
             this.EnhancedAgent.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.eautoloot.SuspendLayout();
@@ -9192,98 +9175,11 @@ namespace Assistant
             this.generalTab.Controls.Add(this.alwaysTop);
             this.generalTab.Controls.Add(this.label9);
             this.generalTab.Controls.Add(this.remoteControl);
-            this.generalTab.Controls.Add(this.gumpStatusGroupBox);
             this.generalTab.Location = new System.Drawing.Point(4, 23);
             this.generalTab.Name = "generalTab";
             this.generalTab.Size = new System.Drawing.Size(649, 344);
             this.generalTab.TabIndex = 0;
             this.generalTab.Text = "Razor Settings";
-            // 
-            // gumpStatusGroupBox
-            // 
-            this.gumpStatusGroupBox.Controls.Add(this.gumpStatusEnabledCheckBox);
-            this.gumpStatusGroupBox.Controls.Add(this.gumpPickLocationButton);
-            this.gumpStatusGroupBox.Controls.Add(this.gumpStatusXLabel);
-            this.gumpStatusGroupBox.Controls.Add(this.gumpStatusXTextBox);
-            this.gumpStatusGroupBox.Controls.Add(this.gumpStatusYLabel);
-            this.gumpStatusGroupBox.Controls.Add(this.gumpStatusYTextBox);
-            this.gumpStatusGroupBox.Controls.Add(this.gumpOrientationComboBox);
-            this.gumpStatusGroupBox.Location = new System.Drawing.Point(6, 280);
-            this.gumpStatusGroupBox.Name = "gumpStatusGroupBox";
-            this.gumpStatusGroupBox.Size = new System.Drawing.Size(390, 55);
-            this.gumpStatusGroupBox.TabIndex = 85;
-            this.gumpStatusGroupBox.TabStop = false;
-            this.gumpStatusGroupBox.Text = "Agent Status Gump";
-            // 
-            // gumpStatusEnabledCheckBox
-            // 
-            this.gumpStatusEnabledCheckBox.Location = new System.Drawing.Point(6, 20);
-            this.gumpStatusEnabledCheckBox.Name = "gumpStatusEnabledCheckBox";
-            this.gumpStatusEnabledCheckBox.Size = new System.Drawing.Size(65, 22);
-            this.gumpStatusEnabledCheckBox.TabIndex = 0;
-            this.gumpStatusEnabledCheckBox.Text = "Enable";
-            this.gumpStatusEnabledCheckBox.CheckedChanged += new System.EventHandler(this.GumpStatusEnabledCheckBox_CheckedChanged);
-            // 
-            // gumpPickLocationButton
-            // 
-            this.gumpPickLocationButton.Location = new System.Drawing.Point(75, 19);
-            this.gumpPickLocationButton.Name = "gumpPickLocationButton";
-            this.gumpPickLocationButton.Size = new System.Drawing.Size(36, 22);
-            this.gumpPickLocationButton.TabIndex = 1;
-            this.gumpPickLocationButton.Text = "Pick";
-            this.gumpPickLocationButton.Click += new System.EventHandler(this.GumpPickLocationButton_Click);
-            // 
-            // gumpStatusXLabel
-            // 
-            this.gumpStatusXLabel.Location = new System.Drawing.Point(115, 22);
-            this.gumpStatusXLabel.Name = "gumpStatusXLabel";
-            this.gumpStatusXLabel.Size = new System.Drawing.Size(18, 18);
-            this.gumpStatusXLabel.TabIndex = 2;
-            this.gumpStatusXLabel.Text = "X:";
-            this.gumpStatusXLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // gumpStatusXTextBox
-            // 
-            this.gumpStatusXTextBox.BackColor = System.Drawing.Color.White;
-            this.gumpStatusXTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.gumpStatusXTextBox.Location = new System.Drawing.Point(135, 20);
-            this.gumpStatusXTextBox.Name = "gumpStatusXTextBox";
-            this.gumpStatusXTextBox.Size = new System.Drawing.Size(50, 20);
-            this.gumpStatusXTextBox.TabIndex = 3;
-            this.gumpStatusXTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.gumpStatusXTextBox.Leave += new System.EventHandler(this.GumpStatusXTextBox_Leave);
-            // 
-            // gumpStatusYLabel
-            // 
-            this.gumpStatusYLabel.Location = new System.Drawing.Point(189, 22);
-            this.gumpStatusYLabel.Name = "gumpStatusYLabel";
-            this.gumpStatusYLabel.Size = new System.Drawing.Size(18, 18);
-            this.gumpStatusYLabel.TabIndex = 4;
-            this.gumpStatusYLabel.Text = "Y:";
-            this.gumpStatusYLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // gumpStatusYTextBox
-            // 
-            this.gumpStatusYTextBox.BackColor = System.Drawing.Color.White;
-            this.gumpStatusYTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.gumpStatusYTextBox.Location = new System.Drawing.Point(209, 20);
-            this.gumpStatusYTextBox.Name = "gumpStatusYTextBox";
-            this.gumpStatusYTextBox.Size = new System.Drawing.Size(50, 20);
-            this.gumpStatusYTextBox.TabIndex = 5;
-            this.gumpStatusYTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.gumpStatusYTextBox.Leave += new System.EventHandler(this.GumpStatusYTextBox_Leave);
-            // 
-            // gumpOrientationComboBox
-            // 
-            this.gumpOrientationComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.gumpOrientationComboBox.Items.AddRange(new object[] {
-            "Horizontal",
-            "Vertical"});
-            this.gumpOrientationComboBox.Location = new System.Drawing.Point(265, 19);
-            this.gumpOrientationComboBox.Name = "gumpOrientationComboBox";
-            this.gumpOrientationComboBox.Size = new System.Drawing.Size(90, 22);
-            this.gumpOrientationComboBox.TabIndex = 6;
-            this.gumpOrientationComboBox.SelectedIndexChanged += new System.EventHandler(this.GumpOrientationComboBox_SelectedIndexChanged);
             // 
             // label79
             // 
@@ -10035,8 +9931,6 @@ namespace Assistant
             this.TechnicalPages.ResumeLayout(false);
             this.generalTab.ResumeLayout(false);
             this.generalTab.PerformLayout();
-            this.gumpStatusGroupBox.ResumeLayout(false);
-            this.gumpStatusGroupBox.PerformLayout();
             this.groupBox29.ResumeLayout(false);
             this.groupBox29.PerformLayout();
             this.opacityGroupBox.ResumeLayout(false);
@@ -10334,9 +10228,6 @@ namespace Assistant
             videoPathTextBox.Text = Settings.General.ReadString("VideoPath");
             videoFPSTextBox.Text = Settings.General.ReadInt("VideoFPS").ToString();
             videoCodecComboBox.SelectedIndex = Settings.General.ReadInt("VideoFormat");
-
-            // Agent Status Gump
-            LoadAgentStatusGumpSettings();
         }
 
         public void SetBandSelfState()

@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 //
-[assembly: AssemblyVersion("1.0.0.13")]
+[assembly: AssemblyVersion("1.0.0.12")]
 [assembly: AssemblyTitle("Razor Enhanced")]
 [assembly: AssemblyDescription("The bleeding edge UO tool")]
 [assembly: AssemblyCompany("www.razorenhanced.net")]

@@ -711,20 +711,17 @@ namespace RazorEnhanced
         /// <param name="gumpid">ID of the gump</param>
         public static void CloseGump(uint gumpid)
         {
-            if (World.Player != null)
+            if (gumpid == 0)
+                Assistant.Client.Instance.SendToClientWait(new CloseGump(World.Player.CurrentGumpI));
+            else
             {
-                if (gumpid == 0)
-                    Assistant.Client.Instance.SendToClientWait(new CloseGump(World.Player.CurrentGumpI));
-                else
-                {
-                    Assistant.Client.Instance.SendToClientWait(new CloseGump(gumpid));
-                }
-
-                World.Player.HasGump = false;
-                World.Player.CurrentGumpStrings.Clear();
-                World.Player.CurrentGumpTile.Clear();
-                World.Player.CurrentGumpI = 0;
+                Assistant.Client.Instance.SendToClientWait(new CloseGump(gumpid));
             }
+
+            World.Player.HasGump = false;
+            World.Player.CurrentGumpStrings.Clear();
+            World.Player.CurrentGumpTile.Clear();
+            World.Player.CurrentGumpI = 0;
             Gumps.RemoveGump(gumpid);
         }
 

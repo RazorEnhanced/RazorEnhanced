@@ -97,24 +97,48 @@ namespace Assistant
 
         private void sellEnableCheck_CheckedChanged(object sender, EventArgs e)
         {
-            if (sellEnableCheckBox.Checked && !RazorEnhanced.SellAgent.CanEnable(out string reason))
+            if (World.Player == null)  // offline
             {
-                sellEnableCheckBox.Checked = false;
-                RazorEnhanced.SellAgent.AddLog(reason);
-                RazorEnhanced.Misc.SendMessage(reason, 33);
+                if (sellEnableCheckBox.Checked)
+                {
+                    sellEnableCheckBox.Checked = false;
+                    SellAgent.AddLog("You are not logged in game!");
+                }
+                return;
+            }
+
+            if (sellListSelect.Text == String.Empty) // Nessuna lista
+            {
+                if (sellEnableCheckBox.Checked)
+                {
+                    sellEnableCheckBox.Checked = false;
+                    SellAgent.AddLog("Item list not selected!");
+                }
                 return;
             }
 
             if (sellEnableCheckBox.Checked)
             {
-                sellListSelect.Enabled = false;
-                sellAddListButton.Enabled = false;
-                sellRemoveListButton.Enabled = false;
-                sellCloneListButton.Enabled = false;
-                SellAgent.AddLog("Apply item list " + sellListSelect.SelectedItem.ToString() + " filter ok!");
-                if (showagentmessageCheckBox.Checked)
-                    Misc.SendMessage("Apply item list " + sellListSelect.SelectedItem.ToString() + " filter ok!", false);
-                SellAgent.EnableSellFilter();
+                Assistant.Item bag = Assistant.World.FindItem(SellAgent.SellBag);
+
+                if (bag != null && (!bag.IsLootableTarget))
+                {
+                    SellAgent.AddLog("Invalid or not accessible Container!");
+                    if (showagentmessageCheckBox.Checked)
+                        Misc.SendMessage("Invalid or not accessible Container!", false);
+                    sellEnableCheckBox.Checked = false;
+                }
+                else
+                {
+                    sellListSelect.Enabled = false;
+                    sellAddListButton.Enabled = false;
+                    sellRemoveListButton.Enabled = false;
+                    sellCloneListButton.Enabled = false;
+                    SellAgent.AddLog("Apply item list " + sellListSelect.SelectedItem.ToString() + " filter ok!");
+                    if (showagentmessageCheckBox.Checked)
+                        Misc.SendMessage("Apply item list " + sellListSelect.SelectedItem.ToString() + " filter ok!", false);
+                    SellAgent.EnableSellFilter();
+                }
             }
             else
             {
