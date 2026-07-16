@@ -5549,7 +5549,14 @@ namespace RazorEnhanced
                 RazorEnhanced.Settings.General.WriteBool("RemoteControl", false);
                 realVersion = 19;
                 General.WriteInt("SettingVersion", realVersion);
+            }            
+            if (realVersion == 19)
+            {
+                // to get rid of a bad update I did by accident
+                realVersion = 20;
+                General.WriteInt("SettingVersion", realVersion);
             }
+
             {
                 // These always run and must be protected to ensure a patch is not applied twice
                 bool found = false;
