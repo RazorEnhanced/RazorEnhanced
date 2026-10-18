@@ -2014,6 +2014,20 @@ namespace Assistant
         }
     }
 
+    internal sealed class AsciiPromptResponse : Packet
+    {
+        internal AsciiPromptResponse(uint serial, uint promptid, uint operation, string text)
+            : base(0x9A)
+        {
+            EnsureCapacity(3 + 4 + 4 + 4 + (text?.Length ?? 0) + 1);
+
+            Write(serial);
+            Write(promptid);
+            Write(operation);
+            WriteAsciiNull(text);
+        }
+    }
+
     internal sealed class RenameRequest : Packet
     {
         internal RenameRequest(uint serial, string name)

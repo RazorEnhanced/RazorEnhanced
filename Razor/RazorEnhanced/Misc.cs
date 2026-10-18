@@ -714,17 +714,28 @@ namespace RazorEnhanced
         /// </summary>
         public static void CancelPrompt()
         {
-            Assistant.Client.Instance.SendToServerWait(new PromptResponse(World.Player.PromptSenderSerial, World.Player.PromptID, 0, Language.CliLocName, String.Empty));
-            World.Player.HasPrompt = false;
+            SendPromptResponse(0, String.Empty);
         }
 
         /// <summary>
         /// Response a prompt request. Often used to rename runes and similar.
         /// </summary>
-        /// <param name="text">Text of the response.</param>
+        /// <param name="text">Text of the response. An empty response cancels the prompt, as the client does.</param>
         public static void ResponsePrompt(string text)
         {
-            Assistant.Client.Instance.SendToServerWait(new PromptResponse(World.Player.PromptSenderSerial, World.Player.PromptID, 1, Language.CliLocName, text));
+            if (string.IsNullOrEmpty(text))
+                SendPromptResponse(0, String.Empty);
+            else
+                SendPromptResponse(1, text);
+        }
+
+        // Reply in the format the server prompted with, as the client does: 0x9A for ASCII prompts, 0xC2 for unicode.
+        private static void SendPromptResponse(uint operation, string text)
+        {
+            if (World.Player.PromptIsAscii)
+                Assistant.Client.Instance.SendToServerWait(new AsciiPromptResponse(World.Player.PromptSenderSerial, World.Player.PromptID, operation, text));
+            else
+                Assistant.Client.Instance.SendToServerWait(new PromptResponse(World.Player.PromptSenderSerial, World.Player.PromptID, operation, Language.CliLocName, text));
             World.Player.HasPrompt = false;
         }
 
