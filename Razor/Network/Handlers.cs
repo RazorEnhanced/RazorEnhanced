@@ -91,7 +91,7 @@ namespace Assistant
             PacketHandler.RegisterServerToClientViewer(0x88, new PacketViewerCallback(OpenPaperdoll));
             PacketHandler.RegisterServerToClientViewer(0x90, new PacketViewerCallback(MapDetails));
             PacketHandler.RegisterServerToClientViewer(0x97, new PacketViewerCallback(MovementDemand));
-            PacketHandler.RegisterServerToClientViewer(0x9A, new PacketViewerCallback(AsciiPromptResponse));
+            PacketHandler.RegisterServerToClientViewer(0x9A, new PacketViewerCallback(AsciiPromptReceived));
             PacketHandler.RegisterServerToClientViewer(0x9E, new PacketViewerCallback(Vendor.StoreSellList));
             PacketHandler.RegisterServerToClientViewer(0xA1, new PacketViewerCallback(HitsUpdate));
             PacketHandler.RegisterServerToClientViewer(0xA2, new PacketViewerCallback(ManaUpdate));
@@ -1356,15 +1356,20 @@ namespace Assistant
             }
         }
 
-        private static void AsciiPromptResponse(PacketReader p, PacketHandlerEventArgs args)
+        private static void AsciiPromptReceived(PacketReader p, PacketHandlerEventArgs args)
         {
-            //int serial = (int)p.ReadUInt32();
-            //int id = (int)p.ReadUInt32();
-            //int type = (int)p.ReadUInt32();
-            //string message = p.ReadString();
+            if (World.Player == null)
+                return;
 
-            if (World.Player != null)
-                World.Player.HasPrompt = false;
+            uint serial = p.ReadUInt32();
+            uint id = p.ReadUInt32();
+            uint type = p.ReadUInt32();
+
+            World.Player.HasPrompt = true;
+            World.Player.PromptSenderSerial = serial;
+            World.Player.PromptID = id;
+            World.Player.PromptType = type;
+            World.Player.PromptIsAscii = true;
         }
 
         private static void UnicodePromptSend(PacketReader p, PacketHandlerEventArgs args)
@@ -1407,6 +1412,7 @@ namespace Assistant
             World.Player.PromptSenderSerial = serial;
             World.Player.PromptID = id;
             World.Player.PromptType = type;
+            World.Player.PromptIsAscii = false;
 
             //string lang = p.ReadStringSafe(4);
             //string message = p.ReadUnicodeStringSafe();
@@ -3394,12 +3400,15 @@ namespace Assistant
 
         private static void ClientAsciiPromptResponse(PacketReader p, PacketHandlerEventArgs args)
         {
+            if (World.Player != null)
+                World.Player.HasPrompt = false;
+
             if (!RazorEnhanced.ScriptRecorderService.Instance.Active() && !RazorEnhanced.Macros.MacroManager.IsRecording) { return; }
 
             p.ReadUInt32(); // sender serial
             p.ReadUInt32(); // Prompt ID
             uint type = p.ReadUInt32(); // type
-            string text = p.ReadUnicodeStringSafe();
+            string text = p.ReadStringSafe();
             RazorEnhanced.ScriptRecorderService.Instance.Record_AsciiPromptResponse(type, text);
             RazorEnhanced.Macros.MacroManager.RecordAsciiPromptResponse(type, text);
         }
